@@ -2803,7 +2803,11 @@ def generate_sprite(
     if life_state is not None:
         age = life_state
     else:
-        age = cat.age.value
+        if game.settings["ageup dead"] and cat.dead:
+            age = "adult"
+        else:
+            age = cat.age.value
+
 
     if always_living:
         dead = False
@@ -2836,7 +2840,7 @@ def generate_sprite(
         if game.config["fun"]["all_cats_are_newborn"]:
             cat_sprite = str(cat.pelt.cat_sprites["newborn"])
         else:
-            if cat.pelt.cat_sprites[age] < 9 and cat.pelt.cat_sprites[age] > 5 and (cat.pelt.length == 'medium' and get_current_season() == 'Leaf-bare') and cat.moons > 11:
+            if cat.pelt.cat_sprites[age] < 9 and cat.pelt.cat_sprites[age] > 5 and (cat.pelt.length == 'medium' and get_current_season() == 'Leaf-bare'):
                 cat_sprite = str(cat.pelt.cat_sprites[age]+3)
             else:
                 cat_sprite = str(cat.pelt.cat_sprites[age])
@@ -3011,6 +3015,15 @@ def generate_sprite(
                 return whichmain
 
             def ApplySmokeEffects(whichmain):
+                white = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                white.blit(sprites.sprites['lightbasecolours0'], (0, 0))
+                smokeUnders = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                smokeUnders.blit(sprites.sprites["Tabby_unders" + cat_sprite], (0, 0))
+                smokeUnders.blit(white, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+                smokeUnders.set_alpha(10)
+                white.set_alpha(10)
+                smokeLayer = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                smokeLayer.blit(white, (0, 0))
                 if(genotype.ext[0] == 'Eg' and genotype.agouti[0] != 'a'):
                     whichmain.blit(sprites.sprites['grizzle' + cat_sprite], (0, 0))
                 if genotype.ghosting[0] == 'Gh' and not (genotype.silver[0] == 'I' and cat.pelt.length == 'long'):
@@ -3020,31 +3033,33 @@ def generate_sprite(
                         ghostingbase.set_alpha(150)
                     
                     whichmain.blit(ghostingbase, (0, 0))
-                if genotype.silver[0] == 'I':
+                if (genotype.silver[0] == 'I'):
                     ghostingbase = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                     ghostingbase.blit(sprites.sprites['ghost' + cat_sprite], (0, 0))
                     if cat.pelt.length != 'long':
-                        ghostingbase.set_alpha(75)
+                        ghostingbase.set_alpha(100)
                     elif genotype.wbtype == 'low':
                         ghostingbase.set_alpha(150)
                     
                     whichmain.blit(ghostingbase, (0, 0))
                 if (genotype.silver[0] == 'I'):
-                    smokeLayer = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                    smokeLayer.blit(sprites.sprites['smoke' + cat_sprite], (0, 0))
+                    smokeLayer.set_alpha(255)
+                    if cat.pelt.length != 'long':
+                        smokeLayer.blit(smokeUnders, (0, 0))
                     if genotype.wbtype == 'low' and cat.pelt.length == 'long':
                         smokeLayer.set_alpha(75)
-                    elif genotype.wbtype == 'low':
+                    elif genotype.wbtype == 'low' or cat.pelt.length == 'long':
                         smokeLayer.set_alpha(150)
                     else:
                         smokeLayer.set_alpha(200)
                     whichmain.blit(smokeLayer, (0, 0))
                 if('light smoke' in phenotype.silvergold):
-                    smokeLayer = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                    smokeLayer.blit(sprites.sprites['smoke' + cat_sprite], (0, 0))
+                    smokeLayer.set_alpha(255)
+                    if cat.pelt.length != 'long':
+                        smokeLayer.blit(smokeUnders, (0, 0))
                     if genotype.wbtype == 'high':
                         smokeLayer.set_alpha(100)
-                    elif cat.pelt.length != 'long':
+                    elif cat.pelt.length == 'long':
                         smokeLayer.set_alpha(200)                    
                     whichmain.blit(smokeLayer, (0, 0))
                 
@@ -3645,7 +3660,7 @@ def generate_sprite(
                         fevercoat.set_alpha(150)
                     gensprite.blit(fevercoat, (0, 0))
                 
-                elif (genotype.bleach[0] == "lb" and sprite_age > 3) or 'masked' in phenotype.silvergold:
+                elif (genotype.bleach[0] == "lb" and sprite_age > 3) or (genotype.wbtype == "shaded" and 'smoke' in phenotype.silvergold):
                     gensprite.blit(sprites.sprites['bleach' + cat_sprite], (0, 0))
 
             
@@ -3785,13 +3800,13 @@ def generate_sprite(
 
         age = cat.moons
 
-        if int(cat_sprite) == 20 and cat.moons > 0:
+        if int(cat_sprite) == 20:
             age = 0
-        elif int(cat_sprite) < 3 and cat.moons > 5:
+        elif int(cat_sprite) < 3 and 5 < cat.moons < 1:
             age = 4
-        elif int(cat_sprite) < 6 and cat.moons > 11:
+        elif int(cat_sprite) < 6 and 11 < cat.moons < 6:
             age = 10
-        elif (int(cat_sprite == 19) or int(cat_sprite) == 17) and cat.moons > 12:
+        elif (int(cat_sprite == 19) or int(cat_sprite) == 17) and 12 < cat.moons < 6:
             age = 6
         gensprite.blit(GenSprite(genotype, phenotype, age), (0, 0))
 
