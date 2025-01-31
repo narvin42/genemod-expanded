@@ -1063,8 +1063,9 @@ class ChooseMateScreen(Screens):
 
         if (
             not game.clan.clan_settings["same sex birth"]
-            and not (xor('Y' in self.the_cat.genotype.sexgene, 'Y' in self.selected_cat.genotype.sexgene)) 
-            and 'infertility' not in self.the_cat.permanent_condition and 'infertility' not in self.selected_cat.permanent_condition
+            and not (xor('Y' in self.the_cat.phenotype.sexgene, 'Y' in self.selected_cat.phenotype.sexgene) 
+            and 'infertility' not in self.the_cat.permanent_condition 
+            and 'infertility' not in self.selected_cat.permanent_condition)
         ):
             warning_rect = ui_scale(pygame.Rect((0, 0), (160, 45)))
             warning_rect.bottomleft = ui_scale_offset((0, -5))
@@ -1192,7 +1193,7 @@ class ChooseMateScreen(Screens):
                 not self.have_kits_only
                 or 
                 ((game.clan.clan_settings["same sex birth"]
-                or xor('Y' in i.genotype.sexgene, 'Y' in self.the_cat.genotype.sexgene)) 
+                or xor('Y' in i.phenotype.sexgene, 'Y' in self.the_cat.phenotype.sexgene)) 
                 and 'infertility' not in i.permanent_condition
                 and 'infertility' not in self.the_cat.permanent_condition)
             )
