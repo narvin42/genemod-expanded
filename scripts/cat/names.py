@@ -249,9 +249,9 @@ class Name:
         except:
             used_prefixes = []
 
-        namer = Namer(used_prefixes, self.mod_prefixes, self.moons)
+        namer = Namer(used_prefixes, self.mod_prefixes, self.moons, self.phenotype, self.chimpheno)
         if not game.clan or (game.clan.clan_settings["modded names"] and game.clan.clan_settings['new prefixes']):
-            self.prefix = namer.start(self.phenotype, self.chimpheno)
+            self.prefix = namer.start()
             if no_suffix:
                 if self.prefix == "Striped":
                     self.prefix = "Stripe"
@@ -469,7 +469,7 @@ class Name:
         # then suffixes based on ages (fixes #2004, just trust me)
 
         # Handles suffix assignment with outside cats
-        if self.cat.status in ["exiled", "lost"]:
+        if self.cat.status not in ["rogue", "loner", "kittypet"] and self.cat.outside:
             adjusted_status: str = ""
             if self.cat.moons >= 15:
                 adjusted_status = "warrior"
@@ -484,7 +484,7 @@ class Name:
             else:
                 adjusted_status = "warrior"
 
-            if adjusted_status != "warrior":
+            if adjusted_status != "warrior" and not self.specsuffix_hidden:
                 return (
                     self.prefix + self.names_dict["special_suffixes"][adjusted_status]
                 )
