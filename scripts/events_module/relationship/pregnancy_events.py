@@ -1528,7 +1528,7 @@ class Pregnancy_Events:
                 kit.phenotype.tortiepattern = None
                 kit.phenotype.chimerapattern = None
                 kit.phenotype.merlepattern = None
-                kit.phenotype.white_pattern = kit.GenerateWhite(kit.phenotype.white, kit.phenotype.pointgene, kit.phenotype.whitegrade, kit.phenotype.vitiligo, None, kit.phenotype.pax3)
+                kit.phenotype.white_pattern = kit.pelt.generate_white(kit.phenotype.white, kit.phenotype.pointgene, kit.phenotype.whitegrade, kit.phenotype.vitiligo, None, kit.phenotype.pax3)
                 kit.phenotype.PhenotypeOutput(kit.phenotype.white_pattern)
                 kit.phenotype.SpriteInfo(kit.moons)
                 
@@ -1537,7 +1537,7 @@ class Pregnancy_Events:
                     kit.chimerapheno.tortiepattern = None
                     kit.chimerapheno.chimerapattern = None
                     kit.chimerapheno.merlepattern = None
-                    kit.chimerapheno.white_pattern = kit.GenerateWhite(kit.chimerapheno.white, kit.chimerapheno.pointgene, kit.chimerapheno.whitegrade, kit.chimerapheno.vitiligo, None, kit.chimerapheno.pax3)
+                    kit.chimerapheno.white_pattern = kit.pelt.generate_white(kit.chimerapheno.white, kit.chimerapheno.pointgene, kit.chimerapheno.whitegrade, kit.chimerapheno.vitiligo, None, kit.chimerapheno.pax3)
                     kit.chimerapheno.PhenotypeOutput(kit.chimerapheno.white_pattern)
                     kit.chimerapheno.SpriteInfo(kit.moons)
 
@@ -1552,7 +1552,7 @@ class Pregnancy_Events:
                     if i > kits_amount:
                         kit.chimerapheno = None
                 
-                if randint(1, game.config["genetics_config"]["identical_twins"]) == 1 and kits_amount < 19:
+                if game.config["genetics_config"]["identical_twins"] and randint(1, game.config["genetics_config"]["identical_twins"]) == 1 and kits_amount < 19:
                     kits_amount += 1
                     identical = True
                 
