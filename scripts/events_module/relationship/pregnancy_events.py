@@ -1613,7 +1613,7 @@ class Pregnancy_Events:
                     kit.relationships[the_cat.ID] = start_relation
 
             #### REMOVE ACCESSORY ######
-            kit.pelt.accessory = None
+            kit.pelt.accessory = []
             clan.add_cat(kit)
 
             #### GIVE HISTORY ######
