@@ -201,7 +201,7 @@ class Namer():
             tabby['tortie_red'] = 'mackerel'
         else:
             tabby['tortie_red'] = 'spotted'
-        if base in ['ginger', 'cream'] or (phenotype.agouti[0] != "a") or (phenotype.ext[0] not in ['Eg', 'E']) or 'light smoke' in phenotype.silvergold:
+        if base in ['ginger', 'cream'] or (phenotype.agouti[0] != "a") or (phenotype.ext[0] not in ['Eg', 'E']) or ('smoke' in phenotype.silvergold and 14 > phenotype.wbsum > 9):
             tabby['pattern'] = tabby['tortie_red']
 
             if base not in ['ginger', 'cream'] and ('smoke' in phenotype.silvergold or 'masked' in phenotype.silvergold or phenotype.ext[0] == "Eg" or (('charcoal' in phenotype.tabtype or phenotype.ruftype == 'low') and phenotype.wbtype in ['low', 'medium'])):
@@ -299,6 +299,8 @@ class Namer():
 
         try:
             possible_prefixes = possible_prefixes[tabby['type']]
+            if isinstance(possible_prefixes, dict):
+                possible_prefixes = possible_prefixes[white + '_white']
             if base in ['ginger', 'cream', 'blue', 'lilac', 'fawn'] and tabby['type'] == 'silver':
                 try:
                     possible_prefixes += self.all_prefixes[base]['tortie' if tortie else 'plain']['tabby'][tabby['pattern']]['regular'][white + '_white']
@@ -317,6 +319,8 @@ class Namer():
 
         try:
             extra_prefixes = extra_prefixes[tabby['type']]
+            if isinstance(possible_prefixes, dict):
+                possible_prefixes = possible_prefixes[white + '_white']
             if base in ['ginger', 'cream', 'blue', 'lilac', 'fawn'] and tabby['type'] == 'silver':
                 try:
                     extra_prefixes += self.all_prefixes[base]['tortie' if tortie else 'plain']['tabby'][tabby['pattern']]['regular'][white + '_white']

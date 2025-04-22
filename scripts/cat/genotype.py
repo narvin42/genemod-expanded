@@ -959,7 +959,7 @@ class Genotype:
             if par1.passes == 1 or not par1.chimerapheno:
                 par1 = par1.phenotype
             elif not par1.passes:
-                par1 = choice(par1.phenotype, par1.chimerapheno)
+                par1 = choice([par1.phenotype, par1.chimerapheno])
             else:
                 par1 = par1.chimerapheno
         except:
@@ -968,7 +968,7 @@ class Genotype:
             if par2.passes == 1 or not par2.chimerapheno:
                 par2 = par2.phenotype
             elif not par2.passes:
-                par2 = choice(par2.phenotype, par2.chimerapheno)
+                par2 = choice([par2.phenotype, par2.chimerapheno])
             else:
                 par2 = par2.chimerapheno
         except:
@@ -987,7 +987,7 @@ class Genotype:
             if par3.passes == 1 or not par3.chimerapheno:
                 par3 = par3.phenotype
             elif not par3.passes:
-                par3 = choice(par3.phenotype, par3.chimerapheno)
+                par3 = choice([par3.phenotype, par3.chimerapheno])
             else:
                 par3 = par3.chimerapheno
         except:
@@ -1522,7 +1522,7 @@ class Genotype:
         else:
             self.soktype = soktypes[2]
 
-        body_types = ['snub-nosed', 'cobby', 'semi-cobby', 'intermediate', 'semi-oriental', 'oriental', 'wedge-faced']
+        body_types = ['snub-nosed cobby', 'cobby', 'semi-cobby', 'intermediate', 'semi-oriental', 'oriental', 'wedge-faced oriental']
         height_types = ['teacup', 'tiny', 'small', 'below average', 'average', 'above average', 'large', 'massive', 'giant', 'goliath']
 
         if self.body_label != '':
