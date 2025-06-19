@@ -67,9 +67,6 @@ jobs:
         uses: abatilo/actions-poetry@v3
         with:
           poetry-version: latest
-      - name: Clear Poetry Cache
-        run: |
-          poetry cache clear genemod --all
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
