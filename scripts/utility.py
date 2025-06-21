@@ -274,7 +274,7 @@ def get_warring_clan():
 
 def search_cats(search_text, cat_list, search_genotype):
     search_text = search_text.strip()
-    all_found = cat_list
+    all_found = cat_list.copy()
     if search_text not in ["", i18n.t("general.name_search"), i18n.t("general.genotype_search")]:
         if search_genotype:
             gene_map = {
@@ -2435,7 +2435,7 @@ def event_text_adjust(
     # patrol_apprentices
     app_abbr = ["app1", "app2", "app3", "app4", "app5", "app6"]
     for i, abbr in enumerate(app_abbr):
-        if abbr not in text:
+        if abbr not in text or not patrol_apprentices:
             continue
         if len(patrol_apprentices) > i:
             replace_dict[abbr] = (
@@ -2455,7 +2455,7 @@ def event_text_adjust(
             replace_dict[f"n_c_pre:{i}"] = (str(cat_list[0].name.prefix), pronoun)
 
     # mur_c (murdered cat for reveals)
-    if "mur_c" in text:
+    if "mur_c" in text and victim_cat:
         replace_dict["mur_c"] = (str(victim_cat.name), get_pronouns(victim_cat))
 
     # lead_name
@@ -2478,7 +2478,7 @@ def event_text_adjust(
         text = process_text(text, replace_dict)
 
     # multi_cat
-    if "multi_cat" in text:
+    if "multi_cat" in text and multi_cats:
         name_list = []
         for _cat in multi_cats:
             name_list.append(str(_cat.name))
@@ -2487,7 +2487,7 @@ def event_text_adjust(
 
     # other_clan_name
     if "o_c_n" in text:
-        other_clan_name = other_clan.name
+        other_clan_name = other_clan.name if other_clan else "Default"
         pos = 0
         for x in range(text.count("o_c_n")):
             if "o_c_n" in text:
@@ -2539,19 +2539,19 @@ def event_text_adjust(
     text = adjust_prey_abbr(text)
 
     # acc_plural (only works for main_cat's acc)
-    if "acc_plural" in text:
+    if "acc_plural" in text and main_cat:
         text = text.replace(
             "acc_plural", i18n.t(f"cat.accessories.{main_cat.pelt.accessory[-1]}", count=2)
         )
 
     # acc_singular (only works for main_cat's acc)
-    if "acc_singular" in text:
+    if "acc_singular" in text and main_cat:
         text = text.replace(
             "acc_singular",
             i18n.t(f"cat.accessories.{main_cat.pelt.accessory[-1]}", count=1),
         )
 
-    if "given_herb" in text:
+    if "given_herb" in text and chosen_herb:
         text = text.replace(
             "given_herb", i18n.t(f"conditions.herbs.{chosen_herb}", count=2)
         )
@@ -2836,6 +2836,30 @@ def update_sprite(cat):
     cat.sprite = generate_sprite(cat)
     # update class dictionary
     cat.all_cats[cat.ID] = cat
+
+
+def update_mask(cat):
+    val = pygame.mask.from_surface(
+        pygame.transform.scale(cat.sprite, ui_scale_dimensions((50, 50))), threshold=250
+    )
+
+    inflated_mask = pygame.Mask(
+        (
+            val.get_size()[0] + 10,
+            val.get_size()[1] + 10,
+        )
+    )
+    inflated_mask.draw(val, (5, 5))
+    for _ in range(3):
+        outline = inflated_mask.outline()
+        for point in outline:
+            for dx in range(-1, 2):
+                for dy in range(-1, 2):
+                    try:
+                        inflated_mask.set_at((point[0] + dx, point[1] + dy), 1)
+                    except IndexError:
+                        continue
+    cat.sprite_mask = inflated_mask
 
 
 def clan_symbol_sprite(clan, return_string=False, force_light=False):
@@ -3159,7 +3183,7 @@ def generate_sprite(
                 
                 return whichmain
 
-            def AddPads(sprite, whichcolour, is_red=False, override=None):
+            def AddPads(sprite, whichcolour, is_red=False):
                 pads = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                 pads.blit(sprites.sprites['pads' + cat_sprite], (0, 0))
 
@@ -3181,7 +3205,7 @@ def generate_sprite(
                     'beige' : 14
                 }
 
-                if(phenotype.white[0] == 'W' or phenotype.pointgene[0] == 'c' or phenotype.white_pattern == ['full white'] or override == "white"):
+                if(phenotype.white[0] == 'W' or phenotype.pointgene[0] == 'c' or phenotype.white_pattern == ['full white'] or whichcolour == "white"):
                     pads.blit(sprites.sprites['nosecolours1'], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                 elif ('amber' not in phenotype.colour or phenotype.agouti[0] != 'a') and ('russet' in phenotype.colour or 'carnelian' in phenotype.colour or is_red):
                     pads.blit(sprites.sprites['nosecolours0'], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
@@ -3197,7 +3221,7 @@ def generate_sprite(
 
                 return sprite
 
-            def AddNose(sprite, override = None):
+            def AddNose(sprite, maincolour, spritecolour, isred):
                 nose = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                 nose.blit(sprites.sprites['nose' + cat_sprite], (0, 0))
 
@@ -3219,19 +3243,19 @@ def generate_sprite(
                     'beige' : 14
                 }
 
-                if phenotype.maincolour == "white" or override == 'white':
+                if maincolour == "white":
                     nose.blit(sprites.sprites['nosecolours1'], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-                elif ('amber' not in phenotype.colour or phenotype.agouti[0] != 'a') and ('red' in phenotype.maincolour or 'cream' in phenotype.maincolour or 'honey' in phenotype.maincolour or 'ivory' in phenotype.maincolour or 'apricot' in phenotype.maincolour):
+                elif ('amber' not in phenotype.colour or phenotype.agouti[0] != 'a') and isred:
                     nose.blit(sprites.sprites['nosecolours0'], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                 elif 'amber' in phenotype.colour:
                     phenotype.SpriteInfo(10)
                     nose.blit(sprites.sprites['nosecolours' + str(nose_dict.get(phenotype.maincolour[:-1]))], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     phenotype.SpriteInfo(sprite_age)
-                elif phenotype.maincolour != phenotype.spritecolour:
+                elif maincolour != spritecolour and "masked" not in phenotype.silvergold:
                     nose.blit(sprites.sprites['nosecolours2'], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     nose.set_alpha(200)
                 else:
-                    nose.blit(sprites.sprites['nosecolours' + str(nose_dict.get(phenotype.maincolour[:-1]))], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+                    nose.blit(sprites.sprites['nosecolours' + str(nose_dict.get(maincolour[:-1]))], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
                 sprite.blit(nose, (0, 0))
                 return sprite
@@ -3655,6 +3679,7 @@ def generate_sprite(
                     whichmain.blit(sprites.sprites['salmiak' + cat_sprite], (0, 0))
 
                 whichmain = AddPads(whichmain, whichcolour, is_red)
+                whichmain = AddNose(whichmain, whichcolour, whichbase, is_red)
                 
                 return whichmain
 
@@ -3775,8 +3800,6 @@ def generate_sprite(
                 tint.fill(tuple(sprites.cat_tints["dilute_tint_colours"][cat.pelt.tint]))
                 gensprite.blit(tint, (0, 0), special_flags=pygame.BLEND_RGB_ADD)
 
-            gensprite = AddNose(gensprite)
-
             if (game.config["fun"]["april_fools"] or is_today(SpecialDate.APRIL_FOOLS)) and "Dg" in phenotype.april_fools.get("danish_green", []):
                 green = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                 green.fill((0, 255, 0))
@@ -3798,8 +3821,8 @@ def generate_sprite(
             tintedwhitesprite.blit(whitesprite, (0, 0))
 
             leathers = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-            leathers = AddPads(leathers, "white", override="white")
-            leathers = AddNose(leathers, "white")
+            leathers = AddPads(leathers, "white")
+            leathers = AddNose(leathers, "white", "white", False)
             white_leathers = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
             white_leathers.blit(whitesprite, (0, 0))
 
