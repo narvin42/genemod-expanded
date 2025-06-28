@@ -25,11 +25,8 @@ class Breed_generator:
         # RED GENE
         if genoclass.odds['XXX/XXY'] > 0 and randint(1, genoclass.odds['XXX/XXY']) == 1:
             genoclass.sexgene = ["", "", ""]
-        elif genoclass.odds['X'] > 0 and randint(1, genoclass.odds['X']) == 1:
-            genoclass.sexgene = [""]
-        else:  
+        else:
             genoclass.sexgene = ["", ""]
-        
         
         for i in range(len(genoclass.sexgene)):
             if genoclass.odds["red"] > 0 and randint(1, genoclass.odds["red"]) == 1:
@@ -173,9 +170,7 @@ class Breed_generator:
         # RED GENE
         if genoclass.odds['XXX/XXY'] > 0 and randint(1, genoclass.odds['XXX/XXY']) == 1:
             genoclass.sexgene = ["", "", ""]
-        elif genoclass.odds['X'] > 0 and randint(1, genoclass.odds['X']) == 1:
-            genoclass.sexgene = [""]
-        else:  
+        else:
             genoclass.sexgene = ["", ""]
         
         for i in range(len(genoclass.sexgene)):
@@ -582,9 +577,7 @@ class Breed_generator:
         # RED GENE
         if genoclass.odds['XXX/XXY'] > 0 and randint(1, genoclass.odds['XXX/XXY']) == 1:
             genoclass.sexgene = ["", "", ""]
-        elif genoclass.odds['X'] > 0 and randint(1, genoclass.odds['X']) == 1:
-            genoclass.sexgene = [""]
-        else:  
+        else:
             genoclass.sexgene = ["", ""]
         
         for i in range(len(genoclass.sexgene)):
@@ -1518,9 +1511,7 @@ class Breed_generator:
         # RED GENE
         if genoclass.odds['XXX/XXY'] > 0 and randint(1, genoclass.odds['XXX/XXY']) == 1:
             genoclass.sexgene = ["", "", ""]
-        elif genoclass.odds['X'] > 0 and randint(1, genoclass.odds['X']) == 1:
-            genoclass.sexgene = [""]
-        else:  
+        else:
             genoclass.sexgene = ["", ""]
         
         for i in range(len(genoclass.sexgene)):

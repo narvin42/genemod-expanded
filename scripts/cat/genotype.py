@@ -19,7 +19,7 @@ class Genotype:
         self.furLength = ["", ""]
         self.longtype = choice(['long', 'long', 'long', 'medium'])
         self.eumelanin = ["", ""]
-        self.sexgene = [""]
+        self.sexgene = ["", ""]
         self.specialred = None
         self.tortiepattern = None
         self.pseudomerle = False
@@ -379,8 +379,6 @@ class Genotype:
         # RED GENE
         if self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
             self.sexgene = ["", "", ""]
-        elif self.odds['X'] > 0 and randint(1, self.odds['X']) == 1:
-            self.sexgene = [""]
         else:
             self.sexgene = ["", ""]
         
@@ -390,8 +388,6 @@ class Genotype:
             else:
                 self.sexgene[i] = "o"
 
-        if len(self.sexgene) == 1:
-            self.sex = "molly"
         if (random() < 0.5 and special != "fem") or special == "masc":
             self.sexgene[-1] = "Y"
             self.sex = "tom"
@@ -667,8 +663,6 @@ class Genotype:
         # RED GENE
         if self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
             self.sexgene = ["", "", ""]
-        elif self.odds['X'] > 0 and randint(1, self.odds['X']) == 1:
-            self.sexgene = [""]
         else:
             self.sexgene = ["", ""]
         
@@ -677,11 +671,9 @@ class Genotype:
                 self.sexgene[i] = "O"
             else:
                 self.sexgene[i] = "o"
-        
-        if len(self.sexgene) == 1:
-            self.sex= "molly"
-        elif (random() < 0.5 and special != "fem") or special == "masc":
-            self.sexgene[1] = "Y"
+
+        if (random() < 0.5 and special != "fem") or special == "masc":
+            self.sexgene[-1] = "Y"
             self.sex = "tom"
         else:
             self.sex = "molly"
@@ -1150,14 +1142,7 @@ class Genotype:
                     self.sexgene[0] = mum[a]
                     self.sexgene[1] = mum[b]
                 self.sexgene[2] = pap[0]
-        elif self.odds['X'] > 0 and randint(1, self.odds['X']) == 1: 
-            self.sexgene = [""]
-            if randint(1, 2) == 1:
-                self.sexgene[0] = choice(mum)
-                self.sex =  "molly"
-            else:
-                self.sexgene[0] = pap[0]
-                self.sex = "molly"
+
         else:
             if(randint(1, 2) == 1):
                 self.sexgene[1] = "Y"
@@ -1628,10 +1613,8 @@ class Genotype:
         elif len(self.sexgene) > 2 and self.sexgene[2] == "O":
             self.sexgene[2] = self.sexgene[1]
             self.sexgene[1] = "O"
-        elif len(self.sexgene) > 1 and self.sexgene[1] == "O":
+        elif self.sexgene[1] == "O":
             self.sexgene[1] = self.sexgene[0]
-            self.sexgene[0] = "O"
-        elif self.sexgene[0] == "O":
             self.sexgene[0] = "O"
 
         if self.white[0] == "wsal":
