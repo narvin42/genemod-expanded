@@ -377,7 +377,9 @@ class Genotype:
                 self.eumelanin[i] = "B"
 
         # RED GENE
-        if self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
+        if self.odds['X monosomy'] > 0 and randint(1, self.odds['X monosomy']) == 1:
+            self.sexgene = [""]
+        elif self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
             self.sexgene = ["", "", ""]
         else:
             self.sexgene = ["", ""]
@@ -388,7 +390,7 @@ class Genotype:
             else:
                 self.sexgene[i] = "o"
 
-        if (random() < 0.5 and special != "fem") or special == "masc":
+        if (random() < 0.5 and special != "fem" and len(self.sexgene) > 1) or special == "masc":
             self.sexgene[-1] = "Y"
             self.sex = "tom"
         else:
@@ -661,7 +663,9 @@ class Genotype:
                 self.eumelanin[i] = "B"
 
         # RED GENE
-        if self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
+        if self.odds['X monosomy'] > 0 and randint(1, self.odds['X monosomy']) == 1:
+            self.sexgene = [""]
+        elif self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
             self.sexgene = ["", "", ""]
         else:
             self.sexgene = ["", ""]
@@ -672,7 +676,7 @@ class Genotype:
             else:
                 self.sexgene[i] = "o"
 
-        if (random() < 0.5 and special != "fem") or special == "masc":
+        if (random() < 0.5 and special != "fem" and len(self.sexgene) > 1) or special == "masc":
             self.sexgene[-1] = "Y"
             self.sex = "tom"
         else:
@@ -1107,7 +1111,10 @@ class Genotype:
             pap = par2.sexgene
         
 
-        if self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
+        if self.odds['X monosomy'] > 0 and randint(1, self.odds['X monosomy']) == 1:
+            self.sexgene = [choice(mum)]
+            self.sex = "molly"
+        elif self.odds['XXX/XXY'] > 0 and randint(1, self.odds['XXX/XXY']) == 1:
             self.sexgene = ["", "", ""]
             if randint(1, 2) == 1:
                 self.sex = 'tom'
@@ -1584,6 +1591,8 @@ class Genotype:
         
         if 'Y' in self.sexgene:
             self.shoulder_height *= 1.1
+        elif len(self.sexgene) == 1:
+            self.shoulder_height *= 0.9
         if self.munch[0] == 'Mk':
             self.shoulder_height /= 1.5
         self.shoulder_height = round(self.shoulder_height, 2)
@@ -1607,7 +1616,9 @@ class Genotype:
             self.eumelanin[0] = "B"
             self.eumelanin[1] = "b"
 
-        if len(self.sexgene) > 2 and self.sexgene[2] == "O" and self.sexgene[0] == "o":
+        if len(self.sexgene) == 1:
+            pass
+        elif len(self.sexgene) > 2 and self.sexgene[2] == "O" and self.sexgene[0] == "o":
             self.sexgene[2] = self.sexgene[0]
             self.sexgene[0] = "O"
         elif len(self.sexgene) > 2 and self.sexgene[2] == "O":
