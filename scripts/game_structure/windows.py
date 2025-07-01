@@ -1308,7 +1308,7 @@ class KillCat(UIWindow):
             self.all_lives_check.hide()
             self.life_text = pygame_gui.elements.UITextBox(
                 "windows.all_lives_leader",
-                ui_scale(pygame.Rect((60, 147), (450, 40))),
+                ui_scale(pygame.Rect((60, 147), (300, 40))),
                 object_id="#text_box_30_horizleft",
                 manager=MANAGER,
                 container=self,
@@ -2214,6 +2214,7 @@ class ChangeCatToggles(UIWindow):
             elif event.ui_element == self.checkboxes["prevent_fading"]:
                 self.the_cat.prevent_fading = not self.the_cat.prevent_fading
                 self.refresh_checkboxes()
+                self.the_cat.pelt.rebuild_sprite = True
             elif event.ui_element == self.checkboxes["prevent_kits"]:
                 self.the_cat.no_kits = not self.the_cat.no_kits
                 self.refresh_checkboxes()
