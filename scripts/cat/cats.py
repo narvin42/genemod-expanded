@@ -472,7 +472,7 @@ class Cat:
         :return: None
         """
         self.ID = ID
-        self.name = Name(self, prefix=prefix, suffix=suffix)
+        self.name = Name(self, prefix=prefix, suffix=suffix, load_existing_name=True)
         self.parent1 = None
         self.parent2 = None
         self.parent3 = None
@@ -482,7 +482,6 @@ class Cat:
         self._pronouns = {}  # Needs to be set as a dict
         self.moons = moons
         self.inheritance = None  # This should never be used, but just for safety
-        self.name = Name(prefix=prefix, suffix=suffix, cat=self)
 
         self.init_moons_age(moons)
 
@@ -1537,11 +1536,11 @@ class Cat:
                 # pick the oldest leader in SC
                 leaders.sort(key=lambda x: -1 * int(x.dead_for))
                 ancient_leader = True
-                life_giving_leader = leaders[0]
+                life_giving_leader = leaders[0] if leaders else None
             else:
                 # pick previous leader
                 leaders.sort(key=lambda x: int(Cat.fetch_cat(x).dead_for))
-                life_giving_leader = leaders[0]
+                life_giving_leader = leaders[0] if leaders else None
 
         if life_giving_leader:
             life_givers.append(life_giving_leader)
@@ -3751,7 +3750,6 @@ class Cat:
                 "passes_genotype" : self.passes,
                 "white_pattern" : self.phenotype.white_pattern,
                 "chim_white" : self.chimerapheno.white_pattern if self.chimerapheno else "No",
-                "driven_out": self.driven_out,
                 "sprite_kitten": self.pelt.cat_sprites['kitten'],
                 "sprite_adolescent": self.pelt.cat_sprites['adolescent'],
                 "sprite_adult": self.pelt.cat_sprites['adult'],
