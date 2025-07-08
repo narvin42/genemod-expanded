@@ -283,9 +283,9 @@ class Pregnancy_Events:
             wobbly = False
             if len(cat.illnesses) > 0:
                 for illness in cat.illnesses:
-                    if illness in ["diarrhea, running nose, stomacheache"] and random.random() < 0.20:
+                    if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
                         wobbly = True
-            elif random.random() < 0.05:
+            elif random() < 0.05:
                 wobbly = True
             
             fever = False
@@ -412,9 +412,9 @@ class Pregnancy_Events:
                                 ids.append(c.ID)
                     if len(pregnant_cat.illnesses) > 0:
                         for illness in cat.illnesses:
-                            if illness in ["diarrhea, running nose, stomacheache"] and random.random() < 0.20:
+                            if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
                               wobbly = True
-                    elif random.random() < 0.05:
+                    elif random() < 0.05:
                        wobbly = True
                     if len(pregnant_cat.illnesses) > 0:
                         for illness in pregnant_cat.illnesses:
@@ -506,9 +506,9 @@ class Pregnancy_Events:
             wobbly = False
             if len(cat.illnesses) > 0:
                 for illness in cat.illnesses:
-                    if illness in ["diarrhea, running nose, stomacheache"] and random.random() < 0.20:
+                    if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
                         wobbly = True
-            elif random.random() < 0.05:
+            elif random() < 0.05:
                 wobbly = True
             
             fever = False
@@ -562,9 +562,9 @@ class Pregnancy_Events:
 
         if len(cat.illnesses) > 0:
                 for illness in cat.illnesses:
-                    if illness in ["diarrhea, running nose, stomacheache"] and random.random() < 0.20:
+                    if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
                         wobbly = True
-        elif random.random() < 0.05:
+        elif random() < 0.05:
             wobbly = True
 
         fever = clan.pregnancy_data[cat.ID].get('fever_coat', False)
@@ -774,11 +774,11 @@ class Pregnancy_Events:
                 if kit.chimerapheno:
                     kit.chimerapheno.fevercoat = True
             if Wobbly:
-                if random.random() < 0.10:
+                if random() < 0.10:
                     kit.moons = 0
                     kit.dead = True
                     History.add_death(kit, str(kit.name) + " was stillborn.")
-                elif random.random() < 0.80:
+                elif random() < 0.80:
                     kit.get_permanent_condition('wobbly', born_with=True, genetic=False)
             if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3):
                 kit.moons = 0
