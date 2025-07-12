@@ -2,6 +2,7 @@ from collections import defaultdict
 from itertools import groupby
 from random import choice
 from typing import TypedDict, Optional, List, Dict
+from copy import deepcopy
 
 from scripts.cat.enums import CatRank, CatSocial, CatStanding, CatAge, CatGroup
 from scripts.game_structure.game_essentials import game
@@ -179,7 +180,8 @@ class Status:
                     rank = CatRank.KITTYPET
             else:
                 rank = self.get_rank_from_age(age)
-                new_history["rank"] = rank
+
+            new_history["rank"] = rank
 
         # if not social, then social category is found via the rank
         if not social:
@@ -399,7 +401,7 @@ class Status:
             {"group": group, "standing": [new_standing], "near": True}
         )
 
-    def become_lost(self, new_social_status: CatSocial = CatSocial.KITTYPET):
+    def become_lost(self, new_social_status: CatSocial = CatSocial.KITTYPET, override_standing=CatStanding.LOST):
         """
         Removes from previous group and sets standing with that group to Lost.
         :param new_social_status: Indicates what social category the cat now belongs to (i.e. they've been taken by
@@ -408,7 +410,7 @@ class Status:
         # find matching rank enum
         rank = CatRank(new_social_status)
 
-        self._modify_group(rank, standing_with_past_group=CatStanding.LOST)
+        self._modify_group(rank, standing_with_past_group=override_standing)
 
     def exile_from_group(self):
         """
@@ -550,6 +552,19 @@ class Status:
 
         return past_ranks[-1]
 
+    def get_last_living_group(self) -> Optional[CatGroup]:
+        """
+        Returns the last group this cat belonged to before death. If the cat had no group before dying, this will return None.
+        """
+        history = deepcopy(self.group_history)
+        history.reverse()
+
+        for entry in history:
+            if not entry["group"] or not entry["group"].is_afterlife():
+                return entry["group"]
+
+        return None
+
     def is_lost(self, group: CatGroup = None) -> bool:
         """
         Returns True if the cat is considered "lost" by a group.
@@ -590,6 +605,9 @@ class Status:
                 return True
 
         return False
+
+    def is_any_clan_group(self) -> bool:
+        return self.group and self.group.is_any_clan_group()
 
 
 class StatusDict(TypedDict, total=False):
