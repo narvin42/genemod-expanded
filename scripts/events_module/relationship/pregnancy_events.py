@@ -811,7 +811,7 @@ class Pregnancy_Events:
                 if random() < 0.10:
                     kit.moons = 0
                     kit.dead = True
-                    History.add_death(kit, str(kit.name) + " was stillborn.")
+                    kit.history.add_death(kit, str(kit.name) + " was stillborn.")
                 elif random() < 0.80:
                     kit.get_permanent_condition('wobbly', born_with=True, genetic=False)
             if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3):
