@@ -429,9 +429,9 @@ class Pregnancy_Events:
                     if len(pregnant_cat.illnesses) > 0:
                         for illness in cat.illnesses:
                             if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
-                              wobbly = True
+                                wobbly = True
                     elif random() < 0.05:
-                       wobbly = True
+                        wobbly = True
                     if len(pregnant_cat.illnesses) > 0:
                         for illness in pregnant_cat.illnesses:
                             if (illness in ["greencough", "redcough", "yellowcough", "whitecough", 
@@ -587,11 +587,11 @@ class Pregnancy_Events:
         wobbly = game.clan.pregnancy_data[cat.ID].get('fpv', False)
 
         if len(cat.illnesses) > 0:
-                for illness in cat.illnesses:
-                    if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
-                        game.clan.pregnancy_data[cat.ID]["fpv"] = True
+            for illness in cat.illnesses:
+                if illness in ["diarrhea, running nose, stomacheache"] and random() < 0.20:
+                    game.clan.pregnancy_data[cat.ID]["fpv"] = True
         elif random() < 0.05:
-           game.clan.pregnancy_data[cat.ID]["fpv"] = True
+            game.clan.pregnancy_data[cat.ID]["fpv"] = True
 
         fever = game.clan.pregnancy_data[cat.ID].get('fever_coat', False)
 
@@ -1471,7 +1471,7 @@ class Pregnancy_Events:
             death_chances = constants.CONFIG['death_related']['kit_death_chances']
             for i in range(initial_amount):
                 if random() < stillborn_chance:
-                   continue
+                    continue
                 elif litter_age == 0 or not (get_clan_setting("modded_kits")):
                     kits_amount += 1
                 elif random() < death_chances['0']:
