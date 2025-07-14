@@ -199,63 +199,6 @@ def get_free_possible_mates(cat):
     return cats
 
 
-def get_random_moon_cat(
-    Cat, main_cat, parent_child_modifier=True, mentor_app_modifier=True, clan: CatGroup=CatGroup.PLAYER_CLAN
-):
-    """
-    returns a random cat for use in moon events
-    :param Cat: Cat class
-    :param main_cat: cat object of main cat in event
-    :param parent_child_modifier: increase the chance of the random cat being a
-    parent of the main cat. Default True
-    :param mentor_app_modifier: increase the chance of the random cat being a mentor or
-    app of the main cat. Default True
-    """
-    random_cat = None
-
-    # grab list of possible random cats
-    possible_r_c = list(
-        filter(
-            lambda c: c.status.group == clan and (c.ID != main_cat.ID),
-            Cat.all_cats.values(),
-        )
-    )
-
-    if possible_r_c:
-        random_cat = choice(possible_r_c)
-        if parent_child_modifier and not int(random() * 3):
-            possible_parents = []
-            if main_cat.parent1:
-                if Cat.fetch_cat(main_cat.parent1) in possible_r_c:
-                    possible_parents.append(main_cat.parent1)
-            if main_cat.parent2:
-                if Cat.fetch_cat(main_cat.parent2) in possible_r_c:
-                    possible_parents.append(main_cat.parent2)
-            if main_cat.parent3:
-                if Cat.fetch_cat(main_cat.parent3) in possible_r_c:
-                    possible_parents.append(main_cat.parent3)
-            if main_cat.adoptive_parents:
-                for parent in main_cat.adoptive_parents:
-                    if Cat.fetch_cat(parent) in possible_r_c:
-                        possible_parents.append(parent)
-            if possible_parents:
-                random_cat = Cat.fetch_cat(choice(possible_parents))
-        if mentor_app_modifier:
-            if (
-                main_cat.status.rank.is_any_apprentice_rank()
-                and main_cat.mentor
-                and not int(random() * 3)
-            ):
-                random_cat = Cat.fetch_cat(main_cat.mentor)
-            elif main_cat.apprentice and not int(random() * 3):
-                random_cat = Cat.fetch_cat(choice(main_cat.apprentice))
-
-    if isinstance(random_cat, str):
-        print(f"WARNING: random cat was {random_cat} instead of cat object")
-        random_cat = Cat.fetch_cat(random_cat)
-    return random_cat
-
-
 def get_warring_clan():
     """
     returns enemy clan if a war is currently ongoing
@@ -620,6 +563,8 @@ def create_new_cat_block(
             age = randint(19, 120)
             break
 
+    if not rank and not age:
+        rank = choice([CatRank.WARRIOR, CatRank.WARRIOR, CatRank.WARRIOR, CatRank.APPRENTICE])
     if rank and not age:
         if rank in [
             CatRank.APPRENTICE,
@@ -1048,7 +993,7 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
 
         
     if "litter" in attribute_list:
-        (parents, orphans) = get_alive_clan_queens(all_clan_cats, clan=other_clan)[0]
+        (parents, orphans) = get_alive_clan_queens(all_clan_cats, clan=other_clan)
         if blood_parent:
             picked_cats = parents[blood_parent.ID]
         elif parents:
@@ -1081,10 +1026,7 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
 
     if "change_clan" in attribute_list:
         for cat in picked_cats:
-            cat.status.add_to_group(clan, standing_with_past_group=CatStanding.LEFT)
-            other = game.clan if cat.status.group == CatGroup.PLAYER_CLAN else next(filter(lambda c: c.enum == cat.status.group, game.clan.all_clans), None)
-            if "rogue" in attribute_list:
-                cat.become_lost(CatSocial.ROGUE)
+            other = cat.status.group.fetch_clan_object()
             if cat.status.rank == CatRank.LEADER:
                 other.leader = None
                 other.leader_lives = 0
@@ -1095,6 +1037,9 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
             if cat.status.rank in [CatRank.LEADER, CatRank.DEPUTY]:
                 cat.status._change_rank(CatRank.WARRIOR)
 
+            if "rogue" in attribute_list:
+                cat.become_lost(CatSocial.ROGUE)
+            cat.status.add_to_group(clan, standing_with_past_group=CatStanding.LEFT)
             for app in cat.apprentice.copy():
                 app_ob = Cat.fetch_cat(app)
                 if app_ob:
@@ -1146,6 +1091,7 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
 
     for cat in picked_cats:
         cat.backstory = chosen_backstory
+        cat.history.add_beginning()
         
         # SET MATES
         for inter_cat in give_mates:
@@ -1222,7 +1168,8 @@ def create_new_cat(
         in (
             BACKSTORIES["backstory_categories"]["former_clancat_backstories"]
             or BACKSTORIES["backstory_categories"]["otherclan_categories"]
-        )
+        ) 
+        and original_social == CatSocial.CLANCAT
         and not original_group
     ):
         original_group = choice(game.clan.other_clans)
@@ -1236,8 +1183,10 @@ def create_new_cat(
 
     if (litter or kit):
         parent_thought = i18n.t("conditions.pregnancy.half_blood_kitting_thought", count=number_of_cats)
-        Cat.all_cats[parent1].thought = event_text_adjust(Cat, parent_thought, main_cat=Cat.all_cats[parent1])
-        Cat.all_cats[parent2].thought = event_text_adjust(Cat, parent_thought, main_cat=Cat.all_cats[parent2])
+        if Cat.all_cats[parent1].status.is_outsider:
+            Cat.all_cats[parent1].thought = event_text_adjust(Cat, parent_thought, main_cat=Cat.all_cats[parent1])
+        if Cat.all_cats[parent2].status.is_outsider:
+            Cat.all_cats[parent2].thought = event_text_adjust(Cat, parent_thought, main_cat=Cat.all_cats[parent2])
     
 
     if not isinstance(moons, int):
@@ -1729,7 +1678,7 @@ def filter_relationship_type(
             if patrol_leader in group:
                 group.remove(patrol_leader)
             group.insert(0, patrol_leader)
-        # It should be exactly two cats for a "parent/child" event
+        # It should be exactly two cats for a "child/parent" event
         if len(group) != 2:
             return False
         # test for parentage
@@ -1741,7 +1690,7 @@ def filter_relationship_type(
             if patrol_leader in group:
                 group.remove(patrol_leader)
             group.insert(0, patrol_leader)
-        # It should be exactly two cats for a "parent/child" event
+        # It should be exactly two cats for a "mentor/app" event
         if len(group) != 2:
             return False
         # test for parentage
@@ -1753,7 +1702,7 @@ def filter_relationship_type(
             if patrol_leader in group:
                 group.remove(patrol_leader)
             group.insert(0, patrol_leader)
-        # It should be exactly two cats for a "parent/child" event
+        # It should be exactly two cats for a "app/mentor" event
         if len(group) != 2:
             return False
         # test for parentage
@@ -2082,7 +2031,7 @@ def unpack_rel_block(
             comfortable,
             jealousy,
             trust,
-            log=log1,
+            log=event_text_adjust(Cat, log1, main_cat=cats_from_ob[0], random_cat=cats_to_ob[0])
         )
 
         if block.get("mutual"):
@@ -2096,7 +2045,7 @@ def unpack_rel_block(
                 comfortable,
                 jealousy,
                 trust,
-                log=log2,
+                log=event_text_adjust(Cat, log2, main_cat=cats_to_ob[0], random_cat=cats_from_ob[0]),
             )
 
 
