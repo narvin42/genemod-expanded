@@ -1702,7 +1702,7 @@ class Cat:
             outro = "this should not appear"
 
         full_ceremony = "<br><br>".join([intro, all_lives, outro])
-        return full_ceremony
+        self.history.lead_ceremony = full_ceremony
 
     # ---------------------------------------------------------------------------- #
     #                              moon skip functions                             #
@@ -2441,7 +2441,7 @@ class Cat:
                 text = f"{self.name} had contact with {cat.name} and now has {illness_name}."
                 # game.health_events_list.append(text)
                 game.cur_events_list.append(
-                    Single_Event(text, "health", cat_dict={"m_c": self}, clan=game.clan.name)
+                    Single_Event(text, "health", cat_dict={"m_c": self}, clan=game.clan.enum)
                 )
                 self.get_ill(illness_name)
 

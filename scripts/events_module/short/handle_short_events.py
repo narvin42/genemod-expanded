@@ -58,6 +58,7 @@ class HandleShortEvents:
     def __init__(self):
         self.future_event_failed = None
         self.current_lives = None
+        self.current_lives_r_c = None
         self.herb_notice = None
         self.types = []
         self.sub_types = []
@@ -351,7 +352,7 @@ class HandleShortEvents:
                 self.text + " " + self.additional_event_text,
                 self.types,
                 self.involved_cats,
-                clan=clan.name
+                clan=clan.enum
             )
         )
         if second_clan:
@@ -360,7 +361,7 @@ class HandleShortEvents:
                     self.text + " " + self.additional_event_text,
                     self.types,
                     self.involved_cats,
-                    clan=second_clan.name
+                    clan=second_clan.enum
                 )
             )
 
@@ -561,14 +562,14 @@ class HandleShortEvents:
         handles killing/murdering cats
         """
         dead_list = self.dead_cats if self.dead_cats else []
-        self.current_lives = int(clan.leader_lives)
+        self.current_lives = int(self.main_cat.status.group.fetch_clan_object(game.clan).leader_lives)
+        self.current_lives_r_c = int(self.random_cat.status.group.fetch_clan_object(game.clan).leader_lives) if self.random_cat else None
 
         # check if the bodies are retrievable
         if "no_body" in self.chosen_event.tags:
             body = False
         else:
             body = True
-        pass
 
         if self.chosen_event.m_c["dies"] and self.main_cat not in dead_list:
             dead_list.append(self.main_cat)
@@ -586,14 +587,14 @@ class HandleShortEvents:
 
             if cat.status.is_leader:
                 if "all_lives" in self.chosen_event.tags:
-                    clan.leader_lives -= 10
+                    cat.status.group.fetch_clan_object().leader_lives -= 10
                 elif "some_lives" in self.chosen_event.tags:
-                    clan.leader_lives -= randrange(2, self.current_lives - 1)
+                    cat.status.group.fetch_clan_object().leader_lives -= randrange(2, self.current_lives - 1)
                 else:
-                    clan.leader_lives -= 1
+                    cat.status.group.fetch_clan_object().leader_lives -= 1
 
                 cat.die(body)
-                self.additional_event_text = get_leader_life_notice(clan)
+                self.additional_event_text = get_leader_life_notice(cat.status.group.fetch_clan_object())
 
             else:
                 cat.die(body)
@@ -705,8 +706,8 @@ class HandleShortEvents:
 
                     if self.main_cat.status.is_leader:
                         self.current_lives -= 1
-                        if self.current_lives != clan.leader_lives:
-                            while self.current_lives > clan.leader_lives:
+                        if self.current_lives != self.main_cat.status.group.fetch_clan_object().leader_lives:
+                            while self.current_lives > self.main_cat.status.group.fetch_clan_object().leader_lives:
                                 self.main_cat.history.add_death(
                                     "multi_lives",
                                     other_cat=self.random_cat,
@@ -736,14 +737,14 @@ class HandleShortEvents:
                         )
 
                     if self.random_cat.status.is_leader:
-                        self.current_lives -= 1
-                        if self.current_lives != clan.leader_lives:
-                            while self.current_lives > clan.leader_lives:
+                        self.current_lives_r_c -= 1
+                        if self.current_lives_r_c != self.random_cat.status.group.fetch_clan_object().leader_lives:
+                            while self.current_lives_r_c > self.random_cat.status.group.fetch_clan_object().leader_lives:
                                 self.random_cat.history.add_death(
                                     "multi_lives",
                                     other_cat=self.random_cat,
                                 )
-                                self.current_lives -= 1
+                                self.current_lives_r_c -= 1
                     self.random_cat.history.add_death(
                         death_history, other_cat=self.random_cat
                     )
@@ -767,11 +768,18 @@ class HandleShortEvents:
                         )
 
                     if cat.status.is_leader:
-                        self.current_lives -= 1
-                        if self.current_lives != clan.leader_lives:
-                            while self.current_lives > clan.leader_lives:
-                                cat.history.add_death("multi_lives")
-                                self.current_lives -= 1
+                        if cat.status.group == self.main_cat.group:
+                            self.current_lives -= 1
+                            if self.current_lives != cat.status.group.fetch_clan_object().leader_lives:
+                                while self.current_lives > cat.status.group.fetch_clan_object().leader_lives:
+                                    cat.history.add_death("multi_lives")
+                                    self.current_lives -= 1
+                        else:
+                            self.current_lives_r_c -= 1
+                            if self.current_lives_r_c != cat.status.group.fetch_clan_object().leader_lives:
+                                while self.current_lives_r_c > cat.status.group.fetch_clan_object().leader_lives:
+                                    cat.history.add_death("multi_lives")
+                                    self.current_lives_r_c -= 1
                     cat.history.add_death(death_history)
 
             # new_cat history
