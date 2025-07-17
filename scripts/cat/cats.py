@@ -815,7 +815,9 @@ class Cat:
         # Deal with leader death
         text = ""
         darkforest = game.clan.instructor.status.group == CatGroup.DARK_FOREST
-        isoutside = self.status.is_outsider
+        isoutside = self.status.is_outsider and not self.status.is_lost(
+            self.status.get_last_living_group()
+        )
         clan = self.status.group.fetch_clan_object(None) if self.status.group else None
         if self.status.is_leader:
             if clan.leader_lives > 0:
@@ -901,7 +903,7 @@ class Cat:
 
         # apply grief to cats with high positive relationships to dead cat
         for cat in Cat.all_cats.values():
-            if cat.dead or cat.status.is_outsider or cat.moons < 1 or cat.status.group != self.status.group:
+            if cat.dead or cat.status.is_outsider or cat.moons < 1 or cat.status.group != self.status.get_last_living_group():
                 continue
 
             to_self = cat.relationships.get(self.ID, None)
@@ -976,7 +978,7 @@ class Cat:
 
                 text = choice(possible_strings)
                 text += " " + choice(MINOR_MAJOR_REACTION["major"])
-                text = event_text_adjust(Cat, text=text, main_cat=self, random_cat=cat, clan=self.group)
+                text = event_text_adjust(Cat, text=text, main_cat=self, random_cat=cat, clan=self.status.group)
 
                 cat.get_ill("grief stricken", event_triggered=True, severity="major")
 
@@ -1473,6 +1475,8 @@ class Cat:
         # if we have relations, then make sure we only take the top 8
         if dead_relations:
             for i, rel in enumerate(dead_relations):
+                if rel.cat_to.faded:
+                    continue
                 if i == 8:
                     break
                 if rel.cat_to.status.is_leader:

@@ -7,7 +7,6 @@ import i18n
 
 from scripts.clan_resources.herb.herb import HERBS
 from scripts.events_module.future.future_event import prep_event
-from scripts.game_structure import localization
 from scripts.cat.cats import Cat
 from scripts.cat.enums import CatAge, CatRank, CatGroup, CatSocial, CatStanding
 from scripts.cat.history import History
@@ -296,7 +295,7 @@ class HandleShortEvents:
                 victim=self.victim_cat,
                 murderer_id=self.main_cat.ID,
                 clan_reveal="clan_wide" in self.chosen_event.tags,
-                aware_individuals=[self.random_cat],
+                aware_individuals=[self.random_cat.ID],
             )
 
         # change outsider rep
