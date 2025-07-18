@@ -501,6 +501,10 @@
     "polydactyl": 150,
     "DBE": 150,
 
+    "dominant fca": 1,
+    "recessive fca": 500,
+
+
     "body_ranges": [1, 4, 12, 60, 12, 4, 1],
     "height_ranges": [1, 4, 12, 60, 180, 60, 12, 2, 2, 1],
     "saturation": [0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6],

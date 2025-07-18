@@ -1889,6 +1889,17 @@ class Breed_generator:
 
         genoclass.body_value = randint(0, genoclass.body_indexes[1]-1)
         
+        #recessive feline cutaneous asthenia
+
+        if genoclass.pointgene == ["cs", "cs"]:
+            for i in range(2):
+                if randint(1, 50) == 1:
+                    genoclass.rfca[i] = "rca"
+        else:
+            for i in range(2):
+                if randint(1, 100) == 1:
+                    genoclass.rfca[i] = "rca"
+    
         genoclass.breeds["Persian/Exotic"] = 100
         return genoclass
     

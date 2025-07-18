@@ -37,6 +37,8 @@
         "bumpy skin" : "bumpy skin",
         "flat nose" : "flat nose",
         "wobbly" : "wobbly",
+        "fragile skin": "fragile skin",
+        "loose joints": "loose joints",
         "unknown_condition_risk_given": "m_c's condition has gotten worse."
     }
 }

@@ -75,6 +75,9 @@ class Genotype:
         self.poly = ["pd", "pd"]
         self.pax3 = ["NoDBE", "NoDBE"]
 
+        self.dfca = ['dca','dca']
+        self.rfca = ['rca', 'rca']
+
         self.wideband = ""
         self.wbtype = ""
         self.wbsum = 0
@@ -210,6 +213,9 @@ class Genotype:
         self.poly = jsonstring["poly"]
         self.pax3 = jsonstring.get("pax3", ['NoDBE', 'NoDBE'])
 
+        self.dfca = jsonstring.get("dfca", ['dca', 'dca'])
+        self.rfca = jsonstring.get("rfca", ['', ''])
+
         self.wideband = jsonstring["wideband"]
         self.saturation = jsonstring.get("saturation", 3)
         self.rufousing = jsonstring["rufousing"]
@@ -308,6 +314,9 @@ class Genotype:
             "munch" : self.munch,
             "poly" : self.poly,
             "pax3" : self.pax3,
+
+            "DomFCA" : self.dfca,
+            "RecFCA" : self.rfca,
 
             "wideband" : self.wideband,
             "saturation" : self.saturation,
@@ -625,6 +634,15 @@ class Genotype:
         elif self.odds["DBE"] > 0 and randint(1, self.odds["DBE"]) == 1 and not self.ban_genes:
             self.pax3[0] = choice(['DBEcel', 'DBEcel', 'DBEre', 'DBEalt', 'DBEalt'])
 
+        # Genetic disorders
+
+        if self.odds["dominant fca"] > 0 and randint(1, self.odds["dominant fca"]) == 1 and not self.ban_genes:
+            self.dfca[0] = "Dca"
+
+        for i in range(2):
+            if self.odds["recessive fca"] > 0 and randint(1, self.odds["recessive fca"]) == 1 and not self.ban_genes:
+                self.rfca[i] = ""
+
         self.wideband = ''
         self.rufousing = ''
         self.spotted = ''
@@ -834,6 +852,13 @@ class Genotype:
         elif self.odds["DBE"] > 0 and (randint(1, round(self.odds["DBE"]/1.5)) == 1 or self.odds["DBE"] == 1) and not self.ban_genes:
             self.pax3[0] = choice(['DBEcel', 'DBEcel', 'DBEre', 'DBEalt', 'DBEalt'])
 
+        # Genetic disorders
+        if self.odds["dominant fca"] > 0 and (randint(1, round(self.odds["dominant fca"]/0.5)) == 1 or self.odds["dominant fca"] == 1) and not self.ban_genes:
+            self.dfca[0] = "Dca"
+        for i in range(2):
+            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/0.5)) == 1 or self.odds["recessive FCA"] == 1) and not self.ban_genes:
+                self.rfca[i] = ""
+    
         self.wideband = ''
         self.rufousing = ''
         self.spotted = ''
@@ -1171,6 +1196,8 @@ class Genotype:
         self.munch = [choice(par1.munch), choice(par2.munch)]
         self.poly = [choice(par1.poly), choice(par2.poly)]
         self.pax3 = [choice(par1.pax3), choice(par2.pax3)]
+        self.dfca = [choice(par1.dfca), choice(par2.dfca)]
+        self.rfca = [choice(par1.rfca), choice(par2.rfca)]
 
         if random() < 0.25:
             self.saturation = par1.saturation
@@ -1664,7 +1691,15 @@ class Genotype:
 
         if self.pax3[0] == 'NoDBE':
             self.pax3[0] = self.pax3[1]
-            self.pax3[1] = 'NoDBE' 
+            self.pax3[1] = 'NoDBE'
+        
+        if self.dfca[1] == "Dfca":
+            self.dfca[1] = self.dfca[0]
+            self.dfca[0] = "Dfca"
+        
+        if self.rfca[1] == "rfca":
+            self.rfca[1] = self.rfca[0]
+            self.rfca[0] = "rfca"
 
     def EyeColourFinder(self):
         eyecolours = {
@@ -1961,6 +1996,7 @@ class Genotype:
             self.Fur_Genes = []
             self.Other_Colour = []
             self.Body_Genes = []
+            self.Genetic_Disorders = []
             for x in [self.wirehair, self.laperm, self.cornish, self.urals, self.tenn, self.fleece, self.sedesp, self.ruhr, self.ruhrmod, self.lykoi]:
                 if x == self.ruhrmod:
                     self.Fur_Genes.append(x)
@@ -1975,6 +2011,10 @@ class Genotype:
                         self.Body_Genes.append(x)
                 elif x[0] != x[1] or x[0] not in ['cu', 'fd', 'm', 'ab', 'Kab', 'tb', 'Jb', 'kub', 'Rt', 'mk', 'pd', 'NoDBE']:
                     self.Body_Genes.append(x)
+            for x in [self.dfca, self.rfca]:
+                if x[0] != x[1] or x[0] not in ['dca', '']:
+                    self.Genetic_Disorders.append(x)
+                    
             for x in self.april_fools.values():
                 if x[0] != x[1] or not x[0].islower():
                     april_fools_output.append(x)
@@ -1982,6 +2022,7 @@ class Genotype:
             self.Fur_Genes = [self.wirehair, self.laperm, self.cornish, self.urals, self.tenn, self.fleece, self.sedesp, self.ruhr, self.ruhrmod, self.lykoi]
             self.Other_Colour = [self.pinkdilute, self.dilutemd, self.ext, self.corin, self.karp, self.bleach, self.ghosting, self.satin, self.glitter]
             self.Body_Genes = [self.curl, self.fold, self.manx, self.kab, self.toybob, self.jbob, self.kub, self.ring, self.munch, self.poly, self.pax3]
+            self.Genetic_Disorders = [self.dfca, self.rfca]
             april_fools_output = [self.april_fools.values()]
         self.Polygenes = ["Wideband:", self.wideband, self.wbtype, "Rufousing:", self.rufousing, self.ruftype, "Underbelly rufousing:", self.unders_ruf, self.unders_ruftype, "Saturation:", self.saturation, "Bengal:", self.bengal, self.bengtype, "Sokoke:", self.sokoke, self.soktype, "Spotted:", self.spotted, self.spottype, "Ticked:", self.tickgenes, self.ticktype, "Refraction:", self.refraction, "Pigmentation:", self.pigmentation]
 
@@ -1991,11 +2032,15 @@ class Genotype:
     
     def Mutate(self):
         print("MUTATION!")
-        wheremutation = ["body", "furtype", "furtype", "othercoat", "othercoat", "othercoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat"]
+        wheremutation = ["body", "genetic disorder", "furtype", "furtype", "othercoat", "othercoat", "othercoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat"]
         where = choice(wheremutation)
 
         if where == 'body':
             self.Bodymutation()
+        elif where == 'genetic disorder':
+            if self.ban_genes:
+                return
+            self.GeneticDisordermutation()
         elif where == 'furtype':
             self.FurTypemutation()
         elif where == 'othercoat':
@@ -2032,7 +2077,7 @@ class Genotype:
                     self.manx[0] = 'M'
                 else:
                     self.manx[0] = 'Ab'
-            if(self.manx[1] == 'm' or self.manx[1] == 'ab'):
+            elif(self.manx[1] == 'm' or self.manx[1] == 'ab'):
                 if(random() < 0.34) and not self.ban_genes:
                     self.manx[1] = 'M'
                 else:
@@ -2090,6 +2135,26 @@ class Genotype:
                 self.Mutate()
         
         print(which)
+    
+    def GeneticDisordermutation(self):
+        whichgene = ["dfca", "rfca"]
+        
+        which = choice(whichgene)
+
+        if(which == 'dfca'):
+            if(self.dfca[0] == 'dca'):
+                self.dfca[0] = 'Dca'
+            elif(self.dfca[1] == 'dca'):
+                self.dfca[1] = 'Dca'
+            else:
+                self.Mutate()
+        else:
+            if(self.rfca[0] == ''):
+                self.rfca[0] = ''
+            elif(self.rfca[1] == ''):
+                self.rfca[1] = ''
+            else:
+                self.Mutate()
     
     def FurTypemutation(self):
         whichgene = ["wirehair", "laperm", "cornish", "urals", "tennessee", "fleecy", "sedesp", "sedesp", "sedesp", "lykoi", "russian"]

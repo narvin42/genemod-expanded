@@ -454,7 +454,7 @@ class Pregnancy_Events:
                 kits = Pregnancy_Events.get_kits(amount, cat, outside_parent if not surrogate else [pregnant_cat], clan, backkit=backkit)
 
                 for kit in kits:
-                    if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3):
+                    if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3) or kit.phenotype.dfca[1] == "Dca":
                         kit.dead = True
                         kit.moons = 0
                         kit.history.add_death(i18n.t(
@@ -462,6 +462,7 @@ class Pregnancy_Events:
                             name=(kit.name),
                         ))
                         kits.remove(kit)
+
 
                 if len(kits) > 0:
                     cats_involved = [cat.ID]
@@ -814,7 +815,7 @@ class Pregnancy_Events:
                     kit.history.add_death(kit, str(kit.name) + " was stillborn.")
                 elif random() < 0.80:
                     kit.get_permanent_condition('wobbly', born_with=True, genetic=False)
-            if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3):
+            if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3) or kit.phenotype.dfca[1] == "Dca":
                 kit.moons = 0
                 kit.dead = True
                 kit.history.add_death(str(kit.name) + " was stillborn.")
@@ -932,6 +933,8 @@ class Pregnancy_Events:
                 death_chance = 40
         else:
             death_chance = 40
+        if 'fragile skin' in pregnant_cat.permanent_condition:
+            death_chance += 20
         if not int(
             random() * death_chance
         ):  # chance for a cat to die during childbirth
@@ -1992,7 +1995,7 @@ class Pregnancy_Events:
                 inverse_chance -= int(inverse_chance * 0.2)
             elif average_trust >= 35:
                 inverse_chance -= int(inverse_chance * 0.1)
-        
+
         # AGE
         # - decrease the inverse chance if the whole clan is really old
         avg_age = int(sum((cat.moons for cat in Cat.all_cats.values())) / living_cats)

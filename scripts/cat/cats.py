@@ -268,6 +268,8 @@ class Cat:
                 self.phenotype.manx[1] = self.phenotype.manx[1].lower()
             if 'NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3:
                 self.phenotype.pax3[0] = 'DBEalt'
+            if self.phenotype.dfca[0] == 'Dca':
+                self.phenotype.dfca[0] = 'dca'                
         
         if not loading_cat:
             if(randint(1, constants.CONFIG['genetics_config']['intersex']) == 1) or (self.chimerapheno and xor('Y' in self.phenotype.sexgene, 'Y' in self.chimerapheno.sexgene) and randint(1, round(constants.CONFIG['genetics_config']['intersex']/4)) == 1):
@@ -337,7 +339,7 @@ class Cat:
         self.faded = faded  # This is only used to flag cats that are faded, but won't be added to the faded list until
         # the next save.
         
-        if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3):
+        if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3) or self.phenotype.dfca[0] == 'Dca':
             self.dead = True
 
         self.favourite = False
@@ -598,7 +600,6 @@ class Cat:
                 
         if not skill_dict:
             self.skills = CatSkills.generate_new_catskills(self.status.rank, self.moons)
-        
         self.genetic_conditions()
 
     def __repr__(self):
@@ -670,6 +671,14 @@ class Cat:
 
         if self.phenotype.lykoi[0] == 'ly':
             self.get_permanent_condition('bumpy skin', born_with=True, genetic=True, custom_reveal=randint(36, 60))
+        
+        if self.phenotype.dfca[0] == 'Dca':
+            self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
+            if random() < 0.1:
+                self.get_permanent_condition('loose joints', born_with=True, genetic=True)
+        elif self.phenotype.rfca[1] == 'rca':
+            self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
+            
 
     @property
     def dead(self) -> bool:

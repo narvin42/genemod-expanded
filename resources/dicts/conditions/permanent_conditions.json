@@ -1047,6 +1047,7 @@
         "1": ["betony", "mullein", "juniper", "ragwort"],
         "2": [],
         "3": []
+      }
   },
   "wobbly": {
     "severity": "major",
@@ -1097,6 +1098,77 @@
         "2": [],
         "3": []
       }
+    },
+  "fragile skin": {
+    "severity": "major",
+    "congenital": "always",
+    "moons_until": 1,
+    "mortality": {
+      "newborn": 400,
+      "kitten": 350,
+      "adolescent": 300,
+      "young adult": 250,
+      "adult": 200,
+      "senior adult": 150,
+      "senior": 100
+    },
+    "illness_infectiousness": [],
+    "risks": [
+      {
+        "name": "scrapes",
+        "chance": 10
+        },
+      {
+        "name": "bruises",
+        "chance": 50
+       },
+      {
+        "name": "torn pelt",
+        "chance": 20
+      },
+      {
+        "name": "small cut",
+        "chance": 10
+      }
+    ],
+    "herbs": {
+      "1": [],
+      "2": [],
+      "3": []
+    }
+  },
+  "loose joints": {
+    "severity": "major",
+    "congenital": "always",
+    "moons_until": 1,
+    "mortality": {
+      "newborn": 0,
+      "kitten": 0,
+      "adolescent": 0,
+      "young adult": 0,
+      "adult": 0,
+      "senior adult": 0,
+      "senior": 0
+    },
+    "illness_infectiousness": [],
+    "risks": [
+      {
+        "name": "dislocated joint",
+        "chance": 50
+      },
+      {
+        "name": "sprain",
+        "chance": 20
+      },
+      {
+        "name": "joint pain",
+        "chance": 10
+      }
+    ],
+    "herbs": {
+      "1": [],
+      "2": [],
+      "3": []
     }
   }
 }

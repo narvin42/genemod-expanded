@@ -296,32 +296,65 @@
   },
   "wobbly" : {
     "broken back": [
-      "m_c had to be carried home after a bad fall. r_c confirms that {PRONOUN/m_c/poss} back is broken.",
-      "A bad fall has left m_c with a broken back."
+      "m_c's back feels like it's on fire after {PRONOUN/m_c/subject} fell, and r_c is quick to help {PRONOUN/m_c/object} to the healer den.",
+      "m_c fell and landed hard on {PRONOUN/m_c/poss} back, leaving {PRONOUN/m_c/object} with a broken back."
     ],
     "broken bone": [
-      "m_c limped home after a bad fall. r_c confirms that {PRONOUN/m_c/poss} leg is broken.",
-      "m_c needed help getting back to camp after breaking {PRONOUN/m_c/poss} leg during a bad fall."
+      "m_c's leg is bent at an odd angle, and r_c is quick to help {PRONOUN/m_c/object} to the healer den.",
+      "m_c fell and landed hard on {PRONOUN/m_c/poss} leg, leaving {PRONOUN/m_c/object} with a broken bone."
     ],
     "dislocated joint": [
-      "m_c twisted their paw badly. r_c confirms the joint is dislocated.",
-      "m_c's lack of coordination caused {PRONOUN/m_c/object} to dislocate their paw."
+      "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint",
+      "m_c twisted {PRONOUN/m_c/poss} oaw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
     ],
     "sprain": [
-      "m_c took a bad step, leaving {PRONOUN/m_c/poss} paw sore.",
-      "m_c twisted {PRONOUN/m_c/poss} paw."
+      "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
+      "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
     ],
     "bruises": [
-      "m_c fell over, and {PRONOUN/m_c/poss} side is bruised.",
-      "m_c took a tumble, leaving {PRONOUN/m_c/poss} with bruises."
+      "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} needs to be more careful.",
+      "m_c bruised {PRONOUN/m_c/poss} body when {PRONOUN/m_c/subject} fell."
     ],
     "sore":[
-      "m_c is sore after a fall.",
-      "m_c is sore after a tumble."
+      "m_c's body is sore from a fall.", 
+      "m_c fell and landed hard, leaving {PRONOUN/m_c/object} feeling sore."
     ],
     "scrapes": [
-      "m_c is scraped up after taking a tumble.",
-      "m_c is scraped up after tripping over {PRONOUN/m_c/poss} feet."
+      "m_c's accidentally scraped {PRONOUN/m_c/poss} body on something hard, leaving {PRONOUN/m_c/object} with some scrapes.",
+      "m_c fell and scraped {PRONOUN/m_c/poss} body."
     ]
+  },
+  "fragile skin": {
+    "scrapes": [
+      "m_c tore {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with some scrapes.",
+      "m_c tore {PRONOUN/m_c/poss} skin while grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal."
+    ],
+    "bruises": [
+      "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} insides are fragile too.",
+      "m_c bruised {PRONOUN/m_c/poss} body, and doesn't quite remember how it happened."
+    ],
+    "torn pelt": [
+      "m_c's pelt is torn in several places. r_c puts a salve on it to help it heal, since m_c's skin doesn't heal as quickly.",
+      "m_c' tore {PRONOUN/m_c/poss} pelt while just walking through camp."
+    ],
+    "small cut": [
+      "m_c scratched {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with a small cut.",
+      "m_c scratched {PRONOUN/m_c/poss} skin while grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal."
+    ]
+  },
+  "loose joints": {
+    "dislocated joint": [
+      "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint.",
+      "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
+    ],
+    "sprain": [
+      "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
+      "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
+    ],
+    "joint pain": [
+      "m_c's joints are feeling the strain of {PRONOUN/m_c/poss} loose joints. {PRONOUN/m_c/subject/CAP}{VERB/m_c/'ve/'s} been moving slower this moon.",
+      "m_c comes to r_c feeling like {PRONOUN/m_c/poss} legs {VERB/m_c/are/is} going to collapse under {PRONOUN/m_c/object} from the pain."
+    ]
+    
   }
 }

@@ -95,10 +95,13 @@ class Scar_Events:
         chance = max(5 - moons_with, 1)
 
         amount_per_med = get_amount_cat_for_one_medic(cat.status.group)
-        if medicine_cats_can_cover_clan(
+        if 'fragile skin' in cat.permanent_condition:
+            chance == 1
+        elif medicine_cats_can_cover_clan(
             game.cat_class.all_cats.values(), amount_per_med, clan=cat.status.group
         ):
             chance += 2
+    
 
         if len(cat.pelt.scars) < 4 and not int(random.random() * chance):
             # move potential scar text into displayed scar text
