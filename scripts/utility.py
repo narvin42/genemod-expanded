@@ -1608,13 +1608,20 @@ def filter_relationship_type(
     # keeping this list here just for quick reference of what tags are handled here
     possible_rel_types = [
         "siblings",
+        "not_siblings",
+        "littermates",
+        "not_littermates",
         "mates",
         "mates_with_pl",
         "not_mates",
         "parent/child",
+        "not_parent",
         "child/parent",
+        "not_child",
         "mentor/app",
+        "not_mentor",
         "app/mentor",
+        "not_app",
     ]
 
     possible_value_types = [
@@ -1627,12 +1634,37 @@ def filter_relationship_type(
         "admiration",
     ]
 
+    if patrol_leader:
+        if patrol_leader in group:
+            group.remove(patrol_leader)
+        group.insert(0, patrol_leader)
+
     if "siblings" in filter_types:
         test_cat = group[0]
         testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
 
-        siblings = [test_cat.is_sibling(inter_cat) for inter_cat in testing_cats]
-        if not all(siblings):
+        if not all([test_cat.is_sibling(inter_cat) for inter_cat in testing_cats]):
+            return False
+
+    if "not_siblings" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if any([test_cat.is_sibling(inter_cat) for inter_cat in testing_cats]):
+            return False
+
+    if "littermates" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if not all([test_cat.is_littermate(inter_cat) for inter_cat in testing_cats]):
+            return False
+
+    if "not_littermates" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if any([test_cat.is_littermate(inter_cat) for inter_cat in testing_cats]):
             return False
 
     if "mates" in filter_types:
@@ -1672,10 +1704,6 @@ def filter_relationship_type(
 
     # Check if the cats are in a parent/child relationship
     if "parent/child" in filter_types:
-        if patrol_leader:
-            if patrol_leader in group:
-                group.remove(patrol_leader)
-            group.insert(0, patrol_leader)
         # It should be exactly two cats for a "parent/child" event
         if len(group) != 2:
             return False
@@ -1683,11 +1711,14 @@ def filter_relationship_type(
         if not group[0].is_parent(group[1]):
             return False
 
+    if "not_parent" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if any([test_cat.is_parent(inter_cat) for inter_cat in testing_cats]):
+            return False
+
     if "child/parent" in filter_types:
-        if patrol_leader:
-            if patrol_leader in group:
-                group.remove(patrol_leader)
-            group.insert(0, patrol_leader)
         # It should be exactly two cats for a "child/parent" event
         if len(group) != 2:
             return False
@@ -1695,11 +1726,14 @@ def filter_relationship_type(
         if not group[1].is_parent(group[0]):
             return False
 
+    if "not_child" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if any([inter_cat.is_parent(test_cat) for inter_cat in testing_cats]):
+            return False
+
     if "mentor/app" in filter_types:
-        if patrol_leader:
-            if patrol_leader in group:
-                group.remove(patrol_leader)
-            group.insert(0, patrol_leader)
         # It should be exactly two cats for a "mentor/app" event
         if len(group) != 2:
             return False
@@ -1707,16 +1741,26 @@ def filter_relationship_type(
         if not group[1].ID in group[0].apprentice:
             return False
 
+    if "not_mentor" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if any([inter_cat in test_cat.apprentice for inter_cat in testing_cats]):
+            return False
+
     if "app/mentor" in filter_types:
-        if patrol_leader:
-            if patrol_leader in group:
-                group.remove(patrol_leader)
-            group.insert(0, patrol_leader)
         # It should be exactly two cats for a "app/mentor" event
         if len(group) != 2:
             return False
         # test for parentage
         if not group[0].ID in group[1].apprentice:
+            return False
+
+    if "not_app" in filter_types:
+        test_cat = group[0]
+        testing_cats = [cat for cat in group if cat.ID != test_cat.ID]
+
+        if any([inter_cat in test_cat.mentor for inter_cat in testing_cats]):
             return False
 
     # Filtering relationship values
@@ -2588,6 +2632,8 @@ def event_text_adjust(
 
     if isinstance(clan, CatGroup):
         clan = clan.fetch_clan_object(game.clan)
+    elif clan is None:
+        clan = game.clan
     if isinstance(other_clan, CatGroup):
         other_clan = other_clan.fetch_clan_object()
 

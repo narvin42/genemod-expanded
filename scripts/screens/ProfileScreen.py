@@ -16,6 +16,7 @@ from scripts.cat.cats import Cat, BACKSTORIES
 from ..cat.enums import CatAge, CatRank, CatGroup
 from scripts.cat.pelts import Pelt
 from scripts.clan_resources.freshkill import FRESHKILL_ACTIVE
+from scripts.events import Events
 from scripts.game_structure import image_cache
 from scripts.game_structure.game_essentials import game
 from scripts.game_structure.ui_elements import (
@@ -301,7 +302,13 @@ class ProfileScreen(Screens):
         # Dangerous Tab
         elif self.open_tab == "dangerous":
             if event.ui_element == self.kill_cat_button:
-                KillCat(self.the_cat)
+                if self.the_cat.dead:
+                    Events.handle_fading(Events, self.the_cat, self.the_cat.status.get_last_living_group(
+                    ).fetch_clan_object(game.clan), True)
+                    self.close_current_tab()
+                    self.change_screen(game.last_screen_forProfile)
+                else:
+                    KillCat(self.the_cat)
             if hasattr(self, "change_clan_button") and event.ui_element == self.change_clan_button:
                 SelectSingleClan(self.the_cat)
             elif event.ui_element == self.exile_cat_button:
@@ -314,27 +321,47 @@ class ProfileScreen(Screens):
                 # if the cat is dead, moves them to the opposite afterlife
                 if self.the_cat.dead:
                     self.the_cat.pelt.rebuild_sprite = True
-                    # DF -> UR
-                    if self.the_cat.status.group == CatGroup.DARK_FOREST:
-                        self.the_cat.status.add_to_group(
-                            new_group=CatGroup.UNKNOWN_RESIDENCE
-                        )
-                        self.the_cat.thought = (
-                            "Is surprised to find themself walking among a foreign land"
-                        )
-                    # UR -> SC
-                    elif self.the_cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
-                        self.the_cat.status.add_to_group(new_group=CatGroup.STARCLAN)
-                        self.the_cat.thought = (
-                            "Is relieved to once again hunt in StarClan"
-                        )
-                    # SC -> UR
+                    if self.the_cat == game.clan.instructor:
+                        # DF -> SC
+                        if self.the_cat.status.group == CatGroup.DARK_FOREST:
+                            self.the_cat.status.add_to_group(
+                                new_group=CatGroup.STARCLAN
+                            )
+                            self.the_cat.thought = i18n.t(
+                                "screens.profile.guide_thought_sc", clan=game.clan.name
+                            )
+                        # SC -> DF
+                        else:
+                            self.the_cat.status.add_to_group(
+                                new_group=CatGroup.DARK_FOREST
+                            )
+
+                            self.the_cat.thought = i18n.t(
+                                "screens.profile.guide_thought_df", clan=game.clan.name
+                            )
+                        self.the_cat.pelt.rebuild_sprite = True
                     else:
-                        self.the_cat.status.add_to_group(new_group=CatGroup.DARK_FOREST)
-                        self.the_cat.thought = (
-                            "Is distraught after being sent to the Place of No Stars"
-                        )
-                    self.the_cat.pelt.rebuild_sprite = True
+                        # DF -> UR
+                        if self.the_cat.status.group == CatGroup.DARK_FOREST:
+                            self.the_cat.status.add_to_group(
+                                new_group=CatGroup.UNKNOWN_RESIDENCE
+                            )
+                            self.the_cat.thought = "Is surprised to find themself walking among a foreign land"
+                        # UR -> SC
+                        elif self.the_cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
+                            self.the_cat.status.add_to_group(
+                                new_group=CatGroup.STARCLAN
+                            )
+                            self.the_cat.thought = (
+                                "Is relieved to once again hunt in StarClan"
+                            )
+                        # SC -> DF
+                        else:
+                            self.the_cat.status.add_to_group(
+                                new_group=CatGroup.DARK_FOREST
+                            )
+                            self.the_cat.thought = "Is distraught after being sent to the Place of No Stars"
+                        self.the_cat.pelt.rebuild_sprite = True
 
                 self.clear_profile()
                 self.build_profile()
@@ -567,19 +594,13 @@ class ProfileScreen(Screens):
 
         # Instructor thoughts
         if self.the_cat.dead and game.clan.instructor is self.the_cat:
-            if not self.the_cat.status.group == CatGroup.STARCLAN:  # StarClan
+            if self.the_cat.status.group == CatGroup.STARCLAN:  # StarClan
                 self.the_cat.thought = i18n.t(
                     "screens.profile.guide_thought_sc", clan=game.clan.name
                 )
             elif self.the_cat.status.group == CatGroup.DARK_FOREST:  # Dark Forest
                 self.the_cat.thought = i18n.t(
                     "screens.profile.guide_thought_df", clan=game.clan.name
-                )
-            elif (
-                self.the_cat.status.group == CatGroup.UNKNOWN_RESIDENCE
-            ):  # Unknown Residence
-                self.the_cat.thought = i18n.t(
-                    "screens.profile.guide_thought_sc", clan=game.clan.name
                 )
 
         self.profile_elements["cat_name"] = pygame_gui.elements.UITextBox(
@@ -726,13 +747,14 @@ class ProfileScreen(Screens):
             output += i18n.t(f"general.{the_cat.age.value}", count=1)
         else:
             output += i18n.t(f"general.{the_cat.age.value}", count=1)
-        # NEWLINE ----------
-        output += "\n"
 
         # EYE COLOR
-        output += i18n.t(
-            "screens.profile.eyes_label", eyes=the_cat.describe_eyes()
-        )
+        if the_cat.age != CatAge.NEWBORN:
+            # NEWLINE ----------
+            output += "\n"
+            output += i18n.t(
+                "screens.profile.eyes_label", eyes=the_cat.describe_eyes()
+            )
         # NEWLINE ----------
         output += "\n"
 
@@ -1550,31 +1572,15 @@ class ProfileScreen(Screens):
                     main_cat=self.the_cat,
                     random_cat=Cat.fetch_cat(death["involved"]),
                 )
-                if "is_victim" in murder_history:
-                    for event in murder_history["is_victim"]:
-                        # check if we match moon counts
-                        if event["moon"] == death["moon"]:
-                            # get reveal status text
-                            status_text = self.the_cat.history.get_murder_status_text(
-                                murder=event, Cat=Cat
-                            )
-                            status_text = event_text_adjust(
-                                Cat,
-                                status_text,
-                                main_cat=self.the_cat,
-                                random_cat=Cat.fetch_cat(death["involved"]),
-                            )
-                            text += f" ({status_text}) "
-                            break
 
                 if self.the_cat.status.is_leader:
                     if text == "multi_lives":
                         multi_life_count += 1
                         continue
                     if index == death_number - 1 and self.the_cat.dead:
-                        if death_number == 9:
+                        if death_number == 9 and not multi_life_count:
                             life_text = "lost {PRONOUN/m_c/poss} final life"
-                        elif death_number == 1:
+                        elif multi_life_count == 8:
                             life_text = "lost all of {PRONOUN/m_c/poss} lives"
                         else:
                             life_text = "lost the rest of {PRONOUN/m_c/poss} lives"
@@ -1619,6 +1625,27 @@ class ProfileScreen(Screens):
                 else:
                     life_text = ""
 
+                # we're adding the leader's period here so that it doesn't conflict weirdly with a murder status addition.
+                if life_text:
+                    text += "."
+
+                if "is_victim" in murder_history:
+                    for event in murder_history["is_victim"]:
+                        # check if we match moon counts
+                        if event["moon"] == death["moon"]:
+                            # get reveal status text
+                            status_text = self.the_cat.history.get_murder_status_text(
+                                murder=event, Cat=Cat
+                            )
+                            status_text = event_text_adjust(
+                                Cat,
+                                status_text,
+                                main_cat=self.the_cat,
+                                random_cat=Cat.fetch_cat(death["involved"]),
+                            )
+                            text += f" ({status_text}) "
+                            break
+
                 if text:
                     if life_text:
                         text = i18n.t(
@@ -1637,7 +1664,7 @@ class ProfileScreen(Screens):
                 else:
                     deaths = all_deaths[0]
 
-                if not deaths.endswith("."):
+                if not deaths.endswith(".") and not deaths.endswith(") "):
                     deaths += "."
 
                 text = str(self.the_cat.name) + " " + deaths
@@ -2118,18 +2145,18 @@ class ProfileScreen(Screens):
                 )
                 self.kill_cat_button = UIImageButton(
                     ui_scale(pygame.Rect((578, 522), (172, 36))),
-                    "screens.profile.kill_cat",
+                    "screens.profile.fade_cat" if self.the_cat.dead else "screens.profile.kill_cat",
                     object_id="#kill_cat_button",
-                    tool_tip_text="screens.profile.kill_cat_tooltip",
+                    tool_tip_text="screens.profile.fade_cat_tooltip" if self.the_cat.dead else "screens.profile.kill_cat_tooltip",
                     starting_height=2,
                     manager=MANAGER,
                 )
             else:
                 self.kill_cat_button = UIImageButton(
                     ui_scale(pygame.Rect((578, 486), (172, 36))),
-                    "screens.profile.kill_cat",
+                    "screens.profile.fade_cat" if self.the_cat.dead else "screens.profile.kill_cat",
                     object_id="#kill_cat_button",
-                    tool_tip_text="screens.profile.kill_cat_tooltip",
+                    tool_tip_text="screens.profile.fade_cat_tooltip" if self.the_cat.dead else "screens.profile.kill_cat_tooltip",
                     starting_height=2,
                     manager=MANAGER,
                 )
@@ -2241,14 +2268,21 @@ class ProfileScreen(Screens):
             )
             text = "screens.profile.exile"
             if self.the_cat.dead:
-                text = "screens.profile.exile_df"
-                layer = self.df
-                if self.the_cat.status.group == CatGroup.DARK_FOREST:
-                    text = "screens.profile.send_ur"
-                    layer = self.ur
-                elif self.the_cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
-                    text = "screens.profile.guide_sc"
-                    layer = self.sc
+                if self.the_cat == game.clan.instructor:
+                    text = "screens.profile.exile_df"
+                    layer = self.df
+                    if self.the_cat.status.group == CatGroup.DARK_FOREST:
+                        text = "screens.profile.guide_sc"
+                        layer = self.sc
+                else:
+                    text = "screens.profile.exile_df"
+                    layer = self.df
+                    if self.the_cat.status.group == CatGroup.DARK_FOREST:
+                        text = "screens.profile.send_ur"
+                        layer = self.ur
+                    elif self.the_cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
+                        text = "screens.profile.guide_sc"
+                        layer = self.sc
 
                 self.exile_layer = pygame_gui.elements.UIImage(
                     ui_scale(pygame.Rect((578, 450), (172, 46))),
@@ -2273,7 +2307,7 @@ class ProfileScreen(Screens):
                 if hasattr(self, "change_clan_button"):
                     self.change_clan_button.disable()
             
-            if not self.the_cat.dead:
+            if not self.the_cat == game.clan.instructor:
                 self.kill_cat_button.enable()
             else:
                 self.kill_cat_button.disable()

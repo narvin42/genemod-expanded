@@ -898,13 +898,10 @@ class Events:
         if not predetermined_cat_IDs:
             eligible_cats = []
             for cat in Cat.all_cats.values():
-                if not cat.status.is_outsider and not cat.dead:
+                if cat.dead or not cat.status.is_lost(clan.enum):
                     continue
-                if cat.ID not in Cat.outside_cats:
-                    # The outside-value must be set to True before the cat can go to cotc
-                    Cat.outside_cats.update({cat.ID: cat})
 
-                if cat.status.is_lost(clan.enum) and ("infertility" not in cat.permanent_condition or game.clan.age - cat.permanent_condition["infertility"]["moon_start"] > -1):
+                if "infertility" not in cat.permanent_condition or game.clan.age - cat.permanent_condition["infertility"]["moon_start"] > -1:
                     eligible_cats.append(cat)
                 elif cat.status.is_lost(clan.enum):
                     pass
@@ -946,7 +943,7 @@ class Events:
                 elif not x.status.rank.is_any_apprentice_rank() and x.moons >= 6:
                     self.ceremony(x, CatRank.APPRENTICE)
 
-    def handle_fading(self, cat, clan):
+    def handle_fading(self, cat, clan, forced=False):
         """
         TODO: DOCS
         """
@@ -955,7 +952,7 @@ class Events:
             and not cat.prevent_fading
             and cat.ID != game.clan.instructor.ID
             and not cat.faded
-        ):
+        ) or forced:
             age_to_fade = constants.CONFIG["fading"]["age_to_fade"]
             kitten_fade = constants.CONFIG["fading"]["kit_fade"]
             opacity_at_fade = constants.CONFIG["fading"]["opacity_at_fade"]
@@ -968,7 +965,7 @@ class Events:
             )
 
             # Deal with fading the cat if they are old enough.
-            if cat.dead_for > age_to_fade or (get_clan_setting('modded_kits') and cat.moons < 6 and cat.dead_for > kitten_fade):
+            if forced or cat.dead_for > age_to_fade or (get_clan_setting('modded_kits') and cat.moons < 6 and cat.dead_for > kitten_fade):
                 # If order not to add a cat to the faded list
                 # twice, we can't remove them or add them to
                 # faded cat list here. Rather, they are added to
@@ -2539,7 +2536,7 @@ class Events:
     def coming_out(self, cat, clan):
         """turnin' the kitties trans..."""
 
-        if cat.age.is_baby():
+        if cat.age.is_baby() or cat.gender != cat.genderalign:
             return
 
         transing_chance = constants.CONFIG["transition_related"]
