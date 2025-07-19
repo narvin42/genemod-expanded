@@ -214,7 +214,7 @@ class Genotype:
         self.pax3 = jsonstring.get("pax3", ['NoDBE', 'NoDBE'])
 
         self.dfca = jsonstring.get("dfca", ['dca', 'dca'])
-        self.rfca = jsonstring.get("rfca", ['', ''])
+        self.rfca = jsonstring.get("rfca", ['Rfca', 'Rfca'])
 
         self.wideband = jsonstring["wideband"]
         self.saturation = jsonstring.get("saturation", 3)
@@ -641,7 +641,7 @@ class Genotype:
 
         for i in range(2):
             if self.odds["recessive fca"] > 0 and randint(1, self.odds["recessive fca"]) == 1 and not self.ban_genes:
-                self.rfca[i] = ""
+                self.rfca[i] = "rca"
 
         self.wideband = ''
         self.rufousing = ''
