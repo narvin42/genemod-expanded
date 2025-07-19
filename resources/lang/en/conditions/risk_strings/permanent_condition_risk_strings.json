@@ -352,9 +352,12 @@
       "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
     ],
     "joint pain": [
-      "m_c's joints are feeling the strain of {PRONOUN/m_c/poss} loose joints. {PRONOUN/m_c/subject/CAP}{VERB/m_c/'ve/'s} been moving slower this moon.",
+      "m_c's joints are feeling the strain of their condition. {PRONOUN/m_c/subject/CAP}{VERB/m_c/'ve/'s} been moving slower this moon.",
       "m_c comes to r_c feeling like {PRONOUN/m_c/poss} legs {VERB/m_c/are/is} going to collapse under {PRONOUN/m_c/object} from the pain."
+    ],
+    "constant joint pain": [
+      "m_c's joints hurt all the time now, and r_c tells {PRONOUN/m_c/object} the pain is permanent.",
+      "m_c's wobbly joints have caught up with {PRONOUN/m_c/object}, and the joints hurt."
     ]
-    
   }
 }

@@ -1104,13 +1104,13 @@
     "congenital": "always",
     "moons_until": 1,
     "mortality": {
-      "newborn": 400,
-      "kitten": 350,
-      "adolescent": 300,
-      "young adult": 250,
-      "adult": 200,
-      "senior adult": 150,
-      "senior": 100
+      "newborn": 0,
+      "kitten": 0,
+      "adolescent": 0,
+      "young adult": 0,
+      "adult": 0,
+      "senior adult": 0,
+      "senior": 0
     },
     "illness_infectiousness": [],
     "risks": [
@@ -1163,6 +1163,10 @@
       {
         "name": "joint pain",
         "chance": 10
+      },
+      {
+        "name": "constant joint pain",
+        "chance": 50
       }
     ],
     "herbs": {
