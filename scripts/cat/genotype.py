@@ -76,7 +76,7 @@ class Genotype:
         self.pax3 = ["NoDBE", "NoDBE"]
 
         self.dfca = ['dca','dca']
-        self.rfca = ['rca', 'rca']
+        self.rfca = ['Rca', 'Rca']
 
         self.wideband = ""
         self.wbtype = ""
