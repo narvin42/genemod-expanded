@@ -2265,7 +2265,7 @@ class Cat:
                 f"WARNING: {name} is not in the permanent conditions collection.",
             )
             return
-        if not genetic and name in ["flat nose", "rabbit gait", "albinism", "ocular albinism", 'fully hairless', 'partially hairless', "narrowed chest", "bumpy skin"]:
+        if not genetic and name in ["flat nose", "rabbit gait", "albinism", "ocular albinism", 'fully hairless', 'partially hairless', "narrowed chest", "bumpy skin", "fragile skin", "loose joints"]:
             return
         if "blind" in self.permanent_condition and name == "failing eyesight":
             return
