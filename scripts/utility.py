@@ -15,7 +15,7 @@ from math import floor
 from random import choice, choices, randint, random, sample, randrange, getrandbits
 from sys import exit as sys_exit
 from copy import deepcopy
-from typing import List, Tuple, TYPE_CHECKING, Type, Union
+from typing import List, Tuple, TYPE_CHECKING, Type, Union, Optional
 
 import i18n
 import pygame
@@ -410,7 +410,13 @@ def create_bio_parents(Cat, flip=False, second_parent=True):
     return [blood_parent, blood_parent2, par2geno]
 
 def create_new_cat_block(
-    Cat, Relationship, event, in_event_cats: dict, i: int, attribute_list: List[str], clan:CatGroup=None
+    Cat: Optional["Cat"], 
+    Relationship, 
+    event, 
+    in_event_cats: dict, 
+    i: int, 
+    attribute_list: List[str], 
+    clan:CatGroup=None
 ) -> list:
     """
     Creates a single new_cat block and then generates and returns the cats within the block
@@ -696,7 +702,7 @@ def create_new_cat_block(
         thought = i18n.t("hardcoded.thought_new_dead")
 
     # check if we can use an existing cat here
-    chosen_cat = None
+    chosen_cat: Optional["Cat"] = None
     if "exists" in attribute_list:
         existing_outsiders = [
             i for i in Cat.all_cats.values() if i.status.is_outsider and not i.dead
@@ -720,7 +726,7 @@ def create_new_cat_block(
             elif not outside:
                 chosen_cat.add_to_clan(clan)
                 if chosen_cat.status.rank != rank:
-                    chosen_cat.rank_change(rank, resort=True)
+                    chosen_cat.rank_change(new_rank=CatRank(rank), resort=True)
             elif outside:
                 # updates so that the clan is marked as knowing of this cat
                 current_standing = chosen_cat.status.get_standing_with_group(
@@ -3914,7 +3920,7 @@ def generate_sprite(
                             whichmain.blit(sprites.sprites['lightbasecolours2'], (0, 0)) 
                             colour = 'lightbasecolours2'
                             whichmain = ApplySmokeEffects(whichmain)
-                        elif((("chocolate" in whichcolour and phenotype.pointgene == ["cb", "cb"]) or ("chocolate" in whichcolour and "cb" in phenotype.pointgene) or ("black" in whichcolour and phenotype.pointgene == ["cs", "cs"])) and cat_sprite != "20") or (("chocolate" in whichcolour and phenotype.pointgene == ["cb", "cb"]) or ("black" in whichcolour and "cb" in phenotype.pointgene)):
+                        elif((("cinnamon" in whichcolour and phenotype.pointgene == ["cb", "cb"]) or ("chocolate" in whichcolour and "cb" in phenotype.pointgene) or ("black" in whichcolour and phenotype.pointgene == ["cs", "cs"])) and cat_sprite != "20") or (("chocolate" in whichcolour and phenotype.pointgene == ["cb", "cb"]) or ("black" in whichcolour and "cb" in phenotype.pointgene)):
                             whichmain.blit(sprites.sprites['lightbasecolours1'], (0, 0))  
                             colour = 'lightbasecolours1'
                             whichmain = ApplySmokeEffects(whichmain)

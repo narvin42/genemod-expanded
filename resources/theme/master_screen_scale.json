@@ -23,7 +23,7 @@
 			"selected_border": "#776045",
 			"active_border": "#776045"
 		},
-		"misc": { "border_width": "12", "shadow_width": "0" }
+		"misc": { "border_width": "12", "shadow_width": "0", "tool_tip_delay": "0" }
 	},
 	"@image_button": {
 		"colours": {
@@ -1225,6 +1225,23 @@
 			},
 			"selected_image": {
 				"path": "resources/images/buttons/fav_star_hover5.png"
+			},
+			"disabled_image": {
+				"path": "resources/images/buttons/fav_star_unavailable.png"
+			}
+		}
+	},
+	"#fav_star6": {
+		"prototype": "@image_button",
+		"images": {
+			"normal_image": {
+				"path": "resources/images/buttons/fav_star6.png"
+			},
+			"hovered_image": {
+				"path": "resources/images/buttons/fav_star_hover6.png"
+			},
+			"selected_image": {
+				"path": "resources/images/buttons/fav_star_hover6.png"
 			},
 			"disabled_image": {
 				"path": "resources/images/buttons/fav_star_unavailable.png"

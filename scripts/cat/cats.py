@@ -17,6 +17,7 @@ import i18n
 import ujson  # type: ignore
 
 import scripts.game_structure.localization as pronouns
+from scripts.cat import save_load
 from scripts.cat.enums import CatAge, CatRank, CatSocial, CatGroup, CatStanding
 from scripts.cat.history import History
 from scripts.cat.names import Name
@@ -241,22 +242,22 @@ class Cat:
                             self.parent3 = extrapar.ID
                 except:
                     traceback.print_exc()
-                    self.phenotype.Generator()
+                    self.phenotype.Generator(kittypet=kittypet)
         else:
             if not chimera:
-                if self.status.social == CatSocial.KITTYPET and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
+                if (kittypet or self.status.social == CatSocial.KITTYPET) and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
                     self.phenotype.AltGenerator(special=self.gender)
                 else:
-                    self.phenotype.Generator(special=self.gender)
+                    self.phenotype.Generator(special=self.gender, kittypet=kittypet)
             else:
                 par1 = Phenotype(gene_config, game_setting_get("ban problem genes"))
                 par2 = Phenotype(gene_config, game_setting_get("ban problem genes"))
-                if self.status.social == CatSocial.KITTYPET and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
+                if (kittypet or self.status.social == CatSocial.KITTYPET) and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
                     par1.AltGenerator()
                     par2.AltGenerator()
                 else:
-                    par1.Generator()
-                    par2.Generator()
+                    par1.Generator(kittypet=kittypet)
+                    par2.Generator(kittypet=kittypet)
 
                 self.phenotype.KitGenerator(par1, par2)
                 self.chimerapheno.KitGenerator(par1, par2)
@@ -351,7 +352,7 @@ class Cat:
             potential_id = str(next(Cat.id_iter))
 
             if game.clan:
-                faded_cats = game.clan.faded_ids
+                faded_cats = save_load.get_faded_ids()
             else:
                 faded_cats = []
 
@@ -2076,6 +2077,8 @@ class Cat:
         :param lethal: Allow lethality, default `True` (bool)
         :param severity: Override severity, default `'default'` (str, accepted values `'minor'`, `'major'`, `'severe'`)
         """
+        if self.dead:
+            return
         if name not in ILLNESSES:
             print(f"WARNING: {name} is not in the illnesses collection.")
             return
@@ -2145,6 +2148,9 @@ class Cat:
         :param severity: _description_, defaults to 'default'
         :type severity: str, optional
         """
+        if self.dead:
+            return
+
         if name not in INJURIES:
             print(f"WARNING: {name} is not in the injuries collection.")
             return
@@ -2256,6 +2262,8 @@ class Cat:
         self.get_permanent_condition(new_condition, born_with=True)
 
     def get_permanent_condition(self, name, born_with=False, event_triggered=False, genetic=False, custom_reveal=None):
+        if self.dead:
+            return
         with open(f"resources/dicts/conditions/permanent_conditions.json", 'r') as read_file:
             PERMANENT = ujson.loads(read_file.read())
         if name not in PERMANENT:
