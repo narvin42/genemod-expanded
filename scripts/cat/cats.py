@@ -342,7 +342,7 @@ class Cat:
         if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3) or self.phenotype.dfca[0] == 'Dca':
             self.dead = True
 
-        self.favourite = False
+        self.favourite = 0
 
         self.specsuffix_hidden = specsuffix_hidden
         self.inheritance = None
