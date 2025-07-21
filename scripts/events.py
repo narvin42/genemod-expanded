@@ -1908,7 +1908,7 @@ class Events:
         if not cat:
             return
 
-        if not cat.status.group != clan.enum:
+        if cat.status.group != clan.enum:
             return
 
         # check if cat already has max acc
@@ -2379,6 +2379,7 @@ class Events:
                     event_type="birth_death",
                     main_cat=chosen_cat,
                     random_cat=cat,
+                    victim_cat=chosen_target,
                     sub_type=["murder"],
                     freshkill_pile=game.clan.freshkill_pile,
                     clan=clan,

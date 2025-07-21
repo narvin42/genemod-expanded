@@ -818,6 +818,7 @@ class Pregnancy_Events:
             if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3) or kit.phenotype.dfca[1] == "Dca":
                 kit.moons = 0
                 kit.dead = True
+                kit.thoughts(just_died=True)
                 kit.history.add_death(str(kit.name) + " was stillborn.")
         Pregnancy_Events.set_biggest_family(clan)
         
@@ -1421,12 +1422,12 @@ class Pregnancy_Events:
         elif cat:
             par2geno.Generator('masc')
         ##### SELECT BACKSTORY #####
+        if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.group != cat.status.group:
+            backkit = 'halfclan1' if other_cat[0].status.group else 'outsider_roots1'
+        elif cat and other_cat and other_cat[0].status.group != cat.status.group:
+            backkit = 'halfclan2' if other_cat[0].status.group else 'outsider_roots2'
         if backkit:
             backstory = backkit
-        elif cat and "pregnant" in cat.injuries:
-            backstory = choice(['halfclan1', 'outsider_roots1'])
-        elif cat:
-            backstory = choice(["halfclan2", "outsider_roots2"])
         else:  # cat is adopted
             backstory = choice(["abandoned1", "abandoned2", "abandoned3", "abandoned4"])
         ###########################
