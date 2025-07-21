@@ -632,11 +632,11 @@ class Genotype:
 
         # Genetic disorders
 
-        if self.odds["dominant fca"] > 0 and randint(1, self.odds["dominant fca"]) == 1 and not self.ban_genes:
+        if self.odds["dominant FCA"] > 0 and randint(1, self.odds["dominant FCA"]) == 1 and not self.ban_genes:
             self.dfca[0] = "Dca"
 
         for i in range(2):
-            if self.odds["recessive fca"] > 0 and randint(1, self.odds["recessive fca"]) == 1 and not self.ban_genes:
+            if self.odds["recessive FCA"] > 0 and randint(1, self.odds["recessive FCA"]) == 1 and not self.ban_genes:
                 self.rfca[i] = "rca"
 
         self.wideband = ''
@@ -849,10 +849,10 @@ class Genotype:
             self.pax3[0] = choice(['DBEcel', 'DBEcel', 'DBEre', 'DBEalt', 'DBEalt'])
 
         # Genetic disorders
-        if self.odds["dominant fca"] > 0 and (randint(1, round(self.odds["dominant fca"]/0.5)) == 1 or self.odds["dominant fca"] == 1) and not self.ban_genes:
+        if self.odds["dominant FCA"] > 0 and (randint(1, round(self.odds["dominant FCA"]/1.5)) == 1 or self.odds["dominant FCA"] == 1) and not self.ban_genes:
             self.dfca[0] = "Dca"
         for i in range(2):
-            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/0.5)) == 1 or self.odds["recessive FCA"] == 1) and not self.ban_genes:
+            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/1.5)) == 1 or self.odds["recessive FCA"] == 1) and not self.ban_genes:
                 self.rfca[i] = ""
     
         self.wideband = ''
