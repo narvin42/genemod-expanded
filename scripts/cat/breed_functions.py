@@ -1594,6 +1594,17 @@ class Breed_generator:
             if random() < 0.15:
                 genoclass.ext[i] = "er"
 
+        # recessive fca
+        
+        if genoclass.pointgene == ["cb", "cb"]:
+            for i in range(2):
+                if randint(1, 100) == 1:
+                    genoclass.rfca[i] = "rca"
+        else:
+            for i in range(2):
+                if randint(1, 250) == 1:
+                    genoclass.rfca[i] = "rca"
+
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         genoclass.tickgenes = ''
         genoclass.ticksum = 0
@@ -1889,7 +1900,7 @@ class Breed_generator:
 
         genoclass.body_value = randint(0, genoclass.body_indexes[1]-1)
         
-        #recessive feline cutaneous asthenia
+        #recessive fca
 
         if genoclass.pointgene == ["cs", "cs"]:
             for i in range(2):
