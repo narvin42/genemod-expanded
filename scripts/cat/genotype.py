@@ -2009,7 +2009,7 @@ class Genotype:
                         self.Body_Genes.append(x)
                 elif x[0] != x[1] or x[0] not in ['cu', 'fd', 'm', 'ab', 'Kab', 'tb', 'Jb', 'kub', 'Rt', 'mk', 'pd', 'NoDBE']:
                     self.Body_Genes.append(x)
-            for x in [self.dfca, self.rfca]:
+            for x in [self.dfca, self.rfca, self.chs]:
                 if x[0] != x[1] or x[0] not in ['dca', 'Rca', 'Ch']:
                     self.Genetic_Disorders.append(x)
                     
@@ -2020,13 +2020,13 @@ class Genotype:
             self.Fur_Genes = [self.wirehair, self.laperm, self.cornish, self.urals, self.tenn, self.fleece, self.sedesp, self.ruhr, self.ruhrmod, self.lykoi]
             self.Other_Colour = [self.pinkdilute, self.dilutemd, self.ext, self.corin, self.karp, self.bleach, self.ghosting, self.satin, self.glitter]
             self.Body_Genes = [self.curl, self.fold, self.manx, self.kab, self.toybob, self.jbob, self.kub, self.ring, self.munch, self.poly, self.pax3]
-            self.Genetic_Disorders = [self.dfca, self.rfca]
+            self.Genetic_Disorders = [self.dfca, self.rfca, self.chs]
             april_fools_output = [self.april_fools.values()]
         self.Polygenes = ["Wideband:", self.wideband, self.wbtype, "Rufousing:", self.rufousing, self.ruftype, "Underbelly rufousing:", self.unders_ruf, self.unders_ruftype, "Saturation:", self.saturation, "Bengal:", self.bengal, self.bengtype, "Sokoke:", self.sokoke, self.soktype, "Spotted:", self.spotted, self.spottype, "Ticked:", self.tickgenes, self.ticktype, "Refraction:", self.refraction, "Pigmentation:", self.pigmentation]
 
         if is_today(SpecialDate.APRIL_FOOLS):
-            return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Polygenes: ", self.Polygenes, "April Fools:", april_fools_output
-        return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Polygenes: ", self.Polygenes
+            return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Polygenes: ", self.Polygenes, "April Fools:", april_fools_output
+        return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Polygenes: ", self.Polygenes
     
     def Mutate(self):
         print("MUTATION!")
