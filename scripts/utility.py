@@ -3299,8 +3299,8 @@ def generate_sprite(
                 'mediumivory-apricot' : 'rufousedivory',
                 'lowivory-apricot' : 'mediumivory',
                 
-                'rufosedsnow-apricot' : 'lowivory',
-                'mediumsnow-apricot' : 'rufosedsnow',
+                'rufousedsnow-apricot' : 'lowivory',
+                'mediumsnow-apricot' : 'rufousedsnow',
                 'lowsnow-apricot' : 'mediumsnow'
             }
         gensprite = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
