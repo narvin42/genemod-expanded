@@ -214,8 +214,8 @@ class Genotype:
         self.poly = jsonstring["poly"]
         self.pax3 = jsonstring.get("pax3", ['NoDBE', 'NoDBE'])
 
-        self.dfca = jsonstring.get("dfca", ['dca', 'dca'])
-        self.rfca = jsonstring.get("rfca", ['Rfca', 'Rfca'])
+        self.dfca = jsonstring.get("DomFCA", ['dca', 'dca'])
+        self.rfca = jsonstring.get("RecFCA", ['Fca', 'Fca'])
         self.chs = jsonstring.get("chs", ['Ch', 'Ch'])
 
         self.wideband = jsonstring["wideband"]
@@ -644,7 +644,7 @@ class Genotype:
 
         for i in range(2):
             if self.odds["recessive FCA"] > 0 and randint(1, self.odds["recessive FCA"]) == 1 and not self.ban_genes:
-                self.rfca[i] = "rca"
+                self.rfca[i] = "fca"
 
         self.wideband = ''
         self.rufousing = ''
@@ -860,7 +860,7 @@ class Genotype:
             self.dfca[0] = "Dca"
         for i in range(2):
             if self.odds["recessive FCA"] > 0 and randint(1, round(self.odds["recessive FCA"]/0.5)) == 1 and not self.ban_genes:
-                self.rfca[i] = ""
+                self.rfca[i] = "fca"
     
         self.wideband = ''
         self.rufousing = ''
@@ -2135,7 +2135,7 @@ class Genotype:
         print(which)
     
     def GeneticDisordermutation(self):
-        whichgene = ["dfca", "rfca"]
+        whichgene = ["dfca", "rfca", "chs"]
         
         which = choice(whichgene)
 
@@ -2146,11 +2146,18 @@ class Genotype:
                 self.dfca[1] = 'Dca'
             else:
                 self.Mutate()
+        elif(which == 'rfca'):
+            if(self.rfca[0] == 'fca'):
+                self.rfca[0] = 'Fca'
+            elif(self.rfca[1] == 'fca'):
+                self.rfca[1] = 'Fca'
+            else:
+                self.Mutate()
         else:
-            if(self.rfca[0] == ''):
-                self.rfca[0] = ''
-            elif(self.rfca[1] == ''):
-                self.rfca[1] = ''
+            if(self.chs[0] == 'Ch'):
+                self.chs[0] = 'ch'
+            elif(self.chs[1] == 'Ch'):
+                self.chs[1] = 'ch'
             else:
                 self.Mutate()
     
