@@ -197,21 +197,23 @@ class Sprites:
         for i, x in enumerate(["black", "chocolate", "cinnamon", 
                                "blue", "lilac", "fawn", 
                                "dove", "champagne", "buff", 
-                               "platinum", "lavender", "beige"]):
+                               "platinum", "lavender", "beige"
+                               "pearl", "bone", "powder"]):
             self.make_group('base/eumelanin', (0, i), f'{x}', sprites_x=7, sprites_y=1)
         for i, x in enumerate(["rufousedred", "mediumred", "lowred", 
                                "rufousedcream", "mediumcream", "lowcream", 
                                "rufousedhoney", "mediumhoney", "lowhoney", 
-                               "rufousedivory", "mediumivory", "lowivory"]):
+                               "rufousedivory", "mediumivory", "lowivory",
+                               "rufousedsnow", "mediumsnow", "lowsnow"]):
             self.make_group('base/pheomelanin', (0, i), f'{x}', sprites_x=7, sprites_y=1)
         self.make_group('base/lightbases', (0, 0), 'lightbasecolours', sprites_x=4, sprites_y=1)
 
         # genemod tabby bases
 
-        for x in ["black", "blue", "pale_blue", "dove", "pale_dove", "platinum",
-                  "chocolate", "lilac", "pale_lilac", "champagne", "lavender",
-                  "cinnamon", "fawn", "pale_fawn", "buff", "beige",
-                  "red", "cream", "honey", "ivory"]:
+        for x in ["black", "blue", "pale_blue", "dove", "pale_dove", "platinum", "pearl",
+                  "chocolate", "lilac", "pale_lilac", "champagne", "lavender", "bone",
+                  "cinnamon", "fawn", "pale_fawn", "buff", "beige", "powder",
+                  "red", "cream", "honey", "ivory", "snow"]:
             for a, i in enumerate(['rufousedlow', 'rufousedmedium', 'rufousedhigh', 'rufousedshaded', 'rufousedchinchilla']):
                 self.make_group('Tabby/'+x, (a, 0), f'{x}{i}', sprites_x=1, sprites_y=1)
             for a, i in enumerate(['mediumlow', 'mediummedium', 'mediumhigh', 'mediumshaded', 'mediumchinchilla']):

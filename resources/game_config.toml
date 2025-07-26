@@ -636,6 +636,7 @@ dev_tools = false
 
   "dominant FCA" = 250
   "recessive FCA" = 1000
+  "chediak-higashi syndrome" = 1000
 
   body_ranges = [1, 4, 12, 60, 12, 4, 1]
   height_ranges = [1, 4, 12, 60, 180, 60, 12, 2, 2, 1]

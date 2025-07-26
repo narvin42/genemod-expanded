@@ -1900,7 +1900,7 @@ class Breed_generator:
 
         genoclass.body_value = randint(0, genoclass.body_indexes[1]-1)
         
-        #recessive fca
+        #RECESSIVE FCA, CHEDIAK-HIGASHI
 
         if genoclass.pointgene == ["cs", "cs"]:
             for i in range(2):
@@ -1910,6 +1910,10 @@ class Breed_generator:
             for i in range(2):
                 if randint(1, 100) == 1:
                     genoclass.rfca[i] = "rca"
+
+        for i in range(2):
+            if randint(1, 50) == 1:
+                genoclass.chs = "chs"
     
         genoclass.breeds["Persian/Exotic"] = 100
         return genoclass

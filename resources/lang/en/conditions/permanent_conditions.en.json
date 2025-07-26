@@ -39,6 +39,8 @@
         "wobbly" : "wobbly",
         "fragile skin": "fragile skin",
         "loose joints": "loose joints",
+        "sickly": "sickly",
+        "bleeds easily": "bleeds easily",
         "unknown_condition_risk_given": "m_c's condition has gotten worse."
     }
 }

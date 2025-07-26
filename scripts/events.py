@@ -1223,14 +1223,16 @@ class Events:
         if cat.phenotype.white[0] == 'W' or (cat.phenotype.white[1] in ['ws', 'wt'] and cat.phenotype.whitegrade > 2) or cat.phenotype.pointgene[0] == 'c' or 'o' not in cat.phenotype.sexgene:
             return
         
-        if cat.phenotype.dilute[0] == 'D' and cat.phenotype.pinkdilute[0] == 'Dp':
+        if cat.phenotype.dilute[0] == 'D' and cat.phenotype.pinkdilute[0] == 'Dp' and cat.phenotype.chs[0] == 'CH':
             red_colour = "orange"
-        elif cat.phenotype.dilute[0] == 'd' and cat.phenotype.pinkdilute[0] == 'Dp':
+        elif cat.phenotype.dilute[0] == 'd' and cat.phenotype.pinkdilute[0] == 'Dp' and cat.phenotype.chs[0] == 'CH':
             red_colour = "cream"
-        elif cat.phenotype.dilute[0] == 'D' and cat.phenotype.pinkdilute[0] == 'dp':
+        elif cat.phenotype.dilute[0] == 'D' and (cat.phenotype.pinkdilute[0] == 'dp' or cat.phenotype.chs[0] == 'ch'):
             red_colour = "yellow"
-        else:
+        elif cat.phenotype.dilute == 'd' and (cat.phenotype.pinkdilute[0] == 'dp' or cat.phenotype.chs[0] == 'ch'):
             red_colour = 'creamy white'
+        else:
+            red_colour = 'warm white'
 
         if cat.phenotype.ext[0] == 'ec' and cat.phenotype.agouti[0] == 'a' and cat.moons == 6:
             event_text = "Throughout kittenhood m_c has gotten many comments about their unique coat. Well, it looks by now to have turned completely " + red_colour + "."

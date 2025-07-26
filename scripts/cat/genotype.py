@@ -77,6 +77,7 @@ class Genotype:
 
         self.dfca = ['dca','dca']
         self.rfca = ['Rca', 'Rca']
+        self.chs = ['Ch', 'Ch']
 
         self.wideband = ""
         self.wbtype = ""
@@ -215,6 +216,7 @@ class Genotype:
 
         self.dfca = jsonstring.get("dfca", ['dca', 'dca'])
         self.rfca = jsonstring.get("rfca", ['Rfca', 'Rfca'])
+        self.chs = jsonstring.get("chs", ['Ch', 'Ch'])
 
         self.wideband = jsonstring["wideband"]
         self.saturation = jsonstring.get("saturation", 3)
@@ -313,6 +315,7 @@ class Genotype:
 
             "DomFCA" : self.dfca,
             "RecFCA" : self.rfca,
+            "chs" : self.chs,
 
             "wideband" : self.wideband,
             "saturation" : self.saturation,
@@ -441,6 +444,10 @@ class Genotype:
                 self.ticked[i] = "Ta"
             else:
                 self.ticked[i] = "ta"
+
+        # CHEDIAK-HIGASHI SYNDROME
+            if self.odds["chediak-higashi syndrome"] > 0 and randint(1, self.odds["chediak-higashi syndrome"]) == 1:
+                self.chs[i] = "ch"
 
         if self.odds["breakthrough"] > 0 and randint(1, self.odds["breakthrough"]) == 1:
             self.breakthrough = True
@@ -852,7 +859,7 @@ class Genotype:
         if self.odds["dominant FCA"] > 0 and (randint(1, round(self.odds["dominant FCA"]/1.5)) == 1 or self.odds["dominant FCA"] == 1) and not self.ban_genes:
             self.dfca[0] = "Dca"
         for i in range(2):
-            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/1.5)) == 1 or self.odds["recessive FCA"] == 1) and not self.ban_genes:
+            if self.odds["recessive FCA"] > 0 and randint(1, round(self.odds["recessive FCA"]/0.5)) == 1 and not self.ban_genes:
                 self.rfca[i] = ""
     
         self.wideband = ''
@@ -1192,8 +1199,10 @@ class Genotype:
         self.munch = [choice(par1.munch), choice(par2.munch)]
         self.poly = [choice(par1.poly), choice(par2.poly)]
         self.pax3 = [choice(par1.pax3), choice(par2.pax3)]
+
         self.dfca = [choice(par1.dfca), choice(par2.dfca)]
         self.rfca = [choice(par1.rfca), choice(par2.rfca)]
+        self.chs = [choice(par1.chs), choice(par2.chs)]
 
         if random() < 0.25:
             self.saturation = par1.saturation
@@ -1583,7 +1592,7 @@ class Genotype:
         for gene in ["furLength", "dilute", 'silver', 'mack', 'ticked',
                      'wirehair', 'laperm', 'cornish', 'urals', 'tenn', 'fleece', 'ruhr', 'lykoi',
                      'pinkdilute', 'dilutemd', 'karp', 'bleach', 'ghosting', 'satin', 'glitter',
-                     'curl', 'fold', 'kab', 'toybob', 'jbob', 'kub', 'ring', 'munch', 'poly']:
+                     'curl', 'fold', 'kab', 'toybob', 'jbob', 'kub', 'ring', 'munch', 'poly', 'rfca', 'dfca', 'chs']:
             if self[gene][0] != self[gene][1] and self[gene][0].islower():
                 self[gene][0], self[gene][1] = self[gene][1], self[gene][0]
         for gene in self.april_fools.keys():
@@ -1688,14 +1697,7 @@ class Genotype:
         if self.pax3[0] == 'NoDBE':
             self.pax3[0] = self.pax3[1]
             self.pax3[1] = 'NoDBE'
-        
-        if self.dfca[1] == "Dfca":
-            self.dfca[1] = self.dfca[0]
-            self.dfca[0] = "Dfca"
-        
-        if self.rfca[1] == "rfca":
-            self.rfca[1] = self.rfca[0]
-            self.rfca[0] = "rfca"
+
 
     def EyeColourFinder(self):
         eyecolours = {
@@ -1729,10 +1731,10 @@ class Genotype:
             if randint(1, 5) == 1:
                 piggrade = piggrade - 1
 
-        if self.pinkdilute[0] == 'dp' or self.pointgene == ["cb", "cs"]:
+        if self.pinkdilute[0] == 'dp' or self.pointgene == ["cb", "cs"] or self.chs[0] == "ch":
             piggrade = math.ceil(piggrade / 2)
         
-        if piggrade == 0 or ((self.pointgene == ["cb", "cm"] or self.pointgene == ["cm", "cm"] or self.pointgene == ["cm", "c"]) and randint(1, 5) == 1):
+        if piggrade == 0 or ((self.pointgene == ["cb", "cm"] or self.pointgene == ["cm", "cm"] or self.pointgene == ["cm", "c"]) and randint(1, 5) == 1) or (self.pinkdilute[0] == 'dp' and self.chs[0] == "ch"):
             piggrade = 1
 
         def RefTypeFind(x, piggrade):
@@ -2008,7 +2010,7 @@ class Genotype:
                 elif x[0] != x[1] or x[0] not in ['cu', 'fd', 'm', 'ab', 'Kab', 'tb', 'Jb', 'kub', 'Rt', 'mk', 'pd', 'NoDBE']:
                     self.Body_Genes.append(x)
             for x in [self.dfca, self.rfca]:
-                if x[0] != x[1] or x[0] not in ['dca', '']:
+                if x[0] != x[1] or x[0] not in ['dca', 'Rca', 'Ch']:
                     self.Genetic_Disorders.append(x)
                     
             for x in self.april_fools.values():

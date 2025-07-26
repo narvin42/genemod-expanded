@@ -122,5 +122,13 @@
   "loose joints": [
     "r_c examines m_c's joints, which are loose and easily dislocated. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
     "m_c's joints are loose and easily dislocated."
+  ],
+  "sickly": [
+    "r_c examines m_c, who is sick yet again. {PRONOUN/r_c/subject} explains that m_c will need extra care throughout {PRONOUN/m_c/poss} life.",
+    "m_c frequently gets sick."
+  ],
+  "bleeds easily": [
+    "m_c has a small cut, but it won't stop bleeding. r_c examines m_c and explains that {PRONOUN/m_c/subject} needs to avoid injuries throughout {PRONOUN/m_c/poss} life.",
+    "m_c bleeds profusely from small cuts and scrapes."
   ]
 }

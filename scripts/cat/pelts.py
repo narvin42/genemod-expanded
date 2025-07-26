@@ -772,12 +772,12 @@ class Pelt:
         colour = ""
         if self.phenotype.white[0] == "W":
             colour = "WHITE"
-        elif 'point' in self.phenotype.point or 'silver' in self.phenotype.silvergold or (self.phenotype.dilute[0] == 'd' and self.phenotype.pinkdilute[0] == "dp"):
+        elif 'point' in self.phenotype.point or 'silver' in self.phenotype.silvergold or (self.phenotype.dilute[0] == 'd' and (self.phenotype.pinkdilute[0] == "dp" or self.phenotype.chs[0] == "ch")) or (self.phenotype.pinkdilute[0] == "dp" and self.phenotype.chs[0] == "ch"):
             colour = "PALE"
         elif 'gold' in self.phenotype.silvergold or 'sunshine' in self.phenotype.silvergold:
             colour = "GOLDEN"
         else:
-            if (self.phenotype.dilute[0] == 'd' or self.phenotype.pinkdilute[0] == "dp"):
+            if (self.phenotype.dilute[0] == 'd' or self.phenotype.pinkdilute[0] == "dp" or self.phenotype.chs[0] == "ch"):
                 if self.phenotype.colour in ['cream', 'cream apricot', 'honey']:
                     colour = "CREAM"
                 elif self.phenotype.colour in ['fawn', 'fawn caramel', 'buff']:

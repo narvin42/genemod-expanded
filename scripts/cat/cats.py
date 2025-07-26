@@ -653,7 +653,7 @@ class Cat:
         
         if(self.phenotype.pointgene[0] == 'c'):
             self.get_permanent_condition('albinism', born_with=True, genetic=True)
-        elif('albino' in self.phenotype.lefteyetype or self.phenotype.pinkdilute[0] == 'dp'):
+        elif('albino' in self.phenotype.lefteyetype or self.phenotype.pinkdilute[0] == 'dp' or self.phenotype.chs[0] == 'ch'):
             self.get_permanent_condition('ocular albinism', born_with=True, genetic=True)
         
         if self.phenotype.length == 'hairless':
@@ -676,8 +676,12 @@ class Cat:
             self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
             if random() < 0.1:
                 self.get_permanent_condition('loose joints', born_with=True, genetic=True)
-        elif self.phenotype.rfca[1] == 'rca':
+        elif self.phenotype.rfca[0] == 'rca':
             self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
+        
+        elif self.phenotype.chs[0] == 'ch':
+            self.get_permanent_condition('sickly', born_with=True, genetic=True)
+            self.get_permanent_condition('bleeds easily', born_with=True, genetic=True)
             
 
     @property
@@ -2210,8 +2214,16 @@ class Cat:
             
             self.pelt.rebuild_sprite = True
 
+        if "bleeds easily" in self.permanent_condition and "blood loss" in "risks":
+                self.also_got = True
+                additional_injury = "blood loss"
+        
         if len(new_injury.also_got) > 0 and not int(random() * 5):
             avoided = False
+            if "bleeds easily" in self.permanent_condition and "blood loss" in new_injury.also_got:
+                self.also_got = True
+                additional_injury = "blood loss"
+
             if (
                 "blood loss" in new_injury.also_got
                 and len(
@@ -2249,7 +2261,7 @@ class Cat:
 
         for condition in PERMANENT:
             possible = PERMANENT[condition]
-            if possible["congenital"] in ['always', 'sometimes'] and condition not in ['albinism', 'ocular albinism', "flat nose", "fully hairless", "partially hairless", "bumpy skin"]:
+            if possible["congenital"] in ['always', 'sometimes'] and condition not in ['albinism', 'ocular albinism', "flat nose", "fully hairless", "partially hairless", "bumpy skin", "fragile skin", "loose joints"]:
                 possible_conditions.append(condition)
 
         new_condition = choice(possible_conditions)

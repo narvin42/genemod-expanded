@@ -215,7 +215,7 @@ class Name:
             (self.phenotype.maincolour == 'white' and not self.phenotype.patchmain) or
             (self.phenotype.white[1] in ['ws', 'wt'] and self.phenotype.whitegrade == 5) or
             (self.phenotype.tortiepattern == ['revCRYPTIC'] and self.phenotype.brindledbi) or 
-            (self.phenotype.dilute[0] == 'd' and self.phenotype.pinkdilute[0] == 'dp' and 
+            (self.phenotype.dilute[0] == 'd' and (self.phenotype.pinkdilute[0] == 'dp' or self.phenotype.chs[0] == 'ch') and 
                 (('dove' in self.phenotype.colour and self.phenotype.saturation < 2) or 
                 ('platinum' in self.phenotype.colour and self.phenotype.saturation < 3) or
                 ('dove' not in self.phenotype.colour and 'platinum' not in self.phenotype.colour))) or

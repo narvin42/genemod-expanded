@@ -359,5 +359,27 @@
       "m_c's joints hurt all the time now, and r_c tells {PRONOUN/m_c/object} the pain is permanent.",
       "m_c's wobbly joints have caught up with {PRONOUN/m_c/object}, and the joints hurt."
     ]
-  }
+  },
+    "sickly": {
+    "running nose": [
+      "r_c feeds m_c disgusting herbs with {PRONOUN/m_c/poss} supper, concerned over {PRONOUN/m_c/poss} running nose. m_c thinks {PRONOUN/r_c/subject} should be more concerned with ruining {PRONOUN/m_c/poss} appetite!",
+      "m_c's nose has been running perpetually all moon."
+    ],
+    "whitecough": [
+      "r_c worst fears are realized as whitecough has infected m_c thanks to {PRONOUN/m_c/poss} susceptibility to disease.",
+      "m_c's susceptibility to disease has left {PRONOUN/m_c/object} coughing and wheezing this moon, unable to resist potential sickness."
+    ],
+    "greencough": [
+      "r_c worst fears are realized as greencough has infected m_c thanks to {PRONOUN/m_c/poss} susceptibility to disease.",
+      "m_c's susceptibility to disease has left {PRONOUN/m_c/object} coughing and wheezing this moon, unable to resist potential sickness."
+    ],
+    "yellowcough": [
+      "If only {PRONOUN/r_c/subject} had lungwort... r_c searches the herb stores, desperate for a way to help m_c through yellowcough.",
+      "m_c has been weak and fevered, only barely coherent... it seems {PRONOUN/m_c/subject} {VERB/m_c/have/has} yellowcough."
+    ],
+    "redcough": [
+      "r_c has quietly begun making m_c comfortable... or as comfortable as {PRONOUN/m_c/subject} can be while hacking blood.",
+      "m_c has been hacking up blood, {PRONOUN/m_c/poss} body growing weaker and weaker.  {PRONOUN/m_c/subject/CAP} may not last much longer."
+    ]    
+    }
 }

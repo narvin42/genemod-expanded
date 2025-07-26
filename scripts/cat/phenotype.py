@@ -91,32 +91,41 @@ class Phenotype(Genotype):
 
         if('o' not in self.sexgene):
             if(self.dilute[0] == "d"):
-                if(self.pinkdilute[0] == "dp"):
+                if (self.pinkdilute[0] == "dp" and self.chs[0] == "ch"):
+                    colour = "snow"
+                elif(self.pinkdilute[0] == "dp" or self.chs[0] == "ch"):
                     colour = "ivory"
                 else:
                     colour = "cream"
-
                 if(self.dilutemd[0] == "Dm"):
                     colour += " apricot"
             else:
-                if(self.pinkdilute[0] == "dp"):
+                if (self.pinkdilute[0] == "dp" and self.chs[0] == "ch"):
+                    colour = "ivory"
+                elif(self.pinkdilute[0] == "dp" or self.chs[0] == "ch"):
                     colour = "honey"
                 else:
                     colour = "red"
         else:
             if(self.dilute[0] == "d"):
                 if(self.eumelanin[0] == "B"):
-                    if(self.pinkdilute[0] == "dp"):
+                    if (self.pinkdilute[0] == "dp" and self.chs[0] == "ch"):
+                        colour += "pearl"
+                    elif(self.pinkdilute[0] == "dp" or self.chs[0] == "ch"):
                         colour += "platinum"
                     else:
                         colour = "blue"
                 elif(self.eumelanin[0] == "b"):
-                    if(self.pinkdilute[0] == "dp"):
+                    if (self.pinkdilute[0] == "dp" and self.chs[0] == "ch"):
+                        colour += "bone"
+                    elif(self.pinkdilute[0] == "dp" or self.chs[0] == "ch"):
                         colour += "lavender"
                     else:
                         colour = "lilac"
                 else:
-                    if(self.pinkdilute[0] == "dp"):
+                    if (self.pinkdilute[0] == "dp" and self.chs[0] == "ch"):
+                        colour += "powder"
+                    elif(self.pinkdilute[0] == "dp" or self.chs[0] == "ch"):
                         colour += "beige"
                     else:
                         colour = "fawn"
@@ -124,7 +133,14 @@ class Phenotype(Genotype):
                 if(self.dilutemd[0] == "Dm"):
                     colour += " caramel"
             else:
-                if(self.pinkdilute[0] == "dp"):
+                if (self.pinkdilute[0] == "dp" and self.chs[0] == "ch"):
+                    if self.eumelanin[0] == "B":
+                        colour += "platinum"
+                    elif(self.eumelanin[0] == "b"):
+                        colour = "lavender"
+                    else:
+                        colour = "beige"
+                if(self.pinkdilute[0] == "dp" or self.chs[0] == "ch"):
                     if(self.eumelanin[0] == "B"):
                         colour = "dove"
                     elif(self.eumelanin[0] == "b"):
@@ -197,15 +213,16 @@ class Phenotype(Genotype):
                 self.colour = 'agouti carnelian'
                 if(self.agouti[0] == 'a'):
                     self.colour = "non" + self.colour
-                if(self.dilute[0] == 'd' or self.pinkdilute[0] == 'dp'):
+                if(self.dilute[0] == 'd' or self.pinkdilute[0] == 'dp' or self.chs[0] == 'ch'):
                     self.colour = "light " + self.colour
             
             elif(self.ext[0] == 'er'):
                 self.colour += ' russet'
             elif(self.ext[0] == 'ea'):
-                if(self.dilute[0] == 'd' or self.pinkdilute[0] == 'dp'):
+                if(self.dilute[0] == 'd' or self.pinkdilute[0] == 'dp' or self.chs[0] == 'ch'):
                     self.colour += " light"
                 self.colour += ' amber'
+
     def KarpFadeFinder(self):
         self.karpati = ""
         self.fade = ""
@@ -242,13 +259,13 @@ class Phenotype(Genotype):
         self.silvergold = ""
 
         if((self.agouti[0] == 'a' or self.ext[0] == 'Eg') and 'o' in self.sexgene):
-            if(self.silver[0] == 'I'):
+            if(self.silver[0] == 'I' or self.chs[0] == 'ch'):
                 if(self.wbsum > 13):
                     self.silvergold = 'masked silver '
                 else:
                     self.silvergold += 'smoke '
         else:
-            if(self.silver[0] == 'I'):
+            if(self.silver[0] == 'I' or self.chs[0] == 'ch'):
                 if(self.corin[0] in ['sg', 'sh'] or (self.ext[0] != 'ec' and self.ext[1] == 'ec')):
                     self.silvergold = 'bimetallic '
                 elif(self.corin[0] == 'fg'):
@@ -257,7 +274,7 @@ class Phenotype(Genotype):
                     self.silvergold = 'cameo '
                 else:
                     self.silvergold = 'silver '
-                if self.pseudomerle:
+                if self.pseudomerle and self.chs[0] != 'ch':
                     self.silvergold += "pseudo-merle "
             elif (self.corin[0] == 'sg'): 
                 self.silvergold = 'extreme sunshine '
@@ -705,12 +722,16 @@ class Phenotype(Genotype):
                 self.patchunders = [main[2], main[3]]
     def FindEumUnders(self, genes, wideband, rufousing, unders_ruf):
         if(genes.dilute[0] == "d"):
-            if(genes.pinkdilute[0] == "dp"):
+            if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                colour = "snow"
+            elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                 colour = "ivory"
             else:
                 colour = "cream"
         else:
-            if(genes.pinkdilute[0] == "dp"):
+            if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                colour = "ivory"
+            elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                 colour = "honey"
             else:
                 colour = "red"
@@ -730,7 +751,7 @@ class Phenotype(Genotype):
         return colour
     def GetSilverUnders(self, wideband):
         if wideband == "low":
-           return 20
+            return 20
         elif wideband == "medium":
             return 40
         elif wideband == "high":
@@ -761,12 +782,16 @@ class Phenotype(Genotype):
                     self.caramel = 'caramel'
                 
                 if genes.dilute[0] == "d":
-                    if(genes.pinkdilute[0] == "dp"):
+                    if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                        colour = "powder"
+                    elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                         colour = "beige"
                     else:
                         colour = "fawn"
                 else:
-                    if(genes.pinkdilute[0] == "dp"):
+                    if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                        colour = "beige"
+                    elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                         colour = "buff"
                     else:
                         colour = "cinnamon"
@@ -776,12 +801,16 @@ class Phenotype(Genotype):
                     self.caramel = 'caramel'
                 
                 if genes.dilute[0] == "d":
-                    if(genes.pinkdilute[0] == "dp"):
+                    if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                        colour = "bone"
+                    elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                         colour = "lavender"
                     else:
                         colour = "lilac"
                 else:
-                    if(genes.pinkdilute[0] == "dp"):
+                    if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                        colour = "lavender"
+                    elif(genes.pinkdilute[0] == "dp"):
                         colour = "champagne"
                     else:
                         colour = "chocolate"
@@ -791,12 +820,16 @@ class Phenotype(Genotype):
                     self.caramel = 'caramel'
                 
                 if(genes.dilute[0] == "d"):
-                    if(genes.pinkdilute[0] == "dp"):
+                    if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                        colour = "pearl"
+                    elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                         colour = "platinum"
                     else:
                         colour = "blue"
                 else:
-                    if(genes.pinkdilute[0] == "dp"):
+                    if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                        colour = "platinum"
+                    elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                         colour = "dove"
                     else:
                         colour = "black"
@@ -858,7 +891,12 @@ class Phenotype(Genotype):
             else:
                 maincolour = 'low'
         if(genes.dilute[0] == "d" or (genes.specialred == 'cameo' and genes.silver[0] == 'I') or self.merlepattern):
-            if(genes.pinkdilute[0] == "dp"):
+            if (genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                if genes.dilutemd[0] == "Dm":
+                    colour = "snow-apricot"
+                else:
+                    colour = "snow"
+            elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                 if genes.dilutemd[0] == "Dm":
                     colour = "ivory-apricot"
                 else:
@@ -869,7 +907,12 @@ class Phenotype(Genotype):
                 else:
                     colour = "cream"
         else:
-            if(genes.pinkdilute[0] == "dp"):
+            if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+                if genes.dilutemd[0] == "Dm":
+                    colour = "ivory-apricot"
+                else:
+                    colour = "ivory"
+            if(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                 if genes.dilutemd[0] == "Dm":
                     colour = "honey-apricot"
                 else:
@@ -949,6 +992,7 @@ class Phenotype(Genotype):
             colour = colour.replace('cream', 'lilac')
             colour = colour.replace('honey', 'dove')
             colour = colour.replace('ivory', 'lavender')
+            colour = colour.replace('snow', 'bone')
             if(genes.specialred == 'cinnamon'):
                 if('red' in maincolour):
                     maincolour = 'cinnamon3'
@@ -958,6 +1002,8 @@ class Phenotype(Genotype):
                     maincolour = 'buff3'
                 elif('ivory' in maincolour):
                     maincolour = 'beige3'
+                elif('snow' in maincolour):
+                    maincolour = 'powder'
                 
                 if('apricot' in maincolour):
                     self.caramel = 'caramel'
