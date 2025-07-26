@@ -1016,7 +1016,7 @@ class Phenotype(Genotype):
                 elif('ivory' in maincolour):
                     maincolour = 'beige3'
                 elif('snow' in maincolour):
-                    maincolour = 'powder'
+                    maincolour = 'powder3'
                 
                 if('apricot' in maincolour):
                     self.caramel = 'caramel'
