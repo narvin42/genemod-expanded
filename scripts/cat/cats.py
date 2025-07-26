@@ -2212,9 +2212,13 @@ class Cat:
             
             self.pelt.rebuild_sprite = True
 
-        if "bleeds easily" in self.permanent_condition and "blood loss" in "risks":
-                self.also_got = True
-                additional_injury = "blood loss"
+        if "bleeds easily" in self.permanent_condition and "blood loss" in new_injury.risks:
+            self.also_got = True
+            additional_injury = "blood loss"
+        
+        if "sickly" in self.permanent_condition and "an infected wound" in new_injury.risks:
+            self.also_got = True
+            additional_injury = "an infected wound"
         
         if len(new_injury.also_got) > 0 and not int(random() * 5):
             avoided = False
