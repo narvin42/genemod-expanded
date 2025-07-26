@@ -197,7 +197,7 @@ class Sprites:
         for i, x in enumerate(["black", "chocolate", "cinnamon", 
                                "blue", "lilac", "fawn", 
                                "dove", "champagne", "buff", 
-                               "platinum", "lavender", "beige"
+                               "platinum", "lavender", "beige",
                                "pearl", "bone", "powder"]):
             self.make_group('base/eumelanin', (0, i), f'{x}', sprites_x=7, sprites_y=1)
         for i, x in enumerate(["rufousedred", "mediumred", "lowred", 
@@ -271,7 +271,7 @@ class Sprites:
         #genemod extra
         self.make_group('Other/ears', (0, 0), 'ears')
         self.make_group('Other/noses', (0, 0), 'nose')
-        self.make_group('Other/nose_colours', (0, 0), 'nosecolours', sprites_y=5)
+        self.make_group('Other/nose_colours', (0, 0), 'nosecolours', sprites_y=6)
         self.make_group('Other/paw_pads', (0, 0), 'pads')
 
         #genemod eyes

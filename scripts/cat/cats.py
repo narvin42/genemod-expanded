@@ -676,7 +676,7 @@ class Cat:
             self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
             if random() < 0.1:
                 self.get_permanent_condition('loose joints', born_with=True, genetic=True)
-        elif self.phenotype.rfca[0] == 'rca':
+        elif self.phenotype.rfca[0] == 'fca':
             self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
         
         elif self.phenotype.chs[0] == 'ch':

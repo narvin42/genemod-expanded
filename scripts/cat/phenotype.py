@@ -978,7 +978,20 @@ class Phenotype(Genotype):
                 colour = "honey"
                 if rufousing != "silver":
                     rufousing = "low"
-
+        elif colour == "snow-apricot":
+            if genes.ruftype == "low":
+                colour = "snow"
+                if rufousing != "silver":
+                    rufousing = "medium"
+            elif genes.ruftype == "medium":
+                colour = "snow"
+                if rufousing != "silver":
+                    rufousing = "rufoused"
+            else:
+                colour = "ivory"
+                if rufousing != "silver":
+                    rufousing = "low"
+    
         if (genes.ext[0] == "ec" and genes.agouti[0] == "a" and 'o' in genes.sexgene):
             unders_opacity = 0
         elif rufousing == "silver" or (genes.ext[0] == "ec" and genes.agouti[0] != "a" and 'o' in genes.sexgene):

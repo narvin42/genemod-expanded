@@ -3588,7 +3588,7 @@ def generate_sprite(
                     'beige' : 14,
                     'pearl' : 15,
                     'bone' : 16,
-                    'powder' : 17,
+                    'powder' : 17
                 }
 
                 if maincolour == "white":

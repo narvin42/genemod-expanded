@@ -575,10 +575,10 @@ dev_tools = false
   homo_dom_white_one_blue_eye = 3
 
   longhair = 2
-  cinnamon = 30
-  chocolate = 15
+  cinnamon = 2
+  chocolate = 2
   red = 4
-  dilute = 2
+  dilute = 1
   "dominant white" = 15
   "white spotting" = 3
   "birman gloving" = 10
@@ -594,7 +594,7 @@ dev_tools = false
   blotched = 3
   ticked = 10
 
-  "pink-eyed dilute" = 400
+  "pink-eyed dilute" = 1
   "dilute modifier" = 150
   grizzle = 275
   carnelian = 200
@@ -636,7 +636,7 @@ dev_tools = false
 
   "dominant FCA" = 250
   "recessive FCA" = 1000
-  "chediak-higashi syndrome" = 1000
+  "chediak-higashi syndrome" = 1
 
   body_ranges = [1, 4, 12, 60, 12, 4, 1]
   height_ranges = [1, 4, 12, 60, 180, 60, 12, 2, 2, 1]
