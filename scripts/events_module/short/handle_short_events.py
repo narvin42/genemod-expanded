@@ -440,7 +440,7 @@ class HandleShortEvents:
             if ("clancat" not in attribute_list and "change_clan" not in attribute_list) or game.clan.clancount != 'multiclan':
                 self.new_cats.append(
                     create_new_cat_block(
-                        Cat, Relationship, self, in_event_cats, i, attribute_list, clan=clan.enum
+                        Cat, Relationship, self, in_event_cats, i, attribute_list, clan=clan.enum, other_clan=other_clan
                     )
                 )
             else:
@@ -667,6 +667,7 @@ class HandleShortEvents:
                     if tnr and 'TNR' not in kitty.pelt.scars:
                         if kitty.moons > 3:
                             kitty.pelt.scars.append("TNR")
+                            kitty.pelt.rebuild_sprite = True
                             kitty.get_permanent_condition("infertility", False)
                             if 'pregnant' in kitty.injuries:
                                 kitty.permanent_condition['infertility']['moon_start'] += 3
