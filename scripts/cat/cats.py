@@ -1765,6 +1765,7 @@ class Cat:
                 while all_cats and (
                     (other_cat.dead and not thinking_of_dead_cat)
                     or other_cat.ID not in self.relationships
+                    or other_cat.status.group != self.status.group
                 ):
                     all_cats.remove(other_cat)
 
