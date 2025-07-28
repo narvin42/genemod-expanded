@@ -644,8 +644,12 @@ class Genotype:
 
         for i in range(2):
             if self.odds["recessive FCA"] > 0 and randint(1, self.odds["recessive FCA"]) == 1 and not self.ban_genes:
-                self.rfca[i] = "fca"
-
+                self.rfca[i] = "rca"
+        
+        for i in range(2):
+            if self.odds["chediak-higashi syndrome"] > 0 and randint(1, self.odds["chediak-higashi syndrome"]) == 1 and not self.ban_genes:
+                self.chs[i] = "ch"
+                
         self.wideband = ''
         self.rufousing = ''
         self.spotted = ''
@@ -860,8 +864,11 @@ class Genotype:
             self.dfca[0] = "Dca"
         for i in range(2):
             if self.odds["recessive FCA"] > 0 and randint(1, round(self.odds["recessive FCA"]/0.5)) == 1 and not self.ban_genes:
-                self.rfca[i] = "fca"
-    
+                self.rfca[i] = "rca"
+        for i in range(2):
+            if self.odds[i] ["chediak-higashi syndrome"] > 0 and randint(1, round(self.odds["chediak-higashi syndrome"]/0.5)) == 1 and not self.ban_genes:
+                self.chs = "ch"
+
         self.wideband = ''
         self.rufousing = ''
         self.spotted = ''
@@ -2147,10 +2154,10 @@ class Genotype:
             else:
                 self.Mutate()
         elif(which == 'rfca'):
-            if(self.rfca[0] == 'fca'):
-                self.rfca[0] = 'Fca'
-            elif(self.rfca[1] == 'fca'):
-                self.rfca[1] = 'Fca'
+            if(self.rfca[0] == 'Rca'):
+                self.rfca[0] = 'rca'
+            elif(self.rfca[1] == 'Rca'):
+                self.rfca[1] = 'rca'
             else:
                 self.Mutate()
         else:
