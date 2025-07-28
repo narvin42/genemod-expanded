@@ -810,7 +810,7 @@ class Phenotype(Genotype):
                 else:
                     if(genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
                         colour = "lavender"
-                    elif(genes.pinkdilute[0] == "dp"):
+                    elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
                         colour = "champagne"
                     else:
                         colour = "chocolate"
