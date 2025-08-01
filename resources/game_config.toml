@@ -317,6 +317,11 @@ dev_tools = false
     mid = 0.1
     big = 0.15
     large = 0.2
+  [pregnancy.miscarriage_chances]
+    "young adult" = 0.01
+    adult = 0.05
+    "senior adult" = 0.10
+    senior = 0.15
 
 [cat_generation]
   # base 1/chance that a cat will generate with a permanent condition. gets modified further in code

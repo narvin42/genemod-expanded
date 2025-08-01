@@ -40,6 +40,8 @@
       "disasters_tooltip": "This may result in up to 1/3rd of your Clan dying in one moon.",
       "modded_kits": "Use modded litters",
       "modded_kits_tooltip": "Gives larger litters, and higher kit death chances",
+      "miscarriage": "Allow miscarriages",
+      "miscarriage_tooltip": "Cats may lose their litters due to miscarriages.",
       "tnr_mode": "Cats can be spayed/neutered by Twolegs",
       "tnr_mode_tooltip": "Kittypets, loners, and Clan cats caught by Twolegs now have a chance of ending up spayed or neutered",
       "showheight": "Show exact cat shoulder height on profile",

@@ -35,6 +35,11 @@
         "Gives larger litters, and higher kit death chances",
         false
       ],
+      "miscarriage": [
+        "Allow miscarriages",
+        "Cats may lose their litters due to miscarriages.",
+        false
+      ],
       "tnr_mode": [
         "Cats can be spayed/neutered by Twolegs",
         "Kittypets, loners, and Clan cats caught by Twolegs now have a chance of ending up spayed or neutered",

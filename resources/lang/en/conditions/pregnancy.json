@@ -58,6 +58,17 @@
         "They should also start with a space in order to ensure there is a space between the announcement/litter sentence and the severity sentence."
     ],
     "birth": {
+      "miscarriage": [
+        "m_c lost {PRONOUN/m_c/poss} litter.",
+        "m_c had a miscarriage."
+      ],
+      "grief": [
+        "m_c is devastated by the loss of {PRONOUN/m_c/poss} litter.",
+        "m_c is inconsolable, wailing and crying over the loss of {PRONOUN/m_c/poss} litter.",
+        "m_c is heartbroken, unable to stop crying over the loss of {PRONOUN/m_c/poss} litter.",
+        "m_c is grieving deeply, unable to focus on anything but the loss of {PRONOUN/m_c/poss} litter.",
+        "m_c is mourning the loss of {PRONOUN/m_c/poss} litter, feeling empty and lost without them."
+      ],
       "otherclan_mother": [
         "Many cats have been questioning where m_c's litter could have gone despite {PRONOUN/m_c/object} insisting {PRONOUN/m_c/subject} {VERB/m_c/were/was} never pregnant."
       ],

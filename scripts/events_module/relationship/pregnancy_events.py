@@ -578,14 +578,45 @@ class Pregnancy_Events:
             del game.clan.pregnancy_data[cat.ID]
             return
 
+        Pregnancy_Events.rebuild_strings()
+        events = Pregnancy_Events.PREGNANT_STRINGS
+        event_list = []
+        wobbly = game.clan.pregnancy_data[cat.ID].get('fpv', False)
+
+        # miscarriage function
+        if get_clan_setting('miscarriage'):
+            miscarriage_chance = constants.CONFIG['pregnancy']['miscarriage_chances'][cat.age.value]
+        else:
+            miscarriage_chance = 0
+        miscarriage = False
+
+        if wobbly == True and miscarriage_chance > 0 and random() < 0.80:
+            miscarriage = True
+        elif random() < miscarriage_chance:
+            miscarriage = True
+        
+        if miscarriage == True:
+            event_list.append(choice(events["birth"]["miscarriage"]))
+            cat.get_injured("recovering from birth", event_triggered=True)
+            if random() < 0.80:
+                cat.get_ill("grief stricken", event_triggered=True)
+                event_list.append(choice(events["birth"]["grief"]))
+            print_event = " ".join(event_list)
+            print_event = event_text_adjust(Cat, print_event, main_cat=cat, clan=clan.enum)
+            game.cur_events_list.append(
+            Single_Event(
+                print_event, ["health", "birth_death"], cat, clan=clan.enum
+            ))
+            del game.clan.pregnancy_data[cat.ID]
+            del cat.injuries["pregnant"]
+            return
+    
         amount = Pregnancy_Events.get_amount_of_kits(cat, game.clan)
         
         text = 'This should not appear (pregnancy_events.py)'
 
         # add the amount to the pregnancy dict
         game.clan.pregnancy_data[cat.ID]["amount"] = amount
-
-        wobbly = game.clan.pregnancy_data[cat.ID].get('fpv', False)
 
         if len(cat.illnesses) > 0:
             for illness in cat.illnesses:
