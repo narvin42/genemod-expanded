@@ -320,6 +320,8 @@ class Phenotype(Genotype):
                         self.tabby += 'pinstripe'
             elif(self.mack[0] == 'mc'):
                 self.tabby = 'blotched'
+                if self.sheeted:
+                    self.tabby = "sheeted " + self.tabby
             elif(self.spotsum > 5):
                 self.tabby = 'spotted'
             else:
@@ -335,8 +337,8 @@ class Phenotype(Genotype):
                         self.tabby = "broken braided"
                     elif(self.tabby == "mackerel"):
                         self.tabby = "braided"
-                    elif(self.tabby == "blotched"):
-                        self.tabby = "marbled"
+                    elif("blotched" in self.tabby):
+                        self.tabby.replace("blotched", "marbled")
 
                     elif(self.tabby == "servaline"):
                         self.tabby += "-rosetted"
@@ -511,67 +513,77 @@ class Phenotype(Genotype):
 
         return outputs
     
-    def GetTabbySprite(self, special = None):
-        pattern = ""
+    def GetTabbySprite(self, special=None):
+        all_patterns = []
 
-        if(special == 'redbar'):
-            if(self.mack[0] == "mc"):
-                pattern = 'redbarc'
+        if (special == 'redbar'):
+            all_patterns = ['redbaralt']
+        elif (special == 'ghost'):
+            all_patterns = ['fullbaralt']
+        elif (self.wbtype == 'chinchilla' or self.ticked[1] == "Ta" or ((not self.breakthrough or self.mack[0] == "mc") and self.ticked[0] == "Ta")):
+            if (self.ticktype == "agouti" or self.wbtype == 'chinchilla'):
+                all_patterns = ['agouti']
+            elif (self.ticktype == 'reduced barring'):
+                all_patterns = ['redbar']
             else:
-                pattern = 'redbar'
-        elif(special == 'ghost'):
-            pattern = 'fullbarc'
-        elif(self.wbtype == 'chinchilla' or self.ticked[1] == "Ta" or (not self.breakthrough and self.ticked[0] == "Ta")):
-            if(self.ticktype == "agouti" or self.wbtype == 'chinchilla'):
-                pattern = 'agouti'
-            elif(self.ticktype == 'reduced barring'):
-                if(self.mack[0] == "mc"):
-                    pattern = 'redbarc'
+                all_patterns = ['fullbar']
+        elif (self.ticked[0] == "Ta"):
+            if (self.bengtype == "normal markings"):
+                if (self.spotsum == 4):
+                    all_patterns = ['brokenpins', 'pinsbar']
+                elif (self.spotsum < 6):
+                    all_patterns = ['pinstripe', 'pinsbar']
                 else:
-                    pattern = 'redbar'
+                    all_patterns = ['servaline', 'pinsbar']
             else:
-                if(self.mack[0] == "mc"):
-                    pattern = 'fullbarc'
+                if (self.spotsum == 4):
+                    all_patterns = ['brokenpinsbraid', 'pinsbar']
+                elif (self.spotsum < 6):
+                    all_patterns = ['pinsbraided', 'pinsbar']
                 else:
-                    pattern = 'fullbar'
-        elif(self.ticked[0] == "Ta"):
-            if(self.bengtype == "normal markings"):
-                if(self.spottype == "broken stripes"):
-                    pattern = 'brokenpins'
-                elif(self.spotsum < 6):
-                    pattern = 'pinstripe'
-                else:
-                    pattern = 'servaline'
+                    all_patterns = ['leopard', 'pinsbar']
+        elif (self.mack[0] == "mc"):
+            if (self.bengtype == "normal markings"):
+                all_patterns = ['blotched', 'blotchbar']
+            elif self.bengtype == "mild bengal":
+                all_patterns = ["marbled", "marbled", 'blotchbar']
             else:
-                if(self.spottype == "broken stripes"):
-                    pattern = 'brokenpinsbraid'
-                elif(self.spotsum < 6):
-                    pattern = 'pinsbraided'
-                else:
-                    pattern = 'leopard'
-        elif(self.mack[0] == "mc"):
-            if(self.bengtype == "normal markings"):
-                pattern = 'classic'
-            else:
-                pattern = 'marbled'
+                all_patterns = ['marbled', 'blotchbar']
         else:
-            if(self.bengtype == "normal markings"):
-                if(self.spottype == "broken stripes"):
-                    pattern = 'brokenmack'
-                elif(self.spotsum < 6):
-                    pattern = 'mackerel'
+            if (self.bengtype == "normal markings"):
+                if (self.spotsum == 4):
+                    all_patterns = ['brokenmack', 'fullbar']
+                elif (self.spotsum < 6):
+                    all_patterns = ['mackerel', 'fullbar']
                 else:
-                    pattern = 'spotted'
+                    all_patterns = ['spotted', 'fullbar']
+            elif (self.bengtype == "mild bengal"):
+                if (self.spotsum == 4):
+                    all_patterns = ['brokenbraid', 'fullbar']
+                elif (self.spotsum < 6):
+                    all_patterns = ['braided', 'fullbar']
+                else:
+                    all_patterns = ['partialrosetted', 'fullbar']
             else:
-                if(self.spottype == "broken stripes"):
-                    pattern = 'brokenbraid'
-                elif(self.spotsum < 6):
-                    pattern = 'braided'
+                if (self.spotsum == 4):
+                    all_patterns = ['brokenbraid', 'fullbar']
+                elif (self.spotsum < 6):
+                    all_patterns = ['braided', 'fullbar']
                 else:
-                    pattern = 'rosetted'
-                
+                    all_patterns = ['rosetted', 'fullbar']
 
-        return pattern     
+        if all_patterns[0] != "agouti":
+            if self.bengtype != "normal markings":
+                tail = "bengtail"
+            else:
+                if self.mack[0] == "mc":
+                    tail = "blotchtail"
+                else:
+                    tail = "macktail"
+            all_patterns.append(tail)
+
+        return all_patterns
+  
     def ChooseTortiePattern(self, spec = None):
         self.def_tortie_low_patterns = ['DELILAH', 'MOTTLED', 'EYEDOT', 'BANDANA', 'SMUDGED', 'EMBER', 'BRINDLE', 'SAFI', 'BELOVED', 'BODY', 
                                     'SHILOH', 'FRECKLED']
@@ -605,18 +617,16 @@ class Phenotype(Genotype):
                 tortie_high_patterns = self.def_tortie_high_patterns
 
                 if randint(1, 15) == 1 or (i > 0 and randint(1, 10) == 1):
-                    tortie_low_patterns = ["BOWTIE", "BROKENBLAZE", "BUZZARDFANG", "revCOWTWO", "FADEBELLY", "revLOVEBUG", "MITAINE", 
-                                        "revPEBBLESHINE", "revPIEBALD", "SAVANNAH",
-                                        choice(tiny_patches)]
-                    tortie_mid_patterns = ["revAPPALOOSA", "BLOSSOMSTEP", "BOWTIE", "revBROKEN", "revBUB", "BULLSEYE", "revBUSTER", "BUZZARDFANG",
-                                        "revCOW", "revCOWTWO", "DAMIEN", "DAPPLEPAW", "DIVA", "FCTWO", "revFINN", "FRECKLES", "revGLASS", "HAWKBLAZE",
-                                        "revLOVEBUG", "MITAINE", "PAINTED", "PANTSTWO", "revPEBBLE", "revPIEBALD", "ROSINA", "revSHOOTINGSTAR", "SPARROW",
-                                        "WOODPECKER",
-                                        choice(tiny_patches)]
-                    tortie_high_patterns = ["revANY", "revANYTWO", "BLOSSOMSTEP", "revBUB", "revBUDDY", "revBUSTER", "revCAKE", "revCOW", "revCURVED",
-                                        "DAPPLEPAW", "FCTWO", "FAROFA", "revGOATEE", "revHALFFACE", "HAWKBLAZE", "LILTWO", "MISS", "MISTER", "revMOORISH", 
-                                        "OWL", "PANTS", "revPRINCE", "REVERSEPANTS", "RINGTAIL", "SAMMY", "SKUNK", "SPARROW", "TOPCOVER", "VEST", "WINGS",
-                                        choice(tiny_patches)]
+                    tortie_low_patterns = ["BOWTIE", "BROKENBLAZE", "BUZZARDFANG", "revCOWTWO", "FADEBELLY", "FADESPOTS", "revLOVEBUG", 
+                                        "MITAINE", "revPEBBLESHINE", "revPIEBALD", "SAVANNAH"]*2 + tiny_patches
+                    tortie_mid_patterns = ["revAPPALOOSA", "BLOSSOMSTEP", "BOWTIE", "revBROKEN", "revBUB", "BULLSEYE", "revBUSTER", 
+                                        "BUZZARDFANG", "revCOW", "revCOWTWO", "DAMIEN", "DAPPLEPAW", "DIVA", "FCTWO", "revFINN", 
+                                        "FRECKLES", "revGLASS", "HAWKBLAZE", "revLOVEBUG", "MITAINE", "PAINTED", "PANTSTWO", 
+                                        "revPEBBLE", "revPIEBALD", "ROSINA", "revSHOOTINGSTAR", "SPARROW", "WOODPECKER"]*2 + tiny_patches
+                    tortie_high_patterns = ["revANY", "revANYTWO", "BLOSSOMSTEP", "revBUB", "revBUDDY", "revBUSTER", "revCAKE", 
+                                        "revCOW", "revCURVED", "DAPPLEPAW", "FCTWO", "FAROFA", "revGOATEE", "revHALFFACE", 
+                                        "HAWKBLAZE", "LILTWO", "MISS", "MISTER", "revMOORISH", "OWL", "PANTS", "revPRINCE", 
+                                        "REVERSEPANTS", "RINGTAIL", "SAMMY", "SKUNK", "SPARROW", "TOPCOVER", "VEST", "WINGS"]*2 + tiny_patches
                 elif i > 0 and randint(1, 3) == 1:
                     tortie_low_patterns = tiny_patches
                     tortie_mid_patterns = tiny_patches

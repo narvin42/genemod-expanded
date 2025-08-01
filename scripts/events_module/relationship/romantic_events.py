@@ -540,7 +540,7 @@ class RomanticEvents:
             relationship_from.comfortable -= 10
 
         text = choice(RomanticEvents.BREAKUP_STRINGS[breakup_type])
-        text = event_text_adjust(Cat, text, main_cat=cat_from, random_cat=cat_to, clan=cat_from.group)
+        text = event_text_adjust(Cat, text, main_cat=cat_from, random_cat=cat_to, clan=cat_from.status.group)
         clan = cat_from.status.group.fetch_clan_object(game.clan)
         other_clan = cat_to.status.group.fetch_clan_object(game.clan)
         game.cur_events_list.append(
@@ -693,7 +693,7 @@ class RomanticEvents:
         # Moving on, not breakups, occur when one mate is dead or outside.
         if (
             (not cat_from.status.is_any_clan_group() and (cat_from.status.is_lost() or cat_from.status.is_exiled()))
-            or not (cat_to.status.is_any_clan_group() and (cat_to.status.is_lost() or cat_to.status.is_exiled()))
+            or (not cat_to.status.is_any_clan_group() and (cat_to.status.is_lost() or cat_to.status.is_exiled()))
         ):
             return False
 
