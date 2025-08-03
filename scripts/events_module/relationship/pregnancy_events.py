@@ -599,9 +599,11 @@ class Pregnancy_Events:
         if miscarriage == True:
             event_list.append(choice(events["birth"]["miscarriage"]))
             cat.get_injured("recovering from birth", event_triggered=True)
-            if random() < 0.80:
+            if random() < 0.50:
                 cat.get_ill("grief stricken", event_triggered=True)
                 event_list.append(choice(events["birth"]["grief"]))
+            elif random() < 0.25:
+                event_list.append(choice(events["birth"]["relief"]))
             print_event = " ".join(event_list)
             print_event = event_text_adjust(Cat, print_event, main_cat=cat, clan=clan.enum)
             game.cur_events_list.append(
