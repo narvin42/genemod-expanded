@@ -856,8 +856,8 @@ class Events:
         for cat in Cat.all_cats.values():
             if not cat.status.is_lost(clan.enum):
                 continue
-            TNRed = True if ('infertility' in cat.permanent_condition and 'TNR' in cat.pelt.scars and 
-            game.clan.age - cat.permanent_condition['infertility']['moon_start'] == 1) else False
+            TNRed = True if ('sterile' in cat.permanent_condition and 'TNR' in cat.pelt.scars and 
+            game.clan.age - cat.permanent_condition['sterile']['moon_start'] == 1) else False
             if (cat.status.is_outsider
             and not cat.dead
             and TNRed):
@@ -879,7 +879,7 @@ class Events:
                 if x in Cat.all_cats:
                     Cat.all_cats[x].backstory = 'kittypet' + str(random.randint(1, 4))
                     Cat.all_cats[x].name.suffix = ''
-                    Cat.all_cats[x].get_permanent_condition("infertility", False, custom_reveal=4)
+                    Cat.all_cats[x].get_permanent_condition("sterile", False, custom_reveal=4)
         text = event_text_adjust(Cat, text, main_cat=eligible_cats[0], clan=clan.enum)
         game.cur_events_list.append(Single_Event(text, "misc", cat_IDs, clan=clan.enum))
         
@@ -899,7 +899,7 @@ class Events:
                 if cat.dead or not cat.status.is_lost(clan.enum):
                     continue
 
-                if "infertility" not in cat.permanent_condition or game.clan.age - cat.permanent_condition["infertility"]["moon_start"] > -1:
+                if "sterile" not in cat.permanent_condition or game.clan.age - cat.permanent_condition["sterile"]["moon_start"] > -1:
                     eligible_cats.append(cat)
                 elif cat.status.is_lost(clan.enum):
                     pass
@@ -2045,17 +2045,7 @@ class Events:
         """
         chance = 200
 
-        alive_cats = list(
-            filter(
-                lambda kitty: (
-                    kitty.status.rank != CatRank.LEADER
-                    and kitty.status.group == clan.enum
-                ),
-                Cat.all_cats.values(),
-            )
-        )
-
-        clan_size = len(alive_cats)
+        clan_size = get_living_clan_cat_count(Cat, clan.enum)
 
         base_chance = 700
         if clan_size < 10:
@@ -2067,17 +2057,14 @@ class Events:
         if clan != game.clan:
             # Increase chance if secondary Clan is smaller than main clan
 
-            main_clan_alive_cats = len(
-                list(
-                    filter(
-                        lambda kitty: (
-                            kitty.status.rank != CatRank.LEADER
-                            and kitty.status.alive_in_player_clan
-                        ),
-                        Cat.all_cats.values(),
-                    )
-                ))
+            main_clan_alive_cats = get_living_clan_cat_count(Cat)
             ratio = clan_size / (main_clan_alive_cats or 1)
+
+            if ratio < 0.33:
+                base_chance = int(base_chance * ratio / 2)
+
+            if ratio < 0.5:
+                base_chance = int(base_chance * ratio)
 
             if ratio < 0.75:
                 base_chance = int(base_chance * ratio * 1.25)
