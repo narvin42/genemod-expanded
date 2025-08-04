@@ -518,7 +518,10 @@ class Events:
                                     "healer_backstories"
                                 ]
                             ):
-                                invited_cat.status._change_rank(CatRank.MEDICINE_CAT)
+                                if invited_cat.age == CatAge.ADOLESCENT:
+                                    invited_cat.status._change_rank(CatRank.MEDICINE_APPRENTICE)
+                                else:
+                                    invited_cat.status._change_rank(CatRank.MEDICINE_CAT)
                             # if cat is a little baby, check name
                             elif invited_cat.age in (CatAge.NEWBORN, CatAge.KITTEN):
                                 if not invited_cat.name.suffix:
@@ -691,7 +694,7 @@ class Events:
                 healthy_other = list(
                     filter(
                         lambda c: c.moons > 3
-                        and not c.status.alive_in_player_clan
+                        and c.status.alive_in_player_clan
                         and not c.not_working(),
                         Cat.all_cats.values(),
                     )
