@@ -322,92 +322,108 @@
             "The itching or jabbing from a pesky hair or occasional debri was annoying, sure, but m_c feels far more alarmed now that {PRONOUN/m_c/subject}{VERB/m_c/'ve/'s} noticed a cloudiness to {PRONOUN/m_c/poss} vision."
         ]
     },
-  "wobbly" : {
-    "broken back": [
-      "m_c's back feels like it's on fire after {PRONOUN/m_c/subject} fell, and r_c is quick to help {PRONOUN/m_c/object} to the healer den.",
-      "m_c fell and landed hard on {PRONOUN/m_c/poss} back, leaving {PRONOUN/m_c/object} with a broken back."
-    ],
-    "broken bone": [
-      "m_c's leg is bent at an odd angle, and r_c is quick to help {PRONOUN/m_c/object} to the healer den.",
-      "m_c fell and landed hard on {PRONOUN/m_c/poss} leg, leaving {PRONOUN/m_c/object} with a broken bone."
-    ],
-    "dislocated joint": [
-      "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint",
-      "m_c twisted {PRONOUN/m_c/poss} oaw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
-    ],
-    "sprain": [
-      "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
-      "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
-    ],
-    "bruises": [
-      "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} needs to be more careful.",
-      "m_c bruised {PRONOUN/m_c/poss} body when {PRONOUN/m_c/subject} fell."
-    ],
-    "sore":[
-      "m_c's body is sore from a fall.", 
-      "m_c fell and landed hard, leaving {PRONOUN/m_c/object} feeling sore."
-    ],
-    "scrapes": [
-      "m_c's accidentally scraped {PRONOUN/m_c/poss} body on something hard, leaving {PRONOUN/m_c/object} with some scrapes.",
-      "m_c fell and scraped {PRONOUN/m_c/poss} body."
-    ]
-  },
-  "fragile skin": {
-    "scrapes": [
-      "m_c tore {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with some scrapes.",
-      "m_c tore {PRONOUN/m_c/poss} skin while grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal."
-    ],
-    "bruises": [
-      "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} insides are fragile too.",
-      "m_c bruised {PRONOUN/m_c/poss} body, and doesn't quite remember how it happened."
-    ],
-    "torn pelt": [
-      "m_c's pelt is torn in several places. r_c puts a salve on it to help it heal, since m_c's skin doesn't heal as quickly.",
-      "m_c' tore {PRONOUN/m_c/poss} pelt while just walking through camp."
-    ],
-    "small cut": [
-      "m_c scratched {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with a small cut.",
-      "m_c scratched {PRONOUN/m_c/poss} skin while grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal."
-    ]
-  },
-  "loose joints": {
-    "dislocated joint": [
-      "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint.",
-      "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
-    ],
-    "sprain": [
-      "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
-      "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
-    ],
-    "joint pain": [
-      "m_c's joints are feeling the strain of their condition. {PRONOUN/m_c/subject/CAP}{VERB/m_c/'ve/'s} been moving slower this moon.",
-      "m_c comes to r_c feeling like {PRONOUN/m_c/poss} legs {VERB/m_c/are/is} going to collapse under {PRONOUN/m_c/object} from the pain."
-    ],
-    "constant joint pain": [
-      "m_c's joints hurt all the time now, and r_c tells {PRONOUN/m_c/object} the pain is permanent.",
-      "m_c's wobbly joints have caught up with {PRONOUN/m_c/object}, and the joints hurt."
-    ]
-  },
+    "wobbly" : {
+        "broken back": [
+            "m_c's back feels like it's on fire after {PRONOUN/m_c/subject} fell, and r_c is quick to help {PRONOUN/m_c/object} to the healer den.",
+            "m_c fell and landed hard on {PRONOUN/m_c/poss} back, leaving {PRONOUN/m_c/object} with a broken back."
+        ],
+        "broken bone": [
+            "m_c's leg is bent at an odd angle, and r_c is quick to help {PRONOUN/m_c/object} to the healer den.",
+            "m_c fell and landed hard on {PRONOUN/m_c/poss} leg, leaving {PRONOUN/m_c/object} with a broken bone."
+        ],
+        "dislocated joint": [
+        "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint",
+        "m_c twisted {PRONOUN/m_c/poss} oaw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
+        ],
+        "sprain": [
+        "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
+        "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
+        ],
+    "   bruises": [
+        "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} needs to be more careful.",
+        "m_c bruised {PRONOUN/m_c/poss} body when {PRONOUN/m_c/subject} fell."
+        ],
+        "sore": [
+        "m_c's body is sore from a fall.", 
+        "m_c fell and landed hard, leaving {PRONOUN/m_c/object} feeling sore."
+        ],
+        "scrapes": [
+        "m_c's accidentally scraped {PRONOUN/m_c/poss} body on something hard, leaving {PRONOUN/m_c/object} with some scrapes.",
+        "m_c fell and scraped {PRONOUN/m_c/poss} body."
+        ]
+    },
+    "fragile skin": {
+        "scrapes": [
+            "m_c tore {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with some scrapes.",
+            "m_c tore {PRONOUN/m_c/poss} skin while grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal."
+        ],
+        "bruises": [
+            "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} insides are fragile too.",
+            "m_c bruised {PRONOUN/m_c/poss} body, and doesn't quite remember how it happened."
+        ],
+        "torn pelt": [
+            "m_c's pelt is torn in several places. r_c puts a salve on it to help it heal, since m_c's skin doesn't heal as quickly.",
+            "m_c' tore {PRONOUN/m_c/poss} pelt while just walking through camp."
+        ],
+        "small cut": [
+            "m_c scratched {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with a small cut.",
+            "m_c scratched {PRONOUN/m_c/poss} skin while grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal."
+        ]
+    },
+    "loose joints": {
+        "dislocated joint": [
+            "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint.",
+            "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
+        ],
+        "sprain": [
+            "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
+            "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
+        ],
+        "joint pain": [
+            "m_c's joints are feeling the strain of their condition. {PRONOUN/m_c/subject/CAP}{VERB/m_c/'ve/'s} been moving slower this moon.",
+            "m_c comes to r_c feeling like {PRONOUN/m_c/poss} legs {VERB/m_c/are/is} going to collapse under {PRONOUN/m_c/object} from the pain."
+        ],
+        "constant joint pain": [
+            "m_c's joints hurt all the time now, and r_c tells {PRONOUN/m_c/object} the pain is permanent.",
+            "m_c's wobbly joints have caught up with {PRONOUN/m_c/object}, and the joints hurt."
+        ]
+    },
     "sickly": {
-    "running nose": [
-      "r_c feeds m_c disgusting herbs with {PRONOUN/m_c/poss} supper, concerned over {PRONOUN/m_c/poss} running nose. m_c thinks {PRONOUN/r_c/subject} should be more concerned with ruining {PRONOUN/m_c/poss} appetite!",
-      "m_c's nose has been running perpetually all moon."
-    ],
-    "whitecough": [
-      "r_c worst fears are realized as whitecough has infected m_c thanks to {PRONOUN/m_c/poss} susceptibility to disease.",
-      "m_c's susceptibility to disease has left {PRONOUN/m_c/object} coughing and wheezing this moon, unable to resist potential sickness."
-    ],
-    "greencough": [
-      "r_c worst fears are realized as greencough has infected m_c thanks to {PRONOUN/m_c/poss} susceptibility to disease.",
-      "m_c's susceptibility to disease has left {PRONOUN/m_c/object} coughing and wheezing this moon, unable to resist potential sickness."
-    ],
-    "yellowcough": [
-      "If only {PRONOUN/r_c/subject} had lungwort... r_c searches the herb stores, desperate for a way to help m_c through yellowcough.",
-      "m_c has been weak and fevered, only barely coherent... it seems {PRONOUN/m_c/subject} {VERB/m_c/have/has} yellowcough."
-    ],
-    "redcough": [
-      "r_c has quietly begun making m_c comfortable... or as comfortable as {PRONOUN/m_c/subject} can be while hacking blood.",
-      "m_c has been hacking up blood, {PRONOUN/m_c/poss} body growing weaker and weaker.  {PRONOUN/m_c/subject/CAP} may not last much longer."
-    ]    
+        "running nose": [
+            "r_c feeds m_c disgusting herbs with {PRONOUN/m_c/poss} supper, concerned over {PRONOUN/m_c/poss} running nose. m_c thinks {PRONOUN/r_c/subject} should be more concerned with ruining {PRONOUN/m_c/poss} appetite!",
+            "m_c's nose has been running perpetually all moon."
+        ],
+        "whitecough": [
+            "r_c worst fears are realized as whitecough has infected m_c thanks to {PRONOUN/m_c/poss} susceptibility to disease.",
+            "m_c's susceptibility to disease has left {PRONOUN/m_c/object} coughing and wheezing this moon, unable to resist potential sickness."
+        ],
+        "greencough": [
+            "r_c worst fears are realized as greencough has infected m_c thanks to {PRONOUN/m_c/poss} susceptibility to disease.",
+            "m_c's susceptibility to disease has left {PRONOUN/m_c/object} coughing and wheezing this moon, unable to resist potential sickness."
+        ],
+        "yellowcough": [
+            "If only {PRONOUN/r_c/subject} had lungwort... r_c searches the herb stores, desperate for a way to help m_c through yellowcough.",
+            "m_c has been weak and fevered, only barely coherent... it seems {PRONOUN/m_c/subject} {VERB/m_c/have/has} yellowcough."
+        ],
+        "redcough": [
+            "r_c has quietly begun making m_c comfortable... or as comfortable as {PRONOUN/m_c/subject} can be while hacking blood.",
+            "m_c has been hacking up blood, {PRONOUN/m_c/poss} body growing weaker and weaker.  {PRONOUN/m_c/subject/CAP} may not last much longer."
+        ]    
+    },
+    "pica": {
+        "stomachache": [
+            "m_c's stomach is upset from eating something {PRONOUN/m_c/subject} shouldn't have. r_c gives {PRONOUN/m_c/object} some herbs to help.",
+            "m_c's stomach is upset from eating something {PRONOUN/m_c/subject} shouldn't have."
+        ],
+        "diarrhea": [
+            "m_c excuses themselves over and over to visit the Dirtplace after eating something {PRONOUN/m_c/subject} shouldn't have. r_c gives {PRONOUN/m_c/object} some herbs to help.",
+            "m_c excuses themselves over and over to visit the Dirtplace."
+        ]
+    },
+    "compulsive grooming": {
+        "torn pelt": [
+            "m_c accidentally tore {PRONOUN/m_c/poss} pelt while compulsively grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal.",
+            "m_c' tore {PRONOUN/m_c/poss} pelt during a compulsive grooming session."
+        ]
     }
 }

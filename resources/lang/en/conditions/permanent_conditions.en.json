@@ -43,6 +43,8 @@
         "loose joints": "loose joints",
         "sickly": "sickly",
         "bleeds easily": "bleeds easily",
+        "pica": "pica",
+        "compulsive grooming": "compulsive grooming",
         "unknown_condition_risk_given": "m_c's condition has gotten worse."
     }
 }

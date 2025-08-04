@@ -126,5 +126,13 @@
   "bleeds easily": [
     "m_c has a small cut, but it won't stop bleeding. r_c examines m_c and explains that {PRONOUN/m_c/subject} needs to avoid injuries throughout {PRONOUN/m_c/poss} life.",
     "m_c bleeds profusely from small cuts and scrapes."
+  ],
+  "pica": [
+    "m_c has been eating strange things, like dirt and leaves. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to eat non-food items.",
+    "m_c has been eating strange things, like dirt and leaves."
+  ],
+  "compulsive grooming": [
+    "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to groom.",
+    "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare."
   ]
 }
