@@ -332,24 +332,24 @@
             "m_c fell and landed hard on {PRONOUN/m_c/poss} leg, leaving {PRONOUN/m_c/object} with a broken bone."
         ],
         "dislocated joint": [
-        "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint",
-        "m_c twisted {PRONOUN/m_c/poss} oaw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
+            "m_c took a wrong step and felt a sharp pain in {PRONOUN/m_c/poss} paw. r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} dislocated a joint",
+            "m_c twisted {PRONOUN/m_c/poss} oaw when {PRONOUN/m_c/subject} was walking. The joint seems to have dislocated."
         ],
         "sprain": [
-        "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
-        "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
+            "m_c's paw is swollen and tender, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} sprained it.",
+            "m_c twisted {PRONOUN/m_c/poss} paw when {PRONOUN/m_c/subject} was walking. {PRONOUN/m_c/subject} seems to have sprained it."
         ],
-    "   bruises": [
-        "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} needs to be more careful.",
-        "m_c bruised {PRONOUN/m_c/poss} body when {PRONOUN/m_c/subject} fell."
+        "bruises": [
+            "m_c's body is covered in bruises, r_c tells {PRONOUN/m_c/object} that {PRONOUN/m_c/subject} needs to be more careful.",
+            "m_c bruised {PRONOUN/m_c/poss} body when {PRONOUN/m_c/subject} fell."
         ],
         "sore": [
-        "m_c's body is sore from a fall.", 
-        "m_c fell and landed hard, leaving {PRONOUN/m_c/object} feeling sore."
+            "m_c's body is sore from a fall.", 
+            "m_c fell and landed hard, leaving {PRONOUN/m_c/object} feeling sore."
         ],
         "scrapes": [
-        "m_c's accidentally scraped {PRONOUN/m_c/poss} body on something hard, leaving {PRONOUN/m_c/object} with some scrapes.",
-        "m_c fell and scraped {PRONOUN/m_c/poss} body."
+            "m_c's accidentally scraped {PRONOUN/m_c/poss} body on something hard, leaving {PRONOUN/m_c/object} with some scrapes.",
+            "m_c fell and scraped {PRONOUN/m_c/poss} body."
         ]
     },
     "fragile skin": {
