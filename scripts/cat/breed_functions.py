@@ -359,6 +359,11 @@ class Breed_generator:
 
         genoclass.ticked = ["Ta", "Ta"]
 
+        # BURMESE HEAD DEFECT
+
+        if random() < 0.06 and not genoclass.ban_genes:
+            genoclass.bhd[0] = "Bhd"
+
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
 
         genoclass.tickgenes = ''
@@ -477,6 +482,11 @@ class Breed_generator:
 
         genoclass.ticked = ["Ta", "Ta"]
 
+        # BURMESE HEAD DEFECT
+
+        if random() < 0.01 and not genoclass.ban_genes:
+            genoclass.bhd[0] == "Bhd"
+
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         
         if random() < 0.25:
@@ -545,6 +555,10 @@ class Breed_generator:
         for i in range(2):
             if randint(1, 50) == 1:
                 genoclass.dilutemd[i] = "Dm"
+
+        #BURMESE HEAD DEFECT
+        if random() < 0.01 and not genoclass.ban_genes:
+            genoclass.bhd[0] == "Bhd"
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         
@@ -2505,6 +2519,10 @@ class Breed_generator:
         for i in range(2):
             if randint(1, 50) == 1:
                 genoclass.dilutemd[i] = "Dm"
+        
+        #Burmese Head Defect
+        if random() < 0.01 and not genoclass.ban_genes:
+            genoclass.bhd[0] == "Bhd"
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
 
