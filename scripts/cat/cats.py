@@ -48,14 +48,13 @@ from scripts.game_structure.game_essentials import game
 from scripts.game_structure.localization import load_lang_resource
 from scripts.game_structure.screen_settings import screen
 from scripts.housekeeping.datadir import get_save_dir
-from scripts.utility import (
-    clamp,
+from scripts.utility import (clamp,
     find_alive_cats_with_rank,
     get_personality_compatibility,
     event_text_adjust,
     update_sprite,
     leader_ceremony_text_adjust,
-    update_mask,
+    update_mask
 )
 
 import scripts.game_structure.screen_settings
@@ -268,8 +267,10 @@ class Cat:
                 self.phenotype.manx[1] = self.phenotype.manx[1].lower()
             if 'NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3:
                 self.phenotype.pax3[0] = 'DBEalt'
-            if self.phenotype.dfca[0] == 'Dca':
-                self.phenotype.dfca[0] = 'dca'                
+            if self.phenotype.dfca[1] == 'Dca':
+                self.phenotype.dfca[1] = 'dca'    
+            if self.phenotype.bhd[1] == 'Bhd':
+                self.phenotype.bhd[1] = 'bhd'            
         
         if not loading_cat:
             if(randint(1, constants.CONFIG['genetics_config']['intersex']) == 1) or (self.chimerapheno and xor('Y' in self.phenotype.sexgene, 'Y' in self.chimerapheno.sexgene) and randint(1, round(constants.CONFIG['genetics_config']['intersex']/4)) == 1):
@@ -339,7 +340,7 @@ class Cat:
         self.faded = faded  # This is only used to flag cats that are faded, but won't be added to the faded list until
         # the next save.
         
-        if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3) or self.phenotype.dfca[0] == 'Dca':
+        if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3) or self.phenotype.dfca[1] == 'Dca' or self.phenotype.bhd[1] == 'Bhd':
             self.dead = True
 
         self.favourite = 0

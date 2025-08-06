@@ -262,8 +262,9 @@ def search_cats(search_text, cat_list, search_genotype):
                 "pax3": ["NoDBE", "DBEre", "DBEalt", "DBEcel"],
 
                 "dfca": ["Dca", "dca"],
+                "bhd": ["Bhd", "bhd"],
                 "rfca": ["Rca", "rca"],
-                "chs": ["Ch", "ch"]
+                "chs": ["Ch", "ch"],
             }
             orgroups = search_text.split("/")
             all_found = []
@@ -840,7 +841,7 @@ def create_new_cat_block(
 
         for n_c in new_cats:
 
-            if n_c.phenotype.manx[1] == "Ab" or n_c.phenotype.manx[1] == "M" or n_c.phenotype.munch[1] == "Mk" or ('NoDBE' not in n_c.phenotype.pax3 and 'DBEalt' not in n_c.phenotype.pax3) or n_c.phenotype.dfca[1] == "Dca":
+            if n_c.phenotype.manx[1] == "Ab" or n_c.phenotype.manx[1] == "M" or n_c.phenotype.munch[1] == "Mk" or ('NoDBE' not in n_c.phenotype.pax3 and 'DBEalt' not in n_c.phenotype.pax3) or n_c.phenotype.dfca[1] == "Dca" or n_c.phenotype.bhd[1] == "Bhd":
                 n_c.moons = 0
                 n_c.status = {"group": n_c.status.group, "rank": CatRank.NEWBORN, "age": CatAge.NEWBORN}
                 n_c.dead = True

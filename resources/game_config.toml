@@ -643,6 +643,7 @@ dev_tools = false
   DBE = 150
 
   "dominant FCA" = 250
+  "burmese head defect" = 1000
   "recessive FCA" = 1000
   "chediak-higashi syndrome" = 1000
 

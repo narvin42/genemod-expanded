@@ -92,7 +92,7 @@
         true
       ],
       "ban problem genes": [
-        "Hide genes directly associated with health issues",
+        "NOT RECOMMENDED: Hide genes directly associated with health issues",
         "Newly generated cats will not have genes that are directly correlated with permanent conditions.",
         false
       ],
