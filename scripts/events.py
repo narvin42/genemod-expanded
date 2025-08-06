@@ -2202,7 +2202,7 @@ class Events:
             )
             return True
         # max age has been indicated to be 300, so if a cat reaches that age, they die of old age
-        elif cat.moons >= 300:
+        elif cat.moons >= 456:
             handle_short_events.handle_event(
                 event_type="birth_death",
                 main_cat=cat,
