@@ -1399,16 +1399,15 @@ class Genotype:
         self.height_value = randint(1, x)
     
     def VerifyBody(self, body_types):
-        for i in range(7):
-            if i == 0:
-                if self.body_label == body_types[0] and self.body_value >= self.body_indexes[0]:
-                    self.body_value = randint(0, self.body_indexes[0]-1)
-            else:
-                if self.body_label == body_types[i] and (self.body_value >= self.body_indexes[i] or self.body_value  < self.body_indexes[i-1]):
-                    self.body_value = randint(self.body_indexes[i-1], self.body_indexes[i]-1)
-        if self.bhd[0] == "Bhd" and self.body_value >= self.body_indexes[1]:
-            self.body_label = body_types[1]
-    
+        if self.bhd[0] == 'bhd':
+            for i in range(7):
+                if i == 0:
+                    if self.body_label == body_types[0] and self.body_value >= self.body_indexes[0]:
+                        self.body_value = randint(0, self.body_indexes[0]-1)
+                else:
+                    if self.body_label == body_types[i] and (self.body_value >= self.body_indexes[i] or self.body_value  < self.body_indexes[i-1]):
+                        self.body_value = randint(self.body_indexes[i-1], self.body_indexes[i]-1)
+
     def VerifyHeight(self):
         height = self.shoulder_height
         if self.munch[0] == 'Mk':
@@ -1576,12 +1575,15 @@ class Genotype:
 
         body_types = ['snub-nosed cobby', 'cobby', 'semi-cobby', 'intermediate', 'semi-oriental', 'oriental', 'wedge-faced oriental']
         height_types = ['teacup', 'tiny', 'small', 'below average', 'average', 'above average', 'large', 'massive', 'giant', 'goliath']
-
+        
         if self.body_label != '':
             self.VerifyBody(body_types)
         else:
             index = next((n for n in range(7) if self.body_value <= self.body_indexes[n]))
             self.body_label = body_types[index]
+        
+        if self.bhd[0] == 'Bhd' and self.body_label != body_types[0]:
+            self.body_label = body_types[1]
 
         if self.shoulder_height > 0:
             self.VerifyHeight()
