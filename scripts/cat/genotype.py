@@ -1406,8 +1406,8 @@ class Genotype:
             else:
                 if self.body_label == body_types[i] and (self.body_value >= self.body_indexes[i] or self.body_value  < self.body_indexes[i-1]):
                     self.body_value = randint(self.body_indexes[i-1], self.body_indexes[i]-1)
-        if self.bhd[0] == "Bhd":
-            self.body_label = body_types[2]
+        if self.bhd[0] == "Bhd" and self.body_value >= self.body_indexes[1]:
+            self.body_label = body_types[1]
     
     def VerifyHeight(self):
         height = self.shoulder_height
