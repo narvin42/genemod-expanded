@@ -2349,8 +2349,6 @@ def process_text(text, cat_dict, raise_exception=False):
         "|".join(name_patterns), lambda x: name_repl(x, cat_dict), adjust_text
     )
 
-    adjust_text.replace("medicine cat", "healer").replace("medicine den", "healer den")
-
     return adjust_text
 
 
@@ -2624,6 +2622,8 @@ def ongoing_event_text_adjust(Cat, text, clan=None, other_clan_name=None):
 
     text = text.replace("c_n", clan_name + "Clan")
 
+    text.replace("medicine cat", "healer").replace("medicine den", "healer den")
+
     return text
 
 
@@ -2864,6 +2864,8 @@ def event_text_adjust(
                 "given_herb", i18n.t(f"conditions.herbs.{chosen_herb}", count=2)
             )
 
+    text.replace("medicine cat", "healer").replace("medicine den", "healer den")
+
     return text
 
 
@@ -2900,6 +2902,8 @@ def leader_ceremony_text_adjust(
 
     clan = leader.status.group.fetch_clan_object()
     text = text.replace("c_n", str(clan.displayname) + "Clan")
+
+    text.replace("medicine cat", "healer").replace("medicine den", "healer den")
 
     return text
 
@@ -3002,6 +3006,8 @@ def ceremony_text_adjust(
         )
 
     adjust_text = process_text(adjust_text, cat_dict)
+
+    adjust_text.replace("medicine cat", "healer").replace("medicine den", "healer den")
 
     return adjust_text, random_living_parent, random_dead_parent
 
@@ -3880,7 +3886,7 @@ def generate_sprite(
 
                         if phenotype.length != "longhaired":
                             stripebase = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                            stripebase.blit(CreateStripes(whichcolour, "solid"), (0, 0))
+                            stripebase.blit(CreateStripes(whichcolour, "solid", special="no_shading"), (0, 0))
                             whichmain.blit(stripebase, (0, 0))
                     elif("cm" in phenotype.pointgene):
                         colour = None
@@ -3896,7 +3902,7 @@ def generate_sprite(
                             if phenotype.length != "longhaired":
                                 stripebase = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                             
-                                stripebase.blit(CreateStripes("cinnamon2", 'solid', preset_pattern=["fullbaralt"]), (0, 0))
+                                stripebase.blit(CreateStripes("cinnamon2", 'solid', special="no_shading", preset_pattern=["fullbaralt"]), (0, 0))
                                 stripebase.set_alpha(150)
 
                                 whichmain.blit(stripebase, (0, 0))
@@ -3953,7 +3959,7 @@ def generate_sprite(
                             
                             
                             if phenotype.length != "longhaired":
-                                stripebase = CreateStripes(colour, 'solid', coloursurface=coloursurface)
+                                stripebase = CreateStripes(colour, 'solid', special="no_shading", coloursurface=coloursurface)
                                 whichmain.blit(stripebase, (0, 0))
 
                             pointbase = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
@@ -3968,7 +3974,7 @@ def generate_sprite(
                             
                             if phenotype.length != "longhaired":
                                 stripebase = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                                stripebase.blit(CreateStripes(whichcolour, 'solid'), (0, 0))
+                                stripebase.blit(CreateStripes(whichcolour, 'solid', special="no_shading"), (0, 0))
 
                             pointbase2.blit(stripebase, (0, 0))
 
@@ -4050,7 +4056,7 @@ def generate_sprite(
                             whichmain.blit(sprites.sprites['lightbasecolours0'], (0, 0))
                             colour = 'lightbasecolours0'
 
-                        stripebase = CreateStripes(colour, 'solid', coloursurface=coloursurface)
+                        stripebase = CreateStripes(colour, 'solid', special="no_shading", coloursurface=coloursurface)
 
                         whichmain.blit(stripebase, (0, 0))
 
@@ -4064,7 +4070,7 @@ def generate_sprite(
 
                         
                         if phenotype.length != "longhaired":
-                            stripebase = CreateStripes(whichcolour, "solid")
+                            stripebase = CreateStripes(whichcolour, "solid", special="no_shading")
                         
                             pointbase2.blit(stripebase, (0, 0))
 
