@@ -1292,6 +1292,8 @@ class Pregnancy_Events:
         only_clancat = get_clan_setting("only clan surrogates") and game.clan.clancount == "multiclan"
         only_clanmate = get_clan_setting("only inclan surrogates")
         mate = []
+
+        # TODO: restructure this plz
         
         
         unknowns = []
