@@ -210,10 +210,10 @@ class Events:
                 elif group := next(filter(lambda c: ghost.status.get_last_living_group() == c, game.clan.other_clans), None):
                     group = group.fetch_clan_object()
                     if group.displayname not in ghost_names:
-                        ghost_names[group.name] = []
-                        sorted_dead_cats[group.name] = []
-                    ghost_names[group.name].append(str(ghost.name))
-                    sorted_dead_cats[group.name].append(ghost)
+                        ghost_names[group.displayname] = []
+                        sorted_dead_cats[group.displayname] = []
+                    ghost_names[group.displayname].append(str(ghost.name))
+                    sorted_dead_cats[group.displayname].append(ghost)
             for clan in [game.clan] + game.clan.all_clans:
                 if clan.displayname not in ghost_names:
                     continue
