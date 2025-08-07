@@ -209,7 +209,7 @@ class Events:
                     sorted_dead_cats[game.clan.displayname].append(ghost)
                 elif group := next(filter(lambda c: ghost.status.get_last_living_group() == c, game.clan.other_clans), None):
                     group = group.fetch_clan_object()
-                    if group.name not in ghost_names:
+                    if group.displayname not in ghost_names:
                         ghost_names[group.name] = []
                         sorted_dead_cats[group.name] = []
                     ghost_names[group.name].append(str(ghost.name))
