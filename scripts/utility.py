@@ -1082,7 +1082,7 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
 
             y = randrange(0, 20)
             start_relation = Relationship(par, cat, False, True)
-            start_relation.platonic_like += 30 + y
+            start_relation.romance += 30 + y
             start_relation.comfortable = 10 + y
             start_relation.admiration = 15 + y
             start_relation.trust = 10 + y
@@ -1090,7 +1090,7 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
 
             y = randrange(0, 20)
             start_relation = Relationship(cat, par, False, True)
-            start_relation.platonic_like += 30 + y
+            start_relation.romance += 30 + y
             start_relation.comfortable = 10 + y
             start_relation.admiration = 15 + y
             start_relation.trust = 10 + y
