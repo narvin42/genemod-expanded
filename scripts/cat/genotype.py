@@ -887,8 +887,8 @@ class Genotype:
             if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/1.5)) or self.odds["recessive FCA"] == 1) and not self.ban_genes:
                 self.rfca[i] = "rca"
         for i in range(2):
-            if self.odds[i] ["chediak-higashi syndrome"] > 0 and (randint(1, round(self.odds["chediak-higashi syndrome"]/1.5)) or self.odds["chediak-higashi syndrome"] == 1) and not self.ban_genes:
-                self.chs = "ch"
+            if self.odds["chediak-higashi syndrome"] > 0 and (randint(1, round(self.odds["chediak-higashi syndrome"]/1.5)) or self.odds["chediak-higashi syndrome"] == 1) and not self.ban_genes:
+                self.chs[i] = "ch"
 
         self.wideband = ''
         self.rufousing = ''
