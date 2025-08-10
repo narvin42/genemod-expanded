@@ -126,7 +126,7 @@
       ],
     "wobbly": [
         "m_c fell down again, and r_c is called in to check on {PRONOUN/m_c/poss} health. {PRONOUN/r_c/subject} confirms that m_c has a wobbly gait, but {PRONOUN/m_c/subject} should be able to live a normal life.",
-    "   m_c has a wobbly gait, and {PRONOUN/m_c/subject} {VERB/m_c/seem/seems} to have trouble keeping {PRONOUN/m_c/poss} balance."
+        "m_c has a wobbly gait, and {PRONOUN/m_c/subject} {VERB/m_c/seem/seems} to have trouble keeping {PRONOUN/m_c/poss} balance."
     ],
     "flat nose": [
         "r_c sadly confirms that there's not much {PRONOUN/r_c/subject} can do for m_c, despite how the kitten struggles to breath through {PRONOUN/m_c/poss} flattened nose and tires quickly.",
