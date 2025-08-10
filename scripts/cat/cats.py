@@ -2965,8 +2965,7 @@ class Cat:
                     comfort=comfort,
                     trust=trust,
                 )
-                if not (not mates and not related and romance == 0 and like == 0 and respect == 0
-                and comfort == 0 and trust == 0):
+                if not (not mates and not related and romance == 0 and like == 0 and respect == 0 and comfort == 0 and trust == 0):
                     self.relationships[the_cat.ID] = rel
                 else:
                     blanks.append(the_cat.ID)
@@ -3143,9 +3142,10 @@ class Cat:
         chosen_pos = sample(rel_values, k=randint(2, len(rel_values)))
 
         # Determine negative trains effected
+        available = [v for v in rel_values if v not in chosen_pos]
         chosen_neg = sample(
-            [v for v in rel_values if v not in chosen_pos], k=randint(1, 2)
-        )
+            available, k=randint(1, 2)
+        ) if len(available) > 1 else available
 
         if compat is True:
             personality_bonus = 2
@@ -3185,8 +3185,8 @@ class Cat:
                 -1 if sabotage else 1
             )
 
-            setattr(rel1, rel_type, amount)
-            setattr(rel2, rel_type, amount)
+            setattr(rel1, rel_type, getattr(rel1, rel_type) + amount)
+            setattr(rel2, rel_type, getattr(rel1, rel_type) + amount)
 
             output += i18n.t(
                 f"screens.mediation.output_{'decrease' if decrease else 'increase'}",

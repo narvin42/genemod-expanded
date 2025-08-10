@@ -1215,7 +1215,7 @@ class Pregnancy_Events:
 
                 if not mate_relation:
                     mate_relation = rel
-                elif mate_relation.romantic_love < rel.romantic_love:
+                elif mate_relation.romance < rel.romance:
                     mate_relation = rel
 
         # LOVE AFFAIR
@@ -1326,7 +1326,7 @@ class Pregnancy_Events:
                         possible = False
                         break
                     if x := couple.relationships.get(cand.ID):
-                        if (x.romantic_love + x.platonic_like + x.admiration + x.trust + x.comfortable - x.dislike - x.jealousy) < 5:
+                        if (x.romance + x.like + x.respect + x.trust + x.comfort) < 5:
                             possible = False
                             break
                 if possible:
@@ -1712,13 +1712,13 @@ class Pregnancy_Events:
                 if second_kitten.ID == kitten.ID:
                     continue
                 try:
-                    kitten.relationships[second_kitten.ID].platonic_like += 20 + y
+                    kitten.relationships[second_kitten.ID].romance += 20 + y
                     kitten.relationships[second_kitten.ID].comfortable += 10 + y
                     kitten.relationships[second_kitten.ID].trust += 10 + y
                 except:
                     start_relation = Relationship(kitten, second_kitten, False, True)
                     kitten.relationships[second_kitten.ID] = start_relation
-                    kitten.relationships[second_kitten.ID].platonic_like = 20 + y
+                    kitten.relationships[second_kitten.ID].romance = 20 + y
                     kitten.relationships[second_kitten.ID].comfortable = 10 + y
                     kitten.relationships[second_kitten.ID].trust = 10 + y
             

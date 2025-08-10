@@ -732,7 +732,7 @@ def create_new_cat_block(
             elif not outside:
                 if not rank:
                     rank = chosen_cat.status.get_rank_from_age(chosen_cat.age)
-                chosen_cat.add_to_clan()
+                chosen_cat.add_to_clan(clan)
                 if chosen_cat.status.rank != rank:
                     chosen_cat.rank_change(new_rank=CatRank(rank), resort=True)
             elif outside:
@@ -1082,17 +1082,17 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
 
             y = randrange(0, 20)
             start_relation = Relationship(par, cat, False, True)
-            start_relation.platonic_like += 30 + y
+            start_relation.romance += 30 + y
             start_relation.comfortable = 10 + y
-            start_relation.admiration = 15 + y
+            start_relation.respect = 15 + y
             start_relation.trust = 10 + y
             par.relationships[cat.ID] = start_relation
 
             y = randrange(0, 20)
             start_relation = Relationship(cat, par, False, True)
-            start_relation.platonic_like += 30 + y
+            start_relation.romance += 30 + y
             start_relation.comfortable = 10 + y
-            start_relation.admiration = 15 + y
+            start_relation.respect = 15 + y
             start_relation.trust = 10 + y
             cat.relationships[par.ID] = start_relation
 
