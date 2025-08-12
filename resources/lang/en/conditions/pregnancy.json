@@ -76,7 +76,7 @@
         "{PRONOUN/m_c/subject/CAP} looks like a weight has been lifted from {PRONOUN/m_c/poss} shoulders.",
         "{PRONOUN/m_c/subject/CAP} doesn't seem too bothered.",
         "{PRONOUN/m_c/subject/CAP} seems to be taking it unusually well.",
-        "{PRONOUN/m_c/subject/CAP} denies that {PRONOUN/m_c/subject} ever {VERB/m_c/was/were} pregnant"
+        "{PRONOUN/m_c/subject/CAP} denies that {PRONOUN/m_c/subject} ever {VERB/m_c/were/was} pregnant"
       ],
       "otherclan_mother": [
         "Many cats have been questioning where m_c's litter could have gone despite {PRONOUN/m_c/object} insisting {PRONOUN/m_c/subject} {VERB/m_c/were/was} never pregnant."
