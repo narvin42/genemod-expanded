@@ -367,7 +367,7 @@
         ],
         "torn pelt": [
             "m_c's pelt is torn in several places. r_c puts a salve on it to help it heal, since m_c's skin doesn't heal as quickly.",
-            "m_c' tore {PRONOUN/m_c/poss} pelt while just walking through camp."
+            "m_c tore {PRONOUN/m_c/poss} pelt while just walking through camp."
         ],
         "small cut": [
             "m_c scratched {PRONOUN/m_c/poss} skin on something sharp, leaving {PRONOUN/m_c/object} with a small cut.",
