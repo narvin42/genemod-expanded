@@ -15,7 +15,7 @@ from scripts.clan_package.settings import get_clan_setting
 from scripts.event_class import Single_Event
 from scripts.events_module.short.condition_events import Condition_Events
 from scripts.game_structure import constants
-from scripts.game_structure.game_essentials import game
+from scripts.game_structure import game
 from scripts.game_structure.localization import load_lang_resource
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.utility import (
@@ -1447,9 +1447,9 @@ class Pregnancy_Events:
         elif cat:
             par2geno.Generator('masc')
         ##### SELECT BACKSTORY #####
-        if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.group != cat.status.group:
+        if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.get_last_living_group() != cat.status.group:
             backkit = 'halfclan1' if other_cat[0].status.group else 'outsider_roots1'
-        elif cat and other_cat and other_cat[0].status.group != cat.status.group:
+        elif cat and other_cat and other_cat[0].status.get_last_living_group() != cat.status.group:
             backkit = 'halfclan2' if other_cat[0].status.group else 'outsider_roots2'
         if backkit:
             backstory = backkit
