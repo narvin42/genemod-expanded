@@ -4183,8 +4183,10 @@ def generate_sprite(
                 lefteye.blit(sprites.sprites[phenotype.lefteyetype + "/" + cat_sprite], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                 righteye.blit(sprites.sprites[phenotype.righteyetype + "/" + cat_sprite], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
-                gensprite.blit(lefteye, (0, 0))
-                gensprite.blit(righteye, (0, 0))
+                if phenotype.lefteyesize != 'no':
+                    gensprite.blit(lefteye, (0, 0))
+                if phenotype.righteyesize != 'no':
+                    gensprite.blit(righteye, (0, 0))
 
 
                 if sprite_age == 1:
@@ -4194,8 +4196,10 @@ def generate_sprite(
                     righteye.blit(sprites.sprites[phenotype.righteyetype.split(' ; ')[0] + ' ; blue' + "/" + cat_sprite], (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     lefteye.set_alpha(200)
                     righteye.set_alpha(200)
-                    gensprite.blit(lefteye, (0, 0))
-                    gensprite.blit(righteye, (0, 0))
+                    if phenotype.lefteyesize != 'no':
+                        gensprite.blit(lefteye, (0, 0))
+                    if phenotype.righteyesize != 'no':
+                        gensprite.blit(righteye, (0, 0))
 
 
                 if(phenotype.extraeye):
@@ -4209,11 +4213,22 @@ def generate_sprite(
                         gensprite.blit(special, (0, 0))
 
                 if(phenotype.pinkdilute[0] == 'dp' or phenotype.chs == 'ch'):
-                    pupils = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                    pupils.blit(sprites.sprites['redpupils' + cat_sprite], (0, 0))
-                    pupils.set_alpha(100)
-                    gensprite.blit(pupils, (0, 0))
-            
+                    if phenotype.lefteyesize != 'no' and phenotype.righteyesize != 'no':
+                        pupils = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                        pupils.blit(sprites.sprites['redpupils' + cat_sprite], (0, 0))
+                        pupils.set_alpha(100)
+                        gensprite.blit(pupils, (0, 0))
+                    elif phenotype.lefteyesize != 'no':
+                        pupils = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                        pupils.blit(sprites.sprites['redleft' + cat_sprite], (0, 0))
+                        pupils.set_alpha(100)
+                        gensprite.blit(pupils, (0, 0))
+                    elif phenotype.righteyesize != 'no':
+                        pupils = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                        pupils.blit(sprites.sprites['redright' + cat_sprite], (0, 0))
+                        pupils.set_alpha(100)
+                        gensprite.blit(pupils, (0, 0))
+                        
             return gensprite
 
         age = cat.moons

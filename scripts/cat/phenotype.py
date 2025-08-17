@@ -470,11 +470,37 @@ class Phenotype(Genotype):
         for i in self.furtype:
             furtype += i
 
-        if(self.lefteye == self.righteye):
-            eyes = self.lefteye + " eyes"
+        if(self.lefteye == self.righteye) and (self.lefteyesize == self.righteyesize):
+            if self.lefteyesize == 'normal':
+                eyes = self.lefteye + " eyes"
+            elif self.lefteyesize == 'micro':
+                eyes = "small " + self.lefteye + " eyes"
+            else:
+                eyes = "no eyes"
         else:
-            eyes = "one " + self.lefteye + " eye, one " + self.righteye + " eye"
-        
+            if (self.lefteyesize == self.righteyesize): 
+                if (self.lefteyesize == 'normal'):
+                    eyes = "one " + self.lefteye + " eye, one " + self.righteye + " eye"
+                elif self.lefteyesize == 'micro':
+                    eyes = "one small " + self.lefteye + " eye, one small " + self.righteye + " eye"
+                else:
+                    eyes = "no eyes"
+            else:
+                if (self.lefteyesize == 'normal'):
+                    eyes = "one " + self.lefteye + " eye"
+                    if (self.righteyesize == 'micro'):
+                        eyes += ", one small " + self.righteye + " eye"
+                elif (self.lefteyesize == 'micro'):
+                    eyes = "one small " + self.lefteye + " eye"
+                    if (self.righteyesize == 'normal'):
+                        eyes += ", and one " + self.righteye + " eye"
+                else:
+                    if (self.righteyesize == 'normal'):
+                        eyes = "one " + self.righteye + " eye"
+                    else:
+                        eyes += "one small " + self.righteye + " eye"
+                    
+
         if(self.extraeye):
             eyes += " and sectoral heterochromia"
 

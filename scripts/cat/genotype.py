@@ -139,6 +139,8 @@ class Genotype:
         self.righteye = ""
         self.lefteyetype = "Error"
         self.righteyetype = "Error"
+        self.lefteyesize = "normal"
+        self.righteyesize = "normal"
 
         self.extraeye = None
         self.extraeyetype = ""
@@ -241,7 +243,9 @@ class Genotype:
         self.righteye = jsonstring["righteye"]
         self.lefteyetype = jsonstring["lefteyetype"]
         self.righteyetype = jsonstring["righteyetype"]
-        
+        self.lefteyesize = jsonstring.get("lefteyesize", 'normal')
+        self.righteyesize = jsonstring.get("righteyesize", 'normal')
+
         self.extraeye = jsonstring["extraeye"]
         self.extraeyetype = jsonstring["extraeyetype"]
         self.extraeyecolour = jsonstring["extraeyecolour"]
@@ -341,6 +345,8 @@ class Genotype:
             "righteye" : self.righteye,
             "lefteyetype" :self.lefteyetype,
             "righteyetype" : self.righteyetype,
+            "lefteyesize" : self.lefteyesize,
+            "righteyesize": self.righteyesize,
             
             "extraeye" : self.extraeye,
             "extraeyetype" :self.extraeyetype,
@@ -482,6 +488,11 @@ class Genotype:
             self.unders_ruf += choice(self.odds["rufousing"])
             self.unders_rufsum += int(self.unders_ruf[i])
 
+        #eyesize
+        if self.odds["microphthalmia"] > 0 and randint(1, self.odds["microphthalmia"]) == 1:
+                self.lefteyesize = choice(['no', 'micro', 'micro', 'normal'])
+                self.righteyesize = choice(['no', 'micro', 'micro', 'normal'])
+        
     def Generator(self, special=None, kittypet=False):
         if kittypet and self.odds["kittypet_breed"] > 0 and randint(1, self.odds["kittypet_breed"]) == 1:
             return self.BreedGenerator(special)
@@ -1389,6 +1400,10 @@ class Genotype:
         num = random() * x2
         self.pigmentation = next((n for n in range(len(indexes2)) if num < indexes2[n])) + 1
 
+        if self.odds["microphthalmia"] > 0 and randint(1, self.odds["microphthalmia"]) == 1:
+                self.lefteyesize = choice(['no', 'micro', 'micro', 'normal'])
+                self.righteyesize = choice(['no', 'micro', 'micro', 'normal'])
+
     def GenerateBody(self):
         x = sum(self.body_ranges)
 
@@ -1899,7 +1914,21 @@ class Genotype:
             self.righteyetype = SecondaryRefTypeFind(refgrade, piggrade)
 
             if(sectoralindex == 0):
-                self.extraeye = 'sectoral' + str(randint(1, 6))
+                if self.lefteyesize != 'no' and self.righteyesize != 'no':
+                    self.extraeye = 'sectoral' + str(randint(1, 6))
+                elif self.righteyesize != 'no':
+                    x = randint(1, 2)
+                    if x == 1:
+                        self.extraeye = 'sectoral' + str(2)
+                    else:
+                        self.extraeye = 'sectoral' + str(5)
+                elif self.lefteyesize != 'no':
+                    x = randint(1, 2)
+                    if x == 1:
+                        self.extraeye = 'sectoral' + str(1)
+                    else:
+                        self.extraeye = 'sectoral' + str(4)
+
             a = [randint(1, 11), randint(1, 12)]
             if "c" in self.pointgene and self.pointgene[0] != "C":
                 a[1] = 13

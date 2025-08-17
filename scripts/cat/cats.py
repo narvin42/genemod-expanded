@@ -623,6 +623,20 @@ class Cat:
                     self.get_permanent_condition(choice(['deaf', 'deaf', 'partial hearing loss']), born_with=True, genetic=True)
             elif 'blue' not in self.phenotype.lefteyetype or 'blue' not in self.phenotype.righteyetype:
                 self.get_permanent_condition(choice(['deaf in one ear', 'deaf in one ear', 'partial hearing loss in one ear']), born_with=True, genetic=True)
+        
+        if self.phenotype.lefteyesize == self.phenotype.righteyesize:
+            if self.phenotype.lefteyesize == 'no':
+                self.get_permanent_condition('blind', born_with=True, genetic=False)
+            elif self.phenotype.lefteyesize == 'micro' and random() > 0.1: 
+                self.get_permanent_condition(choice(['blind', 'failing eyesight', 'failing eyesight', 'failing eyesight', 'one bad eye', 'one bad eye', 'one bad eye', 'one bad eye']), born_with=True, genetic=False)
+        else:
+            if (self.phenotype.lefteyesize == 'no' and self.phenotype.righteyesize == 'micro') or (self.phenotype.lefteyesize == 'micro' and self.phenotype.righteyesize == 'no'):
+                self.get_permanent_condition(choice(['blind', 'failing eyesight', 'one bad eye']), born_with=True, genetic=False)
+            elif (self.phenotype.lefteyesize == 'no' and self.phenotype.righteyesize == 'normal') or (self.phenotype.lefteyesize == 'normal' and self.phenotype.righteyesize == 'no'):
+                self.get_permanent_condition('one bad eye',  born_with=True, genetic=False)
+            elif (self.phenotype.lefteyesize == 'micro' and self.phenotype.righteyesize == 'normal') or (self.phenotype.lefteyesize == 'micro' and self.phenotype.righteyesize == 'normal') and random() > 0.3:
+                self.get_permanent_condition(choice(['failing eyesight', 'one bad eye']), born_with=True, genetic=False)
+
         if ('M' in self.phenotype.manx and self.phenotype.bobtailnr):
             manx_c = 0.95
             if self.phenotype.bobtailnr > 3:
