@@ -15,7 +15,7 @@ from scripts.clan_package.settings import get_clan_setting
 from scripts.event_class import Single_Event
 from scripts.events_module.short.condition_events import Condition_Events
 from scripts.game_structure import constants
-from scripts.game_structure.game_essentials import game
+from scripts.game_structure import game
 from scripts.game_structure.localization import load_lang_resource
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.utility import (
@@ -950,9 +950,10 @@ class Pregnancy_Events:
             (affair_partners and len(RandomAffair.mate) > 0 and cat.ID not in RandomAffair.mate and not RandomAffair.dead):
             involved_cats.append(RandomAffair.ID)
             RandomChoice = RandomAffair
-            event_list.append(choice(events["birth"]["affair"]))
             if len(cat.mate) > 0:
                 event_list.append(choice(events["birth"]["affair_mated"]))
+            else:
+                event_list.append(choice(events["birth"]["affair"]))
         else:
             event_list.append(choice(events["birth"]["unmated_parent"]))
 
@@ -1447,9 +1448,9 @@ class Pregnancy_Events:
         elif cat:
             par2geno.Generator('masc')
         ##### SELECT BACKSTORY #####
-        if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.group != cat.status.group:
+        if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.get_last_living_group() != cat.status.group:
             backkit = 'halfclan1' if other_cat[0].status.group else 'outsider_roots1'
-        elif cat and other_cat and other_cat[0].status.group != cat.status.group:
+        elif cat and other_cat and other_cat[0].status.get_last_living_group() != cat.status.group:
             backkit = 'halfclan2' if other_cat[0].status.group else 'outsider_roots2'
         if backkit:
             backstory = backkit
@@ -1712,13 +1713,13 @@ class Pregnancy_Events:
                 if second_kitten.ID == kitten.ID:
                     continue
                 try:
-                    kitten.relationships[second_kitten.ID].romance += 20 + y
+                    kitten.relationships[second_kitten.ID].like += 20 + y
                     kitten.relationships[second_kitten.ID].comfortable += 10 + y
                     kitten.relationships[second_kitten.ID].trust += 10 + y
                 except:
                     start_relation = Relationship(kitten, second_kitten, False, True)
                     kitten.relationships[second_kitten.ID] = start_relation
-                    kitten.relationships[second_kitten.ID].romance = 20 + y
+                    kitten.relationships[second_kitten.ID].like = 20 + y
                     kitten.relationships[second_kitten.ID].comfortable = 10 + y
                     kitten.relationships[second_kitten.ID].trust = 10 + y
             

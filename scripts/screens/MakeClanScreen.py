@@ -15,9 +15,7 @@ from scripts.cat.names import names
 from scripts.clan import Clan
 from scripts.events_module.patrol.patrol import Patrol
 from scripts.game_structure import image_cache, constants
-from scripts.game_structure.game_essentials import (
-    game,
-)
+from scripts.game_structure import game
 from scripts.game_structure.ui_elements import (
     UIImageButton,
     UISpriteButton,
@@ -30,9 +28,9 @@ from .screens_core.screens_core import rebuild_den_dropdown
 from ..cat import save_load
 from ..cat.enums import CatRank
 from ..cat.sprites import sprites
-from ..clan_package.settings import get_clan_setting, load_clan_settings
+from ..clan_package.settings import get_clan_setting, load_clan_settings, reset_loaded_clan_settings
 from ..game_structure.game.settings import game_setting_set, game_setting_get
-from ..game_structure.game.switches import switch_get_value, Switch
+from ..game_structure.game.switches import switch_get_value, switch_set_value, Switch
 from ..game_structure.screen_settings import MANAGER, screen
 from ..game_structure.windows import SymbolFilterWindow
 from ..ui.generate_box import get_box, BoxStyles
@@ -117,6 +115,7 @@ class MakeClanScreen(Screens):
         self.set_mute_button_position("topright")
         self.show_mute_buttons()
         self.set_bg("default", "mainmenu_bg")
+        reset_loaded_clan_settings()
 
         self.clan_frame_img = pygame.transform.scale(
             self.ui_images["clan_frame"],
@@ -143,8 +142,7 @@ class MakeClanScreen(Screens):
             ui_scale_dimensions((800, 700)),
         )
         
-        from scripts.game_structure.constants import reset_config
-        reset_config()
+        constants.reset_config()
 
         # Reset variables
         self.game_mode: str = "classic"
@@ -2254,6 +2252,9 @@ class MakeClanScreen(Screens):
         scripts.screens.screens_core.screens_core.rebuild_bgs()
 
     def save_clan(self):
+        switch_set_value(
+            Switch.error_message, ""
+        )
         game.mediated.clear()
         game.patrolled.clear()
         save_load.faded_ids.clear()

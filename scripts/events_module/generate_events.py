@@ -23,7 +23,7 @@ from scripts.events_module.ongoing.ongoing_event import OngoingEvent
 from scripts.events_module.short.short_event import ShortEvent
 from scripts.game_structure import constants
 from scripts.game_structure.game.switches import switch_get_value, Switch
-from scripts.game_structure.game_essentials import game
+from scripts.game_structure import game
 from scripts.game_structure.localization import load_lang_resource
 from scripts.utility import (
     get_living_clan_cat_count
@@ -553,16 +553,16 @@ class GenerateEvents:
         possible_events = []
         # grab general events first, since they'll always exist
         events = GenerateEvents.get_death_reaction_dicts("general", rel_value)
-        possible_events.extend(events["general"][body_status])
+        possible_events.extend(events["general"].get(body_status, []))
         if trait in events and body_status in events[trait]:
-            possible_events.extend(events[trait][body_status])
+            possible_events.extend(events[trait].get(body_status, []))
 
         # grab family events if they're needed. Family events should not be romantic.
         if family_relation != "general" and rel_value != RelType.ROMANCE:
             events = GenerateEvents.get_death_reaction_dicts(family_relation, rel_value)
-            possible_events.extend(events["general"][body_status])
+            possible_events.extend(events["general"].get(body_status, []))
             if trait in events and body_status in events[trait]:
-                possible_events.extend(events[trait][body_status])
+                possible_events.extend(events[trait].get(body_status, []))
 
         return possible_events
 
