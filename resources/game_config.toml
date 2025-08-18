@@ -550,7 +550,7 @@ dev_tools = false
   cryptic_tortie = 100
   sectoral_heterochromia = 200
   random_heterochromia = 250
-  microphthalmia = 1000
+  microphthalmia = 250
 
   no-low_white_blue_eyes = 100
   low_white_blue_eyes = 75
