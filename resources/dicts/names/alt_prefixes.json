@@ -1,12 +1,9 @@
 {
-  "filter_out" : ["Crappie", "Pimpleback", "Wartyback", "Wartbiter", "Wort", "Stinkhorn", "Fatmucket", 
-                  "Sucker", "Hogsucker", "Goatsucker", 
-                  "Booby", "Tit", "Shag", "Woodcock", 
+  "filter_out" : ["Booby", "Tit", "Shag", "Woodcock", 
                   "Blindworm", 
-                  "Prettyface", "Sister", "Bride", "Maid", "Cousin", "Queen", "Flirt", 
-                  "Tooth", "Thumb", "Toebiter", 
-                  "Babystar", "Woollystar", 
-                  "Killer"],
+                  "Sister", "Bride", "Maid", "Cousin", "Flirt", 
+                  "Babystar", "Woollystar"
+                ],
   "why_filter" : "Some of the prefixes I've picked up might be seem rude or have multiple meanings, so I've put them as removed by default here. Feel free to add or remove. But yeah, Tit is a bird, Pimpleback is a mollusc, Crappie and Sucker are fish, etc.",
   "general": {
     "mackerel": ["Brindle", "Ripple", "Striped"],
