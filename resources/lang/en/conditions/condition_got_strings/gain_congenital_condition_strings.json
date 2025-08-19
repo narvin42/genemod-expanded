@@ -130,29 +130,30 @@
     ],
     "flat nose": [
         "r_c sadly confirms that there's not much {PRONOUN/r_c/subject} can do for m_c, despite how the kitten struggles to breath through {PRONOUN/m_c/poss} flattened nose and tires quickly.",
-        "Some hoped m_c's odd muzzle was just visual quirk, but m_c struggles to keep up and stay active the way other kittens do, tiring easily and struggling to get used to solider food."
+        "Some hoped m_c's odd muzzle was just visual quirk, but m_c struggles to keep up and stay active the way other kittens do, tiring easily and struggling to get used to more solid food."
     ],
     "fragile skin": [
-    "r_c examines m_c's skin, which is thin and easily damaged. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
-    "m_c's skin is thin and easily damaged."],
+        "r_c examines m_c's skin, which is thin and easily damaged. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
+        "m_c's skin is thin and easily damaged."
+    ],
     "loose joints": [
-    "r_c examines m_c's joints, which are loose and easily dislocated. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
-    "m_c's joints are loose and easily dislocated."
+        "r_c examines m_c's joints, which are loose and easily dislocated. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
+        "m_c's joints are loose and easily dislocated."
     ],
     "sickly": [
-    "r_c examines m_c, who is sick yet again. {PRONOUN/r_c/subject} explains that m_c will need extra care throughout {PRONOUN/m_c/poss} life.",
-    "m_c frequently gets sick."
+        "r_c examines m_c, who is sick yet again. {PRONOUN/r_c/subject} explains that m_c will need extra care throughout {PRONOUN/m_c/poss} life.",
+        "m_c frequently gets sick."
     ],
     "bleeds easily": [
-    "m_c has a small cut, but it won't stop bleeding. r_c examines m_c and explains that {PRONOUN/m_c/subject} needs to avoid injuries throughout {PRONOUN/m_c/poss} life.",
-    "m_c bleeds profusely from small cuts and scrapes."
+        "m_c has a small cut, but it won't stop bleeding. r_c examines m_c and explains that {PRONOUN/m_c/subject} needs to avoid injuries throughout {PRONOUN/m_c/poss} life.",
+        "m_c bleeds profusely from small cuts and scrapes."
     ],
     "pica": [
-    "m_c has been eating strange things, like dirt and leaves. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to eat non-food items.",
-    "m_c has been eating strange things, like dirt and leaves."
+        "m_c has been eating strange things, like dirt and leaves. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to eat non-food items.",
+        "m_c has been eating strange things, like dirt and leaves."
     ],
     "compulsive grooming": [
-    "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to groom.",
-    "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare."
+        "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to groom.",
+        "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare."
     ]
 }
