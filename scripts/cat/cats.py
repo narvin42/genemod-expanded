@@ -207,7 +207,7 @@ class Cat:
 
         self.passes = passes
 
-        self.adoptive_parents = adoptive_parents if adoptive_parents else []
+        self.adoptive_parents = adoptive_parents.copy() if adoptive_parents else []
         gene_config = constants.CONFIG['genetics_config']
         gene_config.update(constants.CONFIG['april_fools_genes'])
         self.phenotype = Phenotype(gene_config, game_setting_get("ban problem genes"))
@@ -341,9 +341,6 @@ class Cat:
 
         self.faded = faded  # This is only used to flag cats that are faded, but won't be added to the faded list until
         # the next save.
-        
-        if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3) or self.phenotype.dfca[1] == 'Dca' or self.phenotype.bhd[1] == 'Bhd':
-            self.dead = True
 
         self.favourite = 0
 
@@ -430,6 +427,10 @@ class Cat:
         # These things should only run when generating a new cat, rather than loading one in.
         if not loading_cat:
             self.init_generate_cat(skill_dict, disable_random)
+        
+        if self.phenotype.munch[1] == "Mk" or (self.phenotype.manx[1] == "Ab" or self.phenotype.manx[1] == "M") or ('NoDBE' not in self.phenotype.pax3 and 'DBEalt' not in self.phenotype.pax3) or self.phenotype.dfca[1] == 'Dca' or self.phenotype.bhd[1] == 'Bhd':
+            if not self.dead:
+                self.dead = True
 
         # In camp status
         self.in_camp = 1
@@ -1086,6 +1087,13 @@ class Cat:
     def become_lost(self, status = None):
         """Makes a Clan cat a lost cat. Makes status changes and removes apprentices."""
 
+        if self.status.is_leader:
+            self.status.group.fetch_clan_object().leader = None
+        if self.status.rank == CatRank.DEPUTY:
+            self.status.group.fetch_clan_object().deputy = None
+        if self.status.rank.is_any_medicine_rank():
+            self.status.group.fetch_clan_object().remove_med_cat(self)
+
         self.status.become_lost(
             new_social_status=choice([CatSocial.KITTYPET, CatSocial.LONER]) if not status else status
         )
@@ -1099,13 +1107,6 @@ class Cat:
 
         for x in self.apprentice:
             Cat.fetch_cat(x).update_mentor()
-
-        if self.status.is_leader:
-            self.status.group.fetch_clan_object().leader = None
-        if self.status.rank == CatRank.DEPUTY:
-            self.status.group.fetch_clan_object().deputy = None
-        if self.status.rank.is_any_medicine_rank():
-            self.status.group.fetch_clan_object().remove_med_cat(self)
 
     def add_to_clan(self, clan: CatGroup = CatGroup.PLAYER_CLAN, add_kits=True) -> list:
         """Makes an "outside cat" a Clan cat. Returns a list of IDs for any additional cats that
