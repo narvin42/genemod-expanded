@@ -895,10 +895,10 @@ class Genotype:
         if self.odds["burmese head defect"] > 0 and (randint(1, round(self.odds["burmese head defect"]/1.5)) == 1 or self.odds["burmese head defect"] == 1) and not self.ban_genes:
             self.bhd[0] = "Bhd"
         for i in range(2):
-            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/1.5)) or self.odds["recessive FCA"] == 1) and not self.ban_genes:
-                self.rfca[i] = "rca"
+            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/1.5)) == 1 or self.odds["recessive FCA"] == 1) and not self.ban_genes:
+                self.dfca[i] = "rca"
         for i in range(2):
-            if self.odds["chediak-higashi syndrome"] > 0 and (randint(1, round(self.odds["chediak-higashi syndrome"]/1.5)) or self.odds["chediak-higashi syndrome"] == 1) and not self.ban_genes:
+            if self.odds["chediak-higashi syndrome"] > 0 and (randint(1, round(self.odds["chediak-higashi syndrome"]/1.5)) == 1 or self.odds["chediak-higashi syndrome"] == 1) and not self.ban_genes:
                 self.chs[i] = "ch"
 
         self.wideband = ''
