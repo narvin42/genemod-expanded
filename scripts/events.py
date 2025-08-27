@@ -1228,9 +1228,11 @@ class Events:
         if cat.phenotype.white[0] == 'W' or (cat.phenotype.white[1] in ['ws', 'wt'] and cat.phenotype.whitegrade > 2) or cat.phenotype.pointgene[0] == 'c' or 'o' not in cat.phenotype.sexgene:
             return
         
-        if cat.phenotype.dilute[0] == 'D' and cat.phenotype.pinkdilute[0] == 'Dp' and cat.phenotype.chs[0] == 'CH':
+        if cat.phenotype.brindledbi:
+            red_colour = "white"
+        elif cat.phenotype.dilute[0] == 'D' and cat.phenotype.pinkdilute[0] == 'Dp' and cat.phenotype.chs[0] == 'Ch':
             red_colour = "orange"
-        elif cat.phenotype.dilute[0] == 'd' and cat.phenotype.pinkdilute[0] == 'Dp' and cat.phenotype.chs[0] == 'CH':
+        elif cat.phenotype.dilute[0] == 'd' and cat.phenotype.pinkdilute[0] == 'Dp' and cat.phenotype.chs[0] == 'Ch':
             red_colour = "cream"
         elif cat.phenotype.dilute[0] == 'D' and (cat.phenotype.pinkdilute[0] == 'dp' or cat.phenotype.chs[0] == 'ch'):
             red_colour = "yellow"
