@@ -2358,6 +2358,8 @@ class Cat:
 
         if name == 'partially hairless' and self.phenotype.length != 'fur-pointed':
             moons_until = 11 - self.moons
+        if name in ['blind', 'one bad eye', 'failing eyesight'] and (self.phenotype.lefteyesize == 'no' or self.phenotype.righteyesize == 'no'):
+            moons_until = -2
         if custom_reveal:
             moons_until = custom_reveal - self.moons
         if moons_until < -2:
