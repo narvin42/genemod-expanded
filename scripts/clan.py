@@ -236,7 +236,7 @@ class Clan:
 
         if self.clancount == "multiclan":
             for i, clan in enumerate(game.clan.all_other_clans[:-1]):
-                game.clan.war[enum.group_ID] = {}
+                game.clan.war[clan.group_ID] = {}
                 for o_clan in game.clan.all_other_clans[i+1:]:
                     game.clan.war[clan.group_ID][o_clan.group_ID] = randint(8, 12)
                     game.clan.war[clan.group_ID][o_clan.group_ID] = {"at_war": False, "duration": 0}
