@@ -1,7 +1,7 @@
 {
   "filter_out" : ["Booby", "Tit", "Shag", "Woodcock", 
                   "Blindworm", 
-                  "Sister", "Bride", "Maid", "Cousin", "Flirt", 
+                  "Sister", "Bride", "Cousin", "Flirt", 
                   "Babystar", "Woollystar"
                 ],
   "why_filter" : "Some of the prefixes I've picked up might be seem rude or have multiple meanings, so I've put them as removed by default here. Feel free to add or remove. But yeah, Tit is a bird, Pimpleback is a mollusc, Crappie and Sucker are fish, etc.",
