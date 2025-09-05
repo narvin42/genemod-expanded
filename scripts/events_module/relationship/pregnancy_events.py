@@ -605,7 +605,7 @@ class Pregnancy_Events:
             elif random() < 0.25:
                 event_list.append(choice(events["birth"]["relief"]))
             print_event = " ".join(event_list)
-            print_event = event_text_adjust(Cat, print_event, main_cat=cat, clan=clan.enum)
+            print_event = event_text_adjust(Cat, print_event, main_cat=cat, clan=clan.group_ID)
             game.cur_events_list.append(
             Single_Event(
                 print_event, ["health", "birth_death"], cat, clan=clan.enum
