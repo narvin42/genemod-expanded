@@ -608,7 +608,7 @@ class Pregnancy_Events:
             print_event = event_text_adjust(Cat, print_event, main_cat=cat, clan=clan.group_ID)
             game.cur_events_list.append(
             Single_Event(
-                print_event, ["health", "birth_death"], cat, clan=clan.enum
+                print_event, ["health", "birth_death"], cat, clan=clan.group_ID
             ))
             del game.clan.pregnancy_data[cat.ID]
             del cat.injuries["pregnant"]
