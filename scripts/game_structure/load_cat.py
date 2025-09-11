@@ -56,7 +56,7 @@ def json_load():
         with open(clan_cats_json_path, "r", encoding="utf-8") as read_file:
             cat_data = ujson.loads(read_file.read())
     except PermissionError as e:
-        switch_set_value(Switch.error_message, f"Can\t open {clan_cats_json_path}!")
+        switch_set_value(Switch.error_message, f"Can\'t open {clan_cats_json_path}!")
         switch_set_value(Switch.traceback, e)
         raise
     except ujson.JSONDecodeError as e:
@@ -285,6 +285,9 @@ def json_load():
                     cat["died_by"] if "died_by" in cat else [],
                     cat["scar_event"] if "scar_event" in cat else [],
                 )
+
+            new_cat.starclan_affinity = cat.get("starclan_affinity", 0)
+            new_cat.dark_forest_affinity = cat.get("dark_forest_affinity", 0)
 
             all_cats.append(new_cat)
 

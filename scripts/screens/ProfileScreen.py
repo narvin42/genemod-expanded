@@ -305,10 +305,7 @@ class ProfileScreen(Screens):
         elif self.open_tab == "dangerous":
             if event.ui_element == self.kill_cat_button:
                 if self.the_cat.dead:
-                    if clan := self.the_cat.status.get_last_living_group():
-                        Events.handle_fading(Events, self.the_cat, clan.fetch_clan_object(game.clan), True)
-                    else:
-                        Events.handle_fading(Events, self.the_cat, game.clan, True)
+                    Events.handle_fading(Events, self.the_cat, self.the_cat.status.fetch_clan_object(game.clan), True)
                     self.close_current_tab()
                     self.change_screen(game.last_screen_forProfile)
                 else:
@@ -1015,7 +1012,7 @@ class ProfileScreen(Screens):
         # if cat has never been part of the player clan, then they get no backstory yet
         if (
             not the_cat.status.get_last_living_group() or
-            (not the_cat.status.get_last_living_group() == CatGroup.PLAYER_CLAN_ID
+            (CatGroup.PLAYER_CLAN_ID not in the_cat.status.all_groups
             and game.clan.clancount == "singleclan")
         ):
             bs_text = the_cat.status.social
@@ -1307,6 +1304,10 @@ class ProfileScreen(Screens):
             if murder:
                 life_history.append(murder)
 
+            afterlife_acceptance = self.get_afterlife_acceptance_text()
+            if afterlife_acceptance:
+                life_history.append(afterlife_acceptance)
+
             # join together history list with line breaks
             output = "\n\n".join(life_history)
         return output
@@ -1314,6 +1315,16 @@ class ProfileScreen(Screens):
     def get_previous_names(self):
         return "Previous names: " + ', '.join(self.the_cat.history.prev_names)
     
+    def get_afterlife_acceptance_text(self):
+        """
+        Returns adjusted afterlife acceptance blurb.
+        """
+        if self.the_cat.history.afterlife_acceptance:
+            text = i18n.t(f"cat.afterlife.{self.the_cat.history.afterlife_acceptance}")
+            adjusted_text = event_text_adjust(Cat, text, main_cat=self.the_cat, clan=self.the_cat.status.fetch_clan_object(game.clan))
+            return adjusted_text
+        return None
+
     def get_backstory_text(self):
         """
         returns the backstory blurb

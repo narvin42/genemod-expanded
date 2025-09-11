@@ -315,6 +315,8 @@ class Cat:
         self.also_got = False
         self.permanent_condition = {}
         self.experience_level = None
+        self.dark_forest_affinity = 0
+        self.starclan_affinity = 0
 
         white_pattern = white_patterns
 
@@ -723,6 +725,42 @@ class Cat:
                     f"WARNING: Tried to kill {self.name} ID: {self.ID} but this cat is already dead!"
                 )
                 return
+            
+            instructor = self.status.fetch_clan_object(game.clan).instructor
+
+            if self.status.get_last_living_group():
+            # kits are auto-accepted
+                if self.age in (CatAge.KITTEN, CatAge.NEWBORN):
+                    self.history.add_afterlife_acceptance(
+                        instructor.status.group,
+                        is_kit=True,
+                    )
+                else:
+                    if instructor.status.group == CatGroup.STARCLAN:
+                        affinity = self.starclan_affinity
+                        afterlife_group = CatGroup.STARCLAN
+                        rejected_ID = CatGroup.DARK_FOREST_ID
+                    else:
+                        affinity = self.dark_forest_affinity
+                        afterlife_group = CatGroup.DARK_FOREST
+                        rejected_ID = CatGroup.STARCLAN_ID
+
+                    # afterlife does not like this cat
+                    if affinity < 0:
+                        # might send them to the opposite afterlife instead
+                        if random() < abs(affinity / 100):
+                            self.history.add_afterlife_acceptance(
+                                afterlife_group, rejected=True
+                            )
+                            self.status.send_to_afterlife(rejected_ID)
+                            return
+                        # fine, they can go to afterlife, but some cats don't like it
+                        self.history.add_afterlife_acceptance(
+                            afterlife_group, contentious=True
+                        )
+                    # afterlife thinks this cat is ok
+                    else:
+                        self.history.add_afterlife_acceptance(afterlife_group)
             self.status.send_to_afterlife()
 
     @property
@@ -1361,6 +1399,11 @@ class Cat:
                         else []
                     ),
                     murder=history_data["murder"] if "murder" in history_data else {},
+                    afterlife_acceptance=(
+                        history_data["afterlife_acceptance"]
+                        if "afterlife_acceptance" in history_data
+                        else None
+                    ),
                     cat=self,
                 )
         except Exception:
@@ -3383,8 +3426,8 @@ class Cat:
         elif sort_type == "death":
             given_list.sort(key=lambda x: -1 * int(x.dead_for))
         elif sort_type == "clan":
-            given_list.sort(key=lambda x: (x.status.group_ID if x.status.group_ID else "0", Cat.rank_order(
-                x), Cat.get_adjusted_age(x)), reverse=True)
+            given_list.sort(key=lambda x: (int(x.status.get_last_living_group())*-1 if x.status.get_last_living_group() else 0, 
+                                            Cat.rank_order(x), Cat.get_adjusted_age(x)), reverse=True)
 
         return
 
@@ -3614,6 +3657,8 @@ class Cat:
                 ),
                 "birth_cooldown": self.birth_cooldown,
                 "status": self.status.get_status_dict(),
+                "dark_forest_affinity": self.dark_forest_affinity,
+                "starclan_affinity": self.starclan_affinity,
                 "backstory": self.backstory or None,
                 "moons": self.moons,
                 "trait": self.personality.trait,
