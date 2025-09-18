@@ -34,6 +34,7 @@ from scripts.utility import (
     ui_scale_offset,
     adjust_list_text,
 )
+from scripts.cat.pelts import Pelt
 from .Screens import Screens
 from ..cat.enums import CatAge, CatRank, CatGroup
 from ..cat.sprites import sprites
@@ -795,7 +796,7 @@ class ProfileScreen(Screens):
         elif (the_cat.age == CatAge.ADOLESCENT or (the_cat.moons < 24 and the_cat.phenotype.growth_pattern == "slow")) and not get_clan_setting("adult_height_toggle"):
             output += "size: " + the_cat.phenotype.height_label
             if get_clan_setting("showheight"):
-                start_point = the_cat.shoulder_height * 0.66 if the_cat.phenotype.growth_pattern == "slow" else the_cat.phenotype.shoulder_height * 0.75
+                start_point = the_cat.phenotype.shoulder_height * 0.66 if the_cat.phenotype.growth_pattern == "slow" else the_cat.phenotype.shoulder_height * 0.75
                 period = 18 if the_cat.phenotype.growth_pattern == "slow" else 6
                 difference = 24-the_cat.moons if the_cat.phenotype.growth_pattern == "slow" else 12-the_cat.moons
                 difference = max(0, difference)
@@ -816,15 +817,29 @@ class ProfileScreen(Screens):
 
         # ACCESSORY
         if the_cat.pelt.accessory:
+            cats_accs = the_cat.pelt.accessory.copy()
+            acc_list = []
+            for acc in the_cat.pelt.accessory:
+                potential_collar = "".join([x for x in acc if not x.islower()]).strip(
+                    "_"
+                )
+                for style in Pelt.collar_styles:
+                    if style == potential_collar:
+                        acc_list.append(
+                            i18n.t(f"cat.accessories.{potential_collar}", count=0)
+                        )
+                        cats_accs.remove(acc)
+                        break
+                if acc_list:
+                    break
+
+            acc_list.extend(
+                [i18n.t(f"cat.accessories.{acc}", count=0) for acc in cats_accs]
+            )
             output += "\n"
             output += i18n.t(
                 "screens.profile.accessory_label",
-                accessory=adjust_list_text(
-                    [
-                        i18n.t(f"cat.accessories.{acc}", count=0)
-                        for acc in the_cat.pelt.accessory
-                    ]
-                ),
+                accessory=adjust_list_text(acc_list),
             )
             # NEWLINE ----------
 
