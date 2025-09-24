@@ -1311,6 +1311,14 @@ class Cat:
         the allegiances. If short is true, it will generate a very short one, with the minimal amount of information. """
         return Pelt.describe_appearance(self, short)
 
+    def create_genelist(self):
+        genelist = str(self.phenotype.PhenotypeOutput(self.phenotype.white_pattern, chimera=self.chimerapheno)) + \
+            "\n" + str(self.phenotype.ShowGenes(True)) + "\n" + self.phenotype.FormatSomatic()
+        if (self.chimerapheno):
+            genelist += "\n\n" + str(self.chimerapheno.PhenotypeOutput(self.chimerapheno.white_pattern, chimera=self.chimerapheno))
+
+        return genelist
+
     def describe_eyes(self):
         if(self.phenotype.lefteye == self.phenotype.righteye):
             colour = self.phenotype.lefteye.lower()
@@ -3728,6 +3736,7 @@ class Cat:
                 or (game.clan.clancount == "multiclan" and check_cat.status.is_outsider == self.status.is_outsider
                 and (self.status.is_outsider or check_cat.status.group_ID == self.status.group_ID)))
             and not check_cat.faded
+            and check_cat.status.is_near() == self.status.is_near()
         ]
 
         # we're doing this separately so that we don't fuck up other clan cats and cats with no group

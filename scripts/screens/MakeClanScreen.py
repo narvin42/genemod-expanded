@@ -24,6 +24,7 @@ from scripts.game_structure.ui_elements import (
 from scripts.utility import get_text_box_theme, ui_scale, ui_scale_blit, ui_scale_offset
 from scripts.utility import ui_scale_dimensions
 from .Screens import Screens
+from .enums import GameScreen
 from .screens_core.screens_core import rebuild_den_dropdown
 from ..cat import save_load
 from ..cat.enums import CatRank
@@ -188,7 +189,7 @@ class MakeClanScreen(Screens):
             if event.ui_element == self.main_menu:
                 if switch_get_value(Switch.clan_list):
                     load_clan_settings()
-                self.change_screen("start screen")
+                self.change_screen(GameScreen.START)
             if self.sub_screen == "game mode":
                 self.handle_game_mode_event(event)
             if self.sub_screen == "clan count mode":
@@ -220,7 +221,7 @@ class MakeClanScreen(Screens):
             elif self.sub_screen == "saved screen" and (
                 event.key == pygame.K_RETURN or event.key == pygame.K_RIGHT
             ):
-                self.change_screen("start screen")
+                self.change_screen(GameScreen.START)
 
     def handle_game_mode_event(self, event):
         """Handle events for the game mode screen"""
@@ -273,7 +274,7 @@ class MakeClanScreen(Screens):
     
     def handle_game_mode_key(self, event):
         if event.key == pygame.K_ESCAPE:
-            self.change_screen("start screen")
+            self.change_screen(GameScreen.START)
         elif event.key == pygame.K_DOWN:
             if self.game_mode == "classic":
                 self.game_mode = "expanded"
@@ -313,7 +314,7 @@ class MakeClanScreen(Screens):
 
     def handle_name_clan_key(self, event):
         if event.key == pygame.K_ESCAPE:
-            self.change_screen("start screen")
+            self.change_screen(GameScreen.START)
         elif event.key == pygame.K_LEFT:
             if not self.elements["name_entry"].is_focused:
                 self.clan_name = ""
@@ -579,7 +580,7 @@ class MakeClanScreen(Screens):
 
     def handle_saved_clan_event(self, event):
         if event.ui_element == self.elements["continue"]:
-            self.change_screen("camp screen")
+            self.change_screen(GameScreen.CAMP)
 
     def exit_screen(self):
         self.main_menu.kill()
@@ -1158,14 +1159,6 @@ class MakeClanScreen(Screens):
             if "cat" + str(u) in self.elements:
                 self.elements["cat" + str(u)].kill()
             if game.choose_cats[u] == selected:
-                genelist = str(selected.phenotype.PhenotypeOutput(selected.phenotype.white_pattern, chimera=selected.chimerapheno)) + \
-                    "\n" + str(selected.phenotype.ShowGenes(True)
-                                ) + "\n" + selected.phenotype.FormatSomatic()
-                if (selected.chimerapheno):
-                    genelist += "\n\n" + str(selected.chimerapheno.PhenotypeOutput(selected.chimerapheno.white_pattern,
-                                                chimera=selected.chimerapheno)) + "\n" + str(selected.chimerapheno.ShowGenes(True))
-
-                    
                 self.elements["cat" + str(u)] = self.elements[
                     "cat" + str(u)
                 ] = UISpriteButton(
@@ -1175,7 +1168,7 @@ class MakeClanScreen(Screens):
                     ),
                     cat_object=game.choose_cats[u],
                     object_id="#offspring_predict_cat",
-                    tool_tip_text=genelist,
+                    tool_tip_text=selected.create_genelist(),
                     manager=MANAGER,
                 )
             elif (
@@ -1201,13 +1194,6 @@ class MakeClanScreen(Screens):
             if "cat" + str(u) in self.elements:
                 self.elements["cat" + str(u)].kill()
             if game.choose_cats[u] == selected:
-                genelist = str(selected.phenotype.PhenotypeOutput(selected.phenotype.white_pattern, chimera=selected.chimerapheno)) + \
-                    "\n" + str(selected.phenotype.ShowGenes(True)
-                                ) + "\n" + selected.phenotype.FormatSomatic()
-                if (selected.chimerapheno):
-                    genelist += "\n\n" + str(selected.chimerapheno.PhenotypeOutput(selected.chimerapheno.white_pattern,
-                                                chimera=selected.chimerapheno)) + "\n" + str(selected.chimerapheno.ShowGenes(True))
-                    
                 self.elements["cat" + str(u)] = self.elements[
                     "cat" + str(u)
                 ] = UISpriteButton(
@@ -1217,7 +1203,7 @@ class MakeClanScreen(Screens):
                     ),
                     cat_object=game.choose_cats[u],
                     object_id="#offspring_predict_cat",
-                    tool_tip_text=genelist,
+                    tool_tip_text=selected.create_genelist(),
                     manager=MANAGER,
                 )
             elif (
