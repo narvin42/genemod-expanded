@@ -755,6 +755,12 @@ class Pregnancy_Events:
                 affair_partners.append(Cat.all_cats.get(id))
             if affair_partners:
                 RandomAffair = choice(affair_partners)
+        
+        if (other_cat and None in other_cat) or (surrogate and None in surrogate) or (affair_partners and None in affair_partners):
+            print("PARENT NOT FOUND! If you edited the pregnancy in, double check the IDs, please")
+            other_cat = [c for c in other_cat if c] if other_cat else None
+            affair_partners = [c for c in affair_partners if c] if affair_partners else None
+            surrogate = [c for c in surrogate if c] if surrogate else None
 
         backkit = None
         
@@ -1317,7 +1323,7 @@ class Pregnancy_Events:
             and (get_clan_setting('same sex birth') or xor('Y' in cand_cat.phenotype.sexgene, 'Y' in cat.phenotype.sexgene))):
                 all_candidates.append(cand_cat)
 
-        if (only_clanmate or randint(1, constants.CONFIG['pregnancy']['clanmate_surrogate_chance']) != 1) and not only_outside:
+        if (only_clanmate or randint(1, constants.CONFIG['pregnancy']['clanmate_surrogate_chance']) == 1) and not only_outside:
             candidates = []
             for cand in all_candidates:
                 if cand.status.group_ID != cat.status.group_ID:
