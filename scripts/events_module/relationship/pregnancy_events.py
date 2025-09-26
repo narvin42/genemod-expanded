@@ -852,7 +852,8 @@ class Pregnancy_Events:
                 if random() < 0.10:
                     kit.moons = 0
                     kit.dead = True
-                    kit.history.add_death(kit, str(kit.name) + " was stillborn.")
+                    kit.thoughts(just_died=True)
+                    kit.history.add_death(str(kit.name) + " was stillborn.")
                 elif random() < 0.80:
                     kit.get_permanent_condition('wobbly', born_with=True, genetic=False)
             if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3) or kit.phenotype.dfca[1] == "Dca" or kit.phenotype.bhd[1] == "Bhd":
@@ -862,7 +863,7 @@ class Pregnancy_Events:
                 kit.history.add_death(str(kit.name) + " was stillborn.")
         Pregnancy_Events.set_biggest_family(clan)
         
-        if pregnant_cat.status.is_outsider:
+        if pregnant_cat.stateus.is_outsider:
             for kit in kits:
                 kit.status.generate_new_status(
                     age=kit.age, social=cat.status.social, group_ID=cat.status.group_ID
