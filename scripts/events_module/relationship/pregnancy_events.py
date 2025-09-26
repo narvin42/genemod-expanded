@@ -863,7 +863,7 @@ class Pregnancy_Events:
                 kit.history.add_death(str(kit.name) + " was stillborn.")
         Pregnancy_Events.set_biggest_family(clan)
         
-        if pregnant_cat.stateus.is_outsider:
+        if pregnant_cat.status.is_outsider:
             for kit in kits:
                 kit.status.generate_new_status(
                     age=kit.age, social=cat.status.social, group_ID=cat.status.group_ID
