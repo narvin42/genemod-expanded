@@ -755,6 +755,12 @@ class Pregnancy_Events:
                 affair_partners.append(Cat.all_cats.get(id))
             if affair_partners:
                 RandomAffair = choice(affair_partners)
+        
+        if (other_cat and None in other_cat) or (surrogate and None in surrogate) or (affair_partners and None in affair_partners):
+            print("PARENT NOT FOUND! If you edited the pregnancy in, double check the IDs, please")
+            other_cat = [c for c in other_cat if c] if other_cat else None
+            affair_partners = [c for c in affair_partners if c] if affair_partners else None
+            surrogate = [c for c in surrogate if c] if surrogate else None
 
         backkit = None
         
@@ -846,7 +852,8 @@ class Pregnancy_Events:
                 if random() < 0.10:
                     kit.moons = 0
                     kit.dead = True
-                    kit.history.add_death(kit, str(kit.name) + " was stillborn.")
+                    kit.thoughts(just_died=True)
+                    kit.history.add_death(str(kit.name) + " was stillborn.")
                 elif random() < 0.80:
                     kit.get_permanent_condition('wobbly', born_with=True, genetic=False)
             if random() < stillborn_chance or kit.phenotype.manx[1] == "Ab" or kit.phenotype.manx[1] == "M" or kit.phenotype.munch[1] == "Mk" or ('NoDBE' not in kit.phenotype.pax3 and 'DBEalt' not in kit.phenotype.pax3) or kit.phenotype.dfca[1] == "Dca" or kit.phenotype.bhd[1] == "Bhd":
@@ -1317,7 +1324,7 @@ class Pregnancy_Events:
             and (get_clan_setting('same sex birth') or xor('Y' in cand_cat.phenotype.sexgene, 'Y' in cat.phenotype.sexgene))):
                 all_candidates.append(cand_cat)
 
-        if (only_clanmate or randint(1, constants.CONFIG['pregnancy']['clanmate_surrogate_chance']) != 1) and not only_outside:
+        if (only_clanmate or randint(1, constants.CONFIG['pregnancy']['clanmate_surrogate_chance']) == 1) and not only_outside:
             candidates = []
             for cand in all_candidates:
                 if cand.status.group_ID != cat.status.group_ID:
