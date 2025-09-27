@@ -224,7 +224,7 @@ class Genotype:
 
         self.dfca = jsonstring.get("DomFCA", ['dca', 'dca'])
         self.bhd = jsonstring.get("Bhd", ['bhd', 'bhd'])
-        self.rfca = jsonstring.get("RecFCA", ['Fca', 'Fca'])
+        self.rfca = jsonstring.get("RecFCA", ['Rca', 'Rca'])
         self.chs = jsonstring.get("chs", ['Ch', 'Ch'])
 
         self.wideband = jsonstring["wideband"]
