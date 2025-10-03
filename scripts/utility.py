@@ -744,9 +744,13 @@ def create_new_cat_block(
                 continue
             if age and age not in Cat.age_moons[cat.age]:
                 continue
+            already_picked = False
             for picked_cats in event.new_cats:
                 if cat in picked_cats:
-                    continue
+                    already_picked = True
+                    break
+            if already_picked:
+                continue
             possible_outsiders.append(cat)
 
         if possible_outsiders:
@@ -3168,7 +3172,7 @@ def generate_sprite(
         if constants.CONFIG["fun"]["all_cats_are_newborn"]:
             cat_sprite = sprite_poses[cat.pelt.cat_sprites["newborn"]]
         else:
-            if "long" in cat.pelt.cat_sprites[age] or (cat.pelt.length == 'medium' and get_current_season() == 'Leaf-bare'):
+            if cat.pelt.length == 'medium' and get_current_season() == 'Leaf-bare':
                 cat_sprite = sprite_poses[cat.pelt.cat_sprites[age].replace("short", "long")]
             else:
                 cat_sprite = sprite_poses[cat.pelt.cat_sprites[age]]
@@ -3223,7 +3227,7 @@ def generate_sprite(
                 stripebase = pygame.Surface(
                     (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
 
-                if not preset_pattern and not special and 'solid' not in whichbase:
+                if not special and 'solid' not in whichbase:
                     if ('chinchilla' in whichbase):
                         stripebase.blit(
                             sprites.sprites['chinchillashading' + cat_sprite], (0, 0))
@@ -3341,26 +3345,21 @@ def generate_sprite(
                     stripebase.blit(
                         surf, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
-                middle = pygame.Surface(
-                    (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                if (phenotype.soktype == "full sokoke" and not preset_pattern and 'agouti' not in phenotype.tabby):
-                    middle.blit(stripebase, (0, 0))
-                    stripebase = pygame.Surface(
-                        (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                    middle.set_alpha(150)
-                    stripebase.blit(middle, (0, 0))
-                    middle = CreateStripes(
-                        stripecolour, whichbase, coloursurface, special="no_shading", preset_pattern=phenotype.GetTabbySprite(special='redbar'))
-                    stripebase.blit(middle, (0, 0))
-                elif (phenotype.soktype == "mild fading" and not preset_pattern and 'agouti' not in phenotype.tabby):
-                    middle.blit(stripebase, (0, 0))
-                    stripebase = pygame.Surface(
-                        (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                    middle.set_alpha(204)
-                    stripebase.blit(middle, (0, 0))
-                    middle = CreateStripes(
-                        stripecolour, whichbase, coloursurface, special="no_shading", preset_pattern=phenotype.GetTabbySprite(special='redbar'))
-                    stripebase.blit(middle, (0, 0))
+                if not preset_pattern and len(pattern) > 2:
+                    if phenotype.soktype == "full sokoke":
+                        stripebase = CreateStripes(
+                            stripecolour, whichbase, coloursurface, preset_pattern=pattern[1:])
+                        middle = CreateStripes(
+                            stripecolour, whichbase, coloursurface, special="no_shading", preset_pattern=pattern[:1])
+                        middle.set_alpha(150)
+                        stripebase.blit(middle, (0, 0))
+                    elif phenotype.soktype == "mild fading":
+                        stripebase = CreateStripes(
+                            stripecolour, whichbase, coloursurface, preset_pattern=pattern[1:])
+                        middle = CreateStripes(
+                            stripecolour, whichbase, coloursurface, special="no_shading", preset_pattern=pattern[:1])
+                        middle.set_alpha(204)
+                        stripebase.blit(middle, (0, 0))
 
                 return stripebase
 
