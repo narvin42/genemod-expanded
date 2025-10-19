@@ -137,6 +137,7 @@ class Pelt:
                 "adult": adult_sprite if adult_sprite is not None else 6,
                 "senior adult": adult_sprite if adult_sprite is not None else 6,
                 "senior": senior_sprite if senior_sprite is not None else 12,
+                "para_young": "para_young0",
                 "para_adult": para_adult_sprite,
                 "newborn": "newborn0",
             }
@@ -223,6 +224,8 @@ class Pelt:
 
         if self.length != "long" and self.cat_sprites["adult"] not in self.adult_short_poses:
             self.cat_sprites["adult"] = choice(self.adult_short_poses)
+            self.cat_sprites["young adult"] = self.cat_sprites["adult"]
+            self.cat_sprites["senior adult"] = self.cat_sprites["adult"]
             self.cat_sprites["para_adult"] = "para_adult_short0"
         elif self.length == "long" and self.adult_long_poses and self.cat_sprites["adult"] not in self.adult_long_poses:
             self.cat_sprites["adult"] = choice(
@@ -230,6 +233,8 @@ class Pelt:
                 if self.adult_long_poses
                 else self.adult_short_poses
             )
+            self.cat_sprites["young adult"] = self.cat_sprites["adult"]
+            self.cat_sprites["senior adult"] = self.cat_sprites["adult"]
             self.cat_sprites["para_adult"] = "para_adult_long0"
 
     @property
