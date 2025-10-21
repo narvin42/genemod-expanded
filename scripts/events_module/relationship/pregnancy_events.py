@@ -1036,8 +1036,7 @@ class Pregnancy_Events:
                 else:
                     return False, False, second_parent
                 
-
-            return True, False, second_parent
+            return True, False, second_parent_copy
 
 
 
