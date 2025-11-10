@@ -751,7 +751,7 @@ class Pregnancy_Events:
                     kit.backstory = "outsider2"
 
                 if pregnant_cat.status.is_outsider and not pregnant_cat.status.is_exiled(
-                    clan.ID
+                    clan.group_ID
                 ):
                     kit.backstory = "outsider3"
                 kit.relationships = {}
@@ -1036,8 +1036,7 @@ class Pregnancy_Events:
                 else:
                     return False, False, second_parent
                 
-
-            return True, False, second_parent
+            return True, False, second_parent_copy
 
 
 
@@ -1101,7 +1100,7 @@ class Pregnancy_Events:
         # Handle love affair chance.
         affair_partner = Pregnancy_Events.determine_love_affair(cat, mate if mate else None, mate_relation if mate else None, samesex)
         if affair_partner:
-            if mate:
+            if mate and not get_clan_setting('multisire'):
                 mate.append(affair_partner)
             else:
                 mate = [affair_partner]
@@ -1695,6 +1694,7 @@ class Pregnancy_Events:
                     kitten.relationships[second_kitten.ID].trust = 10 + y
             
             kitten.create_inheritance_new_cat() # Calculate inheritance. 
+            kitten.create_relationships_new_cat()
 
         # check if the possible adoptive cat is not already in the family tree and
         # add them as adoptive parents if not

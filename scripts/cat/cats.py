@@ -1311,12 +1311,12 @@ class Cat:
         the allegiances. If short is true, it will generate a very short one, with the minimal amount of information. """
         return Pelt.describe_appearance(self, short)
 
-    def create_genelist(self):
+    def create_genelist(self, filter=True):
         genelist = str(self.phenotype.PhenotypeOutput(self.phenotype.white_pattern, chimera=self.chimerapheno)) + \
-            "\n" + str(self.phenotype.ShowGenes(True)) + "\n" + self.phenotype.FormatSomatic()
+            "\n" + str(self.phenotype.ShowGenes(filter)) + "\n" + self.phenotype.FormatSomatic()
         if (self.chimerapheno):
             genelist += "\n\n" + str(self.chimerapheno.PhenotypeOutput(self.chimerapheno.white_pattern, chimera=self.chimerapheno)) + \
-            "\n" + str(self.chimerapheno.ShowGenes(True))
+            "\n" + str(self.chimerapheno.ShowGenes(filter))
 
         return genelist
 
@@ -1460,6 +1460,7 @@ class Cat:
         """Create a leader ceremony and add it to the history"""
 
         load_leader_ceremonies()
+        self.history.prev_names.append(str(self.name))
 
         # determine which dict we're pulling from
         if self.status.fetch_clan_object(game.clan).instructor.status.group == CatGroup.DARK_FOREST:
@@ -3085,6 +3086,7 @@ class Cat:
         rel = []
         for r in self.relationships.values():
             rel.append(r.to_dict())
+        rel.append({"blanks": self.blank_relations})
 
         safe_save(f"{relationship_dir}/{self.ID}_relations.json", rel)
 
@@ -3108,7 +3110,7 @@ class Cat:
 
                     for rel in rel_data:
                         if isinstance(rel.get('blanks', False), list):
-                            self.blank_relations = rel['blanks']
+                            self.blank_relations += rel['blanks']
                             continue
                         cat_to = self.all_cats.get(rel["cat_to_id"])
                         if cat_to is None or rel["cat_to_id"] == self.ID:
