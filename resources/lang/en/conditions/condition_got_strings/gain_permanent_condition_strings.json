@@ -288,5 +288,11 @@
             "m_c complains about being unable to sleep properly, leading r_c to find a strange lump under the wound.",
             "m_c won't let r_c see the new lump that appeared on {PRONOUN/m_c/poss} body."
         ]
+    },
+    "wobbly": {
+        "constantly dizzy": [
+            "m_c stumbles through the healer den, feeling like the world is moving under {PRONOUN/m_c/poss} feet. r_c tells {PRONOUN/m_c/object} that the newfound dizziness might be a permanent result of {PRONOUN/m_c/poss} wobble.",
+            "m_c finds that {PRONOUN/m_c/subject} {VERB/m_c/have/has} to concentrate even more to stay upright while standing. The newfound dizziness is endlessly frustrating to {PRONOUN/m_c/object}. {PRONOUN/m_c/subject/CAP} {VERB/m_c/surmise/surmises} that it's likely been caused by {PRONOUN/m_c/poss} wobble"
+        ]
     }
 }

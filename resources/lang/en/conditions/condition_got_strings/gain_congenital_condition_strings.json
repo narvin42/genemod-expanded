@@ -155,5 +155,9 @@
     "compulsive grooming": [
         "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare. r_c examines m_c and explains that {PRONOUN/m_c/subject} has a compulsive urge to groom.",
         "m_c has been grooming {PRONOUN/m_c/poss} fur excessively, leaving patches bare."
+    ],
+    "constantly dizzy": [
+        "m_c stumbles around the nursery, trying to walk a straight line as r_c instructed. r_c tells {PRONOUN/m_c/poss} parents that the lack of balance might be permanent.",
+        "m_c finds that {PRONOUN/m_c/subject} {VERB/m_c/have/has} to concentrate to stay upright while standing. The lack of balance is endlessly frustrating to {PRONOUN/m_c/object}."
     ]
 }
