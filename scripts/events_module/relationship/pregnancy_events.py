@@ -162,6 +162,25 @@ class Pregnancy_Events:
                         surrogate = True
                 Pregnancy_Events.handle_zero_moon_pregnant(cat, second_parent, surrogate, clan)
 
+        elif second_parent and second_parent[0] != "Surrogate" and not kits_are_adopted and constants.CONFIG["pregnancy"]["false_pregnancy_chance"] and not int(random() * (constants.CONFIG["pregnancy"]["false_pregnancy_chance"]-1)):
+            Pregnancy_Events.rebuild_strings()
+            if 'Y' in cat.phenotype.sexgene and not get_clan_setting("same sex birth"):
+                return
+
+            if cat.status.group_ID != clan.group_ID:
+                clan = cat.status.fetch_clan_object(game.clan)
+            
+            text = choice(Pregnancy_Events.PREGNANT_STRINGS["announcement"])
+            cat.get_injured("pregnant", severity="minor")
+            cat.injuries["pregnant"]["duration"] = 1
+            text += choice(Pregnancy_Events.PREGNANT_STRINGS[f"minor_severity"])
+            text = event_text_adjust(Cat, text, main_cat=cat, clan=clan)
+            game.cur_events_list.append(
+                Single_Event(
+                    text, "birth_death", cat.ID, clan=clan.group_ID
+                )
+            )
+
     # ---------------------------------------------------------------------------- #
     #                                 handle events                                #
     # ---------------------------------------------------------------------------- #
@@ -265,6 +284,9 @@ class Pregnancy_Events:
         if (cat and cat.no_kits):
             return
 
+            
+        hidden = constants.CONFIG["pregnancy"]["hidden_pregnancy_chance"] and not (random() * (constants.CONFIG["pregnancy"]["hidden_pregnancy_chance"]-1))
+
         Pregnancy_Events.rebuild_strings()
 
         if get_clan_setting("same sex birth") and not (not other_cat and randint(0,1)):
@@ -307,17 +329,21 @@ class Pregnancy_Events:
                 "moons": 0,
                 "amount": 0,
                 "fever_coat": fever,
+                "hidden": hidden,
                 "fpv": wobbly
-            }
-            text = choice(Pregnancy_Events.PREGNANT_STRINGS["announcement"])
-            severity = choices(["minor", "major"], [3, 1], k=1)
-            cat.get_injured("pregnant", severity=severity[0])
-            text += choice(Pregnancy_Events.PREGNANT_STRINGS[f"{severity[0]}_severity"])
+                }
 
-            text = event_text_adjust(Cat, text, main_cat=cat, clan=clan)
-            game.cur_events_list.append(
-                Single_Event(text, "birth_death", cat.ID, clan=clan.group_ID)
-            )
+            if not hidden:
+                text = choice(Pregnancy_Events.PREGNANT_STRINGS["announcement"])
+                severity = choices(["minor", "major"], [3, 1], k=1)
+                cat.get_injured("pregnant", severity=severity[0])
+                text += choice(Pregnancy_Events.PREGNANT_STRINGS[f"{severity[0]}_severity"])
+                text = event_text_adjust(Cat, text, main_cat=cat, clan=clan)
+                game.cur_events_list.append(
+                    Single_Event(text, "birth_death", cat.ID, clan=clan.group_ID)
+                )
+            else:
+                cat.get_injured("pregnant", severity="minor")
         else:
             if (not other_cat or surrogate) and 'Y' in cat.phenotype.sexgene:
         
@@ -497,19 +523,24 @@ class Pregnancy_Events:
                 "moons": 0,
                 "amount": 0,
                 "fever_coat": fever,
+                "hidden": hidden,
                 "fpv": wobbly
             }
 
-            text = choice(Pregnancy_Events.PREGNANT_STRINGS["announcement"])
-            severity = choices(["minor", "major"], [3, 1], k=1)
-            pregnant_cat.get_injured("pregnant", severity=severity[0])
-            text += choice(Pregnancy_Events.PREGNANT_STRINGS[f"{severity[0]}_severity"])
-            text = event_text_adjust(Cat, text, main_cat=pregnant_cat, clan=clan)
-            game.cur_events_list.append(
-                Single_Event(
-                    text, "birth_death", pregnant_cat.ID, clan=clan.group_ID
+            if not hidden:
+                text = choice(Pregnancy_Events.PREGNANT_STRINGS["announcement"])
+                severity = choices(["minor", "major"], [3, 1], k=1)
+                pregnant_cat.get_injured("pregnant", severity=severity[0])
+                text += choice(Pregnancy_Events.PREGNANT_STRINGS[f"{severity[0]}_severity"])
+                text = event_text_adjust(Cat, text, main_cat=pregnant_cat, clan=clan)
+                game.cur_events_list.append(
+                    Single_Event(
+                        text, "birth_death", pregnant_cat.ID, clan=clan.group_ID
+                    )
                 )
-            )
+            else:
+                pregnant_cat.get_injured("pregnant", severity="minor")
+    
 
     @staticmethod
     def handle_one_moon_pregnant(cat: Cat, clan=game.clan):
@@ -540,7 +571,10 @@ class Pregnancy_Events:
             miscarriage = True
         
         if miscarriage == True:
-            event_list.append(choice(events["birth"]["miscarriage"]))
+            if game.clan.pregnancy_data[cat.ID].get("hidden"):
+                event_list.append(choice(events["birth"]["miscarriage_hidden"]))
+            else:
+                event_list.append(choice(events["birth"]["miscarriage"]))
             cat.get_injured("recovering from birth", event_triggered=True)
             if random() < 0.50:
                 cat.get_ill("grief stricken", event_triggered=True)
@@ -557,7 +591,7 @@ class Pregnancy_Events:
             del cat.injuries["pregnant"]
             return
     
-        amount = Pregnancy_Events.get_amount_of_kits(cat, game.clan)
+        amount = Pregnancy_Events.get_amount_of_kits(cat, game.clan, game.clan.pregnancy_data[cat.ID].get("hidden"))
         
         text = 'This should not appear (pregnancy_events.py)'
 
@@ -578,8 +612,8 @@ class Pregnancy_Events:
                 if (illness in ["greencough", "redcough", "yellowcough", "whitecough", "an infected wound", "a festering wound", "ear infection", "carrionplace disease", "heat stroke", "heat exhaustion"] or wobbly == True) and random() < 0.33:
                     game.clan.pregnancy_data[cat.ID]["fever_coat"] = True
 
-        # if the cat is outside of the clan, they won't guess how many kits they will have
-        if cat.status.is_outsider:
+        # if the cat is outside of the clan (or doesn't know about the pregnancy), they won't guess how many kits they will have
+        if cat.status.is_outsider or game.clan.pregnancy_data[cat.ID].get("hidden"):
             return
 
         thinking_amount = choices(
@@ -629,6 +663,7 @@ class Pregnancy_Events:
             return
 
         involved_cats = [cat.ID]
+        hidden = game.clan.pregnancy_data[cat.ID].get("hidden")
 
         kits_amount = game.clan.pregnancy_data[cat.ID]["amount"]
         FeverCoat = game.clan.pregnancy_data[cat.ID].get("fever_coat", False)
@@ -804,6 +839,8 @@ class Pregnancy_Events:
             else:
                 SurrogateBirth = True
                 event_list.append(choice(events["birth"]["two_parents_surrogate"]))
+        elif hidden:
+            event_list.append(choice(events["birth"]["hidden_pregnancy"]))
         elif not cat.status.is_outsider and backkit:
             event_list.append(choice(events["birth"]["unmated_parent"]))
         elif cat.status.is_outsider:
@@ -939,7 +976,7 @@ class Pregnancy_Events:
         if cat.birth_cooldown > 0:
             return False
 
-        if "recovering from birth" in cat.injuries:
+        if "recovering from birth" in cat.injuries or "pregnant" in cat.injuries:
             return False
 
         # decide chances of having kits, and if it's possible at all.
@@ -1741,7 +1778,7 @@ class Pregnancy_Events:
         return all_kitten
 
     @staticmethod
-    def get_amount_of_kits(cat, clan):
+    def get_amount_of_kits(cat, clan, hidden=False):
         """Get the amount of kits which will be born."""
         
         if(get_clan_setting('modded_kits')):
@@ -1768,6 +1805,8 @@ class Pregnancy_Events:
 
             amount = choice(min_kit + two_kits + three_kits + four_kits + five_kits + max_kits)
         
+        if hidden:
+            amount = max(1, int(amount/3))
 
         return amount
 

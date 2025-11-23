@@ -279,7 +279,8 @@ class ProfileScreen(Screens):
                 #if the cat is anything besides m/f/transm/transf then turn them back to cis
                 is_intersex = "intersex " if (self.the_cat.gender == 'intersex' or 
                             (self.the_cat.gender == "molly" and 'Y' in self.the_cat.phenotype.sexgene) or 
-                            (self.the_cat.gender == "tom" and 'Y' not in self.the_cat.phenotype.sexgene)) else ""
+                            (self.the_cat.gender == "tom" and 'Y' not in self.the_cat.phenotype.sexgene) or
+                            ('Y' in self.the_cat.phenotype.sexgene and len(self.the_cat.phenotype.sexgene) > 2)) else ""
                 if self.the_cat.genderalign.replace("intersex ", "") not in ["molly", "trans molly", "tom", "trans tom"]:
                     if self.the_cat.gender == 'intersex':
                         if('Y' in self.the_cat.phenotype.sexgene):
@@ -1137,7 +1138,7 @@ class ProfileScreen(Screens):
                     "utility.exclamation",
                     text=i18n.t("conditions.injuries.recovering from birth"),
                 )
-            elif "pregnant" in the_cat.injuries:
+            elif "pregnant" in the_cat.injuries and not game.clan.pregnancy_data.get(self.the_cat.ID, {}).get("hidden"):
                 output += i18n.t(
                     "utility.exclamation", text=i18n.t("conditions.injuries.pregnant")
                 )
@@ -1959,7 +1960,7 @@ class ProfileScreen(Screens):
                 or game.clan.age - self.the_cat.permanent_condition[i]["moon_start"] > -1)
         ]
         all_illness_injuries.extend(
-            [[i, self.get_condition_details(i)] for i in self.the_cat.injuries]
+            [[i, self.get_condition_details(i)] for i in self.the_cat.injuries if (i != "pregnant" or not game.clan.pregnancy_data.get(self.the_cat.ID, {}).get("hidden"))]
         )
         all_illness_injuries.extend(
             [
