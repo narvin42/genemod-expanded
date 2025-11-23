@@ -58,6 +58,9 @@
         "They should also start with a space in order to ensure there is a space between the announcement/litter sentence and the severity sentence."
     ],
     "birth": {
+      "miscarriage_hidden": [
+        "m_c lost kits {PRONOUN/m_c/poss} didn't know {PRONOUN/m_c/subject} had."
+      ],
       "miscarriage": [
         "m_c lost {PRONOUN/m_c/poss} litter.",
         "m_c had a miscarriage.",
