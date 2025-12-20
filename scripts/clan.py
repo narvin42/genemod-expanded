@@ -645,15 +645,17 @@ class Clan:
                     if not clan_data["relations"].get(CatGroup.PLAYER_CLAN_ID):
                         game.clan.relations[CatGroup.PLAYER_CLAN_ID][ID] = clan_data["relations"]["player_clan"]["other_clan"+str(len(game.clan.all_other_clans))]
         else:
+            ID = game.get_free_group_ID(CatGroup.OTHER_CLAN)
             if "other_clan_chosen_symbol" not in clan_data:
-                for name, relation, temper, enum in zip(
+                for name, relation, temper in zip(
                     clan_data["other_clans_names"].split(","),
                     clan_data["other_clans_relations"].split(","),
                     clan_data["other_clan_temperament"].split(","),
                 ):
                     OtherClan(name, temperament=temper)
+                    game.clan.relations[CatGroup.PLAYER_CLAN_ID][ID] = int(relation)
             else:
-                for name, relation, temper, symbol, enum in zip(
+                for name, relation, temper, symbol in zip(
                     clan_data["other_clans_names"].split(","),
                     clan_data["other_clans_relations"].split(","),
                     clan_data["other_clan_temperament"].split(","),
@@ -767,6 +769,13 @@ class Clan:
         """
         if not game.clan.name:
             return
+
+        keys_to_delete = []
+        for key in clan.pregnancy_data:
+            if key not in Cat.all_cats:
+                keys_to_delete.append(key)
+        for key in keys_to_delete:
+            del clan.pregnancy_data[key]
 
         safe_save(
             f"{get_save_dir()}/{game.clan.name}/pregnancy.json", clan.pregnancy_data

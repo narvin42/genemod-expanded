@@ -229,7 +229,7 @@ class Events:
                         "hardcoded.event_deaths", count=len(ghost_names[clan.displayname]), insert=insert
                     )
 
-                    if len(ghost_names[clan.displayname])-len(faded_kits[clan.displayname]) > 2:
+                    if len(ghost_names[clan.displayname])-len(faded_kits.get(clan.displayname, [])) > 2:
                         alive_cats = list(
                             filter(
                                 lambda kitty: (
@@ -339,7 +339,7 @@ class Events:
                 for cat in Cat.all_cats.values()
             )
             if not has_med:
-                string = i18n.t("defaults.warn_no_medcats")
+                string = event_text_adjust(Cat, i18n.t("defaults.warn_no_medcats"), clan=game.clan)
                 game.cur_events_list.insert(0, Single_Event(string, "health", clan=game.clan.group_ID))
         if clancount:
             for oc in game.clan.all_other_clans:
@@ -349,7 +349,7 @@ class Events:
                     for cat in Cat.all_cats.values()
                 )
                 if not has_med:
-                    string = event_text_adjust(Cat, i18n.t("defaults.warn_no_medcats"), clan=oc.group_ID)
+                    string = event_text_adjust(Cat, i18n.t("defaults.warn_no_medcats"), clan=oc)
                     game.cur_events_list.insert(0, Single_Event(string, "health", clan=oc.group_ID))
 
 
@@ -2626,16 +2626,40 @@ class Events:
                 leader_outside = True
 
             if leader_dead or leader_outside:
-                string = event_text_adjust(Cat, i18n.t(
-                    "defaults.warn_no_leader"), clan=clan.group_ID)
+                string = i18n.t("defaults.warn_no_leader")
                 game.cur_events_list.insert(
                     0,
                     Single_Event(
                         event_text_adjust(
-                            Cat, string, clan=clan.group_ID
-                        )
+                            Cat, string, clan=clan
+                        ),
+                        clan=clan.group_ID
                     ),
                 )
+
+    def rel_deputy_filter(self, cat_list, leader):
+        has_rel = []
+        values = {}
+        for c in cat_list:
+            if c.ID in leader.relationships:
+                has_rel.append(c)
+                values[c.ID] = leader.relationships[c.ID].respect * 3 + leader.relationships[c.ID].trust * 2 + leader.relationships[c.ID].like + leader.relationships[c.ID].comfort
+        if not has_rel:
+            return cat_list
+
+        has_rel.sort( reverse=True,
+            key=lambda c: leader.relationships[c.ID].respect * 3 + leader.relationships[c.ID].trust * 2 + leader.relationships[c.ID].like + leader.relationships[c.ID].comfort)
+
+        if leader.relationships[has_rel[0].ID].respect * 3 + leader.relationships[has_rel[0].ID].trust * 2 + leader.relationships[has_rel[0].ID].romance + leader.relationships[has_rel[0].ID].like + leader.relationships[has_rel[0].ID].comfort < 0:
+            return cat_list
+        for i, c in enumerate(has_rel):
+            if i > 5:
+                break
+            if i <= 5 and values[c.ID] < 0:
+                has_rel = has_rel[:i]
+                break
+
+        return has_rel[:min(5, len(has_rel))]
 
     def check_and_promote_deputy(self, clan=None):
         # TODO: can these events be handled as ceremony events?
@@ -2648,7 +2672,7 @@ class Events:
         ):
             if not get_clan_setting("deputy") and clan == game.clan:
                 game.cur_events_list.insert(0, Single_Event(
-                    "defaults.warn_no_deputy", clan=clan.group_ID))
+                    event_text_adjust(Cat, "defaults.warn_no_deputy", clan=clan), clan=clan.group_ID))
                 return
             # This determines all the cats who are eligible to be deputy.
             possible_deputies = list(
@@ -2666,6 +2690,8 @@ class Events:
                         and x.status.rank == CatRank.WARRIOR
                         and (x.apprentice or x.former_apprentices),
                         Cat.all_cats_list))
+            if get_clan_setting("rel_deputy") and clan.leader:
+                possible_deputies = self.rel_deputy_filter(possible_deputies, clan.leader)
 
             # If there are possible deputies, choose from that list.
             if possible_deputies:
@@ -2731,6 +2757,8 @@ class Events:
                     )
                 )
                 if all_warriors:
+                    if get_clan_setting("rel_deputy") and clan.leader:
+                        all_warriors = self.rel_deputy_filter(all_warriors, clan.leader)
                     random_cat = random.choice(all_warriors)
                     involved_cats = [random_cat.ID]
                     text = i18n.t("hardcoded.ceremony_deputy_unsuitable")
