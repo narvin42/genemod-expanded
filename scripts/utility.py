@@ -296,6 +296,8 @@ def get_current_season():
     function to handle the math for finding the Clan's current season
     :return: the Clan's current season
     """
+    if not game.clan:
+        return "Newleaf"
 
     if constants.CONFIG["lock_season"]:
         game.clan.current_season = game.clan.starting_season
@@ -307,17 +309,14 @@ def get_current_season():
         "Leaf-fall": 6,
         "Leaf-bare": 9
     }
-    if(not game.clan):
-        return "Newleaf"
-    else: 
-        index = game.clan.age % 12 + modifiers[game.clan.starting_season]
+    index = game.clan.age % 12 + modifiers[game.clan.starting_season]
 
-        if index > 11:
-            index = index - 12
+    if index > 11:
+        index = index - 12
 
-        game.clan.current_season = constants.SEASON_CALENDAR[index]
+    game.clan.current_season = constants.SEASON_CALENDAR[index]
 
-        return game.clan.current_season
+    return game.clan.current_season
 
 
 def change_clan_reputation(difference, clan):
@@ -2500,15 +2499,15 @@ def ongoing_event_text_adjust(Cat, text, clan=None, other_clan_name=None):
     """
     cat_dict = {}
     if "lead_name" in text:
-        kitty = Cat.fetch_cat(game.clan.leader)
+        kitty = Cat.fetch_cat(clan.leader)
         cat_dict["lead_name"] = (str(kitty.name), choice(kitty.pronouns))
     if "dep_name" in text:
-        kitty = Cat.fetch_cat(game.clan.deputy)
+        kitty = Cat.fetch_cat(clan.deputy)
         cat_dict["dep_name"] = (str(kitty.name), choice(kitty.pronouns))
     if "med_name" in text:
-        meds = find_alive_cats_with_rank(Cat, [CatRank.MEDICINE_CAT], working=True)
+        meds = find_alive_cats_with_rank(Cat, [CatRank.MEDICINE_CAT], working=True, clan=clan.group_ID)
         kitty = choice(
-            meds if meds else find_alive_cats_with_rank(Cat, [CatRank.MEDICINE_CAT])
+            meds if meds else find_alive_cats_with_rank(Cat, [CatRank.MEDICINE_CAT], clan=clan.group_ID)
         )
         cat_dict["med_name"] = (str(kitty.name), choice(kitty.pronouns))
 
