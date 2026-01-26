@@ -4180,7 +4180,7 @@ def generate_sprite(
                     masked2.set_alpha(120)
                     sprite.blit(masked2, (0, 0))
 
-                if (phenotype.glitter[0] == 'gl' or phenotype.ghosting[0] == 'Gh') and (phenotype.agouti[0] != 'a' or ('red' in phenotype.maincolour or 'cream' in phenotype.maincolour or 'honey' in phenotype.maincolour or 'ivory' in phenotype.maincolour or 'snow' in phenotype.maincolour 'apricot' in phenotype.maincolour)):    
+                if (phenotype.glitter[0] == 'gl' or phenotype.ghosting[0] == 'Gh') and (phenotype.agouti[0] != 'a' or ('red' in phenotype.maincolour or 'cream' in phenotype.maincolour or 'honey' in phenotype.maincolour or 'ivory' in phenotype.maincolour or 'snow' in phenotype.maincolour or 'apricot' in phenotype.maincolour)):
                     if phenotype.glitter[0] == 'gl':
                         sprite.blit(sprites.sprites['satin0'], (0, 0))
                     if (phenotype.ghosting[0] == 'Gh'):

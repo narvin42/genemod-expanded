@@ -1,6 +1,7 @@
 # ==== DO NOT MOVE THIS IMPORT!
 # ==== DO NOT ADD ANYTHING BEFORE THIS IMPORT!
-import init  # isort: skip
+import init  
+# isort: skip
 
 # Load game
 import logging
