@@ -4439,20 +4439,31 @@ def generate_sprite(
                 if phenotype.righteyesize == 'normal':
                     gensprite.blit(righteye, (0, 0))
                 elif phenotype.righteyesize == 'micro':
-                    gensprite.blit(leftmicro, (0, 0))
+                    gensprite.blit(rightmicro, (0, 0))
 
 
                 if sprite_age == 1:
                     lefteye.blit(sprites.sprites['left' + alt_cat_sprite], (0, 0))
                     righteye.blit(sprites.sprites['right' + alt_cat_sprite], (0, 0))
+                    leftmicro.blit(sprites.sprites['microleft' + alt_cat_sprite], (0, 0))
+                    rightmicro.blit(sprites.sprites['microright' + alt_cat_sprite], (0, 0))
                     lefteye.blit(construct_eye_colour(phenotype.lefteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     righteye.blit(construct_eye_colour(phenotype.righteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+                    leftmicro.blit(construct_eye_colour(phenotype.lefteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+                    rightmicro.blit(construct_eye_colour(phenotype.righteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     lefteye.set_alpha(200)
                     righteye.set_alpha(200)
-                    if phenotype.lefteyesize != 'no':
+                    leftmicro.set_alpha(200)
+                    rightmicro.set_alpha(200)
+                    if phenotype.lefteyesize == 'normal':
                         gensprite.blit(lefteye, (0, 0))
-                    if phenotype.righteyesize != 'no':
+                    elif phenotype.lefteyesize == 'micro':
+                        gensprite.blit(leftmicro, (0, 0))
+                    if phenotype.righteyesize == 'normal':
                         gensprite.blit(righteye, (0, 0))
+                    elif phenotype.righteyesize == 'micro':
+                        gensprite.blit(rightmicro, (0, 0))
+
 
 
                 if(phenotype.extraeye):
