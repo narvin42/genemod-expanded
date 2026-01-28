@@ -2451,6 +2451,9 @@ def handle_murder(cat, clan):
 
         kill_chance = constants.CONFIG["death_related"]["base_murder_kill_chance"]
 
+        if chosen_cat.status.group_ID != cat.status.group_ID:
+            kill_chance += 50
+
         extreme_neg = len(
             [l for l in chosen_target.get_reltype_tiers() if l.is_extreme_neg]
         )
