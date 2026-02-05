@@ -641,6 +641,9 @@ class Phenotype(Genotype):
                     tail = "macktail"
             all_patterns.append(tail)
 
+            if self.wbtype == "chinchilla" or self.corin[0] == "sg":
+                all_patterns.insert(0, "agouti")
+
         return all_patterns
   
     def ChooseTortiePattern(self, spec = None):
@@ -965,18 +968,18 @@ class Phenotype(Genotype):
             else:
                 maincolour = 'low'
         if(genes.dilute[0] == "d" or (genes.specialred == 'cameo' and genes.silver[0] == 'I') or self.merlepattern):
-            if (genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch"):
+            if (genes.pinkdilute[0] == "dp" and genes.chs[0] == "ch") or ((genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch") and (genes.dilute[0] == "d" and genes.specialred == 'cameo' and genes.silver[0] == 'I')):
                 if genes.dilutemd[0] == "Dm":
                     colour = "snow-apricot"
                 else:
                     colour = "snow"
-            elif(genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch"):
+            elif (genes.pinkdilute[0] == "dp" or genes.chs[0] == "ch") or (genes.dilute[0] == "d" and genes.specialred == 'cameo' and genes.silver[0] == 'I'):
                 if genes.dilutemd[0] == "Dm":
                     colour = "ivory-apricot"
                 else:
                     colour = "ivory"
             else:
-                if genes.dilutemd[0] == "Dm" and not(genes.specialred == 'cameo' or self.merlepattern):
+                if genes.dilutemd[0] == "Dm" and not(genes.dilute[0] == "D" and (genes.specialred == 'cameo' or self.merlepattern)):
                     colour = "apricot"
                 else:
                     colour = "cream"
@@ -1005,7 +1008,9 @@ class Phenotype(Genotype):
         else:
             rufousing = genes.ruftype
 
-        if genes.corin[0] == "sg" or genes.wbtype == "chinchilla" or (genes.corin[0] != "N" and genes.wbtype == "shaded"):
+        if special == "nosilver":
+            banding = "medium"
+        elif genes.corin[0] == "sg" or genes.wbtype == "chinchilla" or (genes.corin[0] != "N" and genes.wbtype == "shaded"):
             banding = "chinchilla"
         elif genes.corin[0] == "sh" or genes.corin[0] == "fg" or genes.wbtype == "shaded":
             banding = "shaded"

@@ -1717,21 +1717,23 @@ class Pregnancy_Events:
             # create and update relationships
             relationships_to_update = []
             # if kits are in a clan, the whole clan gets to know
-            if cat and cat.status.alive_in_player_clan:
-                relationships_to_update = clan.clan_cats
+            if cat and cat.status.group.is_any_clan_group():
+                relationships_to_update = game.clan.clan_cats
             # if they aren't, then they only know parents, sibling rels will be added later
             elif cat:
                 relationships_to_update = [cat.ID]
                 # other parent only knows if they're in the same group
-                if other_cat and other_cat.status.group == cat.status.group:
-                    relationships_to_update.append(other_cat.ID)
+                if other_cat:
+                    for o_cat in other_cat:
+                        if o_cat.status.group == cat.status.group:
+                            relationships_to_update.append(o_cat.ID)
 
             if relationships_to_update:
                 for cat_id in relationships_to_update:
                     if cat_id == kit.ID:
                         continue
                     the_cat = Cat.all_cats.get(cat_id)
-                    if the_cat.dead:
+                    if not the_cat or the_cat.dead or the_cat.status.group_ID != cat.status.group_ID:
                         continue
                     if the_cat.ID in kit.get_parents():
                         parent_to_kit = constants.CONFIG["new_cat"]["parent_buff"][

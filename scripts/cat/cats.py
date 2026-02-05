@@ -263,8 +263,8 @@ class Cat:
                     par1.Generator(kittypet=kittypet)
                     par2.Generator(kittypet=kittypet)
 
-                self.phenotype.KitGenerator(par1, par2)
-                self.chimerapheno.KitGenerator(par1, par2)
+                self.phenotype.KitGenerator(par1, par2, gender=self.gender)
+                self.chimerapheno.KitGenerator(par1, par2, gender=self.gender)
             
             if self.phenotype.munch[1] == 'Mk':
                 self.phenotype.munch[1] = "mk"
@@ -1824,11 +1824,13 @@ class Cat:
         old_age = self.age
 
         if self.dead and not self.faded:
+            if self.moons > 0 and self.status.rank == CatRank.NEWBORN:
+                self.status._change_rank(CatRank.KITTEN)
             self.get_new_thought()
             return
 
         self.moons += 1
-        if self.moons == 1 and self.status.rank == CatRank.NEWBORN:
+        if self.moons > 0 and self.status.rank == CatRank.NEWBORN:
             self.status._change_rank(CatRank.KITTEN)
         self.in_camp = 1
 
@@ -1876,7 +1878,7 @@ class Cat:
         )
 
         biome = self.status.fetch_clan_object(game.clan).biome if game.clan else switch_get_value(Switch.biome)
-        camp = switch_get_value(Switch.camp_bg)
+        camp = self.status.fetch_clan_object(game.clan).camp_bg if game.clan else switch_get_value(Switch.camp_bg)
         try:
             season = game.clan.current_season
         except Exception:
