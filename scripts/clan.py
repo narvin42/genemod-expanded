@@ -10,7 +10,7 @@ TODO: Docs
 
 import os
 import statistics
-from random import choice, randint
+from random import choice, randint, random
 from typing import Optional
 
 import pygame
@@ -24,7 +24,7 @@ from scripts.cat.save_load import (
     get_faded_ids,
     load_faded_cat_ids,
 )
-from scripts.cat.sprites import sprites
+from scripts.cat.sprites.load_sprites import sprites
 from scripts.clan_package.settings import save_clan_settings, load_clan_settings
 from scripts.clan_package.settings.clan_settings import reset_loaded_clan_settings
 from scripts.clan_resources.freshkill import FreshkillPile, Nutrition
@@ -41,12 +41,10 @@ from scripts.game_structure.game.switches import (
 from scripts.game_structure import game
 from scripts.housekeeping.datadir import get_save_dir
 from scripts.housekeeping.version import get_version_info, SAVE_VERSION_NUMBER
-from scripts.utility import (
-    get_current_season,
-    clan_symbol_sprite,
-    get_living_clan_cat_count,
-    create_new_cat,
-)  # pylint: disable=redefined-builtin
+from scripts.clan_package.clan_symbols import clan_symbol_sprite
+from scripts.clan_package.get_clan_cats import get_living_clan_cat_count
+from scripts.events_module.consequences import create_new_cat
+from scripts.screens.screens_core.screens_core import rebuild_top_menu_buttons
 
 
 class Clan:
@@ -60,7 +58,6 @@ class Clan:
     clan_cats = []
 
     age = 0
-    current_season = "Newleaf"
     all_other_clans = []
 
     def __init__(
@@ -79,6 +76,10 @@ class Clan:
         self_run_init_functions=True,
         displayname="",
     ):
+        """
+        :param name: The save file name for the Clan, this should not be used for player-facing text beyond the save file screen
+        :param displayname: The display name for the Clan, this is what should appear while the playing the game.
+        """
         if name == "":
             return
 
@@ -108,7 +109,6 @@ class Clan:
             self.med_cat_list
         )  # Must do this after the healer is added to the list.
         self.age = 0
-        self.current_season = "Newleaf"
         self.starting_season = starting_season
         self.instructor = None
         # This is the first cat in starclan, to "guide" the other dead cats there.
@@ -133,6 +133,7 @@ class Clan:
         self.relations = relations if relations.get(self.group_ID) else {CatGroup.PLAYER_CLAN_ID: {}}
 
         self.all_other_clans = []
+        self.other_clan_IDs = []
 
         self.starting_members = starting_members
         if game_mode in ("expanded", "cruel season"):
@@ -149,6 +150,19 @@ class Clan:
 
         if self_run_init_functions:
             self.post_initialization_functions()
+
+        rebuild_top_menu_buttons()
+
+    @property
+    def current_season(self):
+        modifiers = {"Newleaf": 0, "Greenleaf": 3, "Leaf-fall": 6, "Leaf-bare": 9}
+        return (
+            self.starting_season
+            if constants.CONFIG["lock_season"]
+            else constants.SEASON_CALENDAR[
+                (self.age + modifiers[self.starting_season]) % 12
+            ]
+        )
 
     # The clan couldn't save itself in time due to issues arising, for example, from this function: "if deputy is not
     # None: self.deputy.status_change('deputy') -> game.clan.remove_med_cat(self)"
@@ -268,7 +282,7 @@ class Clan:
                 the_cat.backstory = "clan_founder"
             if the_cat.status.rank == CatRank.APPRENTICE:
                 the_cat.rank_change(CatRank.APPRENTICE)
-            the_cat.thoughts()
+            the_cat.get_new_thought()
             the_cat.pelt.rebuild_sprite = True 
         save_cats(game.clan.name, Cat, game)
 
@@ -293,10 +307,6 @@ class Clan:
             switch_set_value(Switch.game_mode, "classic")
             self.game_mode = "classic"
 
-        # set the starting season
-        season_index = constants.SEASON_CALENDAR.index(self.starting_season)
-        self.current_season = constants.SEASON_CALENDAR[season_index]
-
     def add_cat(self, cat):  # cat is a 'Cat' object
         """Adds cat into the list of clan cats"""
         if cat.ID in Cat.all_cats and cat.ID not in self.clan_cats:
@@ -311,7 +321,6 @@ class Clan:
             and cat.status.group.is_any_clan_group()
             and cat.ID in Cat.outside_cats
         ):
-            # The outside-value must be set to True before the cat can go to cotc
             Cat.outside_cats.pop(cat.ID)
 
     def remove_cat(self, ID):  # ID is cat.ID
@@ -603,8 +612,6 @@ class Clan:
             if "starting_season" in clan_data
             else "Newleaf"
         )
-        get_current_season()
-
         game.clan.leader_lives = leader_lives
         game.clan.leader_predecessors = clan_data["leader_predecessors"]
 
@@ -659,6 +666,7 @@ class Clan:
                     temperament=other_clan["temperament"],
                     reputation=other_clan.get("reputation"),
                     chosen_symbol=other_clan["chosen_symbol"],
+                    biome=other_clan.get("biome"),
                     instructor=other_clan.get("instructor"),
                     leader=other_clan.get("leader"),
                     leader_lives=other_clan.get("leader_lives"),
@@ -1240,14 +1248,21 @@ class OtherClan:
     # Neutral to joiners: cunning, logical, stoic, mellow, bloodthirsty
     # Hostile to joiners: wary, proud
 
-    def __init__(self, name="", clancount="singleclan", reputation=None, temperament="", chosen_symbol="", instructor=None, leader=None, leader_lives=9, leader_predecessors=0, deputy=None, deputy_predecessors=0, medicine_cat=None, med_cat_predecessors=0, ID: str=0):
+    def __init__(self, name="", clancount="singleclan", biome=None, reputation=None, temperament="", chosen_symbol="", instructor=None, leader=None, leader_lives=9, leader_predecessors=0, deputy=None, deputy_predecessors=0, medicine_cat=None, med_cat_predecessors=0, ID: str=0):
         self.group_ID = ID
         if not self.group_ID:
             self.group_ID = game.get_free_group_ID(CatGroup.OTHER_CLAN)
+        game.clan.other_clan_IDs.append(self.group_ID)
 
         clan_names = names.names_dict["normal_prefixes"]
         clan_names.extend(names.names_dict["clan_prefixes"])
         self.displayname = name or choice(clan_names)
+        if biome:
+            self.biome = biome
+        else:
+            self.biome = game.clan.biome if random() < 0.75 else choice(constants.BIOME_TYPES)
+            while self.biome in ["Wetlands", "Desert", None]:
+                self.biome = choice(constants.BIOME_TYPES)
         # self.relations = relations or randint(8, 12)
         self.temperament = temperament or choice(self.temperament_list)
         if self.temperament not in self.temperament_list:
@@ -1348,7 +1363,8 @@ class OtherClan:
             "name": self.displayname,
             "reputation" : self.reputation,
             "temperament" : self.temperament,
-            "chosen_symbol" : self.chosen_symbol,
+            "chosen_symbol": self.chosen_symbol,
+            "biome": self.biome,
             "instructor": self.instructor.ID if self.instructor else None,
             "leader" : self.leader.ID if self.leader else None,
             "leader_lives" : self.leader_lives,

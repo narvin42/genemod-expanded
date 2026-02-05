@@ -292,11 +292,10 @@ class Sprites:
         self.make_group('genemod/fold_curllineart', (0, 0), 'fold_curllines')
         self.make_group('genemod/curllineart', (0, 0), 'curllines')
 
-        self.make_group('genemod/isolateears', (0, 0), 'isolateears', sprites_y=7)
-        self.make_group('genemod/noears', (0, 0), 'noears', sprites_y=7)
+        self.make_group('genemod/isolateears', (0, 0), 'isolateears')
+        self.make_group('genemod/noears', (0, 0), 'noears')
         
         self.make_group('genemod/rexlines', (0, 0), 'rexlineart')
-        self.make_group('genemod/rexlinesdead', (0, 0), 'rexlineartdead')
         self.make_group('genemod/rexlinesdf', (0, 0), 'rexlineartdf')
         self.make_group('genemod/rexborder', (0, 0), 'rexbord')
 
@@ -366,7 +365,6 @@ class Sprites:
             self.make_group('Other/karpati', (a, 1), x)
 
         #genemod effects
-        self.make_group('Other/bimetal', (0, 0), 'bimetal')
         self.make_group('Other/ghosting', (0, 0), 'ghost')
         self.make_group('Other/grizzle', (0, 0), 'grizzle')
         self.make_group('Other/bleach', (0, 0), 'bleach')
@@ -390,9 +388,9 @@ class Sprites:
         #genemod eyes
 
         for i, x in enumerate(['left', 'right', 'sectoral1', 'sectoral2', 'sectoral3', 'sectoral4', 'sectoral5', 'sectoral6', 'microleft', 'microright']):
-            self.make_group('Other/eyebase', (i, 0), x, sprites_y=6)
+            self.make_group('Other/eyebase', (i, 0), x, sprites_y=8)
         for i, x in enumerate(['outer', 'inner', 'pupil']):
-            self.make_group('Other/eyesections', (i, 0), f"eye{x}", sprites_y=6)
+            self.make_group('Other/eyesections', (i, 0), f"eye{x}", sprites_y=7)
         
         data_jsons = (
             self.WHITE_DATA,
@@ -558,14 +556,14 @@ class Sprites:
 
             y_pos += 1
 
-    def get_symbol(self, symbol: str, force_light=False, force_dark=False):
+    def get_symbol(self, symbol_str: str, force_light=False, force_dark=False):
         """Change the color of the symbol to match the requested theme, then return it
-        :param Surface symbol: The clan symbol to convert
+        :param Surface symbol_str: The clan symbol to convert
         :param force_light: Use to ignore dark mode and always display the light mode color
         """
-        symbol = self.sprites.get(symbol)
+        symbol = self.sprites.get(symbol_str)
         if symbol is None:
-            logger.warning("%s is not a known Clan symbol! Using default.")
+            logger.warning("%s is not a known Clan symbol! Using default.", symbol_str)
             symbol = self.sprites[self.clan_symbols[0]]
 
         recolored_symbol = copy(symbol)

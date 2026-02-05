@@ -18,12 +18,10 @@ from scripts.events_module.event_filters import (
     event_for_location,
     event_for_season,
     event_for_cat,
-)
-from scripts.utility import (
-    change_relationship_values,
-    process_text,
     filter_relationship_type,
 )
+from scripts.events_module.text_adjust import process_text
+from scripts.events_module.consequences import change_relationship_values
 from scripts.game_structure.localization import load_lang_resource
 
 
@@ -178,7 +176,7 @@ class GroupEvents:
         filtered_interactions = []
         main_cat = Cat.all_cats[abbreviations_cat_id["m_c"]]
         for interact in interactions:
-            if not event_for_location(interact.biome):
+            if not event_for_location(interact.biome, main_cat.status.fetch_clan_object(game.clan)):
                 continue
 
             if not event_for_season(interact.season):

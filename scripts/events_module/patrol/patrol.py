@@ -9,16 +9,21 @@ from typing import List, Tuple, Optional, Union
 
 import pygame
 
+from scripts.cat import pronouns
 from scripts.cat.cats import Cat
 from scripts.cat_relations.enums import RelType
 from scripts.cat.enums import CatAge, CatRank, CatCompatibility
 from scripts.clan import Clan
 from scripts.clan_package.settings import get_clan_setting
+from scripts.clan_package.get_clan_cats import get_living_clan_cat_count
 from scripts.events_module.event_filters import (
     event_for_tags,
     event_for_other_clan,
     get_frequency,
     find_new_frequency,
+    filter_relationship_type,
+    check_relationship_value,
+    get_personality_compatibility,
 )
 from scripts.events_module.patrol.patrol_event import PatrolEvent
 from scripts.events_module.patrol.patrol_outcome import PatrolOutcome
@@ -26,16 +31,12 @@ from scripts.game_structure import localization, constants
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.game_structure import game
 from scripts.game_structure.localization import load_lang_resource
-from scripts.utility import (
-    get_personality_compatibility,
-    check_relationship_value,
+from scripts.events_module.text_adjust import (
     process_text,
     adjust_prey_abbr,
-    find_special_list_types,
-    filter_relationship_type,
     get_special_snippet_list,
+    find_special_list_types,
     adjust_list_text,
-    get_living_clan_cat_count,
 )
 
 logger = logging.getLogger(__name__)
@@ -109,7 +110,7 @@ class Patrol:
         final_patrols, final_romance_patrols = self.get_possible_patrols(
             str(game.clan.current_season).casefold(),
             str(
-                game.clan.biome
+                self.clan.biome
                 if not game.clan.override_biome
                 else game.clan.override_biome
             ).casefold(),
@@ -271,9 +272,20 @@ class Patrol:
         # DETERMINE RANDOM CAT
         # Find random cat
         if len(patrol_cats) > 1:
-            self.random_cat = choice(
-                [i for i in patrol_cats if i != self.patrol_leader]
-            )
+            # prioritize grabbing an adult as the random cat
+            if self.patrol_statuses.get("normal adult", 0) > 1:
+                self.random_cat = choice(
+                    [
+                        i
+                        for i in self.patrol_cats
+                        if i != self.patrol_leader and i not in self.patrol_apprentices
+                    ]
+                )
+            # if no adults, grab anyone
+            else:
+                self.random_cat = choice(
+                    [i for i in patrol_cats if i != self.patrol_leader]
+                )
         else:
             self.random_cat = choice(patrol_cats)
 
@@ -1027,7 +1039,7 @@ class Patrol:
 
         # get first what kind of prey size which will be chosen
         biome = (
-            game.clan.biome
+            self.clan.biome
             if not game.clan.override_biome
             else game.clan.override_biome
         )
@@ -1130,7 +1142,7 @@ class Patrol:
         text, senses, list_type, cat_tag = find_special_list_types(text)
         if list_type:
             sign_list = get_special_snippet_list(
-                list_type, amount=randint(1, 3), sense_groups=senses
+                list_type, amount=randint(1, 3), sense_groups=senses, clan=self.clan
             )
             text = text.replace(list_type, str(sign_list))
             if cat_tag:
@@ -1169,7 +1181,7 @@ class Patrol:
                 pronoun = choice(new_cats[0].pronouns)
             else:
                 names = adjust_list_text([str(cat.name) for cat in new_cats])
-                pronoun = localization.get_new_pronouns("default plural")
+                pronoun = pronouns.get_new_pronouns("default plural")
 
             replace_dict[f"n_c:{i}"] = (names, pronoun)
 
@@ -1262,5 +1274,5 @@ class Patrol:
 #                               PATROL CLASS END                               #
 # ---------------------------------------------------------------------------- #
 
-PATROL_WEIGHT_ADAPTION = game.prey_config["patrol_weight_adaption"]
-PATROL_BALANCE = game.prey_config["patrol_balance"]
+PATROL_WEIGHT_ADAPTION = constants.PREY_CONFIG["patrol_weight_adaption"]
+PATROL_BALANCE = constants.PREY_CONFIG["patrol_balance"]

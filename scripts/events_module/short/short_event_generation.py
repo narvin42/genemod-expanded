@@ -27,7 +27,8 @@ from scripts.events_module.event_filters import (
 from scripts.events_module.short.short_event import ShortEvent
 from scripts.game_structure import constants, game
 from scripts.game_structure.game.switches import switch_get_value, Switch
-from scripts.utility import get_living_clan_cat_count
+from scripts.clan_package.cotc import get_warring_clan
+from scripts.clan_package.get_clan_cats import get_living_clan_cat_count
 
 loaded_events = {}
 used_events = set()
@@ -283,7 +284,7 @@ def generate_event_objects(event_triggered, biome, frequency) -> list:
                     ),
                     m_c=event["m_c"] if "m_c" in event else {},
                     r_c=event["r_c"] if "r_c" in event else {},
-                    new_cat=event["new_cat"] if "new_cat" in event else [],
+                    new_cat=event["multiclan_cat"] if game.clan.clancount == "multiclan" and "multiclan_cat" in event else (event["new_cat"] if "new_cat" in event else []),
                     injury=event["injury"] if "injury" in event else [],
                     exclude_involved=(
                         event["exclude_involved"] if "exclude_involved" in event else []
@@ -382,7 +383,7 @@ def filter_events(
             if set(event.sub_type) != set(sub_types):
                 continue
 
-        if not event_for_location(event.location):
+        if not event_for_location(event.location, clan):
             continue
 
         if not event_for_season(event.season):

@@ -30,11 +30,8 @@ from scripts.game_structure.game.switches import (
 )
 from scripts.game_structure import game
 from scripts.game_structure.localization import load_lang_resource
-from scripts.utility import (
-    event_text_adjust,
-    find_alive_cats_with_rank,
-    get_leader_life_notice,
-)
+from scripts.events_module.text_adjust import event_text_adjust, get_leader_life_notice
+from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank
 
 
 # ---------------------------------------------------------------------------- #
@@ -1053,7 +1050,7 @@ class Condition_Events:
 
                     if cat.age == CatAge.ADOLESCENT or cat.status.rank.is_any_apprentice_rank():
                         if get_clan_setting("modded names") and get_clan_setting("new suffixes"):
-                            cat.name.give_suffix(cat.skills, cat.personality, game.clan.biome, "hard work")
+                            cat.name.give_suffix(cat.skills, cat.personality, clan.biome, "hard work")
                         event += i18n.t(
                             "hardcoded.condition_retire_adolescent_ceremony",
                             clan=clan.displayname,

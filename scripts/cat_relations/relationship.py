@@ -12,9 +12,13 @@ from scripts.cat_relations.interaction import (
 )
 from scripts.cat_relations.enums import RelTier, RelType
 from scripts.event_class import Single_Event
-from scripts.events_module.event_filters import event_for_location, event_for_season
+from scripts.events_module.event_filters import (
+    event_for_location,
+    event_for_season,
+    get_personality_compatibility,
+)
 from scripts.game_structure import game
-from scripts.utility import get_personality_compatibility, process_text
+from scripts.events_module.text_adjust import process_text
 import scripts.cat_relations.interaction as interactions
 
 
@@ -477,7 +481,7 @@ class Relationship:
             )
 
         for interact in possible_interactions:
-            if not event_for_location(interact.biome):
+            if not event_for_location(interact.biome, self.cat_from.status.fetch_clan_object(game.clan)):
                 continue
 
             if not event_for_season(interact.season):

@@ -19,12 +19,10 @@ from scripts.game_structure.ui_elements import UIImageButton, UISurfaceImageButt
 from scripts.ui.windows.select_focus_clans import SelectFocusClansWindow
 from scripts.screens.Screens import Screens
 from scripts.ui.generate_button import ButtonStyles, get_button_dict
-from scripts.utility import (
-    ui_scale,
-    find_alive_cats_with_rank,
-    get_text_box_theme,
-    adjust_list_text,
-)
+from scripts.ui.theme import get_text_box_theme
+from scripts.events_module.text_adjust import adjust_list_text
+from scripts.ui.scale import ui_scale
+from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank
 
 with open("resources/clansettings.json", "r", encoding="utf-8") as f:
     settings_dict = ujson.load(f)
@@ -324,7 +322,7 @@ class WarriorDenScreen(Screens):
         next_change = ""
         if game.clan.last_focus_change:
             last_change_text = i18n.t(
-                "general.moons_date", moon=str(game.clan.last_focus_change)
+                "general.moon_date", moon=str(game.clan.last_focus_change)
             )
             moons = (
                 game.clan.last_focus_change
