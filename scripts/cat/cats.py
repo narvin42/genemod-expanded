@@ -16,6 +16,7 @@ from typing import Dict, List, Any, Optional, Union, Callable, TYPE_CHECKING
 import i18n
 import ujson  # type: ignore
 
+from scripts.special_dates import SpecialDate, is_today
 import scripts.game_structure.localization as pronouns
 from scripts.cat import save_load, pronouns
 from scripts.cat.enums import CatGroup, CatAge, CatRank, CatStanding, CatSocial, CatCompatibility
@@ -1360,6 +1361,8 @@ class Cat:
         return genelist
 
     def describe_eyes(self):
+        if is_today(SpecialDate.APRIL_FOOLS) and self.phenotype.april_fools.get("rainbow_eyes", ["NoDRE"])[0] != "NoDRE":
+            return "rainbow"
         if(self.phenotype.lefteye == self.phenotype.righteye):
             colour = self.phenotype.lefteye.lower()
         else:
@@ -2220,7 +2223,14 @@ class Cat:
             }
             self.pelt.rebuild_sprite = True
 
-    def get_injured(self, name, event_triggered=False, lethal=True, severity="default"):
+    def get_injured(
+        self,
+        name,
+        event_triggered=False,
+        lethal=True,
+        potential_scars=None,
+        severity="default",
+    ):
         """Add an injury to this cat.
 
         :param name: The injury to add
@@ -2229,6 +2239,8 @@ class Cat:
         :type event_triggered: bool, optional
         :param lethal: _description_, defaults to True
         :type lethal: bool, optional
+        :param potential_scars: List of possible scars to get upon healing, defaults to None
+        :type potential_scars: array, optional
         :param severity: _description_, defaults to 'default'
         :type severity: str, optional
         """
@@ -2278,7 +2290,8 @@ class Cat:
             also_got=injury["also_got"],
             cause_permanent=injury["cause_permanent"],
             event_triggered=event_triggered,
-            clan=self.status.group_ID
+            clan=self.status.group_ID,
+            potential_scars=potential_scars,
         )
 
         if new_injury.name not in self.injuries:
@@ -2292,6 +2305,7 @@ class Cat:
                 "complication": None,
                 "cause_permanent": new_injury.cause_permanent,
                 "event_triggered": new_injury.new,
+                "potential_scars": new_injury.potential_scars,
             }
             
             self.pelt.rebuild_sprite = True
