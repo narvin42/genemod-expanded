@@ -1237,8 +1237,8 @@ def generate_sprite(
 
                 lefteye.blit(sprites.sprites['left' + cat_sprite], (0, 0))
                 righteye.blit(sprites.sprites['right' + cat_sprite], (0, 0))
-                leftmicro.blit(sprites.sprites['microleft' + alt_cat_sprite], (0, 0))
-                rightmicro.blit(sprites.sprites['microright' + alt_cat_sprite], (0, 0))
+                leftmicro.blit(sprites.sprites['microleft' + cat_sprite], (0, 0))
+                rightmicro.blit(sprites.sprites['microright' + cat_sprite], (0, 0))
 
                 lefteye.blit(construct_eye_colour(phenotype.lefteyetype), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                 righteye.blit(construct_eye_colour(phenotype.righteyetype), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
@@ -1255,10 +1255,10 @@ def generate_sprite(
                     gensprite.blit(rightmicro, (0, 0))
 
                 if sprite_age == 1:
-                    lefteye.blit(sprites.sprites['left' + alt_cat_sprite], (0, 0))
-                    righteye.blit(sprites.sprites['right' + alt_cat_sprite], (0, 0))
-                    leftmicro.blit(sprites.sprites['microleft' + alt_cat_sprite], (0, 0))
-                    rightmicro.blit(sprites.sprites['microright' + alt_cat_sprite], (0, 0))
+                    lefteye.blit(sprites.sprites['left' + cat_sprite], (0, 0))
+                    righteye.blit(sprites.sprites['right' + cat_sprite], (0, 0))
+                    leftmicro.blit(sprites.sprites['microleft' + cat_sprite], (0, 0))
+                    rightmicro.blit(sprites.sprites['microright' + cat_sprite], (0, 0))
                     lefteye.blit(construct_eye_colour(phenotype.lefteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     righteye.blit(construct_eye_colour(phenotype.righteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     leftmicro.blit(construct_eye_colour(phenotype.lefteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
