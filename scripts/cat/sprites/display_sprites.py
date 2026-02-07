@@ -121,10 +121,6 @@ def generate_sprite(
                 'mediumapricot' : 'rufousedcream',
                 'lowapricot' : 'mediumcream',
 
-                'rufousedhoney-apricot' : 'lowred',
-                'mediumhoney-apricot' : 'rufousedhoney',
-                'lowhoney-apricot' : 'mediumhoney',
-
                 'rufousedivory-apricot' : 'lowhoney',
                 'mediumivory-apricot' : 'rufousedivory',
                 'lowivory-apricot' : 'mediumivory'
@@ -1443,8 +1439,47 @@ def generate_sprite(
         blendmode = pygame.BLEND_RGBA_MIN
 
         gensprite = new_sprite
-        new_sprite = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+        if cat.phenotype.bobtailnr > 0:
+            gensprite.blit(_recolor_lineart(
+                sprites.sprites['bobtail' +
+                                str(cat.phenotype.bobtailnr) + cat_sprite],
+                lineart_color,
+                gradient_surface,
+            ), (0, 0))
+        gensprite.set_colorkey((0, 0, 255))
+        new_sprite = pygame.Surface(
+            (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
         new_sprite.blit(gensprite, (0, 0))
+
+        if is_today(SpecialDate.APRIL_FOOLS):
+            if cat.phenotype.bobtailnr != 1 and "Pc" in phenotype.april_fools.get("polycaudal", []):
+                tail = pygame.Surface(
+                    (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                tail.blit(sprites.sprites['bobtail1' + cat_sprite], (0, 0))
+                white = pygame.Surface(
+                    (sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
+                white.fill((255, 255, 255))
+                tail.blit(white, (0, 0), special_flags=pygame.BLEND_RGB_MAX)
+                tail.blit(new_sprite, (0, 0),
+                          special_flags=pygame.BLEND_RGBA_MIN)
+                offset = 2
+                if cat_sprite in ["2", "12", "13", "14", "16", "18"]:
+                    new_sprite.blit(tail, (offset, 1))
+                elif cat_sprite in ["4", "6", "7", "8", "9", "10", "11", "15", "19", "20"]:
+                    new_sprite.blit(tail, (-offset, -1))
+                elif cat_sprite in ["1", "5"]:
+                    new_sprite.blit(tail, (0, -2))
+
+            if constants.CONFIG["fun"]["april_fools_hats"]:
+                if not dead:
+                    new_sprite.blit(
+                        sprites.sprites['aprilfoolslines' + cat_sprite], (0, 0))
+                elif cat.status.group == CatGroup.DARK_FOREST:
+                    new_sprite.blit(
+                        sprites.sprites['aprilfoolslineartdf' + cat_sprite], (0, 0))
+                else:
+                    new_sprite.blit(
+                        sprites.sprites['aprilfoolslineartdead' + cat_sprite], (0, 0))
 
         if not scars_hidden:
             for scar in cat.pelt.scars:
@@ -1460,39 +1495,6 @@ def generate_sprite(
                         special_flags=blendmode,
                     )
 
-        if is_today(SpecialDate.APRIL_FOOLS):
-            if cat.phenotype.bobtailnr != 1 and "Pc" in phenotype.april_fools.get("polycaudal", []):
-                tail = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                tail.blit(sprites.sprites['bobtail1' + cat_sprite], (0, 0))
-                white = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                white.fill((255, 255, 255))
-                tail.blit(white, (0, 0), special_flags=pygame.BLEND_RGB_MAX)
-                tail.blit(new_sprite, (0, 0), special_flags=pygame.BLEND_RGBA_MIN)
-                offset = 2
-                if cat_sprite in ["2", "12", "13", "14", "16", "18"]:
-                    new_sprite.blit(tail, (offset, 1))
-                elif cat_sprite in ["4", "6", "7", "8", "9", "10", "11", "15", "19", "20"]:
-                    new_sprite.blit(tail, (-offset, -1))
-                elif cat_sprite in ["1", "5"]:
-                    new_sprite.blit(tail, (0, -2))
-            
-            if constants.CONFIG["fun"]["april_fools_hats"]:
-                if not dead:
-                    new_sprite.blit(sprites.sprites['aprilfoolslines' + cat_sprite], (0, 0))
-                elif cat.status.group == CatGroup.DARK_FOREST:
-                    new_sprite.blit(sprites.sprites['aprilfoolslineartdf' + cat_sprite], (0, 0))
-                else:
-                    new_sprite.blit(sprites.sprites['aprilfoolslineartdead' + cat_sprite], (0, 0))
-
-        if cat.phenotype.bobtailnr > 0:
-            gensprite.blit(_recolor_lineart(
-                sprites.sprites['bobtail' +
-                                str(cat.phenotype.bobtailnr) + cat_sprite],
-                            lineart_color,
-                            gradient_surface,
-                        ), (0, 0))
-        gensprite.set_colorkey((0, 0, 255))
-        
         # draw accessories
         from scripts.cat.pelts import Pelt
 
@@ -1684,3 +1686,26 @@ def update_mask(cat):
                     except IndexError:
                         continue
     cat.sprite_mask = inflated_mask
+
+
+def calculate_size(cat):
+    if cat.age in [CatAge.NEWBORN, CatAge.KITTEN]:
+        size = "average"
+        if cat.phenotype.growth_pattern == "big-kitten":
+            size = "big"
+        elif cat.phenotype.growth_pattern == "small-kitten":
+            size = "small"
+        elif cat.phenotype.growth_pattern == "runt":
+            size = "runt"
+        return size
+    elif (cat.age == CatAge.ADOLESCENT or (cat.moons < 24 and cat.phenotype.growth_pattern == "slow")):
+        start_point = cat.phenotype.shoulder_height * 0.66 if cat.phenotype.growth_pattern == "slow" else cat.phenotype.shoulder_height * 0.75
+        period = 18 if cat.phenotype.growth_pattern == "slow" else 6
+        difference = 24-cat.moons if cat.phenotype.growth_pattern == "slow" else 12-cat.moons
+        difference = max(0, difference)
+        step = (cat.phenotype.shoulder_height - start_point) / period
+
+        height = round(cat.phenotype.shoulder_height - (difference * step), 2)
+        return height
+
+    return cat.phenotype.shoulder_height

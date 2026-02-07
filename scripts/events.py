@@ -440,7 +440,7 @@ def trigger_future_events(clan):
                 main_cat=Cat.fetch_cat(event.involved_cats.get("m_c")),
                 random_cat=Cat.fetch_cat(event.involved_cats.get("r_c")),
                 victim_cat=Cat.fetch_cat(event.involved_cats.get("mur_c")),
-                sub_type=event.pool.get("subtype"),
+                sub_type=event.pool.get("sub_type"),
                 future_event=event,
                 clan=clan
             )
@@ -1373,7 +1373,7 @@ def check_war():
         main_clan = game.clan if clan == game.clan.group_ID else [c for c in game.clan.all_other_clans if c.group_ID == clan][0]
         enemy_clan = None
         for enemy in game.clan.war[clan]:
-            war_events = None
+            war_events: list = []
             enemy_clan = [c for c in game.clan.all_other_clans if c.group_ID == enemy][0]
             if game.clan.war[clan][enemy]["at_war"]:
                 threshold = 10

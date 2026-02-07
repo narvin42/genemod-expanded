@@ -1168,6 +1168,25 @@ class Cat:
         else:
             return "general"
 
+    def leave_clan(self, new_social_status: CatSocial):
+        """Removes cat from the Clan willingly. Makes status changes and removes apprentices."""
+        if not new_social_status:
+            new_social_status = choice(
+                (CatSocial.KITTYPET, CatSocial.LONER, CatSocial.ROGUE)
+            )
+        self.status.leave_group(new_social_status=new_social_status)
+        self.get_new_thought()
+
+        for app in self.apprentice.copy():
+            app_ob = Cat.fetch_cat(app)
+            if app_ob:
+                app_ob.update_mentor()
+
+        self.update_mentor()
+
+        for x in self.apprentice:
+            Cat.fetch_cat(x).update_mentor()
+
     def become_lost(self, status = None, standing = CatStanding.LOST):
         """Makes a Clan cat a lost cat. Makes status changes and removes apprentices."""
 
@@ -3121,6 +3140,10 @@ class Cat:
         if os.path.exists(relation_directory):
             if not os.path.exists(relation_cat_directory):
                 self.init_all_relationships()
+                for cat in Cat.all_cats.values():
+                    if cat == self:
+                        continue
+                    cat.create_one_relationship(self)
                 return
             try:
                 with open(relation_cat_directory, "r", encoding="utf-8") as read_file:
