@@ -173,6 +173,8 @@ dev_tools = false
   # number of welcoming events to add when a new cat joins
   cat_amount_welcoming = 3
 
+  # this is the amount to divide a relative's relation toward the parent when deciding on a relative's initial relationship toward a kit
+  ext_relative_modifier = 4
   # relationship buffs represent "default" relationship values that are then lightly randomized
   # in order to create initial relationship values for cats
 
@@ -631,17 +633,17 @@ dev_tools = false
   random_heterochromia = 250
   microphthalmia = 250
 
-  no-low_white_blue_eyes = 100
-  low_white_blue_eyes = 75
-  mid_white_blue_eyes = 50
-  high_white_blue_eyes = 25
+  no-low_white_blue_eyes = 150
+  low_white_blue_eyes = 100
+  mid_white_blue_eyes = 75
+  high_white_blue_eyes = 50
   het_dom_white_blue_eyes = 15
   homo_dom_white_blue_eyes = 5
   
-  no-low_white_one_blue_eye = 75
-  low_white_one_blue_eye = 50
-  mid_white_one_blue_eye = 25
-  high_white_one_blue_eye = 15
+  no-low_white_one_blue_eye = 125
+  low_white_one_blue_eye = 75
+  mid_white_one_blue_eye = 50
+  high_white_one_blue_eye = 25
   het_dom_white_one_blue_eye = 10
   homo_dom_white_one_blue_eye = 3
 
