@@ -496,7 +496,7 @@ def create_new_cat_block(
         generated_parents = []
         if rank in (CatRank.KITTEN, CatRank.NEWBORN) or age in range(Cat.age_moons[CatAge.KITTEN][0], Cat.age_moons[CatAge.KITTEN][1]+1) or parent1:
             generated_parents = create_bio_parents(
-                Cat, flip=True if parent1 and 'Y' in parent1.phenotype.sexgene else False, second_parent=not parent1, clan=cat_group)
+                Cat, flip=True if parent1 and 'Y' in parent1.phenotype.sexgene else False, second_parent=not parent1, clan=cat_group if not chosen_backstory else None)
             if not parent1:
                 parent1 = generated_parents[1]
             if not parent2:
@@ -779,7 +779,9 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
         if not all_clan_cats:
             all_clan_cats = [i for i in Cat.all_cats.values(
             ) if i.status.group_ID == other_clan.group_ID]
-        picked_cats = [choice(all_clan_cats)]
+
+        all_clan_cats_healthy = [i for i in all_clan_cats if not i.not_working()]
+        picked_cats = [choice(all_clan_cats_healthy if all_clan_cats_healthy else all_clan_cats)]
 
     if "change_clan" in attribute_list:
         for cat in picked_cats:

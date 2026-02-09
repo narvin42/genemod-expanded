@@ -16,7 +16,7 @@ from scripts.cat.pronouns import (
 )
 from scripts.cat.sprites.load_sprites import sprites
 from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank
-from scripts.game_structure import localization, game
+from scripts.game_structure import localization, game, constants
 from scripts.game_structure.game import switch_get_value, Switch
 from scripts.game_structure.localization import load_lang_resource, get_lang_config
 
@@ -134,6 +134,7 @@ def process_text(text, cat_dict, raise_exception=False):
     adjust_text = re.sub(
         "|".join(name_patterns), lambda x: name_repl(x, cat_dict), adjust_text
     )
+    adjust_text = adjust_text.replace("medicine cat", "healer").replace("medicine den", "healer den")
     return adjust_text
 
 
@@ -332,6 +333,9 @@ def ongoing_event_text_adjust(Cat, text, clan=None, other_clan_name=None):
     text = text.replace("c_n", clan_name + "Clan")
 
     text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
+
+    if set(constants.CONFIG["clan_creation"]["leader_lives_nr"]) != (9):
+        text = text.replace("nine lives", "lives")
 
     return text
 
@@ -586,6 +590,9 @@ def event_text_adjust(
 
     text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
 
+    if list(set(constants.CONFIG["clan_creation"]["leader_lives_nr"])) != [9]:
+        text = text.replace("nine lives", "lives")
+
     return text
 
 
@@ -647,7 +654,8 @@ def leader_ceremony_text_adjust(
     clan = leader.status.fetch_clan_object()
     text = text.replace("c_n", str(clan.displayname) + "Clan")
 
-    text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
+    if list(set(constants.CONFIG["clan_creation"]["leader_lives_nr"])) != [9]:
+        text = text.replace("nine lives", "lives")
 
     return text
 
@@ -752,7 +760,8 @@ def ceremony_text_adjust(
 
     adjust_text = process_text(adjust_text, cat_dict)
 
-    adjust_text = adjust_text.replace("medicine cat", "healer").replace("medicine den", "healer den")
+    if list(set(constants.CONFIG["clan_creation"]["leader_lives_nr"])) != [9]:
+        adjust_text = adjust_text.replace("nine lives", "lives")
 
     return adjust_text, random_living_parent, random_dead_parent
 
@@ -829,8 +838,10 @@ def history_text_adjust(text, other_clan_name, clan, other_cat_rc=None):
     if "r_c" in text and other_cat_rc:
         text = selective_replace(text, "r_c", str(other_cat_rc.name))
 
-    text = text.replace("medicine cat", "healer").replace(
-        "medicine den", "healer den")
+    text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
+
+    if list(set(constants.CONFIG["clan_creation"]["leader_lives_nr"])) != [9]:
+        text = text.replace("nine lives", "lives")
     return text
 
 

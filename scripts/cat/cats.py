@@ -553,7 +553,8 @@ class Cat:
         self.genderalign = ""
         if (self.gender == 'intersex' or 
            (self.gender == "molly" and 'Y' in self.phenotype.sexgene) or 
-           (self.gender == "tom" and 'Y' not in self.phenotype.sexgene)):
+           (self.gender == "tom" and 'Y' not in self.phenotype.sexgene) or
+           (len(self.phenotype.sexgene) != 2)):
             self.genderalign = 'intersex '
         if nb_chance == 1:
             self.genderalign += "sam"
@@ -1525,6 +1526,9 @@ class Cat:
         load_leader_ceremonies()
         self.history.prev_names.append(str(self.name))
 
+        total_lives = max(1, choice(constants.CONFIG["clan_creation"]["leader_lives_nr"]))
+        self.status.fetch_clan_object().leader_lives = total_lives
+
         # determine which dict we're pulling from
         if self.status.fetch_clan_object(game.clan).instructor.status.group == CatGroup.DARK_FOREST:
             starclan = False
@@ -1577,7 +1581,7 @@ class Cat:
 
         for rel in relationships:
             kitty = self.fetch_cat(rel.cat_to)
-            if kitty and kitty.dead and kitty.status.rank != CatRank.NEWBORN:
+            if kitty and kitty.dead and not kitty.faded and kitty.status.rank != CatRank.NEWBORN:
                 # check where they reside
                 if starclan:
                     if kitty.status.group != CatGroup.STARCLAN:
@@ -1604,9 +1608,7 @@ class Cat:
         # if we have relations, then make sure we only take the top 8
         if dead_relations:
             for i, rel in enumerate(dead_relations):
-                if rel.cat_to.faded:
-                    continue
-                if i == 8:
+                if i == total_lives-1:
                     break
                 if rel.cat_to.status.is_leader:
                     life_giving_leader = rel.cat_to
@@ -1623,8 +1625,8 @@ class Cat:
         ]
 
         # check amount of life givers, if we need more, then grab from the other dead cats
-        if len(life_givers) < 8:
-            amount = 8 - len(life_givers)
+        if len(life_givers) < total_lives-1:
+            amount = total_lives-1 - len(life_givers)
 
             possible_dead_cats = [
                 i
@@ -1661,11 +1663,11 @@ class Cat:
             life_givers.append(life_giving_leader)
 
         # check amount again, if more are needed then we'll add the ghost-y cats at the end
-        if len(life_givers) < 9:
+        if len(life_givers) < total_lives:
             unknown_blessing = True
         else:
             unknown_blessing = False
-        extra_lives = str(9 - len(life_givers))
+        extra_lives = str(total_lives - len(life_givers))
         possible_lives = ceremony_dict["lives"]
         lives = []
         used_lives = []
@@ -1731,7 +1733,7 @@ class Cat:
 
             i = 0
             chosen_life = {}
-            while i < 10:
+            while i <= total_lives:
                 attempted = []
                 if life_list:
                     chosen_life = choice(life_list)
