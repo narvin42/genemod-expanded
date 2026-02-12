@@ -886,7 +886,7 @@ class PatrolOutcome:
             in_event_cats["s_c"] = self.stat_cat
 
         for i, attribute_list in enumerate(self.new_cat):
-            if game.clan.clancount != "multiclan" or (("clancat" not in attribute_list and "change_clan" not in attribute_list) or "exists" not in attribute_list):
+            if game.clan.clancount != "multiclan" or ("clancat" not in attribute_list and "former clancat" not in attribute_list and "change_clan" not in attribute_list):
                 patrol.new_cats.append(
                     create_new_cat_block(
                         Cat, Relationship, patrol, in_event_cats, i, attribute_list, clan=patrol.clan, other_clan=patrol.other_clan
@@ -895,13 +895,16 @@ class PatrolOutcome:
             else:
                 patrol.new_cats.append(
                     find_clan_cats(
-                        Cat, Relationship, self, in_event_cats, i, attribute_list, clan=patrol.clan, other_clan=patrol.other_clan
+                        Cat, Relationship, patrol, in_event_cats, i, attribute_list, clan=patrol.clan, other_clan=patrol.other_clan
                     )
                 )
+            in_event_cats[f"n_c:{i}"] = patrol.new_cats[i][0]
             dead = []
             outside = []
             new = []
             for cat in patrol.new_cats[-1]:
+                if "unknown" in attribute_list:
+                    continue
                 if cat.dead:
                     dead.append(str(cat.name))
                 elif cat.status.group_ID != patrol.clan.group_ID:

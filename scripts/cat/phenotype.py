@@ -579,7 +579,7 @@ class Phenotype(Genotype):
             all_patterns = ['redbaralt']
         elif (special == 'ghost'):
             all_patterns = ['fullbaralt']
-        elif (self.ticked[1] == "Ta" or ((not self.breakthrough or self.mack[0] == "mc") and self.ticked[0] == "Ta")):
+        elif self.ticked[1] == "Ta" or (not self.breakthrough and self.ticked[0] == "Ta"):
             if (self.ticktype == "agouti"):
                 all_patterns = ['agouti']
             elif (self.ticktype == 'reduced barring'):
@@ -743,6 +743,10 @@ class Phenotype(Genotype):
         self.patchmain = ""
         self.patchunders = []
         self.patchcolour = ""
+
+        if "o" in self.sexgene and "O" in self.sexgene:
+            if self.tortiepattern is None:
+                self.tortiepattern = self.ChooseTortiePattern()
 
         if(self.silver[0] == 'I' and self.pseudomerle):
             if self.merlepattern is None:  # pylint: disable=access-member-before-definition

@@ -264,6 +264,10 @@ class ShortEvent:
             if self.handle_accessories() is False:
                 return
 
+        # update gender
+        if self.new_gender:
+            self.handle_transition()
+
         # change relationships before killing anyone
         if self.relationships:
             # we're doing this here to make sure rel logs get adjusted text
@@ -305,10 +309,6 @@ class ShortEvent:
                 comfort=-30,
                 trust=-30,
             )
-
-        # update gender
-        if self.new_gender:
-            self.handle_transition()
 
         # kill cats
         self.handle_death(clan)
@@ -429,7 +429,7 @@ class ShortEvent:
             in_event_cats["r_c"] = self.random_cat
 
         for i, attribute_list in enumerate(self.new_cat_attributes):
-            if (("clancat" not in attribute_list and "change_clan" not in attribute_list) or "exists" not in attribute_list) or game.clan.clancount != 'multiclan':
+            if ("clancat" not in attribute_list and "former clancat" not in attribute_list and "change_clan" not in attribute_list) or game.clan.clancount != 'multiclan':
                 self.new_cats.append(
                     create_new_cat_block(
                         Cat, Relationship, self, in_event_cats, i, attribute_list, clan=clan, other_clan=other_clan
@@ -667,31 +667,29 @@ class ShortEvent:
                     tnr = True
                     
             taken_cats = []
-            left_cats = []
             for kitty in self.dead_cat_objects:
                 if "lost" in self.tags:
                     if not tnr or 'TNR' not in kitty.pelt.scars:
                         kitty.become_lost(CatSocial.KITTYPET if tnr else CatSocial.LONER)
                         taken_cats.append(kitty)
                     if tnr and 'TNR' not in kitty.pelt.scars:
+                        taken_cats.append(kitty)
                         if kitty.moons > 3:
                             kitty.pelt.scars.append("TNR")
                             kitty.pelt.rebuild_sprite = True
                             kitty.get_permanent_condition("sterile", False)
                             if 'pregnant' in kitty.injuries:
                                 kitty.permanent_condition['sterile']['moon_start'] += 3
-                        if kitty.moons < 4:
-                            kitty.become_lost(CatSocial.KITTYPET, CatStanding.LEFT)
+                        else:
+                            kitty.leave_clan(CatSocial.KITTYPET)
                             kitty.get_permanent_condition("sterile", False, event_triggered=True, custom_reveal=randint(4, 6))
                     elif tnr:
-                        left_cats.append(kitty)
+                        taken_cats.append(kitty)
                         continue
                 self.multi_cat_objects.append(kitty)
                 if kitty.ID not in self.all_involved_cat_ids:
                     self.all_involved_cat_ids.append(kitty.ID)
             for kitty in taken_cats:
-                self.dead_cat_objects.remove(kitty)
-            for kitty in left_cats:
                 self.dead_cat_objects.remove(kitty)
 
         else:
