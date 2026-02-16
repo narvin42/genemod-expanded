@@ -1665,7 +1665,7 @@ class Breed_generator:
         elif random() < 0.0625:
             genoclass.poly[0] = "Pd"
 
-        genoclass.height_value = randint(genoclass.height_indexes[3]+1, genoclass.height_indexes[9])
+        genoclass.height_value = randint(genoclass.height_indexes[4]+1, genoclass.height_indexes[9])
         
         genoclass.breeds["Maine Coon"] = 100
         genoclass.longtype = 'long'
@@ -4195,7 +4195,7 @@ class Breed_checker:
     def Pixiebob(phenotype):
         if phenotype.length == "hairless" or phenotype.furtype != [""]:
             return False
-        if phenotype.eartype != "" or (phenotype.tailtype != "" and phenotype.manx[0] != "Ab") or phenotype.pawtype != "":
+        if phenotype.eartype != "" or (phenotype.tailtype != "" and phenotype.manx[0] != "Ab") or phenotype.munch[0] != "mk":
             return False
         
         if phenotype.fade != "" or phenotype.karp[0] == "K":
