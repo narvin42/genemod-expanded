@@ -61,6 +61,7 @@
         autosave = false
         disasters = false
         modded_kits = false
+        miscarriage = false
         tnr_mode = false
         sprite_scaling = true
         showheight = false
