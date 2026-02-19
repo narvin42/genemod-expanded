@@ -1017,6 +1017,9 @@ def filter_relationship_type(
                 if rel.cat_to.ID in group_ids and rel.cat_to.ID != inter_cat.ID
             ]
 
+            if len(relevant_relationships) != len(group_ids)-1:
+                return False # There's strangers when there shouldn't be
+
             # list of every cat's tier list
             group_lists: list[RelTier] = [
                 rel.get_reltype_tiers() for rel in relevant_relationships
@@ -1030,7 +1033,7 @@ def filter_relationship_type(
 
                 # if it's limited to *just* the given tier
                 if "_only" in tier:
-                    tier.replace("_only", "")
+                    tier = tier.replace("_only", "")
                     if tier not in tier_list:
                         return False
                 # otherwise we allow both the given tier and any greater tiers

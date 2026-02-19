@@ -420,7 +420,10 @@ def create_new_cat_block(
     chosen_cat: Optional["Cat"] = None
     if "exists" in attribute_list:
         existing_outsiders = [
-            i for i in Cat.all_cats.values() if i.status.is_outsider and not i.dead and i.status.is_near() and not i.status.is_lost() and i not in in_event_cats.values()
+            i for i in Cat.all_cats.values() 
+            if i.status.is_outsider and 
+            not i.dead and i.status.is_near() and 
+            not i.status.is_lost() and i not in in_event_cats.values()
         ]
         possible_outsiders = []
         for cat in existing_outsiders:
@@ -1106,11 +1109,10 @@ def create_new_cat(
                 name = choice(names.names_dict["loner_names"])
                 # check if the kittypets come with a pretty acc
                 if bool(getrandbits(1)):
-                    # TODO: refactor this entire function to remove this call amongst other things
-                    from scripts.cat.pelts import Pelt
-
-                    new_cat.pelt.accessory.append(
-                        choice(Pelt.collar_accessories))
+                    new_cat.pelt.accessory = (
+                        *new_cat.pelt.accessory,
+                        choice(new_cat.pelt.collar_accessories),
+                    )
 
             # try to give name from full loner name list
             elif original_social in (CatSocial.LONER, CatSocial.ROGUE) and bool(
@@ -1160,9 +1162,10 @@ def create_new_cat(
             "NORIGHTEAR",
             "MANLEG",
         ]
-        for scar in new_cat.pelt.scars:
-            if scar in not_allowed:
-                new_cat.pelt.scars.remove(scar)
+
+        new_cat.pelt.scars = tuple(
+            scar for scar in new_cat.pelt.scars if scar not in not_allowed
+        )
 
         # chance to give the new cat a permanent condition, higher chance for found kits and litters
         if kit or litter:
@@ -1179,7 +1182,7 @@ def create_new_cat(
                 new_cat.get_permanent_condition("sterile", False)
             if original_social in (CatSocial.LONER, CatSocial.ROGUE) and random() < loner_n:
                 new_cat.get_permanent_condition("sterile", False)
-                new_cat.pelt.scars.append("TNR")
+                new_cat.pelt.scars = (*new_cat.pelt.scars, "TNR")
                 new_cat.pelt.rebuild_sprite = True
         if not int(random() * chance):
             possible_conditions = []
@@ -1214,10 +1217,11 @@ def create_new_cat(
                         ] = -2
 
                 # assign scars
+
                 if chosen_condition in ("lost a leg", "born without a leg"):
-                    new_cat.pelt.scars.append("NOPAW")
+                    new_cat.pelt.scars = (*new_cat.pelt.scars, "NOPAW")
                 elif chosen_condition in ("lost their tail", "born without a tail"):
-                    new_cat.pelt.scars.append("NOTAIL")
+                    new_cat.pelt.scars = (*new_cat.pelt.scars, "NOTAIL")
 
         if outside:
             if new_cat.status.social is not CatSocial.CLANCAT:
@@ -1267,7 +1271,7 @@ def gather_cat_objects(
             else:
                 out_set.add(event.main_cat)
         elif abbr == "r_c":
-            out_set.add(event.random_cat[0] if isinstance(event.random_cat, list) else event.random_cat)
+            out_set.add(event.random_cats[0] if hasattr(event, "random_cats") else event.random_cat)
         elif re.match(r"n_c:[0-9]+", abbr):
             index = re.match(r"n_c:([0-9]+)", abbr).group(1)
             index = int(index)
@@ -1276,8 +1280,8 @@ def gather_cat_objects(
         elif re.match(r"r_c[0-9]+", abbr):
             index = re.match(r"r_c([0-9]+)", abbr).group(1)
             index = int(index)-1
-            if index < len(event.random_cat):
-                out_set.add(event.random_cat[index])
+            if index < len(event.random_cats):
+                out_set.add(event.random_cats[index])
         # PATROL SPECIFIC
         elif abbr == "p_l":
             out_set.add(event.patrol_leader)

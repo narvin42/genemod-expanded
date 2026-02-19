@@ -606,7 +606,7 @@ class PatrolOutcome:
                 _cat.become_lost(CatSocial.KITTYPET)
             if tnr and 'TNR' not in _cat.pelt.scars:
                 if not tnr2:
-                    _cat.pelt.scars.append("TNR")
+                    _cat.pelt.scars = (*_cat.pelt.scars, "TNR")
                 _cat.get_permanent_condition("sterile", False)
                 if 'pregnant' in _cat.injuries:
                     _cat.permanent_condition['sterile']['moon_start'] += 3
@@ -1003,7 +1003,7 @@ class PatrolOutcome:
             return None
 
         chosen_scar = choice(scar_list)
-        cat.pelt.scars.append(chosen_scar)
+        cat.pelt.scars = (*cat.pelt.scars, chosen_scar)
 
         history_text = self.history_scar
         if history_text and isinstance(history_text, str):

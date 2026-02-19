@@ -132,42 +132,44 @@ class ShortEvent:
 
         self.r_c = r_c if r_c else {}
         if self.r_c:
-            if "age" in self.r_c and "any" not in self.r_c["age"]:
-                self.weight += self.NUM_OF_AGES - len(self.r_c["age"])
-            else:
-                self.r_c["age"] = ["any"]
-            if "status" in self.r_c and "any" not in self.r_c["status"]:
-                self.weight += self.NUM_OF_RANKS - len(self.r_c["status"])
-            else:
-                self.r_c["status"] = ["any"]
-            if "relationship_status" in self.r_c:
-                self.weight += len(self.r_c["relationship_status"])
-            else:
-                self.r_c["relationship_status"] = []
-            if "skill" in self.r_c:
-                self.weight += self.NUM_OF_SKILLS - len(self.r_c["skill"])
-            else:
-                self.r_c["skill"] = []
-            if "not_skill" in self.r_c:
-                self.weight += len(self.r_c["not_skill"])
-            else:
-                self.r_c["not_skill"] = []
-            if "trait" in self.r_c:
-                self.weight += self.NUM_OF_TRAITS - len(self.r_c["trait"])
-            else:
-                self.r_c["trait"] = []
-            if "not_trait" in self.r_c:
-                self.weight += len(self.r_c["not_trait"])
-            else:
-                self.r_c["not_trait"] = []
-            if "backstory" in self.r_c:
-                self.weight += 1
-            else:
-                self.r_c["backstory"] = []
-            if "dies" not in self.r_c:
-                self.r_c["dies"] = False
-            if "gender" not in self.r_c:
-                self.r_c["gender"] = []
+            r_c_list = self.r_c if isinstance(self.r_c, list) else [self.r_c]
+            for r_c_info in r_c_list:
+                if "age" in r_c_info and "any" not in r_c_info["age"]:
+                    self.weight += self.NUM_OF_AGES - len(r_c_info["age"])
+                else:
+                    r_c_info["age"] = ["any"]
+                if "status" in r_c_info and "any" not in r_c_info["status"]:
+                    self.weight += self.NUM_OF_RANKS - len(r_c_info["status"])
+                else:
+                    r_c_info["status"] = ["any"]
+                if "relationship_status" in r_c_info:
+                    self.weight += len(r_c_info["relationship_status"])
+                else:
+                    r_c_info["relationship_status"] = []
+                if "skill" in r_c_info:
+                    self.weight += self.NUM_OF_SKILLS - len(r_c_info["skill"])
+                else:
+                    r_c_info["skill"] = []
+                if "not_skill" in r_c_info:
+                    self.weight += len(r_c_info["not_skill"])
+                else:
+                    r_c_info["not_skill"] = []
+                if "trait" in r_c_info:
+                    self.weight += self.NUM_OF_TRAITS - len(r_c_info["trait"])
+                else:
+                    r_c_info["trait"] = []
+                if "not_trait" in r_c_info:
+                    self.weight += len(r_c_info["not_trait"])
+                else:
+                    r_c_info["not_trait"] = []
+                if "backstory" in r_c_info:
+                    self.weight += 1
+                else:
+                    r_c_info["backstory"] = []
+                if "dies" not in r_c_info:
+                    r_c_info["dies"] = False
+                if "gender" not in r_c_info:
+                    r_c_info["gender"] = []
 
         self.new_cat_attributes = new_cat if new_cat else []
         self.exclude_involved = exclude_involved if exclude_involved else []
@@ -188,7 +190,7 @@ class ShortEvent:
             ):
                 self.weight += (3 - len(self.other_clan["current_rep"])) * 5
             else:
-                self.other_clan["current_rep"] = []
+                self.other_clan["current_rep"] = ["any"]
             if "changed" not in self.other_clan:
                 self.other_clan["changed"] = 0
         self.supplies = supplies if supplies else []
@@ -541,10 +543,13 @@ class ShortEvent:
             return False
 
         if self.main_cat.pelt.accessory:
-            self.main_cat.pelt.accessory.append(choice(acc_list))
+            self.main_cat.pelt.accessory = (
+                *self.main_cat.pelt.accessory,
+                choice(acc_list),
+            )
             return None
         else:
-            self.main_cat.pelt.accessory = [choice(acc_list)]
+            self.main_cat.pelt.accessory = ([choice(acc_list)])
             return None
 
     def handle_transition(self):
@@ -612,7 +617,7 @@ class ShortEvent:
                     cat_clan.leader_lives -= 1
 
                 cat.die(body)
-                self.additional_event_text = get_leader_life_notice(clan)
+                self.additional_event_text = get_leader_life_notice(cat_clan)
 
             else:
                 cat.die(body)
@@ -676,7 +681,7 @@ class ShortEvent:
                     if tnr and 'TNR' not in kitty.pelt.scars:
                         taken_cats.append(kitty)
                         if kitty.moons > 3:
-                            kitty.pelt.scars.append("TNR")
+                            kitty.pelt.scars = (*kitty.pelt.scars, "TNR")
                             kitty.pelt.rebuild_sprite = True
                             kitty.get_permanent_condition("sterile", False)
                             if 'pregnant' in kitty.injuries:
@@ -865,7 +870,7 @@ class ShortEvent:
                     return
                 elif cat_abbr in block["cats"]:
                     history_text = history_text_adjust(
-                        block["scar"], self.other_clan_name, game.clan, self.random_cat
+                        block["scar"], self.other_clan_name, cat.status.fetch_clan_object(game.clan), self.random_cat
                     )
                     cat.history.add_scar(history_text)
                     break
@@ -875,12 +880,12 @@ class ShortEvent:
                     return
                 elif cat_abbr in block["cats"]:
                     possible_scar = history_text_adjust(
-                        block["scar"], self.other_clan_name, game.clan, self.random_cat
+                        block["scar"], self.other_clan_name, cat.status.fetch_clan_object(game.clan), self.random_cat
                     )
                     possible_death = history_text_adjust(
                         block["death"],
-                        self.other_clan_name,
-                        game.clan,
+                        self.other_clan_name, 
+                        cat.status.fetch_clan_object(game.clan),
                         self.random_cat,
                     )
                     if possible_scar or possible_death:
