@@ -48,6 +48,209 @@
         ]
     },
     {
+        "event_id": "gen_single_ambush2",
+        "location": [
+            "beach", "wetlands"
+        ],
+        "season": [
+            "newleaf", "greenleaf", "leaf-fall"
+        ],
+        "sub_type": [ ],
+        "frequency": 1,
+        "event_text": [
+            "m_c was enjoying a walk by the shore when suddenly {PRONOUN/m_c/subject} {VERB/m_c/were/was} pulled under the water by r_c. It was meant to be a prank, but m_c did not find the humour in it."
+        ],
+        "m_c": {
+            "status": [
+                "-elder"
+            ],
+            "skill": [ "-SENSE,1", "-SWIMMER,1" ]
+        },
+        "r_c": {
+            "status": [ "-elder" ],
+            "trait": [
+                "troublesome",
+                "bloodthirsty",
+                "childish",
+                "playful",
+                "shameless",
+                "sneaky",
+                "strange",
+                "cunning",
+                "oblivious"
+            ],
+            "skill": [ "STEALTH,1", "SWIMMER,1" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c" ],
+                "values": [ "like", "respect", "romance", "trust", "comfort" ],
+                "amount": -5,
+                "mutual": false,
+                "log": {
+                    "cats_from": "to_cat pulled from_cat underwater as a prank."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_ambush3",
+        "location": [
+            "beach", "wetlands"
+        ],
+        "season": [
+            "newleaf", "greenleaf", "leaf-fall"
+        ],
+        "sub_type": [ ],
+        "frequency": 1,
+        "event_text": [
+            "m_c was enjoying a walk by the shore when suddenly {PRONOUN/m_c/subject} {VERB/m_c/were/was} pulled under the water by r_c. m_c laughed the prank off as soon as {PRONOUN/m_c/subject} got out."
+        ],
+        "m_c": {
+            "status": [
+                "-elder"
+            ],
+            "trait": [
+                "troublesome",
+                "childish",
+                "playful",
+                "charismatic",
+                "adventurous",
+                "calm",
+                "shameless",
+                "strange",
+                "oblivious",
+                "sincere",
+                "flamboyant"
+            ],
+            "skill": [ "-SENSE,1", "-SWIMMER,1" ]
+        },
+        "r_c": {
+            "status": [ "-elder" ],
+            "trait": [
+                "troublesome",
+                "bloodthirsty",
+                "childish",
+                "playful",
+                "shameless",
+                "sneaky",
+                "strange",
+                "cunning",
+                "oblivious"
+            ],
+            "skill": [ "STEALTH,1", "SWIMMER,1" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c" ],
+                "values": [ "like", "comfort" ],
+                "amount": 5,
+                "mutual": true,
+                "log": {
+                    "cats_from": "to_cat pulled from_cat underwater as a prank, both laughed it off."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_apprentices1",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [],
+        "frequency": 2,
+        "event_text": [
+            "m_c snuck out of camp at night to see o_c_n's territory for {PRONOUN/m_c/self}. {PRONOUN/m_c/subject/CAP} encountered r_c doing the same from the other side, only for the two apprentices to end up spending the night playing together."
+        ],
+        "m_c": {
+            "age": [ "adolescent" ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c" ],
+                "values": [ "like", "comfort" ],
+                "amount": 10,
+                "mutual": true,
+                "log": {
+                    "cats_from": "to_cat and from_cat encountered each other after sneaking out and spent the night playing."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_apprentices2",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": ["romance"],
+        "frequency": 1,
+        "event_text": [
+            "m_c snuck out of camp at night to see o_c_n's territory for {PRONOUN/m_c/self}. {PRONOUN/m_c/subject/CAP} encountered r_c doing the same from the other side, only for the two apprentices to end up spending the night playing together."
+        ],
+        "m_c": {
+            "age": [ "adolescent" ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c" ],
+                "values": [ "like", "comfort", "romance" ],
+                "amount": 10,
+                "mutual": true,
+                "log": {
+                    "cats_from": "to_cat and from_cat encountered each other after sneaking out and spent the night playing."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_apprentices3",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 2,
+        "event_text": [
+            "m_c got in trouble for telling r_c something that was supposed to be c_n's secret."
+        ],
+        "m_c": {
+            "age": [ "adolescent" ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "high_lawful", "high_aggress" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "respect", "trust" ],
+                "amount": -5,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat heard to_cat shared Clan secrets with r_c from o_c_n."
+                }
+            }
+        ]
+    },
+    {
         "event_id": "gen_single_trespass1",
         "location": [
             "forest",
@@ -455,6 +658,156 @@
         }
     },
     {
+        "event_id": "gen_single_lies1",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 4,
+        "event_text": [
+            "m_c confidently told r_c about 'adult things' that were blatantly untrue, but r_c fully believed {PRONOUN/m_c/object}."
+        ],
+        "m_c": {
+            "age": [ "-adolescent" ],
+            "trait": [
+                "troublesome",
+                "childish",
+                "playful",
+                "confident",
+                "shameless",
+                "sneaky",
+                "strange",
+                "cunning",
+                "flamboyant"
+            ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "r_c" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "trust" ],
+                "amount": 5,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat believed to_cat's lies about what being an adult is like."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_lies2",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 4,
+        "event_text": [
+            "m_c confidently told r_c about 'adult things' that were blatantly untrue, but r_c caught on."
+        ],
+        "m_c": {
+            "age": [ "-adolescent" ],
+            "trait": [
+                "troublesome",
+                "childish",
+                "playful",
+                "confident",
+                "shameless",
+                "sneaky",
+                "strange",
+                "cunning",
+                "flamboyant"
+            ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "r_c" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "trust" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat caught to_cat lying to {PRONOUN/from_cat/object} about what being an adult is like."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_lies3",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 4,
+        "event_text": [
+            "m_c confidently told r_c things about c_n that were blatantly untrue, but r_c fully believed {PRONOUN/m_c/object}."
+        ],
+        "m_c": {
+            "age": [ "adolescent" ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "r_c" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "trust", "respect" ],
+                "amount": 5,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat believed to_cat's boasting about c_n."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_lies4",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 4,
+        "event_text": [
+            "m_c confidently told r_c things about c_n that were blatantly untrue, but r_c caught on."
+        ],
+        "m_c": {
+            "age": [ "adolescent" ]
+        },
+        "r_c": {
+            "age": [ "adolescent" ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "r_c" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "trust" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat caught to_cat lying to {PRONOUN/from_cat/object} about life in c_n."
+                }
+            }
+        ]
+    },
+    {
         "event_id": "gen_single_gathering_elders1",
         "location": [
             "any"
@@ -827,7 +1180,8 @@
             }
         ],
         "other_clan": {
-            "current_rep": ["hostile"]
+            "current_rep": ["hostile"],
+            "changed": -2
         }
     },
     {
@@ -871,7 +1225,8 @@
             }
         ],
         "other_clan": {
-            "current_rep": [ "hostile" ]
+            "current_rep": [ "hostile" ],
+            "changed": -1
         }
     },
     {
@@ -887,7 +1242,10 @@
         "event_text": [
             "During the Gathering, m_c made a point of ignoring r_c.",
             "During the Gathering, m_c made a point of talking over r_c.",
-            "During the Gathering, m_c refused to speak to r_c."
+            "During the Gathering, m_c refused to speak to r_c.",
+            "During the Half-moon meeting, m_c made a point of ignoring r_c.",
+            "During the Half-moon meeting, m_c made a point of talking over r_c.",
+            "During the Half-moon meeting, m_c refused to speak to r_c."
         ],
         "m_c": {
             "status": [ "healer" ],
@@ -916,52 +1274,8 @@
             }
         ],
         "other_clan": {
-            "current_rep": [ "hostile" ]
-        }
-    },
-    {
-        "event_id": "gen_single_half-moon_hostile_healer1",
-        "location": [
-            "any"
-        ],
-        "season": [
-            "any"
-        ],
-        "sub_type": [ ],
-        "frequency": 2,
-        "event_text": [
-            "During the Half-moon meeting, m_c made a point of ignoring r_c.",
-            "During the Half-moon meeting, m_c made a point of talking over r_c.",
-            "During the Half-moon meeting, m_c refused to speak to r_c."
-        ],
-        "m_c": {
-            "status": [ "healer" ],
-            "trait": [
-                "-nervous",
-                "-insecure",
-                "-compassionate",
-                "-thoughtful",
-                "-careful",
-                "-loving"
-            ]
-        },
-        "r_c": {
-            "status": [ "healer" ]
-        },
-        "relationships": [
-            {
-                "cats_from": [ "r_c" ],
-                "cats_to": [ "m_c" ],
-                "values": [ "respect", "trust" ],
-                "amount": -15,
-                "mutual": false,
-                "log": {
-                    "cats_from": "to_cat spent the Half-moon meeting disrespecting from_cat."
-                }
-            }
-        ],
-        "other_clan": {
-            "current_rep": [ "hostile" ]
+            "current_rep": [ "hostile" ],
+            "changed": -1
         }
     }
 ]

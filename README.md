@@ -1,5 +1,11 @@
 # clangen (now with 100% more cat genetics) (now with more disabilities)
 
+## On AI & LLMs
+
+> [!WARNING]
+> Issues and Pull Requests created with AI based tools are going to be closed without further comment.
+> Repeat offenders will be blocked from this project until further notice.
+
 ### [Itch.io Page](https://sablesteel.itch.io/clan-gen-fan-edit)
 ### [Genemod Server](https://discord.gg/t6XqgQ46Jx)
 realistic-disabilites thread for bug reporting or mod support. note most bugs are upstream from me.
