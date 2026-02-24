@@ -1369,6 +1369,11 @@ def unpack_rel_block(
             cats_to_ob.remove(None)
 
         positive = False
+        if amount > 0:
+            amount = int(amount * constants.CONFIG["relationship"]["pos_rel_change_multiplier"])
+            positive = True
+        else:
+            amount = int(amount * constants.CONFIG["relationship"]["neg_rel_change_multiplier"])
 
         # grabbing values
         value_changes = {}
@@ -1376,8 +1381,6 @@ def unpack_rel_block(
         for val in [*RelType]:
             if val in values:
                 value_changes[val] = amount
-                if amount > 0:
-                    positive = True
 
         if positive:
             effect = i18n.t("relationships.positive_postscript")
@@ -1415,7 +1418,7 @@ def unpack_rel_block(
                 cats_from_ob,
                 cats_to_ob,
                 **value_changes,
-                log=to_log if to_log else from_log,
+                log=to_log if to_log else (from_log.replace("to_cat", "[placeholder]").replace("from_cat", "to_cat").replace("[placeholder]", "from_cat") if from_log else None),
             )
 
 
