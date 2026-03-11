@@ -539,7 +539,10 @@ def generate_sprite(
                     'buff' : 11,
                     'platinum' : 12,
                     'lavender' : 13,
-                    'beige' : 14
+                    'beige' : 14,
+                    'pearl' : 15,
+                    'bone' : 16,
+                    'powder' : 17
                 }
 
                 if(phenotype.white[0] == 'W' or phenotype.pointgene[0] == 'c' or phenotype.white_pattern == ['full white'] or whichcolour == "white"):
@@ -577,7 +580,10 @@ def generate_sprite(
                     'buff' : 11,
                     'platinum' : 12,
                     'lavender' : 13,
-                    'beige' : 14
+                    'beige' : 14,
+                    'pearl' : 15,
+                    'bone' : 16,
+                    'powder' : 17
                 }
 
                 if maincolour == "white":
