@@ -1,6 +1,7 @@
 from math import ceil
 from typing import Union, Dict
 
+import i18n
 import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
@@ -21,10 +22,8 @@ from scripts.game_structure.game.switches import (
 from scripts.cat.enums import CatGroup
 from scripts.game_structure import game
 from scripts.game_structure.screen_settings import game_screen_size, MANAGER
-from scripts.game_structure.ui_elements import (
-    UICatListDisplay,
-    UIDropDown,
-)
+from scripts.ui.elements.dropdown import UIDropDown
+from scripts.ui.elements.cat_list_display import UICatListDisplay
 from scripts.ui.elements.image_button import UIImageButton
 from scripts.ui.elements.surface_image_button import UISurfaceImageButton
 from scripts.screens.Screens import Screens
@@ -87,6 +86,7 @@ class ListScreen(Screens):
         self.current_group = "general.your_clan"
         self.full_cat_list = []
         self.current_listed_cats = []
+        self.temper_message = None
 
         self.list_screen_container = None
 
@@ -286,6 +286,15 @@ class ListScreen(Screens):
             manager=MANAGER,
             visible=True,
         )
+        self.temper_message = UISurfaceImageButton(
+            ui_scale(pygame.Rect((200, 104), (400, 35))),
+            "testtestestesttesttest",
+            get_button_dict(ButtonStyles.HORIZONTAL_TAB, (400, 35)),
+            object_id="@buttonstyles_horizontal_tab",
+            manager=MANAGER,
+            container=self.list_screen_container,
+        )
+        self.temper_message.disable()
 
         # BAR CONTAINER
         self.cat_list_bar = pygame_gui.core.UIContainer(
@@ -722,6 +731,7 @@ class ListScreen(Screens):
         """
         sets the background and heading according to current group
         """
+        self.temper_message.set_text(self.get_group_temper_message())
         if self.current_group == "general.your_clan":
             self.set_bg(None)
             self.update_heading_text(self.clan_name)
@@ -745,6 +755,41 @@ class ListScreen(Screens):
             self.update_heading_text(self.current_group)
 
         game.last_list_forProfile = self.current_group
+
+    def get_group_temper_message(self):
+        # UR and COTC has no alignment and no message
+        if self.current_group in ("general.unknown_residence", "general.cotc", "general.cbtc"):
+            self.temper_message.hide()
+            return ""
+
+        self.temper_message.show()
+
+        if self.current_group == "general.your_clan":
+            group = self.clan_name
+            temper = i18n.t(f"screens.leader_den.{game.clan.temperament}")
+        elif self.current_group in self.dead_group_names:
+            if self.current_group == "general.dark_forest":
+                group = i18n.t(f"general.the_dark_forest")
+            else:
+                group = i18n.t(f"{self.current_group}")
+            if self.current_group == "general.starclan":
+                if not game.starclan or not game.starclan.influencing_cats:
+                    self.temper_message.hide()
+
+                    # this means there's probably no cats in starclan, so no temper
+                    return ""
+                temper = i18n.t(f"screens.leader_den.{game.starclan.temperament}")
+            else:
+                if not game.dark_forest or not game.dark_forest.influencing_cats:
+                    self.temper_message.hide()
+                    # this means there's probably no cats in df, so no temper
+                    return ""
+                temper = i18n.t(f"screens.leader_den.{game.dark_forest.temperament}")
+        else:
+            group = self.current_group
+            temper = i18n.t(f"screens.leader_den.{next(filter(lambda c: c.displayname == self.selected_clan, game.clan.all_other_clans), game.clan).temperament}")
+
+        return i18n.t("screens.list.temper", group=group, temper=temper)
 
     def get_cat_list(self):
         """

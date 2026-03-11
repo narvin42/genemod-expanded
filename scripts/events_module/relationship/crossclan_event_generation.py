@@ -195,7 +195,7 @@ def generate_event_objects(is_group, biome, frequency) -> list:
                 if frequency != event_frequency:
                     continue
 
-                event = CrossClanEvent(
+                event_obj = CrossClanEvent(
                     event_id=event["event_id"] if "event_id" in event else "",
                     location=event["location"] if "location" in event else ["any"],
                     season=event["season"] if "season" in event else ["any"],
@@ -222,7 +222,10 @@ def generate_event_objects(is_group, biome, frequency) -> list:
                     else {},
                     nr_involved_clans=event.get("nr_involved_clans", 2)
                 )
-                event_list.append(event)
+
+                if not isinstance(event_obj.r_c, list):
+                    event_obj.r_c = [event_obj.r_c]
+                event_list.append(event_obj)
 
             # Add to loaded events.
             loaded_events[load_name] = event_list
@@ -333,7 +336,7 @@ def filter_events(
     chosen_event = None
 
     failed_ids = []
-    while final_events and not chosen_cats and not chosen_event:
+    while final_events and not chosen_event:
         chosen_event = choice(final_events)
         if chosen_event.event_id in failed_ids:
             final_events.remove(chosen_event)
@@ -391,9 +394,6 @@ def filter_events(
                 new_clan = choice(possible_clans)
             involved_clans.append(new_clan)
 
-        if not isinstance(chosen_event.r_c, list):
-            chosen_event.r_c = [chosen_event.r_c]
-
         for i in range(len(chosen_event.r_c)):
             # gotta gather injuries so we can check if the cat can get them
             r_c_injuries = []
@@ -437,7 +437,7 @@ def filter_events(
                 if chosen_cat.status.group_ID not in involved_clans:
                     involved_clans.append(chosen_cat.status.group_ID)
 
-        if chosen_event and (isinstance(chosen_event.r_c, list) and len(chosen_cats) == len(chosen_event.r_c) or chosen_cats):
+        if chosen_event and chosen_cats and len(chosen_cats) == len(chosen_event.r_c):
            break 
         
 

@@ -213,11 +213,11 @@ def generate_sprite(
                     'red' not in stripecolour and 'cream' not in stripecolour and 'honey' not in stripecolour and 'ivory' not in stripecolour and 'apricot' not in stripecolour)
                 is_dark_sunshine = (phenotype.wbtype not in [
                     "shaded", "chinchilla"] and phenotype.corin[0] == "sh" and not_red and phenotype.agouti[1] == "a"
-                    and not (('ec' in phenotype.ext or (phenotype.ext[0] == 'ea' and ((sprite_age > 3 and phenotype.agouti[0] != "a") or sprite_age > 9))) and 'Eg' not in phenotype.ext))
+                    and not (('ec' in phenotype.ext or (phenotype.ext[0] == 'ea' and ((sprite_age > 3 and phenotype.agouti[0] != "a") or sprite_age > 6))) and 'Eg' not in phenotype.ext))
                 
                 is_amber = not_red and phenotype.ext[0] == 'ea' and ((sprite_age > 11 and phenotype.agouti[0] != 'a') or (sprite_age > 35))
                 is_older_amber = is_amber and ((sprite_age > 35 and phenotype.agouti[0] != 'a') or (sprite_age > 59))
-                is_baby_amber = not_red and not is_amber and phenotype.ext[0] == 'ea' and ((sprite_age > 3 and phenotype.agouti[0] != "a") or sprite_age > 9)
+                is_baby_amber = not_red and not is_amber and phenotype.ext[0] == 'ea' and ((sprite_age > 3 and phenotype.agouti[0] != "a") or sprite_age > 6)
                 
                 pattern = []
                 if preset_pattern:
@@ -1279,10 +1279,12 @@ def generate_sprite(
             age = 4
         elif 5 < int(cat_sprite) < 12 and (11 < cat.moons or cat.moons < 6):
             age = 10
-        elif cat_sprite in ['23', '25'] and (12 < cat.moons or cat.moons < 6):
+        elif cat_sprite in ['23', '25'] and (12 < cat.moons or cat.moons < 1):
             age = 6
         elif 12 < int(cat_sprite) < 18 or cat_sprite in ['21', '22', '24'] and cat.moons > 120:
             age = 30
+        elif 17 < int(cat_sprite) < 21 and cat.moons < 120:
+            age = 120
         elif int(cat_sprite) > 11 and cat_sprite not in ['23', '25'] and cat.moons < 12:
             age = 60
         gensprite.blit(gen_sprite(phenotype, age), (0, 0))

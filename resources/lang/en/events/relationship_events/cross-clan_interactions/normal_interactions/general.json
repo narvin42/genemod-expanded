@@ -239,7 +239,7 @@
         },
         "relationships": [
             {
-                "cats_from": [ "high_lawful", "high_aggress" ],
+                "cats_from": [ "clan", "high_lawful", "high_aggress" ],
                 "cats_to": [ "m_c" ],
                 "values": [ "respect", "trust" ],
                 "amount": -5,
@@ -1539,9 +1539,6 @@
         "m_c": {
             "age": [
                 "adolescent"
-            ],
-            "relationship_status": [
-                "child/parent"
             ]
         },
         "r_c": {
@@ -1581,9 +1578,6 @@
         "m_c": {
             "age": [
                 "-adolescent"
-            ],
-            "relationship_status": [
-                "child/parent"
             ]
         },
         "r_c": {
@@ -1600,6 +1594,42 @@
                 "mutual": true,
                 "log": {
                     "cats_from": "from_cat and to_cat bonded during the Gathering."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_single_gathering_half-clan3",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 3,
+        "event_text": [
+            "m_c and r_c talked about what it would be like to be in the same Clan together."
+        ],
+        "m_c": {
+            "relationship_status": [
+                "relates_to"
+            ]
+        },
+        "r_c": {
+            "relationship_status": [
+                "siblings", "relates_to"
+            ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c" ],
+                "values": [ "comfort" ],
+                "amount": 10,
+                "mutual": true,
+                "log": {
+                    "cats_from": "from_cat and to_cat talked about hypothetically being in the same Clan together."
                 }
             }
         ]
@@ -1821,7 +1851,7 @@
                 }
             },
             {
-                "cats_from": [ "low_aggress", "high_lawful", "high_social" ],
+                "cats_from": [ "clan", "low_aggress", "high_lawful", "high_social" ],
                 "cats_to": [ "m_c" ],
                 "values": [ "like", "respect", "comfort" ],
                 "amount": -5,
@@ -1967,7 +1997,7 @@
         }
     },
     {
-        "event_id": "gen_group_heat1",
+        "event_id": "gen_single_heat1",
         "location": [
             "beach", "forest", "desert", "plains", "wetland"
         ],
@@ -1981,8 +2011,9 @@
         ],
         "m_c": {
         },
-        "r_c": [
-        ],
+        "r_c": {
+            
+        },
         "relationships": [
             {
                 "cats_from": [ "m_c" ],
@@ -1998,5 +2029,43 @@
         "other_clan": {
             "current_rep": [ "ally", "neutral" ]
         }
+    },
+    {
+        "event_id": "gen_single_prey1",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 2,
+        "event_text": [
+            "During a chat about prey preferences, r_c couldn't help but grimace in disgust about what m_c's favourite was."
+        ],
+        "m_c": {
+        },
+        "r_c": {
+            "trait": [
+                "-nervous",
+                "-insecure",
+                "-compassionate",
+                "-thoughtful",
+                "-careful",
+                "-loving"
+            ]
+        },
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c" ],
+                "values": [ "like", "comfort" ],
+                "amount": -10,
+                "mutual": true,
+                "log": {
+                    "cats_from": "to_cat couldn't help but grimace in disgust over what m_c's favourite prey was."
+                }
+            }
+        ]
     }
 ]

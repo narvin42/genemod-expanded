@@ -11,9 +11,7 @@ TODO: Docs
 import os
 import statistics
 from random import choice, randint, random
-from typing import Optional
 
-import pygame
 import ujson
 
 from scripts.cat.cats import Cat, create_cat, cat_class, BACKSTORIES
@@ -24,7 +22,6 @@ from scripts.cat.save_load import (
     get_faded_ids,
     load_faded_cat_ids,
 )
-from scripts.cat.sprites.load_sprites import sprites
 from scripts.clan_package.settings import save_clan_settings, load_clan_settings
 from scripts.clan_package.settings.clan_settings import reset_loaded_clan_settings
 from scripts.clan_resources.freshkill import FreshkillPile, Nutrition
@@ -59,6 +56,8 @@ class Clan:
 
     age = 0
     all_other_clans = []
+
+    grief_strings = {}
 
     def __init__(
         self,
@@ -193,6 +192,8 @@ class Clan:
         switch_set_value(Switch.clan_name, self.name)
         reset_loaded_clan_settings()
         game.reset_group_IDs()
+        game.starclan = Afterlife()
+        game.dark_forest = Afterlife()
         instructor_rank = choice(
             (
                 CatRank.APPRENTICE,
@@ -444,6 +445,9 @@ class Clan:
             "starting_season": self.starting_season,
             "temperament": self.temperament,
             "relations": self.relations,
+            "just_died": game.just_died,
+            "dead_cats_to_grieve": [x.ID for x in game.dead_cats_to_grieve],
+            "grief_to_assign": game.clan.grief_strings,
             "version_name": SAVE_VERSION_NUMBER,
             "version_commit": get_version_info().version_number,
             "source_build": get_version_info().is_source_build,
@@ -778,6 +782,20 @@ class Clan:
             else:
                 game.mediated = clan_data["mediated"]
 
+        # Cat who had just died
+        if "just_died" in clan_data:
+            game.just_died = clan_data["just_died"]
+
+        # Cats who need to be grieved
+        if "dead_cats_to_grieve" in clan_data:
+            game.dead_cats_to_grieve = [
+                Cat.fetch_cat(x) for x in clan_data["dead_cats_to_grieve"]
+            ]
+
+        # Cats who are gonna grieve
+        if "grief_to_assign" in clan_data:
+            game.clan.grief_strings = clan_data["grief_to_assign"]
+
         self.load_pregnancy(game.clan)
         self.load_herb_supply(game.clan)
         self.load_future_events(game.clan)
@@ -966,7 +984,10 @@ class Clan:
                         if not event_obj.clan or event_obj.clan in [game.clan.displayname, CatGroup.PLAYER_CLAN.value]:
                             event_obj.clan = CatGroup.PLAYER_CLAN_ID
                         elif len(event_obj.clan) > 2:
-                            event_obj.clan = game.clan.all_other_clans[int(event_obj.clan[-1])-1].group_ID
+                            if match := [c for c in game.clan.all_other_clans if c.displayname == event_obj.clan]:
+                                event_obj.clan = match[0].group_ID
+                            else:
+                                event_obj.clan = game.clan.all_other_clans[int(event_obj.clan[-1])-1].group_ID
 
                         game.clan.future_events.append(event_obj)
                     except KeyError:
@@ -1535,9 +1556,6 @@ class Afterlife:
         :param cat: The cat object adjust facets by
         :param do_removal: Set True if the cat's facets are being removed from the afterlife's
         """
-        if cat.ID in self.influencing_cats:
-            return
-
         if do_removal:
             self.influencing_cats.remove(cat.ID)
         else:
@@ -1587,6 +1605,8 @@ class Afterlife:
         :param num_of_influencers: The number of cats influencing the average
         :return: The adjusted average
         """
+        if not num_of_influencers:
+            return 0
         return total // num_of_influencers
 
 

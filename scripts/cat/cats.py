@@ -79,7 +79,6 @@ if TYPE_CHECKING:
 class Cat:
     """The cat class."""
 
-    dead_cats = []
     used_screen = screen
     current_pronoun_lang = None
 
@@ -128,8 +127,6 @@ class Cat:
 
     all_cats_list: List[Cat] = []
     ordered_cat_list: List[Cat] = []
-
-    grief_strings = {}
 
     def __init__(
         self,
@@ -317,7 +314,7 @@ class Cat:
         self.patrol_with_mentor = 0
         self.apprentice = []
         self.former_apprentices = []
-        self.relationships = {}
+        self.relationships: Dict[str, Relationship] = {}
         self.blank_relations = []
         self.mate = []
         self.previous_mates = []
@@ -748,13 +745,16 @@ class Cat:
                 )
                 return
             
-            instructor = self.status.fetch_clan_object(game.clan).instructor
-            if not instructor:
-                instructor = game.clan.instructor
+            if game.clan:
+                instructor = self.status.fetch_clan_object(game.clan).instructor
+                if not instructor:
+                    instructor = game.clan.instructor
 
-            game.updated_afterlife_cats.add(self)
+                game.updated_afterlife_cats.add(self)
 
-            cat_default_afterlife_id = self.status.get_default_afterlife_id()
+                cat_default_afterlife_id = self.status.get_default_afterlife_id()
+            else:
+                cat_default_afterlife_id = CatGroup.UNKNOWN_RESIDENCE_ID
             if cat_default_afterlife_id == CatGroup.UNKNOWN_RESIDENCE_ID:
                 pass
 
@@ -973,7 +973,7 @@ class Cat:
         if group := self.status.get_last_living_group():
             if self.moons > 1 and grief_allowed and not self.status.is_lost(group) and not self.status.is_exiled(group):
                 self.grief(body)
-            Cat.dead_cats.append(self)
+            game.dead_cats_to_grieve.append(self)
 
         # mark the sprite as outdated
         self.pelt.rebuild_sprite = True
@@ -1002,8 +1002,6 @@ class Cat:
         # Keep track is the body was treated with rosemary.
         body_treated = False
         text = None
-
-        load_grief_reactions()
 
         # apply grief to cats with high positive relationships to dead cat
         for cat in Cat.all_cats.values():
@@ -1076,13 +1074,12 @@ class Cat:
                     continue
 
                 text = choice(possible_strings)
-                text += " " + choice(MINOR_MAJOR_REACTION["major"])
                 text = event_text_adjust(Cat, text=text, main_cat=self, random_cat=cat, clan=cat.status.fetch_clan_object(game.clan))
 
                 cat.get_ill("grief stricken", event_triggered=True, severity="major")
 
             # If major grief fails, but there are still very_high or high values,
-            # it can fail to to minor grief. If they have a family relation, bypass the roll.
+            # it can fail to minor grief. If they have a family relation, bypass the roll.
             elif (very_high_types or high_types) and (
                 family_relation != "general" or not int(random() * 5)
             ):
@@ -1095,10 +1092,12 @@ class Cat:
 
             if grief_type:
                 # Generate the event:
-                if cat.ID not in Cat.grief_strings:
-                    Cat.grief_strings[cat.ID] = []
+                if cat.ID not in game.clan.grief_strings:
+                    game.clan.grief_strings[cat.ID] = []
 
-                Cat.grief_strings[cat.ID].append((text, (self.ID, cat.ID), grief_type))
+                game.clan.grief_strings[cat.ID].append(
+                    (text, (self.ID, cat.ID), grief_type)
+                )
                 continue
 
             # Negative "grief" messages are just for flavor.
@@ -1116,10 +1115,12 @@ class Cat:
                 text = event_text_adjust(
                     Cat, choice(possible_strings), main_cat=self, random_cat=cat, clan=self.status.fetch_clan_object(game.clan)
                 )
-                if cat.ID not in Cat.grief_strings:
-                    Cat.grief_strings[cat.ID] = []
+                if cat.ID not in game.clan.grief_strings:
+                    game.clan.grief_strings[cat.ID] = []
 
-                Cat.grief_strings[cat.ID].append((text, (self.ID, cat.ID), "negative"))
+                game.clan.grief_strings[cat.ID].append(
+                    (text, (self.ID, cat.ID), "negative")
+                )
 
     def familial_grief(self, living_cat: Cat):
         """
@@ -1204,7 +1205,7 @@ class Cat:
                 and child.moons < 12
             ):
                 if add_kits:
-                    # child.status.add_to_group(new_group=clan, age=self.age)
+                    # child.status.add_to_group(new_group=clan, age=child.age)
                     child.add_to_clan(clan)
                 else:
                     game.clan.add_to_clan(self)
@@ -3441,7 +3442,6 @@ class Cat:
         elif isinstance(cat_info["status"], str):
             cat_ob.status.send_to_afterlife(target_ID=CatGroup.STARCLAN_ID)
 
-        cat_ob.dead_for = cat_info["dead_for"] if "dead_for" in cat_info else 1
         return cat_ob
 
     # ---------------------------------------------------------------------------- #
@@ -3634,7 +3634,7 @@ class Cat:
         if make_clan:
             return "\n".join(
                 [
-                    self.genderalign,
+                    self.get_genderalign_string(),
                     i18n.t(
                         (
                             f"general.{self.age}"
@@ -3757,7 +3757,6 @@ class Cat:
                 "scars": self.pelt.scars or [],
                 "accessory": self.pelt.accessory,
                 "experience": self.experience,
-                "dead_moons": self.dead_for,
                 "current_apprentice": list(self.apprentice),
                 "former_apprentices": list(self.former_apprentices),
                 "faded_offspring": self.faded_offspring,
@@ -3926,21 +3925,6 @@ with open(
 ) as read_file:
     PERMANENT = ujson.loads(read_file.read())
 
-MINOR_MAJOR_REACTION: Optional[Dict] = None
-grief_lang: Optional[str] = None
-
-
-def load_grief_reactions():
-    global MINOR_MAJOR_REACTION, grief_lang
-    if grief_lang == i18n.config.get("locale"):
-        return
-    MINOR_MAJOR_REACTION = load_lang_resource(
-        "events/death/death_reactions/minor_major.json"
-    )
-    grief_lang = i18n.config.get("locale")
-
-
-load_grief_reactions()
 
 LEAD_CEREMONY_SC: Optional[Dict] = None
 LEAD_CEREMONY_DF: Optional[Dict] = None

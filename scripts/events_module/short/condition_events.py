@@ -467,6 +467,7 @@ class Condition_Events:
             "LEGBITE": ["weak leg"],
             "TOETRAP": ["weak leg"],
             "HINDLEG": ["weak leg"],
+            "THROAT": ["damaged throat"],
         }
 
         scarless_conditions = (
@@ -487,7 +488,8 @@ class Condition_Events:
             "lasting grief",
             "persistent headaches",
             "bad back",
-            "crooked jaw"
+            "crooked jaw",
+            "selective mutism",
         )
 
         got_condition = False
@@ -924,8 +926,7 @@ class Condition_Events:
 
                 # add to death history
                 cat.history.add_death(
-                    death_text=i18n.t("defaults.complications_death_history"),
-                    condition=translated_condition,
+                    death_text=i18n.t("defaults.complications_death_history", condition=translated_condition),
                 )
 
                 game.herb_events_list.append(event)

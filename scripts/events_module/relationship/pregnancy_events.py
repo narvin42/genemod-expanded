@@ -472,6 +472,7 @@ class Pregnancy_Events:
                         cats_involved.append(pregnant_cat.ID)
                         
                         pregnant_cat.get_injured("recovering from birth", event_triggered=True)
+                        pregnant_cat.injuries["recovering from birth"]["risks"] = []
                         print_event = i18n.t(
                             "conditions.pregnancy.outside_surrogate_dam",
                             name=cat.name,
@@ -492,6 +493,7 @@ class Pregnancy_Events:
                                     cats_involved.append(par.ID)
                                     par.birth_cooldown = constants.CONFIG["pregnancy"]["birth_cooldown"]
                                     par.get_injured("recovering from birth", event_triggered=True)
+                                    par.injuries["recovering from birth"]["risks"] = []
                                     if par.status.group_ID != cat.status.group_ID and not par.status.is_outsider:
                                         Pregnancy_Events.rebuild_strings()
                                         events = Pregnancy_Events.PREGNANT_STRINGS
@@ -774,8 +776,7 @@ class Pregnancy_Events:
         backkit = None
         
         if not other_cat:
-            other_cat, backkit = Pregnancy_Events.handle_outside_parent(
-                cat, clan, "1")
+            other_cat, backkit = Pregnancy_Events.handle_outside_parent(cat, clan, "1")
                 
         kits = Pregnancy_Events.get_kits(kits_amount, pregnant_cat, other_cat if not surrogate or pregnant_cat in surrogate else surrogate, clan, backkit=backkit)
         kits_amount = len(kits)
@@ -933,13 +934,11 @@ class Pregnancy_Events:
 
         involved_cats += [k.ID for k in kits]
 
-        if game.clan.game_mode != "classic":
-            try:
-                death_chance = cat.injuries["pregnant"]["mortality"]
-            except:
-                death_chance = 40
-        else:
+        try:
+            death_chance = cat.injuries["pregnant"]["mortality"]
+        except:
             death_chance = 40
+        
         if 'fragile skin' in pregnant_cat.permanent_condition:
             death_chance += 20
         if not int(
@@ -1509,10 +1508,12 @@ class Pregnancy_Events:
         blood_parent2 = None
          
         ##### SELECT BACKSTORY #####
-        if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.get_last_living_group() != cat.status.group_ID:
-            backkit = 'halfclan1' if other_cat[0].status.group.is_any_clan_group() else 'outsider_roots1'
-        elif cat and other_cat and other_cat[0].status.get_last_living_group() != cat.status.group_ID:
-            backkit = 'halfclan2' if other_cat[0].status.group.is_any_clan_group() else 'outsider_roots2'
+        if not backkit:
+            if cat and "pregnant" in cat.injuries and other_cat and other_cat[0].status.get_last_living_group() != cat.status.get_last_living_group():
+                backkit = 'halfclan1' if other_cat[0].status.group.is_any_clan_group() else 'outsider_roots1'
+            elif cat and other_cat and other_cat[0].status.get_last_living_group() != cat.status.get_last_living_group():
+                backkit = 'halfclan2' if other_cat[0].status.group.is_any_clan_group() else 'outsider_roots2'
+        
         if backkit:
             backstory = backkit
         else:  # cat is adopted
@@ -1884,6 +1885,8 @@ class Pregnancy_Events:
 
         for kit in all_kitten:
             for c in all_relatives:
+                if c.faded:
+                    continue
                 rel_reflection = constants.CONFIG["new_cat"]["ext_relative_modifier"]
                 y = randrange(-10, 10)
 

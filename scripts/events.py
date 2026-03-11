@@ -170,17 +170,17 @@ def one_moon():
     # disaster_events.handle_disasters()
 
     # Handle grief events.
-    if Cat.grief_strings:
+    if game.clan.grief_strings:
         # Grab all the dead or outside cats, who should not have grief text
-        for ID in Cat.grief_strings.copy():
+        for ID in game.clan.grief_strings.copy():
             check_cat = Cat.all_cats.get(ID)
             if isinstance(check_cat, Cat):
                 if check_cat.dead or check_cat.status.is_outsider:
-                    Cat.grief_strings.pop(ID)
+                    game.clan.grief_strings.pop(ID)
 
         # Generate events
 
-        for cat_id, details in Cat.grief_strings.items():
+        for cat_id, details in game.clan.grief_strings.items():
             for _info in details:
                 text = _info[0]
                 cats = _info[1]
@@ -196,14 +196,14 @@ def one_moon():
                         Single_Event(text, ["birth_death", "relation"], cats, clan=Cat.fetch_cat(cat_id).status.group_ID)
                     )
 
-        Cat.grief_strings.clear()
+        game.clan.grief_strings.clear()
 
-    if Cat.dead_cats:
+    if game.dead_cats_to_grieve:
         ghost_names = {}
         sorted_dead_cats = {}
         shaken_cats = {}
         extra_event = None
-        for ghost in Cat.dead_cats:
+        for ghost in game.dead_cats_to_grieve:
             last_living = ghost.status.get_last_living_group()
             if ghost.status.is_exiled(last_living):
                 pass
@@ -231,7 +231,7 @@ def one_moon():
                     "hardcoded.event_deaths", count=len(ghost_names[clan.displayname]), insert=insert
                 )
 
-                if len(ghost_names[clan.displayname])-len(faded_kits[clan.displayname]) > 2:
+                if len(ghost_names[clan.displayname])-len(faded_kits.get(clan.displayname, [])) > 2:
                     alive_cats = list(
                         filter(
                             lambda kitty: (
@@ -297,7 +297,7 @@ def one_moon():
             
             if not clancount:
                 break
-        Cat.dead_cats.clear()
+        game.dead_cats_to_grieve.clear()
 
     if (
         game.clan.game_mode in ("expanded", "cruel season")
@@ -365,8 +365,8 @@ def one_moon():
         if not clancount:
             break
 
-    # if clancount:
-    #     handle_crossclan_relationships()
+    if clancount:
+        handle_crossclan_relationships()
 
     # Resort
     if switch_get_value(Switch.sort_type) != "id":
@@ -608,6 +608,12 @@ def handle_lead_den_event():
                         # if cat is an apprentice, make sure they get a mentor!
                         if invited_cat.status.rank.is_any_apprentice_rank():
                             invited_cat.update_mentor()
+                        # if the cat chose to become a mediator but the settings don't allow it, make them a warrior instead
+                        if (
+                            invited_cat.status.rank == CatRank.MEDIATOR
+                            and not get_clan_setting("become_mediator")
+                        ):
+                            invited_cat.status._change_rank(CatRank.WARRIOR)
 
                     invited_cat.create_relationships_new_cat()
 
@@ -937,7 +943,7 @@ def handle_tnr_return(clan=game.clan):
     eligible_cats = []
     cat_IDs = []
     for cat in Cat.all_cats.values():
-        if not cat.status.is_lost(clan.group_ID):
+        if not cat.status.is_lost(clan.group_ID) or not cat.status.is_outsider:
             continue
         TNRed = True if ('sterile' in cat.permanent_condition and 'TNR' in cat.pelt.scars and 
         game.clan.age - cat.permanent_condition['sterile']['moon_start'] == 1) else False
@@ -979,13 +985,11 @@ def handle_lost_cats_return(predetermined_cat_IDs: list = None, clan = game.clan
     if not predetermined_cat_IDs:
         eligible_cats = []
         for cat in Cat.all_cats.values():
-            if cat.dead or not cat.status.is_lost(clan.group_ID):
+            if cat.dead or not cat.status.is_lost(clan.group_ID) or not cat.status.is_outsider:
                 continue
 
             if "sterile" not in cat.permanent_condition or game.clan.age - cat.permanent_condition["sterile"]["moon_start"] > -1:
                 eligible_cats.append(cat)
-            elif cat.status.is_lost(clan.group_ID):
-                pass
 
         if not eligible_cats:
             return
@@ -996,7 +1000,7 @@ def handle_lost_cats_return(predetermined_cat_IDs: list = None, clan = game.clan
 
         cat_IDs.append(lost_cat.ID)
 
-        if lost_cat.status.is_former_clancat:
+        if lost_cat.status.is_former_clancat or lost_cat.status.is_outsider:
             text = i18n.t(f"hardcoded.event_lost{random.choice(range(1,5))}")
         else:
             # this would be the child of a lost cat, who inherited the lost status from the parent and was never a clancat
@@ -1402,7 +1406,7 @@ def check_war():
                 else:  # try to influence the relation with warring clan
                     game.clan.war[clan][enemy]["duration"] += 1
                     choice = random.choice(
-                        ["rel_up", "neutral", "rel_down", "rel_down"])
+                        ["rel_up", "neutral", "rel_down", "rel_down", "rel_down"])
                     current_rels = switch_get_value(Switch.war_rel_change_type)
                     if not current_rels.get(clan):
                         current_rels[clan] = {}

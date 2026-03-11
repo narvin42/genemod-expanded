@@ -97,56 +97,28 @@
             "While on patrol, m_c, r_c1, and r_c2 found r_c3, r_c4, and r_c5 trying to get rid of a thornbush, and pitched in to help."
         ],
         "m_c": {
-            "status": [
-                "warrior",
-                "deputy",
-                "leader"
-            ]
+            "status": ["-elder", "-mediator", "-mediator apprentice"]
         },
         "r_c": [
             {
                 "clan": 1,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader",
-                    "apprentice"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             },
             {
                 "clan": 1,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader",
-                    "apprentice"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             },
             {
                 "clan": 2,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             },
             {
                 "clan": 2,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader",
-                    "apprentice"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             },
             {
                 "clan": 2,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader",
-                    "apprentice"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             }
         ],
         "relationships": [
@@ -180,39 +152,21 @@
             "While on a walk, m_c found r_c1, r_c2, and r_c3 trying to get rid of a thornbush, and pitched in to help."
         ],
         "m_c": {
-            "status": [
-                "warrior",
-                "deputy",
-                "leader"
-            ],
+            "status": [ "-elder", "-mediator", "-mediator apprentice" ],
             "skill": ["CAMP,1"]
         },
         "r_c": [
             {
                 "clan": 2,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             },
             {
                 "clan": 2,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader",
-                    "apprentice"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             },
             {
                 "clan": 2,
-                "status": [
-                    "warrior",
-                    "deputy",
-                    "leader",
-                    "apprentice"
-                ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice"]
             }
         ],
         "relationships": [
@@ -346,11 +300,7 @@
             "r_c1 secretly met up with m_c at the border, only to get interrupted by r_c2 and have to play it off as incidental."
         ],
         "m_c": {
-            "age": [ "-adolescent" ],
-            "trait": [
-                "-insecure",
-                "-nervous"
-            ]
+            "age": [ "-adolescent" ]
         },
         "r_c": [
             {
@@ -385,6 +335,129 @@
                 }
             }
         ]
+    },
+    {
+        "event_id": "gen_group_romance2",
+        "location": [ "any" ],
+        "season": [ "any" ],
+        "sub_type": [ "romance" ],
+        "frequency": 2,
+        "event_text": [
+            "r_c1 secretly met up with m_c at the border, not realising that r_c2 had followed until {PRONOUN/r_c2/subject} confronted them both."
+        ],
+        "m_c": {
+        },
+        "r_c": [
+            {
+                "clan": 2,
+                "relationship_status": [
+                    "likes"
+                ]
+            },
+            {
+                "clan": 2
+            }
+        ],
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c1" ],
+                "values": [ "comfort", "romance" ],
+                "amount": 5,
+                "mutual": true,
+                "log": {
+                    "cats_from": "from_cat secretly met up with to_cat at the border."
+                }
+            },
+            {
+                "cats_from": [ "r_c1", "m_c" ],
+                "cats_to": [ "r_c2" ],
+                "values": [ "like", "trust", "romance" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "to_cat caught from_cat having a secret meeting and confronted {PRONOUN/from_cat/object}."
+                }
+            },
+            {
+                "cats_from": [ "r_c2" ],
+                "cats_to": [ "r_c1", "m_c" ],
+                "values": [ "like", "trust", "respect", "romance" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat caught to_cat having a secret meeting and confronted {PRONOUN/to_cat/object}."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_group_romance3",
+        "location": [ "any" ],
+        "season": [ "any" ],
+        "sub_type": [ "romance" ],
+        "frequency": 1,
+        "event_text": [
+            "m_c secretly met up with r_c1 at the border, not realising that r_c2 had followed until {PRONOUN/r_c2/subject} reported it to o_c_n1."
+        ],
+        "m_c": {
+        },
+        "r_c": [
+            {
+                "clan": 2,
+                "relationship_status": [
+                    "likes"
+                ]
+            },
+            {
+                "clan": 1
+            }
+        ],
+        "relationships": [
+            {
+                "cats_from": [ "m_c" ],
+                "cats_to": [ "r_c1" ],
+                "values": [ "comfort", "romance" ],
+                "amount": 10,
+                "mutual": true,
+                "log": {
+                    "cats_from": "from_cat secretly met up with to_cat at the border."
+                }
+            },
+            {
+                "cats_from": [ "r_c1", "m_c" ],
+                "cats_to": [ "r_c2" ],
+                "values": [ "like", "comfort", "trust", "romance" ],
+                "amount": -15,
+                "mutual": false,
+                "log": {
+                    "cats_from": "to_cat caught from_cat having a secret meeting and told {PRONOUN/to_cat/poss} Clan."
+                }
+            },
+            {
+                "cats_from": [ "r_c2" ],
+                "cats_to": [ "r_c1", "m_c" ],
+                "values": [ "like", "trust", "respect", "romance" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat caught to_cat having a secret meeting and told {PRONOUN/to_cat/poss} Clan."
+                }
+            },
+            {
+                "cats_from": [ "high_lawful", "clan" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "like", "trust", "respect" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "from_cat heard about to_cat having secret meetings with another Clan's cat."
+                }
+            }
+        ],
+        "other_clan": {
+            "changed": -1
+        }
     },
     {
         "event_id": "gen_group_gathering_misc1",
@@ -1140,7 +1213,7 @@
                 }
             },
             {
-                "cats_from": [ "r_c2", "low_aggress", "high_lawful", "high_social" ],
+                "cats_from": [ "r_c2", "clan", "low_aggress", "high_lawful", "high_social" ],
                 "cats_to": [ "m_c" ],
                 "values": [ "like", "respect", "comfort" ],
                 "amount": -5,
@@ -1177,15 +1250,15 @@
         "r_c": [
             {
                 "clan": 2,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             },
             {
                 "clan": 2,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             },
             {
                 "clan": 2,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             }
         ],
         "relationships": [
@@ -1331,31 +1404,31 @@
         "sub_type": [ ],
         "frequency": 4,
         "event_text": [
-            "m_c, r_c1, and r_c2 met r_c3, r_c4, and r_c5 resting on patrol and join them, commiserating about the recent heat."
+            "m_c, r_c1, and r_c2 met r_c3, r_c4, and r_c5 resting on patrol and join them, commiserating about the recent hot weather."
         ],
         "m_c": {
-            "status": [ "-elder" ]
+            "status": [ "-elder", "-mediator", "-mediator apprentice" ]
         },
         "r_c": [
             {
                 "clan": 1,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             },
             {
                 "clan": 1,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             },
             {
                 "clan": 2,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             },
             {
                 "clan": 2,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             },
             {
                 "clan": 2,
-                "status": [ "-elder" ]
+                "status": [ "-elder", "-mediator", "-mediator apprentice" ]
             }
         ],
         "relationships": [

@@ -91,7 +91,7 @@ class CrossClanEvent(ShortEvent):
         self.r_c = r_c
         self.nr_involved_clans = nr_involved_clans
         self.involved_clans = []
-        self.random_cats: Optional[Cat] = []
+        self.random_cats = []
         self.custom_mapping = {}
 
     def execute_event(self):
@@ -107,10 +107,12 @@ class CrossClanEvent(ShortEvent):
 
         self.all_involved_cat_ids.append(self.main_cat.ID)
 
-        # check if another cat is present
-        if self.r_c:
-            for c in self.random_cats:
-                self.all_involved_cat_ids.append(c.ID)
+        if not self.random_cats:
+            print(f"{self.event_id} event did not get any cats?")
+            return
+
+        for c in self.random_cats:
+            self.all_involved_cat_ids.append(c.ID)
 
         # remove cats from involved_cats if they're supposed to be
         if self.r_c and "r_c" in self.exclude_involved:
@@ -198,6 +200,10 @@ class CrossClanEvent(ShortEvent):
                     clan=clan_id
                 )
             )
+        self.involved_clans.clear()
+        self.random_cats.clear()
+        self.custom_mapping = {}
+        self.main_cat = None
 
     def handle_injury(self):
         """
