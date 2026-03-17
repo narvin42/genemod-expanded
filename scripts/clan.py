@@ -446,7 +446,7 @@ class Clan:
             "temperament": self.temperament,
             "relations": self.relations,
             "just_died": game.just_died,
-            "dead_cats_to_grieve": [x.ID for x in game.dead_cats_to_grieve],
+            "dead_cats_to_grieve": [x.ID for x in game.dead_cats_to_grieve if x],
             "grief_to_assign": game.clan.grief_strings,
             "version_name": SAVE_VERSION_NUMBER,
             "version_commit": get_version_info().version_number,
@@ -701,7 +701,7 @@ class Clan:
                     clan_data["other_clans_relations"].split(","),
                     clan_data["other_clan_temperament"].split(","),
                 ):
-                    OtherClan(name, temperament=temper)
+                    OtherClan(name, temperament=temper, ID=ID)
                     game.clan.relations[CatGroup.PLAYER_CLAN_ID][ID] = int(relation)
             else:
                 for name, relation, temper, symbol in zip(
@@ -710,7 +710,7 @@ class Clan:
                     clan_data["other_clan_temperament"].split(","),
                     clan_data["other_clan_chosen_symbol"].split(","),
                 ):
-                    OtherClan(name, temperament=temper, chosen_symbol=symbol)
+                    OtherClan(name, temperament=temper, chosen_symbol=symbol, ID=ID)
                     game.clan.relations[CatGroup.PLAYER_CLAN_ID][ID] = int(relation)
         if game.clan.clancount == "multiclan":
             if "relations" not in clan_data or not clan_data["relations"].get(game.clan.group_ID) or len(clan_data["relations"]) < len(game.clan.all_other_clans):
@@ -1003,7 +1003,8 @@ class Clan:
         save_list = []
 
         for event in game.clan.future_events:
-            save_list.append(event.to_dict())
+            if e := event.to_dict():
+                save_list.append(e)
 
         safe_save(f"{get_save_dir()}/{game.clan.name}/future_events.json", save_list)
 

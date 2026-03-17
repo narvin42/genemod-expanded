@@ -434,7 +434,6 @@ class Sprites:
             self.make_group(sheet, (0, 0), sheet)
 
 
-
         # Fading Fog
         for i in range(0, 3):
             self.make_group("fademask", (i, 0), f"fademask{i}")
