@@ -167,5 +167,9 @@
     "constantly dizzy": [
         "m_c stumbles around the nursery, trying to walk a straight line as r_c instructed. r_c tells {PRONOUN/m_c/poss} parents that the lack of balance might be permanent.",
         "m_c finds that {PRONOUN/m_c/subject} {VERB/m_c/have/has} to concentrate to stay upright while standing. The lack of balance is endlessly frustrating to {PRONOUN/m_c/object}."
+    ],
+    "hare-lipped": [
+        "m_c has a lip that resembles a rabbit's, which r_c explains to {PRONOUN/m_c/poss} parents can cause trouble with nursing.",
+        "m_c's lip resembles that of a rabbit."
     ]
 }

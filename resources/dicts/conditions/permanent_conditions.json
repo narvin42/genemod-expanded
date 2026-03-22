@@ -1589,5 +1589,32 @@
             "2": [ ],
             "3": [ ]
         }
+    },
+    "hare-lipped": {
+        "severity": "major",
+        "congenital": "always",
+        "moons_until": 0,
+        "mortality": {
+            "newborn": 10,
+            "kitten": 25,
+            "adolescent": 0,
+            "young adult": 0,
+            "adult": 0,
+            "senior adult": 0,
+            "senior": 0
+        },
+        "illness_infectiousness": [
+        ],
+        "risks": [
+            {
+                "name": "water in their lungs",
+                "chance": 40
+            }
+        ],
+        "herbs": {
+            "1": [ ],
+            "2": [ ],
+            "3": [ ]
+        }
     }        
 }

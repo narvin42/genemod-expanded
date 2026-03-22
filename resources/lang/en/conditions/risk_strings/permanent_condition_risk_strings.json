@@ -445,5 +445,11 @@
             "m_c accidentally tore {PRONOUN/m_c/poss} pelt while compulsively grooming {PRONOUN/m_c/self}. r_c puts a salve on it to help it heal.",
             "m_c' tore {PRONOUN/m_c/poss} pelt during a compulsive grooming session."
         ]
+    },
+    "hare-lipped": {
+        "water in their lungs": [
+            "m_c has been coughing a lot lately, and r_c remarks that it looks like {PRONOUN/m_c/subject} has water in {PRONOUN/m_c/poss} lungs despite not swimming.",
+            "m_c has been coughing a lot lately. It looks like {PRONOUN/m_c/subject} has water in {PRONOUN/m_c/poss} lungs despite not swimming."
+        ]
     }
 }
