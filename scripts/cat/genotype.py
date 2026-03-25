@@ -2224,8 +2224,9 @@ class Genotype:
         print(which)
     
     def GeneticDisordermutation(self):
+        if self.ban_genes:
+            return
         whichgene = ["dfca", "bhd", "rfca", "chs"]
-        
         which = choice(whichgene)
 
         if(which == 'dfca'):
@@ -2236,10 +2237,10 @@ class Genotype:
             else:
                 self.Mutate()
         elif(which == 'bhd'):
-            if(self.dfca[0] == 'bhd'):
-                self.dfca[0] = 'Bhd'
-            elif(self.dfca[1] == 'bhd'):
-                self.dfca[1] = 'Bhd'
+            if(self.bhd[0] == 'bhd'):
+                self.bhd[0] = 'Bhd'
+            elif(self.bhd[1] == 'bhd'):
+                self.bhd[1] = 'Bhd'
             else:
                 self.Mutate()
         elif(which == 'rfca'):

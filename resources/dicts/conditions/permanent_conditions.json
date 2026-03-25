@@ -1605,12 +1605,7 @@
         },
         "illness_infectiousness": [
         ],
-        "risks": [
-            {
-                "name": "water in their lungs",
-                "chance": 40
-            }
-        ],
+        "risks": [],            
         "herbs": {
             "1": [ ],
             "2": [ ],
