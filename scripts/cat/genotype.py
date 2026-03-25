@@ -226,7 +226,7 @@ class Genotype:
         self.pax3 = jsonstring.get("pax3", ['NoDBE', 'NoDBE'])
 
         self.dfca = jsonstring.get("DomFCA", ['dca', 'dca'])
-        self.bhd = jsonstring.get("Bhd", ['bhd', 'bhd'])
+        self.bhd = jsonstring.get("bhd", ['bhd', 'bhd'])
         self.rfca = jsonstring.get("RecFCA", ['Rca', 'Rca'])
         self.chs = jsonstring.get("chs", ['Ch', 'Ch'])
 
