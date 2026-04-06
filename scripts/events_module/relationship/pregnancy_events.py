@@ -1210,7 +1210,7 @@ class Pregnancy_Events:
         # Handle love affair chance.
         affair_partner = Pregnancy_Events.determine_highest_romantic_relation(cat, mate if mate else None, mate_relation if mate else None, samesex)
         if affair_partner:
-            if mate and get_clan_setting('multisire'):
+            if mate and get_clan_setting('multisire') and not cat_is_amab(cat):
                 mate.append(affair_partner)
             else:
                 mate = [affair_partner]
@@ -2229,6 +2229,10 @@ class Pregnancy_Events:
         avg_age = int(sum((cat.moons for cat in Cat.all_cats.values() if cat.status.group_ID == clan.group_ID)) / living_cats)
         if avg_age > 80:
             inverse_chance = int(inverse_chance * 0.8)
+
+        # CURRENT KIT COUNT
+        # increases inverse chance according to number of existing children (ex. 5 kids will multiply by 1.5)
+        inverse_chance += int(inverse_chance * len(first_parent.get_children(True)) * 0.1)
 
         # 'INBREED' counter
         # - increase inverse chance if one of the current cats belongs in the biggest family

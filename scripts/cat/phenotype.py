@@ -384,12 +384,10 @@ class Phenotype(Genotype):
         elif(self.tabby != '' and self.point not in ['point ', 'mink ', 'siamocha ']):
             self.tabby += ' tabby '
         elif(self.tabby != ''  and self.point in ['point ', 'mink ', 'siamocha ']):
-            if(self.colour == 'seal' or self.colour == 'chocolate'):
+            if('o' in self.sexgene):
                 self.tabby += ' lynx '
-            elif('o' not in self.sexgene):
-                self.tabby = ''
             else:
-                self.tabby = ' lynx '
+                self.tabby += " "
     def EarFinder(self):
         self.eartype = ""
 
@@ -483,7 +481,7 @@ class Phenotype(Genotype):
             
         if is_today(SpecialDate.APRIL_FOOLS):
             if "Dg" in self.april_fools.get("danish_green", []):
-                self.colour = "Danish green"
+                self.colour = "Danish green " + self.colour
         self.SolidWhite(pattern=pattern)
 
         if(self.tortiepattern == ["CRYPTIC"] and self.tortie != "brindled bicolour "):

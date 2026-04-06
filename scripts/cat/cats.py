@@ -191,8 +191,7 @@ class Cat:
 
         self._history = None
 
-        if disable_random is not None:
-            Cat.disable_random = disable_random
+        Cat.disable_random = bool(disable_random)
 
         if (
             faded
@@ -214,6 +213,7 @@ class Cat:
         elif self.gender == 'male':
             self.gender = 'masc'
         self.status: Status = Status(**status_dict) if status_dict else Status()
+        kittypet = (kittypet or self.status.social == CatSocial.KITTYPET)
         self.backstory = backstory
         self.age: Optional[CatAge] = None
         self.skills = CatSkills(skill_dict=skill_dict)
@@ -267,14 +267,14 @@ class Cat:
                     self.phenotype.Generator(kittypet=kittypet, special=self.gender)
         else:
             if not chimera:
-                if (kittypet or self.status.social == CatSocial.KITTYPET) and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
+                if kittypet and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
                     self.phenotype.AltGenerator(special=self.gender)
                 else:
                     self.phenotype.Generator(special=self.gender, kittypet=kittypet)
             else:
                 par1 = Phenotype(gene_config, game_setting_get("ban problem genes"))
                 par2 = Phenotype(gene_config, game_setting_get("ban problem genes"))
-                if (kittypet or self.status.social == CatSocial.KITTYPET) and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
+                if kittypet and constants.CONFIG["cat_generation"]["kittypet_gene_boost"]:
                     par1.AltGenerator()
                     par2.AltGenerator()
                 else:
@@ -295,7 +295,7 @@ class Cat:
             if self.phenotype.bhd[1] == 'Bhd':
                 self.phenotype.bhd[1] = 'bhd'            
         
-        if not loading_cat:
+        if not loading_cat and not self.disable_random:
             if(randint(1, constants.CONFIG['genetics_config']['intersex']) == 1) or (self.chimerapheno and xor('Y' in self.phenotype.sexgene, 'Y' in self.chimerapheno.sexgene)):
                 self.phenotype.sex = "intersex"
                 if (randint(1, 25) == 1 and 'Y' in self.phenotype.sexgene) or (self.chimerapheno and xor('Y' in self.phenotype.sexgene, 'Y' in self.chimerapheno.sexgene) and randint(1, 10) == 1):
@@ -1042,7 +1042,7 @@ class Cat:
                     high_types.extend(rel_type)
                 elif tier.is_extreme_neg:
                     very_low_types.extend(rel_type)
-                elif tier.is_mid_neg and randint(1, 4) == 1:
+                elif tier.is_mid_neg and randint(1, 6) == 1:
                     very_low_types.extend(rel_type)
                 continue
 
@@ -1051,7 +1051,12 @@ class Cat:
                 # major grief eligible cats.
 
                 major_chance = 3
+                # the less stable the cat, the more likely to grieve
                 if cat.personality.stability < 5:
+                    major_chance -= 1
+
+                # if considered family, grief more likely
+                if family_relation != "general":
                     major_chance -= 1
 
                 # decrease major grief chance if grave herbs are used
@@ -1094,7 +1099,7 @@ class Cat:
                 cat.get_ill("grief stricken", event_triggered=True, severity="major")
 
             # If major grief fails, but there are still very_high or high values,
-            # it can fail to minor grief. If they have a family relation, bypass the roll.
+            # it can fail to minor grief. If they have a family relation, bypass the roll and guarantee it
             elif (very_high_types or high_types) and (
                 family_relation != "general" or not int(random() * 5)
             ):
@@ -1149,6 +1154,8 @@ class Cat:
             return "parent"
         elif dead_cat.is_sibling(living_cat):
             return "sibling"
+        elif dead_cat.ID in living_cat.mate:
+            return "mate"
         else:
             return "general"
 
@@ -1264,12 +1271,10 @@ class Cat:
         ]:
             pass
 
-        elif self.status.rank == [CatRank.WARRIOR, CatRank.ELDER]:
+        elif self.status.rank in [CatRank.WARRIOR, CatRank.ELDER]:
             if not clan:
                 pass
-            elif old_rank == CatRank.LEADER and (
-                clan.leader and clan.leader.ID == self.ID
-            ):
+            elif clan.leader and clan.leader.ID == self.ID:
                 clan.leader = None
                 clan.leader_predecessors += 1
             elif clan.deputy and clan.deputy.ID == self.ID:
@@ -2094,10 +2099,16 @@ class Cat:
             self.inheritance = Inheritance(self)
         return self.inheritance.siblings.keys()
 
-    def get_children(self):
+    def get_children(self, only_living=False):
         """Returns list of the children (ids)."""
         if not self.inheritance:
             self.inheritance = Inheritance(self)
+        if only_living:
+            living_ids = []
+            for k in self.inheritance.kits.keys():
+                if k in Cat.all_cats and not Cat.all_cats[k].dead:
+                    living_ids.append(k)
+            return living_ids
         return self.inheritance.kits.keys()
 
     def is_grandparent(self, other_cat: Cat):
@@ -3148,20 +3159,47 @@ class Cat:
 
                         # converting old saves
                         if "platonic_like" in rel:
+                            old_rel = rel.copy()
+                            rel = {}
+                            rel["log"] = old_rel["log"]
+                            rel["mates"] = old_rel["mates"]
+                            rel["family"] = old_rel["family"]
+                            rel["cat_to_id"] = old_rel["cat_to_id"]
+
                             # romance
-                            rel["romance"] = rel["romantic_love"]
-                            rel.pop("romantic_love")
-                            # like
-                            rel["like"] = rel["platonic_like"] - rel["dislike"]
-                            rel.pop("platonic_like")
-                            rel.pop("dislike")
-                            # respect
-                            rel["respect"] = rel["admiration"] - rel["jealousy"]
-                            rel.pop("admiration")
-                            rel.pop("jealousy")
-                            # comfort
-                            rel["comfort"] = rel["comfortable"]
-                            rel.pop("comfortable")
+                            rel["romance"] = old_rel["romantic_love"]
+
+                            # attempts to convert "complex" relationships by
+                            #   using the "negative" value for the lower of
+                            #   platonic_like/comfort and trust/admiration.
+                            # if the relationship isn't complex
+                            #   (<= 5 for negative values; this is an arbitrary value),
+                            #   then it just takes the value without considering the negative.
+                            if old_rel["platonic_like"] > old_rel["comfortable"]:
+                                rel["like"] = old_rel["platonic_like"]
+                                if old_rel["dislike"] <= 5:
+                                    rel["comfort"] = old_rel["comfortable"]
+                                else:
+                                    rel["comfort"] = -old_rel["dislike"]
+                            else:  # old_rel["platonic_like"] < old_rel["comfort"]
+                                rel["comfort"] = old_rel["comfortable"]
+                                if old_rel["dislike"] <= 5:
+                                    rel["like"] = old_rel["platonic_like"]
+                                else:
+                                    rel["like"] = -old_rel["dislike"]
+
+                            if old_rel["trust"] > old_rel["admiration"]:
+                                rel["trust"] = old_rel["trust"]
+                                if old_rel["jealousy"] <= 5:
+                                    rel["respect"] = old_rel["admiration"]
+                                else:
+                                    rel["respect"] = -old_rel["jealousy"]
+                            else:  # old_rel["trust"] < old_rel["admiration"]
+                                rel["respect"] = old_rel["admiration"]
+                                if old_rel["jealousy"] <= 5:
+                                    rel["trust"] = old_rel["trust"]
+                                else:
+                                    rel["trust"] = -old_rel["jealousy"]
 
                         # create relationship
                         new_rel = Relationship(

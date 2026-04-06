@@ -1086,9 +1086,9 @@ class Genotype:
             if self.april_fools[gene] == ["", ""]:
                 del self.april_fools[gene]
             elif not self.april_fools[gene][0]:
-                self.april_fools[gene][0] = self.april_fools[gene][1].lower()
+                self.april_fools[gene][0] = self.april_fools[gene][1].lower() if gene != "rainbow_eyes" else "NoDRE"
             elif not self.april_fools[gene][1]:
-                self.april_fools[gene][1] = self.april_fools[gene][0].lower()
+                self.april_fools[gene][1] = self.april_fools[gene][0].lower() if gene != "rainbow_eyes" else "NoDRE"
 
         self.furLength = [choice(par1.furLength), choice(par2.furLength)]
         
@@ -1346,9 +1346,9 @@ class Genotype:
         self.GeneSort()
 
         if self.odds['random_mutation'] > 0 and randint(1, self.odds['random_mutation']) == 1:
+            print("MUTATION!")
             self.Mutate()
-
-        self.GeneSort()
+            self.GeneSort()
 
         if self.odds['somatic_mutation'] > 0 and randint(1, self.odds['somatic_mutation']) == 1:
             self.GenerateSomatic()
@@ -1429,8 +1429,6 @@ class Genotype:
         if height <= 5.00:
             self.shoulder_height = 5.00
 
-            if self.growth_pattern == "runt":
-                self.shoulder_height *= 0.85
             if self.munch[0] == 'Mk':
                 self.shoulder_height /= 1.5
             if 'Y' in self.sexgene:
@@ -2121,7 +2119,6 @@ class Genotype:
         return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Polygenes: ", self.Polygenes
     
     def Mutate(self):
-        print("MUTATION!")
         wheremutation = ["body", "genetic disorder", "furtype", "furtype", "othercoat", "othercoat", "othercoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat"]
         where = choice(wheremutation)
 
@@ -2291,7 +2288,7 @@ class Genotype:
             if 'N' not in self.corin:
                 return self.Mutate()
                 
-            i = self.ext.index("N")
+            i = self.corin.index("N")
             self.corin[i] = choice(['sh', 'sg', 'fg'])
 
         print(name_map[which])
@@ -2361,19 +2358,19 @@ class Genotype:
         elif which == 'pointgene':
             if 'C' not in self.pointgene:
                 return self.Mutate()
-            i = self.white.index("C")
+            i = self.pointgene.index("C")
             self.pointgene[i] = choice([choice(['c', 'cm']), choice(['cs', 'cb']), choice(['cs', 'cb']), choice(['cs', 'cb']), choice(['cs', 'cb'])])
             if self.ban_genes:
                 self.pointgene[i] = choice(['cm', choice(['cs', 'cb']), choice(['cs', 'cb']), choice(['cs', 'cb']), choice(['cs', 'cb'])])
         elif which == 'agouti':
             if "A" not in self.agouti:
                 return self.Mutate()
-            i = self.white.index("A")
+            i = self.agouti.index("A")
             self.agouti[i] = "a"
         else:
             if "NoDBE" not in self.pax3:
                 return self.Mutate()
-            i = self.white.index("NoDBE")
+            i = self.pax3.index("NoDBE")
             self.pax3[i] = choice(['DBEcel', 'DBEre', 'DBEalt'])
 
         print(name_map[which])

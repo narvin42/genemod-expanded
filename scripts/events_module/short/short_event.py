@@ -5,7 +5,7 @@ import i18n
 import re
 
 from scripts.cat import pronouns
-from scripts.cat.cats import Cat
+from scripts.cat.cats import Cat, ILLNESSES, INJURIES, PERMANENT
 from scripts.cat.enums import CatGroup
 from scripts.cat.pelts import Pelt
 from scripts.cat_relations.relationship import Relationship
@@ -482,6 +482,7 @@ class ShortEvent:
 
             if extra_text:
                 self.text = self.text + " " + extra_text
+                extra_text = None
 
         # Check to see if any young litters joined with alive parents.
         # If so, see if recovering from birth condition is needed and give the condition
@@ -597,10 +598,10 @@ class ShortEvent:
             body = True
         pass
 
-        if self.m_c["dies"] and self.main_cat not in dead_list:
+        if self.m_c.get("dies") and self.main_cat not in dead_list:
             dead_list.append(self.main_cat)
         if self.r_c:
-            if self.r_c["dies"] and self.random_cat not in dead_list:
+            if self.r_c.get("dies") and self.random_cat not in dead_list:
                 dead_list.append(self.random_cat)
 
         if not dead_list:
@@ -837,24 +838,59 @@ class ShortEvent:
             for abbr in cats_affected:
                 # MAIN CAT
                 if abbr == "m_c":
-                    injury = choice(possible_injuries)
-                    self.main_cat.get_injured(injury, potential_scars=potential_scars)
-                    self.handle_injury_history(self.main_cat, "m_c", injury)
+                    if self.give_injury_to_cat(self.main_cat, possible_injuries, potential_scars):
+                        self.handle_injury_history(
+                            self.main_cat, "m_c", injury)
 
                 # RANDOM CAT
                 elif abbr == "r_c":
-                    injury = choice(possible_injuries)
-                    self.random_cat.get_injured(injury, potential_scars=potential_scars)
-                    self.handle_injury_history(self.random_cat, "r_c", injury)
+                    if self.give_injury_to_cat(self.random_cat, possible_injuries, potential_scars):
+                        self.handle_injury_history(
+                            self.random_cat, "r_c", injury)
 
                 # NEW CATS
-                elif "n_c" in abbr:
+                elif abbr == "n_c":
                     for i, new_cat_objects in enumerate(self.new_cats):
-                        injury = choice(possible_injuries)
-                        new_cat_objects[i].get_injured(
-                            injury, potential_scars=potential_scars
-                        )
-                        self.handle_injury_history(new_cat_objects[i], abbr, injury)
+                        if self.give_injury_to_cat(new_cat_objects[0], possible_injuries, potential_scars):
+                            self.handle_injury_history(new_cat_objects[0], abbr, injury)
+                # NEW CATS
+                elif "n_c" in abbr:
+                    if self.give_injury_to_cat(self.new_cats[int(abbr.split(":")[-1])][0], possible_injuries, potential_scars):
+                        self.handle_injury_history(self.new_cats[int(abbr.split(":")[-1])][0], abbr, injury)
+
+    def give_injury_to_cat(self, cat, possible_injuries, potential_scars):
+        old_injuries = list(cat.injuries.keys())
+        old_illnesses = list(cat.illnesses.keys())
+        old_perm_cond = list(cat.permanent_condition.keys())
+
+        if set(possible_injuries).issubset(
+            old_injuries + old_illnesses + old_perm_cond
+        ):
+            print(
+                "WARNING: All possible conditions are already on this cat! (poor kitty)"
+            )
+            return False
+
+        give_injury = choice(possible_injuries)
+        # If the cat already has this injury, reroll it to get something new
+        while (
+            give_injury in old_injuries
+            or give_injury in old_illnesses
+            or give_injury in old_perm_cond
+        ):
+            give_injury = choice(possible_injuries)
+
+        if give_injury in INJURIES:
+            cat.get_injured(give_injury, potential_scars=potential_scars)
+        elif give_injury in ILLNESSES:
+            cat.get_ill(give_injury)
+        elif give_injury in PERMANENT:
+            cat.get_permanent_condition(give_injury)
+        else:
+            print("WARNING: No Conditions to Give")
+            return False
+
+        return True
 
     def handle_injury_history(self, cat, cat_abbr, injury=None):
         """
