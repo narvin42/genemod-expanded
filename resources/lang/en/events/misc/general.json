@@ -2163,8 +2163,6 @@
                 ],
                 "mutual": false,
                 "values": [
-                    "respect",
-                    "like",
                     "trust"
                 ],
                 "amount": -15,
@@ -4636,7 +4634,8 @@
             ],
             "status": [
                 "apprentice"
-            ]
+            ],
+            "relationship_status": ["fancies"]
         },
         "relationships": [
             {
