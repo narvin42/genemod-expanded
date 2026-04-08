@@ -968,7 +968,7 @@ dev_tools = false
   sort_by_rel_total = true
 
 [fun]
-  april_fools = true
+  april_fools = false
   # april_fools_hats only applicable if april_fools is also on
   april_fools_hats = true
   all_cats_are_newborn = false
