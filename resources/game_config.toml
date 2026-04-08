@@ -713,6 +713,7 @@ dev_tools = false
 
   # All genes are 1/x chances. They can be set to 0 to prevent it from appearing at all
   longhair = 2
+  longtype = ['long', 'long', 'long', 'medium'] #whether a longhair appears as longhair or as a mediumhair
   cinnamon = 35
   chocolate = 20
   red = 4
