@@ -911,15 +911,15 @@ class Genotype:
             self.pax3[0] = choice(['DBEcel', 'DBEcel', 'DBEre', 'DBEalt', 'DBEalt'])
 
         # Genetic disorders
-        if self.odds["dominant FCA"] > 0 and (randint(1, round(self.odds["dominant FCA"]/1.5)) == 1 or self.odds["dominant FCA"] == 1) and not self.ban_genes:
+        if self.odds["dominant FCA"] > 0 and randint(1, math.ceil(self.odds["dominant FCA"]/modifier)) == 1 and not self.ban_genes:
             self.dfca[0] = "Dca"
-        if self.odds["burmese head defect"] > 0 and (randint(1, round(self.odds["burmese head defect"]/1.5)) == 1 or self.odds["burmese head defect"] == 1) and not self.ban_genes:
+        if self.odds["burmese head defect"] > 0 and randint(1, math.ceil(self.odds["burmese head defect"]/modifier)) == 1 and not self.ban_genes:
             self.bhd[0] = "Bhd"
         for i in range(2):
-            if self.odds["recessive FCA"] > 0 and (randint(1, round(self.odds["recessive FCA"]/1.5)) == 1 or self.odds["recessive FCA"] == 1) and not self.ban_genes:
+            if self.odds["recessive FCA"] > 0 and randint(1, math.ceil(self.odds["recessive FCA"]/modifier)) == 1 and not self.ban_genes:
                 self.rfca[i] = "rca"
         for i in range(2):
-            if self.odds["chediak-higashi syndrome"] > 0 and (randint(1, round(self.odds["chediak-higashi syndrome"]/1.5)) == 1 or self.odds["chediak-higashi syndrome"] == 1) and not self.ban_genes:
+            if self.odds["chediak-higashi syndrome"] > 0 and randint(1, math.ceil(self.odds["chediak-higashi syndrome"]/modifier)) == 1 and not self.ban_genes:
                 self.chs[i] = "ch"
 
         self.wideband = ''
