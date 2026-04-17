@@ -1920,25 +1920,25 @@ class Genotype:
         self.righteye = RefTypeFind(refgrade, piggrade)
         self.lefteye = RefTypeFind(refgrade, piggrade)
 
-            self.lefteyetype = SecondaryRefTypeFind(refgrade, piggrade)
-            self.righteyetype = SecondaryRefTypeFind(refgrade, piggrade)
+        self.lefteyetype = SecondaryRefTypeFind(refgrade, piggrade)
+        self.righteyetype = SecondaryRefTypeFind(refgrade, piggrade)
 
-            if(sectoralindex == 0):
-                if self.lefteyesize != 'no' and self.righteyesize != 'no':
-                    self.extraeye = 'sectoral' + str(randint(1, 6))
-                elif self.righteyesize != 'no':
-                    x = randint(1, 2)
-                    if x == 1:
-                        self.extraeye = 'sectoral' + str(2)
-                    else:
-                        self.extraeye = 'sectoral' + str(5)
-                elif self.lefteyesize != 'no':
-                    x = randint(1, 2)
-                    if x == 1:
-                        self.extraeye = 'sectoral' + str(1)
-                    else:
-                        self.extraeye = 'sectoral' + str(4)
-)
+        if(sectoralindex == 0):
+            if self.lefteyesize != 'no' and self.righteyesize != 'no':
+                self.extraeye = 'sectoral' + str(randint(1, 6))
+            elif self.righteyesize != 'no':
+                x = randint(1, 2)
+                if x == 1:
+                    self.extraeye = 'sectoral' + str(2)
+                else:
+                    self.extraeye = 'sectoral' + str(5)
+            elif self.lefteyesize != 'no':
+                x = randint(1, 2)
+                if x == 1:
+                    self.extraeye = 'sectoral' + str(1)
+                else:
+                    self.extraeye = 'sectoral' + str(4)
+
         self.lefteyetype = SecondaryRefTypeFind(refgrade, piggrade)
         self.righteyetype = SecondaryRefTypeFind(refgrade, piggrade)
         
