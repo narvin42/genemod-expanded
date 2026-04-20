@@ -65,7 +65,7 @@ class SpecialDate(Enum):
 
 # Maps SpecialDate enums to actual DateInfo classes.
 _date_map: Dict[SpecialDate, DateInfo] = {
-    SpecialDate.APRIL_FOOLS: DateInfo("april_fools", (4, 1), (4, 30)),
+    SpecialDate.APRIL_FOOLS: DateInfo("april_fools", (4, 1), (4, 7)),
     SpecialDate.HALLOWEEN: DateInfo("halloween", (10, 21), (11, 7)),
     SpecialDate.NEW_YEARS: DateInfo("new_years", (1, 1)),
 }
