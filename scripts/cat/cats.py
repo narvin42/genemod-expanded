@@ -1271,15 +1271,16 @@ class Cat:
         ]:
             pass
 
-        if not clan:
-            pass
-        elif new_rank != CatRank.LEADER and clan.leader and clan.leader.ID == self.ID:
-            clan.leader = None
-            clan.leader_predecessors += 1
-        elif new_rank != CatRank.DEPUTY and clan.deputy and clan.deputy.ID == self.ID:
-            clan.deputy = None
-            clan.deputy_predecessors += 1
-        elif new_rank in [CatRank.MEDICINE_CAT, CatRank.MEDICINE_APPRENTICE] and old_rank in [CatRank.MEDICINE_CAT, CatRank.MEDICINE_APPRENTICE]:
+        elif self.status.rank in [CatRank.WARRIOR, CatRank.ELDER, CatRank.LEADER, CatRank.DEPUTY]:
+            if not clan or not hasattr(clan, "deputy"):
+                pass
+            elif new_rank != CatRank.LEADER and clan.leader and clan.leader.ID == self.ID:
+                clan.leader = None
+                clan.leader_predecessors += 1
+            elif new_rank != CatRank.DEPUTY and clan.deputy and clan.deputy.ID == self.ID:
+                clan.deputy = None
+                clan.deputy_predecessors += 1
+        elif new_rank not in [CatRank.MEDICINE_CAT, CatRank.MEDICINE_APPRENTICE] and old_rank in [CatRank.MEDICINE_CAT, CatRank.MEDICINE_APPRENTICE]:
             clan.remove_med_cat(self)
 
         elif self.status.rank == CatRank.MEDICINE_CAT:
@@ -1651,12 +1652,12 @@ class Cat:
         leaders = [x for x in cats_in_afterlife if x.status.is_leader and (x.status.get_last_living_group() == self.status.group_ID or x.dead_for > 300)]
         if not life_giving_leader and leaders:
             # choosing if the life giving leader will be the oldest leader or previous leader
-            coin_flip = randint(1, 2)
-            if coin_flip == 1:
-                # pick the oldest leader
+            coin_flip = randint(1, 5)
+            if coin_flip == 1 and len(leaders) > 5:
+                # pick one of the oldest leaders
                 leaders.sort(key=lambda x: -1 * int(x.dead_for))
                 ancient_leader = True
-                life_giving_leader = leaders[0] if leaders else None
+                life_giving_leader = choice(leaders[:int(len(leaders)/3)])
             else:
                 # pick previous leader
                 leaders.sort(key=lambda x: int(Cat.fetch_cat(x).dead_for))
