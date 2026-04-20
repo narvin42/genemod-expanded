@@ -2192,6 +2192,10 @@ class Cat:
         if name == "kittencough" and self.status.rank != CatRank.KITTEN:
             return
 
+        if self.phenotype.element and name in ELEMENT_BLOCK.get(self.phenotype.element, []):
+            print(f"WARNING: tried to give {self.phenotype.element} cat {name}")
+            return
+
         illness = ILLNESSES[name]
         mortality = illness["mortality"][self.age.value]
         med_mortality = illness["medicine_mortality"][self.age.value]
@@ -2275,6 +2279,10 @@ class Cat:
         if name == "mangled tail" and "NOTAIL" in self.pelt.scars:
             return
         if name == "torn ear" and "NOEAR" in self.pelt.scars:
+            return
+
+        if self.phenotype.element and name in ELEMENT_BLOCK.get(self.phenotype.element, []):
+            print(f"WARNING: tried to give {self.phenotype.element} cat {name}")
             return
 
         injury = INJURIES[name]
@@ -3973,6 +3981,13 @@ with open(
     f"{resource_directory}permanent_conditions.json", "r", encoding="utf-8"
 ) as read_file:
     PERMANENT = ujson.loads(read_file.read())
+
+with open(
+    os.path.normpath(f"{resource_directory}elemental_condition_block.json"),
+    "r",
+    encoding="utf-8",
+) as read_file:
+    ELEMENT_BLOCK = ujson.loads(read_file.read())
 
 
 LEAD_CEREMONY_SC: Optional[Dict] = None

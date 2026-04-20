@@ -3,7 +3,7 @@ from itertools import combinations
 from random import choice, randint
 from typing import List, Optional
 
-from scripts.cat.constants import BACKSTORIES
+from scripts.cat.constants import BACKSTORIES, ELEMENT_BLOCK
 from scripts.cat.personality import Personality
 from scripts.cat_relations.enums import RelType, rel_type_tiers, RelTier
 from scripts.cat.enums import CatRank, CatGroup, CatAge, CatCompatibility
@@ -392,6 +392,7 @@ def event_for_cat(
         "skill": _check_cat_skills,
         "backstory": _check_cat_backstory,
         "gender": _check_cat_gender,
+        "element": _check_cat_element,
     }
 
     for param, func in func_lookup.items():
@@ -418,6 +419,9 @@ def event_for_cat(
         ):
             return False
         if "torn ear" in injuries and "NOEAR" in cat.pelt.scars:
+            return False
+
+        if not set(injuries) - set(ELEMENT_BLOCK.get(cat.phenotype.element, [])):
             return False
 
     # checking relationships
@@ -538,6 +542,30 @@ def _check_cat_trait(cat, traits: list) -> bool:
             raise ValueError(f"Unrecognized trait: {trait}")
 
     if cat.personality.trait in traits:
+        return not is_exclusionary
+
+    return is_exclusionary
+
+
+def _check_cat_element(cat, elements: list) -> bool:
+    """
+    Checks if cat has required trait.
+    """
+    if not elements:
+        return True
+
+    if "none" in elements:
+        return not cat.phenotype.element
+
+    if "any" in elements:
+        return cat.phenotype.element != ""
+
+    is_exclusionary = _check_for_exclusionary_value(elements)
+
+    if is_exclusionary:
+        elements = [x.replace("-", "") for x in elements]
+
+    if cat.phenotype.element in elements:
         return not is_exclusionary
 
     return is_exclusionary
@@ -675,6 +703,9 @@ def cat_for_event(
             ):
                 allowed_cats.remove(cat)
             if "torn ear" in injuries and "NOEAR" in cat.pelt.scars:
+                allowed_cats.remove(cat)
+            
+            if not set(injuries) - set(ELEMENT_BLOCK.get(cat.phenotype.element, [])):
                 allowed_cats.remove(cat)
 
         # if the list is emptied, return

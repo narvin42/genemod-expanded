@@ -6,7 +6,7 @@ import i18n
 import ujson
 import logging
 
-from scripts.cat.cats import Cat
+from scripts.cat.cats import Cat, ELEMENT_BLOCK
 from scripts.cat.enums import CatAge, CatRank
 from scripts.cat.history import History
 from scripts.clan_package.settings import get_clan_setting
@@ -314,6 +314,12 @@ class Condition_Events:
                 for illness_name in season_dict:
                     possible_illnesses += [illness_name] * season_dict[illness_name]
 
+                if cat.phenotype.element:
+                    possible_illnesses = list(set(possible_illnesses) - set(ELEMENT_BLOCK.get(cat.phenotype.element, [])))
+
+                if not possible_illnesses:
+                    return False
+
                 # pick a random illness from those possible
                 random_index = int(random.random() * len(possible_illnesses))
                 chosen_illness = possible_illnesses[random_index]
@@ -361,6 +367,13 @@ class Condition_Events:
                         chosen_key = key
                         possible_illnesses += season_dict[key]
                         break
+
+                if cat.phenotype.element:
+                    possible_illnesses = list(set(possible_illnesses) - set(ELEMENT_BLOCK.get(cat.phenotype.element, [])))
+
+                if not possible_illnesses:
+                    return False
+                    
                 chosen_illness = possible_illnesses[int(random.random() * len(possible_illnesses))]
                 random.shuffle(relevant_conditions)
                 if chosen_key in Condition_Events.PERM_CONDITION_RISK_STRINGS and chosen_illness in Condition_Events.PERM_CONDITION_RISK_STRINGS[chosen_key]:
@@ -1211,6 +1224,9 @@ class Condition_Events:
                 risk["name"] == "an infected wound"
                 and "a festering wound" in cat.illnesses
             ):
+                continue
+
+            if risk["name"] in ELEMENT_BLOCK.get(cat.phenotype.element, []):
                 continue
 
             # adjust chance of risk gain if Clan has enough meds

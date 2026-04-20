@@ -1,0 +1,90 @@
+{
+    "fire": [
+        "m_c always seemed warmer than the average kit, and, after almost lighting the nursery on fire, has been placed in a special fireproof nursery.",
+        "m_c plays with little sparks of flame when nobody's watching."
+    ],
+    "water": [
+        "m_c is always soaking wet, no matter the weather.",
+        "m_c has made a habit of splashing others with water, even when there's no puddles around.",
+        "m_c has been chasing around bubbles."
+    ],
+    "earth": [
+        "m_c is always covered in earth lately.",
+        "No matter how often m_c gets a wash, {PRONOUN/m_c/subject}'{VERB/m_c/re/s} always covered in soil."
+    ],
+    "air": [
+        "m_c's always looked quite ruffled, but with the recent bouts of sudden gusts it's no longer a mystery.",
+        "The breeze seems to follow m_c, even shifting suddenly."
+    ],
+
+    "blue fire": [
+        "m_c always seemed warmer than the average kit, and, after self-igniting in a strange blue fire, has been placed in a special fireproof nursery."
+    ],
+    "ice": [
+        "m_c always seemed colder than the average kit, now to the point of growing frost.",
+        "m_c has been turning puddles around camp into ice to play on."
+    ],
+    "plant": [
+        "The nursery has been especially green lately, no matter the weather, especially the sprouts on m_c.",
+        "m_c was caught growing dandelions to play with.",
+        "m_c is always covered in pollen."
+    ],
+    "lightning": [
+        "m_c's made a frequent habit of shocking others with static lately.",
+        "m_c frequently crackles with electricity."
+    ],
+
+    "magma": [
+        "After recklessly playing with magma, m_c has been placed in a special fireproof nursery."
+    ],
+    "metal": [
+        "m_c keeps 'finding' new bits of metal to play with."
+    ],
+    "smoke": [
+        "The lingering scent of smoke has been following m_c about lately.",
+        "Wisps of smoke have been coming off of m_c when {PRONOUN/m_c/subject}'{VERB/m_c/re/s} upset."
+    ],
+    "mud": [
+        "m_c is always covered in mud lately.",
+        "No matter how often m_c gets a wash, {PRONOUN/m_c/subject}'{VERB/m_c/re/s} always covered in mud.",
+        "Camp has been plagued with little mud puddles, courtesy of m_c."
+    ],
+    "shadow": [
+        "m_c has never had any fear of the dark, and has even been making friends with some of the shadows that might startle other kits.",
+        "m_c is quite happy to play in the shadowy areas of camp, where the shadows follow {PRONOUN/m_c/object}."
+    ],
+    "sand": [
+        "m_c is always covered in sand lately.",
+        "No matter how often m_c gets a wash, {PRONOUN/m_c/subject}'{VERB/m_c/re/s} always covered in sand.",
+        "Camp has been plagued with little sand mounds, courtesy of m_c."
+    ],
+
+    "mist": [
+        "The nursery has been filled with faint mist as of late, and it seems the thickest around m_c.",
+        "m_c is surrounded by mist as {PRONOUN/m_c/subject} toddle through camp."
+    ],
+    "oil": [
+        "m_c is covered in a black liquid that shines in the light."
+    ],
+    "combustion": [
+        "A small explosion rumbled the nursery. Thankfully everyone was uninjured, but m_c was told off for making explosions in a confined space.",
+        "m_c has made a habit of startling cats with sudden booms.",
+        "m_c enjoys playing with crackling explosive sparks."
+    ],
+    "decay": [
+        "m_c smells faintly of rot, but otherwise seems healthy enough.",
+        "m_c has been sprouting little mushrooms around camp.",
+        "m_c has been attracting quite a few insects.",
+        "Plants seem to quickly lose colour around m_c."
+    ],
+    "magnetic": [
+        "The air seems to faintly glow around m_c.",
+        "m_c has been complaining about little bits of metal staying stuck to {PRONOUN/m_c/object} lately.",
+        "Sometimes, m_c simply stays floating in the air by {PRONOUN/m_c/self}."
+    ],
+    "luminescent": [
+        "m_c faintly glows in the dark.",
+        "The recent infestation of fireflies in the nursery has turned out to simply be from m_c.",
+        "m_c has been chasing around lights that come from nowhere."
+    ]
+}

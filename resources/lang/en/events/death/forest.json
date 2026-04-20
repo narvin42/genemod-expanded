@@ -19,6 +19,7 @@
                 "deputy",
                 "leader"
             ],
+            "element": ["-plant"],
             "dies": true
         },
         "history": [
@@ -81,6 +82,7 @@
                 "cats": [
                     "m_c"
                 ],
+                "element": ["-plant"],
                 "death": "m_c was crushed by a falling tree."
             }
         ]
@@ -166,6 +168,70 @@
                 "amount": -10,
                 "log": {
                     "cats_from": "cat_from was too slow to save cat_to from an owl."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "frst_death_murder_plant1",
+        "location": [
+            "forest"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [
+            "murder"
+        ],
+        "tags": [ ],
+        "frequency": 2,
+        "event_text": "m_c was crushed when a tree fell into camp.",
+        "m_c": {
+            "status": [
+                "-leader"
+            ],
+            "element": ["-plant"],
+            "dies": true
+        },
+        "r_c": {
+            "age": [
+                "-kitten"
+            ],
+            "element": [
+                "shadow"
+            ]
+        },
+        "exclude_involved": [
+            "r_c"
+        ],
+        "history": [
+            {
+                "cats": [
+                    "m_c"
+                ],
+                "death": "r_c secretly dropped a tree on m_c."
+            }
+        ],
+        "future_event": [
+            {
+                "event_type": "misc",
+                "pool": {
+                    "sub_type": [
+                        "murder_reveal"
+                    ]
+                },
+                "moon_delay": [
+                    1,
+                    12
+                ],
+                "involved_cats": {
+                    "m_c": "r_c",
+                    "mur_c": "m_c",
+                    "r_c": {
+                        "age": [
+                            "-kitten"
+                        ]
+                    }
                 }
             }
         ]

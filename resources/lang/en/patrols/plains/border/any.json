@@ -39,6 +39,7 @@
                         }
                     }
                 ],
+                "art": "gen_bord_roguerunaway",
                 "frequency": 4
             },
             {
@@ -59,6 +60,7 @@
                         }
                     }
                 ],
+                "art": "gen_bord_roguerunaway",
                 "frequency": 4
             },
             {
@@ -85,6 +87,275 @@
                         }
                     }
                 ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 4
+            },
+            {
+                "text": "Ultimately, just a flash of s_c's powers is enough for the rogues to reconsider and turn tail.",
+                "exp": 20,
+                "stat_element": [ "fire", "blue fire", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [
+                            "comfort"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from tried to ambush cat_to's patrol, but was scared off by {PRONOUN/cat_to/poss} powers."
+                        }
+                    },
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": false,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 4
+            },
+            {
+                "text": "s_c wastes no time, intercepting the attack and frying any rogue {PRONOUN/s_c/subject} can get their {PRONOUN/s_c/poss} paws on.",
+                "exp": 20,
+                "stat_element": [ "fire", "blue fire", "lightning", "magma" ],
+                "stat_trait": [ "vengeful", "bloodthirsty", "fierce" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists", "dead" ],
+                    [ "rogue", "meeting", "exists", "dead" ],
+                    [ "rogue", "meeting", "exists", "dead" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol", "-s_c" ],
+                        "cats_to": [ "s_c" ],
+                        "mutual": false,
+                        "values": [
+                            "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_from witnessed s_c brutally killing rogues on patrol."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 3
+            },
+            {
+                "text": "Unbeknownst to the patrol, s_c uses a trick {PRONOUN/s_c/subject}{VERB/s_c/'ve/'s} been practicing lately in order to turn one rogue into a puppet against the others. The confusion of sudden infighting leaves the patrol unscathed.",
+                "exp": 20,
+                "stat_element": [ "water" ],
+                "stat_trait": [ "bloodthirsty" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists", "dead" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 1
+            },
+            {
+                "text": "s_c sends a gale their way, knocking the rogues off-course and scattering them enough for the patrol to fight them off.",
+                "exp": 20,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 2
+            },
+            {
+                "text": "s_c freezes the ground around the patrol, causing most of the ambush to slip and tumble. The patrol has little trouble running them off after.",
+                "exp": 20,
+                "stat_element": [ "ice" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 3
+            },
+            {
+                "text": "s_c coats the ground around the patrol in mud, causing most of the ambush to slip and tumble. The patrol has little trouble running them off after.",
+                "exp": 20,
+                "stat_element": [ "mud" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 2
+            },
+            {
+                "text": "s_c signals for the patrol to duck before sending out a dense cloud above their heads, enough that the unprepared rogues don't see them before they're knocked off their paws.",
+                "exp": 20,
+                "stat_element": [ "mist", "smoke" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 3
+            },
+            {
+                "text": "s_c lets off a loud bang in the air in warning, startling the rogues into retreating.",
+                "exp": 20,
+                "stat_element": [ "combustion", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 4
+            },
+            {
+                "text": "s_c makes use of the surrounding tall grass, tangling the attacking rogues with the strands and halting the attack almost entirely.",
+                "exp": 20,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from's patrol, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
                 "frequency": 4
             }
         ],
@@ -115,6 +386,7 @@
                         }
                     }
                 ],
+                "art": "gen_bord_otherclan_hostile",
                 "frequency": 4
             },
             {
@@ -147,6 +419,427 @@
                         "amount": -5,
                         "log": {
                             "cats_from": "cat_to failed to drive away rogues while on patrol with cat_from."
+                        }
+                    }
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "s_c's offers a demonstration of power, but it's not enough to intimidate the rogues. The patrol is ultimately overwhelmed.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "m_c was killed when rogues ambushed {PRONOUN/m_c/poss} patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmates' bodies."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 1
+            },
+            {
+                "text": "s_c's offers a demonstration of power, but it's not enough to intimidate the rogues. r_c takes the brunt of the damage in the retreat.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "battle_injury"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was badly scarred when rogues ambushed their patrol.",
+                    "death": "m_c died of wounds sustained in a rogue ambush."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to ambushed cat_from's patrol."
+                        }
+                    }
+                ],
+                "frequency": 1
+            },
+            {
+                "text": "s_c wastes no time, intercepting the attack and frying any rogue {PRONOUN/s_c/subject} can get their {PRONOUN/s_c/poss} paws on until the enemies overwhelm {PRONOUN/s_c/object}.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "lightning", "magma" ],
+                "stat_trait": [ "vengeful", "bloodthirsty", "fierce" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists", "dead" ],
+                    [ "rogue", "meeting", "exists", "dead" ]
+                ],
+                "dead_cats": [
+                    "s_c"
+                ],
+                "history_text": {
+                    "death": "m_c was killed when rogues ambushed {PRONOUN/m_c/poss} patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol", "-s_c" ],
+                        "cats_to": [ "s_c" ],
+                        "mutual": false,
+                        "values": [
+                            "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_from witnessed s_c brutally killing rogues on patrol."
+                        }
+                    },
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to ambushed cat_from's patrol."
+                        }
+                    }
+                ],
+                "frequency": 1
+            },
+            {
+                "text": "s_c sends a gale their way in an attempt to scatter the rogues, who use the opportunity to fully surround the patrol instead.",
+                "exp": 0,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "m_c was killed when rogues ambushed {PRONOUN/m_c/poss} patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmates' bodies."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 2
+            },
+            {
+                "text": "s_c freezes the ground around the patrol, but the rogues have no trouble keeping their footing and overwhelm the patrol anyway.",
+                "exp": 0,
+                "stat_element": [ "ice" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "m_c was killed when rogues ambushed {PRONOUN/m_c/poss} patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmates' bodies."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 3
+            },
+            {
+                "text": "s_c freezes the ground around the patrol, causing most of the ambush to slip and tumble. r_c lags behind in the retreat.",
+                "exp": 0,
+                "stat_element": [ "ice" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "battle_injury"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was badly scarred when rogues ambushed their patrol.",
+                    "death": "m_c died of wounds sustained in a rogue ambush."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to ambushed cat_from's patrol."
+                        }
+                    }
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "s_c coats the ground around the patrol in mud, but the rogues have no trouble keeping their footing and overwhelm the patrol anyway.",
+                "exp": 0,
+                "stat_element": [ "mud" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "m_c was killed when rogues ambushed {PRONOUN/m_c/poss} patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmates' bodies."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 4
+            },
+            {
+                "text": "s_c coats the ground around the patrol in mud, causing most of the ambush to slip and tumble. r_c lags behind in the retreat.",
+                "exp": 0,
+                "stat_element": [ "mud" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "battle_injury"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was badly scarred when rogues ambushed their patrol.",
+                    "death": "m_c died of wounds sustained in a rogue ambush."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to ambushed cat_from's patrol."
+                        }
+                    }
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "s_c signals for the patrol to duck before sending out a dense cloud above their heads. They barely have time to react before the rogues are on their backs all the same.",
+                "exp": 0,
+                "stat_element": [ "mist", "smoke" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "m_c was killed when rogues ambushed {PRONOUN/m_c/poss} patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmates' bodies."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 4
+            },
+            {
+                "text": "s_c signals for the patrol to duck before sending out a dense cloud above their heads, enough that the unprepared rogues don't see them retreat, but r_c still gets caught.",
+                "exp": 0,
+                "stat_element": [ "mist", "smoke" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "battle_injury"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was badly scarred when rogues ambushed their patrol.",
+                    "death": "m_c died of wounds sustained in a rogue ambush."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to ambushed cat_from's patrol."
+                        }
+                    }
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "s_c makes use of the surrounding tall grass, tangling the attacking rogues with the strands. They break out quick enough to catch r_c in the retreat.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "battle_injury"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was badly scarred when rogues ambushed their patrol.",
+                    "death": "m_c died of wounds sustained in a rogue ambush."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2", "n_c:3", "n_c:4" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to ambushed cat_from's patrol."
                         }
                     }
                 ],
@@ -214,6 +907,272 @@
                         }
                     }
                 ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 4
+            },
+            {
+                "text": "Ultimately, just a flash of s_c's powers is enough for the rogues to reconsider and turn tail.",
+                "exp": 20,
+                "stat_element": [ "fire", "blue fire", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0",
+                            "n_c:1",
+                            "n_c:2"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [
+                            "comfort"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from tried to ambush cat_to, but was scared off by {PRONOUN/cat_to/poss} powers."
+                        }
+                    },
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but was scared off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 4
+            },
+            {
+                "text": "s_c wastes no time, intercepting the attack and frying any rogue {PRONOUN/s_c/subject} can get their {PRONOUN/s_c/poss} paws on.",
+                "exp": 20,
+                "stat_element": [ "fire", "blue fire", "lightning", "magma" ],
+                "stat_trait": [ "vengeful", "bloodthirsty", "fierce" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists", "dead" ],
+                    [ "rogue", "meeting", "exists", "dead" ],
+                    [ "rogue", "meeting", "exists", "dead" ]
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "Unbeknownst to the rogues, s_c uses a trick {PRONOUN/s_c/subject}{VERB/s_c/'ve/'s} been practicing lately in order to turn one rogue into a puppet against the others. The confusion of sudden infighting leaves {PRONOUN/s_c/object} unscathed.",
+                "exp": 20,
+                "stat_element": [ "water" ],
+                "stat_trait": [ "bloodthirsty" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists", "dead" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but was driven off."
+                        }
+                    }
+                ],
+                "art": "gen_bord_roguerunaway",
+                "frequency": 1
+            },
+            {
+                "text": "s_c sends a gale their way, knocking the rogues off-course and scattering them enough to escape.",
+                "exp": 20,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but {PRONOUN/cat_from/subject} got away."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
+                "frequency": 2
+            },
+            {
+                "text": "s_c freezes the ground around {PRONOUN/s_c/self}, causing most of the ambush to slip and tumble. {PRONOUN/s_c/subject/CAP} {VERB/s_c/escape/escapes} unscathed.",
+                "exp": 20,
+                "stat_element": [ "ice" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but {PRONOUN/cat_from/subject} got away."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
+                "frequency": 3
+            },
+            {
+                "text": "s_c coats the ground around {PRONOUN/s_c/self} in mud, causing most of the ambush to slip and tumble. {PRONOUN/s_c/subject/CAP} {VERB/s_c/escape/escapes} unscathed.",
+                "exp": 20,
+                "stat_element": [ "mud" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but {PRONOUN/cat_from/subject} got away."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
+                "frequency": 2
+            },
+            {
+                "text": "s_c sends out a dense cloud above {PRONOUN/s_c/poss} head, enough that the unprepared rogues don't see {PRONOUN/s_c/object} escaping.",
+                "exp": 20,
+                "stat_element": [ "mist", "smoke" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but {PRONOUN/cat_from/subject} got away."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
+                "frequency": 3
+            },
+            {
+                "text": "s_c lets off a loud bang in the air in warning, startling the rogues into retreating.",
+                "exp": 20,
+                "stat_element": [ "combustion", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but was scared off."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
+                "frequency": 4
+            },
+            {
+                "text": "s_c flashes brightly and rapidly to disorient the attacking rogues, enough to be able to flee unscathed.",
+                "exp": 20,
+                "stat_element": [ "luminescent", "fire" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but {PRONOUN/cat_from/subject} got away."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
+                "frequency": 4
+            },
+            {
+                "text": "s_c makes use of the surrounding tall grass, tangling the attacking rogues with the strands and halting the attack almost entirely.",
+                "exp": 20,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "patrol" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_to tried to ambush cat_from, but was driven off."
+                        }
+                    }
+                ],
+                "art": "fst_hunt_fun1",
                 "frequency": 4
             }
         ],
@@ -265,6 +1224,263 @@
                         }
                     }
                 ],
+                "frequency": 3
+            },
+            {
+                "text": "s_c's offers a demonstration of power, but it's not enough to intimidate the rogues. s_c is ultimately overwhelmed.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "lightning" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 1
+            },
+            {
+                "text": "s_c wastes no time, intercepting the attack and frying any rogue {PRONOUN/s_c/subject} can get their {PRONOUN/s_c/poss} paws on until the enemies overwhelm {PRONOUN/s_c/object}.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "lightning", "magma" ],
+                "stat_trait": [ "vengeful", "bloodthirsty", "fierce" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists", "dead" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 1
+            },
+            {
+                "text": "s_c sends a gale their way in an attempt to scatter the rogues, who use the opportunity to fully surround {PRONOUN/s_c/object} instead.",
+                "exp": 0,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 3
+            },
+            {
+                "text": "s_c freezes the ground around {PRONOUN/s_c/self}, but the rogues have no trouble keeping their footing and overwhelm {PRONOUN/s_c/object} anyway.",
+                "exp": 0,
+                "stat_element": [ "ice" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 3
+            },
+            {
+                "text": "s_c coats the ground around {PRONOUN/s_c/self} in mud, but the rogues have no trouble keeping their footing and overwhelm {PRONOUN/s_c/object} anyway.",
+                "exp": 0,
+                "stat_element": [ "mud" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 4
+            },
+            {
+                "text": "s_c sends out a dense cloud above {PRONOUN/s_c/poss} head, but barely has time to react before the rogues are upon {PRONOUN/s_c/object} regardless.",
+                "exp": 0,
+                "stat_element": [ "mist", "smoke" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 2
+            },
+            {
+                "text": "s_c flashes brightly and rapidly to disorient the attacking rogues, but barely has time to react before the rogues are upon {PRONOUN/s_c/object} regardless.",
+                "exp": 0,
+                "stat_element": [ "luminescent", "fire" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
+                "frequency": 2
+            },
+            {
+                "text": "s_c makes use of the surrounding tall grass, tangling the attacking rogues with the strands. They break out quick enough to catch and slaughter {PRONOUN/s_c/object}.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ],
+                    [ "rogue", "meeting", "exists" ]
+                ],
+                "dead_cats": [
+                    "patrol"
+                ],
+                "history_text": {
+                    "death": "This cat was killed when rogues ambushed {PRONOUN/m_c/object} while on a solo patrol."
+                },
+                "relationships": [
+                    {
+                        "cats_from": [ "some_clan" ],
+                        "cats_to": [ "n_c:0", "n_c:1", "n_c:2" ],
+                        "mutual": false,
+                        "values": [
+                            "like", "comfort"
+                        ],
+                        "amount": -30,
+                        "log": {
+                            "cats_from": "cat_to's scent was found on cat_from's dead clanmate's body."
+                        }
+                    }
+                ],
+                "art": "gen_bord_otherclan_hostile",
                 "frequency": 3
             }
         ]
@@ -2291,7 +3507,6 @@
         "chance_of_success": 30,
         "success_outcomes": [
             {
-                "art": "gen_dirt_tunnel",
                 "text": "They don't know this tunnel — but it knows them, marked by scent and claw as one of the safe refuges in the network c_n constantly maintains and expands in their territory. Thrilled with the illicit discovery, the apprentices have a great adventure crawling in and exploring every inch.",
                 "exp": 20,
                 "art": "pln_bord_tunnel2",
@@ -2474,7 +3689,6 @@
                 "frequency": 4
             },
             {
-                "art": "gen_dirt_tunnel",
                 "text": "The apprentices huddle around the burrow entrance. It'll be okay, s_c reassures. They've had lessons on burrows and this one has no tracks at the front, so it's empty. Together, everyone plucks up just enough bravery to explore it and run home, whispering the story of what it was like that night to each other in the apprentice den.",
                 "exp": 20,
                 "art": "gen_med_warappmedapp_herbcontest",
@@ -2740,7 +3954,6 @@
         "chance_of_success": 30,
         "success_outcomes": [
             {
-                "art": "gen_dirt_tunnel",
                 "text": "app1 pokes {PRONOUN/app1/poss} head into the shallow cave, one whisker at a time, eyes wide. Huh. Well, there's no one home, and from the look of the debris blown in by the wind, no one has been home in a while. There's also no c_n scent though. Perhaps because this is too shallow to be a refuge from predators?",
                 "exp": 20,
                 "art": "pln_bord_tunnel",
@@ -2808,7 +4021,6 @@
                 "frequency": 4
             },
             {
-                "art": "gen_dirt_tunnel",
                 "text": "app1 carefully explores the tunnel {PRONOUN/app1/subject} spotted, seeing how a bush normally conceals its entrance. The idea of having a secret, hidden place that only {PRONOUN/app1/subject} {VERB/app1/know/knows} about is incredibly appealing.",
                 "exp": 20,
                 "art": "pln_bord_tunnel",
@@ -2831,7 +4043,6 @@
                 "frequency": 4
             },
             {
-                "art": "gen_dirt_tunnel",
                 "text": "This is going to be such a cool story to tell back at camp, app1 tells {PRONOUN/app1/self}. Checking the tunnel out, it looks like a collapsed roof into a wider tunnel system, smelling faintly of something app1 can't identify. Awesome!",
                 "exp": 20,
                 "art": "gen_train_patrolapprenticesessionsuccess",
@@ -3072,7 +4283,6 @@
         "chance_of_success": 30,
         "success_outcomes": [
             {
-                "art": "gen_dirt_tunnel",
                 "text": "This shallow cave smells of badger, and claw marks show recent construction efforts. p_l is fortunate that the owner isn't home, and {PRONOUN/p_l/poss} pelt bristles with unease as {PRONOUN/p_l/subject} {VERB/p_l/trot/trots} home.",
                 "exp": 20,
                 "art": "running_warrior2",

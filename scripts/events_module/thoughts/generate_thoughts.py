@@ -347,6 +347,12 @@ def _constraints_fulfilled(main_cat: "Cat", random_cat: "Cat", thought) -> bool:
     if "random_trait_constraint" in thought and random_cat:
         random_info_dict["trait"] = thought["random_trait_constraint"]
 
+    if "main_element_constraint" in thought:
+        main_info_dict["element"] = thought["main_element_constraint"]
+
+    if "random_element_constraint" in thought and random_cat:
+        random_info_dict["element"] = thought["random_element_constraint"]
+
     if "main_skill_constraint" in thought:
         main_info_dict["skill"] = thought["main_skill_constraint"]
 

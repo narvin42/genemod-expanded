@@ -463,6 +463,7 @@ def filter_events(
                 cat_info=event.m_c,
                 cat=main_cat,
                 cat_group=[main_cat, random_cat] if random_cat else None,
+                injuries=m_c_injuries,
                 event_id=event.event_id,
             ):
                 continue

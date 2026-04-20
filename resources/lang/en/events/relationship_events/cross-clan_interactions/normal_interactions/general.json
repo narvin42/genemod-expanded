@@ -497,7 +497,7 @@
                 "amount": -10,
                 "mutual": true,
                 "log": {
-                    "cats_from": "cat_from got into an argument with to_cat."
+                    "cats_from": "cat_from got into an argument with cat_to."
                 }
             }
         ]
@@ -526,7 +526,7 @@
                 "amount": 10,
                 "mutual": true,
                 "log": {
-                    "cats_from": "cat_from had a pleasant conversation with to_cat."
+                    "cats_from": "cat_from had a pleasant conversation with cat_to."
                 }
             }
         ]
@@ -554,7 +554,7 @@
                 "amount": 10,
                 "mutual": true,
                 "log": {
-                    "cats_from": "cat_from had a pleasant discussion with to_cat."
+                    "cats_from": "cat_from had a pleasant discussion with cat_to."
                 }
             }
         ]
@@ -641,7 +641,7 @@
                 "amount": 10,
                 "mutual": true,
                 "log": {
-                    "cats_from": "cat_from shared some tips with to_cat."
+                    "cats_from": "cat_from shared some tips with cat_to."
                 }
             }
         ]
@@ -854,7 +854,7 @@
                 "amount": 10,
                 "mutual": true,
                 "log": {
-                    "cats_from": "cat_from shared some tips with to_cat."
+                    "cats_from": "cat_from shared some tips with cat_to."
                 }
             }
         ],
@@ -883,7 +883,7 @@
                 "amount": 10,
                 "mutual": true,
                 "log": {
-                    "cats_from": "cat_from shared some prey with to_cat."
+                    "cats_from": "cat_from shared some prey with cat_to."
                 }
             }
         ],
@@ -1248,7 +1248,7 @@
                 "amount": 10,
                 "mutual": false,
                 "log": {
-                    "cats_from": "cat_from got advice from to_cat."
+                    "cats_from": "cat_from got advice from cat_to."
                 }
             }
         ]
@@ -1281,7 +1281,7 @@
                 "amount": 10,
                 "mutual": false,
                 "log": {
-                    "cats_from": "cat_from got advice from to_cat."
+                    "cats_from": "cat_from got advice from cat_to."
                 }
             }
         ]
@@ -2125,7 +2125,7 @@
             "While out hunting, m_c encountered r_c struggling to do the same. {PRONOUN/m_c/subject/CAP} share some prey, since o_c_n seemed to need it more."
         ],
         "m_c": {
-            "status": ["apprentice", "warrior", "deputy", "leader"],
+            "status": [ "apprentice", "warrior", "deputy", "leader" ],
             "trait": [
                 "righteous",
                 "compassionate",
@@ -2146,6 +2146,71 @@
                 "mutual": false,
                 "log": {
                     "cats_from": "cat_to shared prey with cat_from to help o_c_n."
+                }
+            }
+        ]
+    },
+    {
+        "event_id": "gen_injury_fire_argument1",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 2,
+        "event_text": "m_c and r_c got into an argument, and m_c burned {PRONOUN/r_c/object} without thinking.",
+        "m_c": {
+            "trait": [
+                "troublesome",
+                "fierce",
+                "bloodthirsty",
+                "childish",
+                "shameless",
+                "vengeful"
+            ],
+            "element": [
+                "fire", "blue fire", "magma", "combustion", "lightning"
+            ]
+        },
+        "r_c": {
+            "element": [
+                "-fire", "-blue fire", "-magma", "-water", "-ice", "-mud", "-combustion", "-lightning"
+            ]
+        },
+        "injury": [
+            {
+                "cats": [
+                    "r_c"
+                ],
+                "injuries": [
+                    "burn",
+                    "severe burn"
+                ]
+            }
+        ],
+        "history": [
+            {
+                "cats": [
+                    "r_c"
+                ],
+                "scar": "r_c gained a scar from m_c's powers.",
+                "death": "r_c died to {PRONOUN/r_c/poss} injuries from m_c's powers."
+            }
+        ],
+        "other_clan":{
+            "changed": -2
+        },
+        "relationships": [
+            {
+                "cats_from": [ "r_c" ],
+                "cats_to": [ "m_c" ],
+                "values": [ "trust", "comfort" ],
+                "amount": -10,
+                "mutual": false,
+                "log": {
+                    "cats_from": "cat_from was burned by cat_to during an argument."
                 }
             }
         ]

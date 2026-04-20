@@ -275,6 +275,10 @@ class Sprites:
         self.make_group("lineart_ur_aprilfools", (0, 0), "aprilfoolslineartur")
         self.make_group("lineart_df_aprilfools", (0, 0), "aprilfoolslineartdf")
 
+        for x in os.listdir("sprites/elemental"):
+            self.spritesheet("sprites/elemental/"+x, 'elemental/'+x.replace('.png', ""))
+
+
         for x in os.listdir("sprites/genemod/borders"):
             self.spritesheet("sprites/genemod/borders/"+x, 'genemod/'+x.replace('.png', ""))
         for x in os.listdir("sprites/genemod/Base Colours"):
@@ -298,6 +302,18 @@ class Sprites:
         for x in os.listdir("sprites/genemod/break white"):
             self.spritesheet("sprites/genemod/break white/"+x, 'Break/'+x.replace('.png', ""))
             self.make_group('Break/'+x.replace('.png', ""), (0, 0), 'break/'+x.replace('.png', ""))
+
+        # elementals
+        for i, x in enumerate(["fire", "water", "earth", "air"]):
+            self.make_group('elemental/element_dominant', (i, 0), f'elemental/{x}')
+        for i, x in enumerate(["blue fire", "ice", "plant", "lightning"]):
+            self.make_group('elemental/element_recessive', (i, 0), f'elemental/{x}')
+        for i, x in enumerate(["magma", "metal", "smoke", "mud"]):
+            self.make_group('elemental/element_hybrid1', (i, 0), f'elemental/{x}')
+        for i, x in enumerate(["shadow", "sand", "mist", "oil"]):
+            self.make_group('elemental/element_hybrid2', (i, 0), f'elemental/{x}')
+        for i, x in enumerate(["combustion", "decay", "magnetic", "luminescent"]):
+            self.make_group('elemental/element_hybrid3', (i, 0), f'elemental/{x}')
 
         # ...idk what to call these
         self.make_group('genemod/fourears', (0, 0), 'fourears')

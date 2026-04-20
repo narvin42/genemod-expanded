@@ -269,6 +269,9 @@ class Namer():
             elif self.phenotype.shoulder_height < 9:
                 extra_prefixes += self.all_prefixes['general']['small']
 
+        if self.moons > 0 and self.all_prefixes.get('element') and self.phenotype.element:
+            extra_prefixes += self.all_prefixes['element'].get(self.phenotype.element, [])
+
         try:
             extra_prefixes += self.all_prefixes['general'][self.phenotype.length.replace('haired', 'hair')]
         except:

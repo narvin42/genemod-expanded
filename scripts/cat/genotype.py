@@ -151,6 +151,13 @@ class Genotype:
 
         self.breeds = {}
         self.somatic = {}
+        self.elemental_genes = {
+            "air": ["N", "N"],
+            "earth": ["N", "N"],
+            "fire": ["N", "N"],
+            "water": ["N", "N"],
+            "favours": [],
+        }
 
     def __getitem__(self, name):
         return getattr(self, name)
@@ -261,6 +268,11 @@ class Genotype:
         self.shoulder_height = jsonstring.get("shoulder_height", 0)
         self.body_label = jsonstring.get("body_type_label", '')
         self.growth_pattern = jsonstring.get("growth_pattern", "average")
+        
+        if "elemental_genes" in jsonstring:
+            self.elemental_genes = jsonstring.get("elemental_genes")
+        else:
+            self.GenerateElemental()
 
         self.GeneSort()
         self.PolyEval()
@@ -366,7 +378,9 @@ class Genotype:
 
             "breeds" : self.breeds,
             "somatic" : self.somatic,
-            "april_fools" : self.april_fools
+            "april_fools" : self.april_fools,
+
+            "elemental_genes" : self.elemental_genes,
         }
     
     def AprilFools(self):
@@ -395,6 +409,26 @@ class Genotype:
             if self.april_fools["rainbow_eyes"][0] == "NoDRE" and self.april_fools["rainbow_eyes"][1] == "NoDRE":
                 del self.april_fools["rainbow_eyes"]
 
+    def GenerateElemental(self):
+        mutated_loci = []
+        for i in range(0, 2):
+            for key in ["air", "earth", "fire", "water"]:
+                if self.odds["recessive_nonelement"] > 0 and randint(1, self.odds["recessive_nonelement"]) == 1:
+                    self.elemental_genes[key][i] = "n"
+                elif self.odds[f"recessive_{key}"] > 0 and randint(1, self.odds[f"recessive_{key}"]) == 1:
+                    self.elemental_genes[key][i] = key[0]
+                    mutated_loci.append(key[0].upper())
+                elif self.odds[f"dominant_{key}"] > 0 and randint(1, self.odds[f"dominant_{key}"]) == 1:
+                    self.elemental_genes[key][i] = key[0].upper()
+                    mutated_loci.append(key[0].upper())
+            
+        self.elemental_genes["favours"].append(choice(mutated_loci) if mutated_loci else choice(["A", "E", "F", "W"]))
+        if random() < self.odds["double_favour_chance"]:
+            self.elemental_genes["favours"].append(choice(["A", "E", "F", "W"]))
+            self.elemental_genes["favours"] = list(
+                set(self.elemental_genes["favours"]))
+
+    
     def CommonGen(self, special=None):
 
         if self.odds["vitiligo"] > 0 and randint(1, self.odds["vitiligo"]) == 1:
@@ -512,6 +546,10 @@ class Genotype:
                 self.lefteyesize = choice(['no', 'micro', 'micro', 'normal'])
                 self.righteyesize = choice(['no', 'micro', 'micro', 'normal'])
         
+
+        self.GenerateElemental()
+
+
     def Generator(self, special=None, kittypet=False):
         if kittypet and self.odds["kittypet_breed"] > 0 and randint(1, self.odds["kittypet_breed"]) == 1:
             return self.BreedGenerator(special)
@@ -993,6 +1031,8 @@ class Genotype:
 
         self = gen(self, special)
 
+        self.GenerateElemental()
+
         self.GeneSort()
 
         if self.odds['somatic_mutation'] > 0 and randint(1, self.odds['somatic_mutation']) == 1:
@@ -1345,6 +1385,16 @@ class Genotype:
         if self.height_value > sum(self.height_ranges):
             self.height_value = sum(self.height_ranges)
 
+        for key in self.elemental_genes.keys():
+            if key != "favours":
+                self.elemental_genes[key] = [choice(par1.elemental_genes[key]), choice(par2.elemental_genes[key])]
+            else:
+                if random() < self.odds["double_favour_chance"]:
+                    self.elemental_genes["favours"].append(choice(par1.elemental_genes["favours"]) if random() < 0.8 else choice(["A", "E", "F", "W"]))
+                    self.elemental_genes["favours"].append(choice(par2.elemental_genes["favours"]) if random() < 0.8 else choice(["A", "E", "F", "W"]))
+                else:
+                    self.elemental_genes["favours"] = choice([choice(par1.elemental_genes["favours"]), choice(par2.elemental_genes["favours"])])
+                self.elemental_genes["favours"] = list(set(self.elemental_genes[key]))
         self.GeneSort()
 
         if self.odds['random_mutation'] > 0 and randint(1, self.odds['random_mutation']) == 1:
@@ -1687,6 +1737,16 @@ class Genotype:
         for gene in self.april_fools.keys():
             self.april_fools[gene].sort()
 
+        for key in self.elemental_genes.keys():
+            if key != "favours":
+                self.elemental_genes[key].sort()
+                if self.elemental_genes[key][1] == "N":
+                    self.elemental_genes[key][1] = self.elemental_genes[key][0]
+                    self.elemental_genes[key][0] = "N"
+                if self.elemental_genes[key][0] == "n":
+                    self.elemental_genes[key][0] = self.elemental_genes[key][1]
+                    self.elemental_genes[key][1] = "n"
+
         if self.eumelanin[0] == "bl":
             self.eumelanin[0] = self.eumelanin[1]
             self.eumelanin[1] = "bl"
@@ -1781,6 +1841,17 @@ class Genotype:
         while not rand or rand == used_value:
             rand = randint(1, max)
         return rand
+
+        for key in self.elemental_genes.keys():
+            self.elemental_genes[key].sort()
+
+            if key != "favours":
+                if self.elemental_genes[key][1] == "N":
+                    self.elemental_genes[key][1] = self.elemental_genes[key][0]
+                    self.elemental_genes[key][0] = "N"
+                elif self.elemental_genes[key][0] == "n":
+                    self.elemental_genes[key][0] = self.elemental_genes[key][1]
+                    self.elemental_genes[key][1] = "n"
 
     def EyeColourFinder(self):
         eyecolours = {
@@ -2088,10 +2159,11 @@ class Genotype:
             self.Genetic_Disorders = [self.dfca, self.bhd, self.rfca, self.chs]
             april_fools_output = [self.april_fools.values()]
         self.Polygenes = ["Wideband:", self.wideband, self.wbtype, "Rufousing:", self.rufousing, self.ruftype, "Underbelly rufousing:", self.unders_ruf, self.unders_ruftype, "Saturation:", self.saturation, "Bengal:", self.bengal, self.bengtype, "Sokoke:", self.sokoke, self.soktype, "Spotted:", self.spotted, self.spottype, "Ticked:", self.tickgenes, self.ticktype, "White Grade:", self.whitegrade, "Refraction:", self.refraction, "Pigmentation:", self.pigmentation]
+        self.ElementalOutput = [self.elemental_genes["air"], self.elemental_genes["earth"], self.elemental_genes["fire"], self.elemental_genes["water"]]
 
         if is_today(SpecialDate.APRIL_FOOLS):
-            return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Polygenes: ", self.Polygenes, "April Fools:", april_fools_output
-        return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Polygenes: ", self.Polygenes
+            return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Elemental:", self.ElementalOutput, "Polygenes: ", self.Polygenes, "April Fools:", april_fools_output
+        return self.Cat_Genes, "Other Fur Genes: ", self.Fur_Genes, "Other Colour Genes: ", self.Other_Colour, "Body Mutations: ", self.Body_Genes, "Genetic disorders", self.Genetic_Disorders, "Elemental:", self.ElementalOutput, "Polygenes: ", self.Polygenes
     
     def Mutate(self):
         wheremutation = ["body", "genetic disorder", "furtype", "furtype", "othercoat", "othercoat", "othercoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat", "maincoat"]

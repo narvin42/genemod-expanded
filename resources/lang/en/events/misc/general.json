@@ -12218,6 +12218,67 @@
         ]
     },
     {
+        "event_id": "gen_misc_fire_war1",
+        "location": [ "any" ],
+        "season": [ "any" ],
+        "sub_type": [ "war" ],
+        "tags": [ ],
+        "frequency": 1,
+        "event_text": "m_c set a fire on o_c_n's territory in secret.",
+        "m_c": {
+            "age": [ "-kitten" ],
+            "element": [
+                "fire", "blue fire", "magma", "lightning"
+            ]
+        },
+        "other_clan": {
+            "current_rep": [ "hostile" ]
+        }
+    },
+    {
+        "event_id": "gen_misc_fire_enemy1",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [ ],
+        "frequency": 2,
+        "event_text": "In the midst of a battle with o_c_n, m_c burned {PRONOUN/m_c/poss} opponent to death.",
+        "m_c": {
+            "status": [
+                "warrior",
+                "deputy",
+                "leader",
+                "apprentice"
+            ],
+            "element": [
+                "fire", "blue fire", "magma", "lightning"
+            ]
+        },
+        "new_cat": [
+            [ "clancat", "exists", "dead", "meeting", "status:any_fighter", "element:-fire,-blue fire,-magma,-water,-ice,-mud,-combustion,-lightning" ]
+        ],
+        "history": [
+            {
+                "cats": [
+                    "n_c:0"
+                ],
+                "death": "n_c:0 was killed by m_c on a border skirmish."
+            }
+        ],
+        "other_clan": {
+            "changed": -3,
+            "current_rep": [
+                "hostile"
+            ],
+            "has_rank": [
+                "any_fighter_mult"
+            ]
+        }
+    },
+    {
         "event_id": "gen_misc_war_onwatch1",
         "location": [
             "any"
@@ -12404,6 +12465,36 @@
                 "daring",
                 "vengeful"
             ]
+        }
+    },
+    {
+        "event_id": "greenleaf_misc_fire_cooking",
+        "location": [ "any" ],
+        "season": [ "greenleaf" ],
+        "sub_type": [  ],
+        "tags": [ ],
+        "frequency": 1,
+        "event_text": "m_c saw a Twoleg holding fresh-kill over a fire and tries to do the same. It comes out awful, what a waste of good fresh-kill!.",
+        "m_c": {
+            "status": [
+                "-kitten"
+            ],
+            "element": ["fire"]
+        }
+    },
+    {
+        "event_id": "greenleaf_misc_blue_fire_cooking",
+        "location": [ "any" ],
+        "season": [ "greenleaf" ],
+        "sub_type": [ ],
+        "tags": [ ],
+        "frequency": 1,
+        "event_text": "m_c saw a Twoleg holding fresh-kill over a fire and tries to do the same. It comes out charred, what a waste of good fresh-kill!.",
+        "m_c": {
+            "status": [
+                "-kitten"
+            ],
+            "element": [ "blue fire" ]
         }
     }
 ]

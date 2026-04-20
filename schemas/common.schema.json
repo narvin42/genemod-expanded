@@ -161,6 +161,54 @@
       "title": "Backstory",
       "type": "string"
     },
+    "Element": {
+      "enum": [
+        "fire",
+        "water",
+        "earth",
+        "air",
+        "blue fire",
+        "ice",
+        "plant",
+        "lightning",
+        "magma",
+        "metal",
+        "smoke",
+        "mud",
+        "shadow",
+        "sand",
+        "mist",
+        "oil",
+        "combustion",
+        "decay",
+        "magnetic",
+        "luminescent",
+        "-fire",
+        "-water",
+        "-earth",
+        "-air",
+        "-blue fire",
+        "-ice",
+        "-plant",
+        "-lightning",
+        "-magma",
+        "-metal",
+        "-smoke",
+        "-mud",
+        "-shadow",
+        "-sand",
+        "-mist",
+        "-oil",
+        "-combustion",
+        "-decay",
+        "-magnetic",
+        "-luminescent",
+        "any",
+        "none"
+      ],
+      "title": "Element",
+      "type": "string"
+    },
     "GatherCat": {
       "anyOf": [
         {
@@ -406,6 +454,10 @@
           },
           {
             "pattern": "^mate:([_,0-9a-zA-Z]+)$",
+            "type": "string"
+          },
+          {
+            "pattern": "^element:([\\-_ ,0-9a-zA-Z]+)$",
             "type": "string"
           }
         ]

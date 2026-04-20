@@ -854,5 +854,24 @@
         "random_living_status": [
             "living"
         ]
+    },
+
+    {
+        "id": "plant_camp_kit",
+        "thoughts": [
+            "Is trying to help reinforce the camp walls by growing brambles",
+            "Is decorating the camp walls with flowers",
+            "Is decorating the dens with flowers"
+        ],
+        "main_status_constraint": [
+            "kitten"
+        ],
+        "main_element_constraint": [
+            "plant"
+        ],
+        "main_skill_constraint": [
+            "CAMP,0"
+        ]
     }
+    
 ]

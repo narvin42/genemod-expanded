@@ -164,6 +164,14 @@
           "title": "Stat Trait",
           "type": "array"
         },
+        "stat_element": {
+          "description": "Makes this a stat outcome which can occur if a stat cat can be found.",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Element"
+          },
+          "title": "Stat Element",
+          "type": "array"
+        },
         "can_have_stat": {
           "description": "Overrides default behavior or adds additional requirements for stat_cat picking.",
           "items": {

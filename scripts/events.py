@@ -1303,6 +1303,8 @@ def one_moon_cat(cat, clan):
 
     cat.relationship_interaction()
     handle_colour_changes(cat, clan)
+    if cat.phenotype.element and cat.moons == 1:
+        handle_element(cat,clan)
 
     # relationships have to be handled separately, because of the ceremony name change
     if cat.status.group.is_any_clan_group():
@@ -1365,6 +1367,16 @@ def handle_colour_changes(cat, clan):
 
     if event_text:
         event_text = event_text_adjust(Cat, event_text, main_cat=cat)
+        types = ["misc"]
+        game.cur_events_list.append(Single_Event(event_text, types, involved_cats, clan=clan.group_ID))
+
+def handle_element(cat, clan):
+    involved_cats = [cat.ID]
+    ELEMENT_TXT = load_lang_resource("events/element_reveal.json")
+    event_text = ELEMENT_TXT.get(cat.phenotype.element)
+
+    if event_text:
+        event_text = event_text_adjust(Cat, random.choice(event_text), main_cat=cat)
         types = ["misc"]
         game.cur_events_list.append(Single_Event(event_text, types, involved_cats, clan=clan.group_ID))
 

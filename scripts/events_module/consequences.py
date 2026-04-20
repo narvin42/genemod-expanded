@@ -23,6 +23,7 @@ from scripts.cat.constants import BACKSTORIES, PERMANENT
 from scripts.events_module.text_adjust import process_text, event_text_adjust, adjust_list_text
 from scripts.game_structure.game import game_setting_get
 from scripts.clan_package.get_clan_cats import get_alive_clan_queens
+from scripts.events_module.event_filters import _check_cat_element
 
 
 def create_bio_parents(Cat, flip=False, second_parent=True, clan=None):
@@ -667,6 +668,7 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
     chosen_backstory = None
 
     all_clan_cats = []
+    elements = []
     if "exiled" in attribute_list:
         all_clan_cats = [i for i in Cat.all_cats.values(
         ) if i.status.is_exiled() and i.status.is_exiled() != clan.group_ID and not i.dead]
@@ -701,6 +703,8 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
                 if in_event_cats[index].ID not in adoptive_parents:
                     adoptive_parents.append(in_event_cats[index].ID)
                     adoptive_parents.extend(in_event_cats[index].mate)
+        if match := re.match(r"element:\s?(.+)", a):
+            elements = a.split(":")[-1].strip().split(",")
 
     # OPTION TO OVERRIDE DEFAULT BACKSTORY
     bs_override = False
@@ -810,6 +814,8 @@ def find_clan_cats(Cat, Relationship, event, in_event_cats: dict, i: int, attrib
                 all_clan_cats = all_clan_cats_age
         else:
             all_clan_cats = [i for i in all_clan_cats if i.age != CatAge.NEWBORN]
+        
+        all_clan_cats = [i for i in all_clan_cats if _check_cat_element(i, elements)]
         if not all_clan_cats:
             all_clan_cats = [i for i in Cat.all_cats.values(
             ) if i.status.group_ID == other_clan.group_ID and i.age != CatAge.NEWBORN]

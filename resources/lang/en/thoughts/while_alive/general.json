@@ -1046,5 +1046,194 @@
         "random_living_status": [
             "living"
         ]
+    },
+    {
+        "id": "fire_gen",
+        "thoughts": [
+            "Accidentally sets something on fire",
+            "Accidentally set a nest on fire after a nightmare"
+        ],
+        "main_element_constraint": [
+            "fire",
+            "blue fire",
+            "magma"
+        ]
+    },
+
+    {
+        "id": "shadow_to_light_gen",
+        "thoughts": [
+            "Has been avoiding r_c"
+        ],
+        "main_element_constraint": [
+            "shadow"
+        ],
+        "random_element_constraint": [
+            "magnetic",
+            "luminescent",
+            "fire",
+            "blue fire",
+            "magma"
+        ]
+    },
+
+    {
+        "id": "flammable_to_fire_gen",
+        "thoughts": [
+            "Has been avoiding r_c"
+        ],
+        "main_element_constraint": [
+            "oil",
+            "plant"
+        ],
+        "random_element_constraint": [
+            "combustion",
+            "fire",
+            "blue fire",
+            "magma"
+        ]
+    },
+
+    {
+        "id": "cold_to_hot_gen",
+        "thoughts": [
+            "Has been avoiding r_c"
+        ],
+        "main_element_constraint": [
+            "ice"
+        ],
+        "random_element_constraint": [
+            "fire",
+            "blue fire",
+            "magma"
+        ]
+    },
+
+    {
+        "id": "element_hunt_gen",
+        "thoughts": [
+            "Used {PRONOUN/m_c/poss} powers to help while hunting"
+        ],
+        "main_age_constraint": [
+            "-kitten"
+        ],
+        "main_element_constraint": [
+            "plant",
+            "smoke",
+            "shadow",
+            "mist"
+        ]
+    },
+
+    {
+        "id": "air_annoy_smoke_gen",
+        "thoughts": [
+            "Blew wind by r_c and pretended it was an accident",
+            "Is sending a light breeze towards r_c",
+            "Is complaining about r_c"
+        ],
+        "main_element_constraint": [
+            "air"
+        ],
+        "main_trait_constraint": [
+            "troublesome",
+            "childish",
+            "strict",
+            "shameless",
+            "grumpy"
+        ],
+        "random_element_constraint": [
+            "smoke",
+            "mist",
+            "decay"
+        ]
+    },
+    {
+        "id": "fire_kit",
+        "thoughts": [
+            "Is being told off for playing with sparks",
+            "Is being told off for almost lighting something on fire"
+        ],
+        "main_age_constraint": [
+            "kitten"
+        ],
+        "main_element_constraint": [
+            "fire",
+            "blue fire",
+            "magma"
+        ]
+    },
+    {
+        "id": "fire_kit_to_non_fire_kit",
+        "thoughts": [
+            "Accidentally burned r_c while playing",
+            "Accidentally singed r_c's whiskers while playing"
+        ],
+        "main_age_constraint": [
+            "kitten"
+        ],
+        "random_age_constraint": [
+            "kitten"
+        ],
+        "main_element_constraint": [
+            "fire",
+            "blue fire",
+            "magma"
+        ],
+        "random_element_constraint": [
+            "-fire",
+            "-blue fire",
+            "-magma",
+            "-combustion"
+        ]
+    },
+
+    {
+        "id": "water_kit",
+        "thoughts": [
+            "Complains how soggy nest {PRONOUN/m_c/poss} nest got"
+        ],
+        "main_age_constraint": [
+            "kitten"
+        ],
+        "main_element_constraint": [
+            "water"
+        ]
+    },
+
+    {
+        "id": "combustion_kit",
+        "thoughts": [
+            "Is being told off for playing with sparks",
+            "Is being told off for waking cats up with loud booms",
+            "Is being told off for scaring other cats with sudden booms"
+        ],
+        "main_age_constraint": [
+            "kitten"
+        ],
+        "main_element_constraint": [
+            "combustion"
+        ]
+    },
+
+    {
+        "id": "plant_kit",
+        "thoughts": [
+            "Is trying to create a new kind of flower",
+            "Is playing with thorns",
+            "Sprouted the prettiest flower ever today",
+            "Wonders if {PRONOUN/m_c/subject}'ll ever be able to grow a whole tree",
+            "Got covered with dandelion fluff after growing too many",
+            "Is covered in pollen",
+            "Pretends to be a bee after getting covered in pollen"
+        ],
+        "main_age_constraint": [
+            "kitten"
+        ],
+        "main_element_constraint": [
+            "plant"
+        ]
     }
+    
+    
 ]

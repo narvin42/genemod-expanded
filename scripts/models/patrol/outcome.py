@@ -10,6 +10,7 @@ from scripts.models.common.min_max_status import MinMaxStatusDictKey
 from scripts.models.common.new_cat import NewCat
 from scripts.models.common.skill import Skill
 from scripts.models.common.trait import Trait
+from scripts.models.common.element import Element
 from scripts.models.patrol.can_have_status import CanHaveStat
 from scripts.models.patrol.history_text import HistoryText
 from scripts.models.patrol.injury_item import InjuryItem
@@ -36,6 +37,10 @@ class Outcome(BaseModel):
         description="Makes this a stat outcome which can occur if a stat cat can be found.",
     )
     stat_trait: Union[List[Trait], MISSING] = Field(
+        MISSING,
+        description="Makes this a stat outcome which can occur if a stat cat can be found.",
+    )
+    stat_element: Union[List[Element], MISSING] = Field(
         MISSING,
         description="Makes this a stat outcome which can occur if a stat cat can be found.",
     )

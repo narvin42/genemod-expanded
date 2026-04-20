@@ -133,6 +133,352 @@
                     ]
                 ],
                 "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and sends {PRONOUN/n_c:0/object} running with fresh burns.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "magma", "combustion", "lightning" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["severe burn"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner is blindsided by a barrage of both water and claws.",
+                "exp": 0,
+                "stat_element": [ "water" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner is blindsided by a barrage of both earth and claws.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "mud" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "blunt_force_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when sudden gusts are throwing off {PRONOUN/n_c:0/poss} aim.",
+                "exp": 0,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner struggles to even keep {PRONOUN/n_c:0/poss} footing on unstable ground before giving up and fleeing.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "ice", "mud", "oil" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["battle_injury"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner finds {PRONOUN/n_c:0/self} fighting both s_c and sprouting brambles.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when s_c uses a sheet of metal as a shield.",
+                "exp": 0,
+                "stat_element": [ "metal" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when {PRONOUN/n_c:0/subject} can't even see.",
+                "exp": 0,
+                "stat_element": [ "sand", "oil", "shadow", "luminescent", "smoke", "mist" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner turns tail and flees after a bang echoes through the air as a warning.",
+                "exp": 0,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when {PRONOUN/n_c:0/subject} can't even reach a floating s_c.",
+                "exp": 0,
+                "stat_element": [ "air", "magnetic" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
             }
         ]
     },
@@ -1388,6 +1734,352 @@
                     ]
                 ],
                 "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and sends {PRONOUN/n_c:0/object} running with fresh burns.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "magma", "combustion", "lightning" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["severe burn"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner is blindsided by a barrage of both water and claws.",
+                "exp": 0,
+                "stat_element": [ "water" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner is blindsided by a barrage of both earth and claws.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "mud" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "blunt_force_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when sudden gusts are throwing off {PRONOUN/n_c:0/poss} aim.",
+                "exp": 0,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner struggles to even keep {PRONOUN/n_c:0/poss} footing on unstable ground before giving up and fleeing.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "ice", "mud", "oil" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["battle_injury"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the loner finds {PRONOUN/n_c:0/self} fighting both s_c and sprouting brambles.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when s_c uses a sheet of metal as a shield.",
+                "exp": 0,
+                "stat_element": [ "metal" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when {PRONOUN/n_c:0/subject} can't even see.",
+                "exp": 0,
+                "stat_element": [ "sand", "oil", "shadow", "luminescent", "smoke", "mist" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner turns tail and flees after a bang echoes through the air as a warning.",
+                "exp": 0,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner can't retaliate when {PRONOUN/n_c:0/subject} can't even reach a floating s_c.",
+                "exp": 0,
+                "stat_element": [ "air", "magnetic" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
             }
         ]
     },
@@ -1494,6 +2186,352 @@
                 "exp": 10,
                 "outsider_rep": -2,
                 "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and sends {PRONOUN/n_c:0/object} running with fresh burns.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "magma", "combustion", "lightning" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["severe burn"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet is blindsided by a barrage of both water and claws.",
+                "exp": 0,
+                "stat_element": [ "water" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet is blindsided by a barrage of both earth and claws.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "mud" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "blunt_force_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when sudden gusts are throwing off {PRONOUN/n_c:0/poss} aim.",
+                "exp": 0,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet struggles to even keep {PRONOUN/n_c:0/poss} footing on unstable ground before giving up and fleeing.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "ice", "mud", "oil" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["battle_injury"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet finds {PRONOUN/n_c:0/self} fighting both s_c and sprouting brambles.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when s_c uses a sheet of metal as a shield.",
+                "exp": 0,
+                "stat_element": [ "metal" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when {PRONOUN/n_c:0/subject} can't even see.",
+                "exp": 0,
+                "stat_element": [ "sand", "oil", "shadow", "luminescent", "smoke", "mist" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet turns tail and flees after a bang echoes through the air as a warning.",
+                "exp": 0,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when {PRONOUN/n_c:0/subject} can't even reach a floating s_c.",
+                "exp": 0,
+                "stat_element": [ "air", "magnetic" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
             }
         ]
     },
@@ -1599,6 +2637,352 @@
                 "text": "p_l approaches the kittypet and tells them firmly that newcomers aren't being taken in right now. The kittypet seems disappointed, but leaves anyway.",
                 "exp": 10,
                 "outsider_rep": -2,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and sends {PRONOUN/n_c:0/object} running with fresh burns.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire", "magma", "combustion", "lightning" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["severe burn"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet is blindsided by a barrage of both water and claws.",
+                "exp": 0,
+                "stat_element": [ "water" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet is blindsided by a barrage of both earth and claws.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "mud" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "blunt_force_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when sudden gusts are throwing off {PRONOUN/n_c:0/poss} aim.",
+                "exp": 0,
+                "stat_element": [ "air" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet struggles to even keep {PRONOUN/n_c:0/poss} footing on unstable ground before giving up and fleeing.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand", "ice", "mud", "oil" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": ["n_c:0"],
+                        "injuries": ["battle_injury"],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though, and the kittypet finds {PRONOUN/n_c:0/self} fighting both s_c and sprouting brambles.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when s_c uses a sheet of metal as a shield.",
+                "exp": 0,
+                "stat_element": [ "metal" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when {PRONOUN/n_c:0/subject} can't even see.",
+                "exp": 0,
+                "stat_element": [ "sand", "oil", "shadow", "luminescent", "smoke", "mist" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "injury": [
+                    {
+                        "cats": [ "n_c:0" ],
+                        "injuries": [ "battle_injury" ],
+                        "no_results": true
+                    }
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet turns tail and flees after a bang echoes through the air as a warning.",
+                "exp": 0,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the kittypet can't retaliate when {PRONOUN/n_c:0/subject} can't even reach a floating s_c.",
+                "exp": 0,
+                "stat_element": [ "air", "magnetic" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
                 "frequency": 4
             }
         ]
@@ -2957,6 +4341,455 @@
                 ],
                 "outsider_rep": 1,
                 "frequency": 4
+            },
+            {
+                "text": "s_c leaps into the fray, letting off sparks that leave the dog yelping and turning tail. The loner gingerly thanks {PRONOUN/s_c/object}, asking to join the Clan.",
+                "exp": 10,
+                "stat_element": [
+                    "fire", "blue fire", "lightning", "combustion"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol", "-s_c"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 5,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    },
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "s_c"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "A splash of water from s_c does little to deter the dog, but it's too preoccupied chasing bubbles to mind the escaping cat. The rest of the patrol bring the loner to safety, {PRONOUN/n_c:0/subject} {VERB/n_c:0/ask/asks} to stay.",
+                "exp": 10,
+                "stat_element": [
+                    "water"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 3
+            },
+            {
+                "text": "When s_c shifts the earth underpaw, the dog turns and, head tilting, inspects the moving stones and soil. While it digs and searches for supposed burrowing prey, the patrol get the loner to safety where {PRONOUN/n_c:0/subject} {VERB/n_c:0/ask/asks} to join the Clan.",
+                "exp": 10,
+                "stat_element": [
+                    "earth"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 3
+            },
+            {
+                "text": "s_c balls up leaves and twigs and sends it flying. It draws the dog's attention away long enough for the patrol to get the loner to safety where {PRONOUN/n_c:0/subject} {VERB/n_c:0/ask/asks} to join them.",
+                "exp": 10,
+                "stat_element": [
+                    "air", "plant"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 3
+            },
+            {
+                "text": "s_c gets close enough for smoke to reach the dog, which thinks better of running towards its source. The rest of patrol takes the opportunity to catch up with the loner to assure them, and convince {PRONOUN/n_c:0/object} to stay.",
+                "exp": 10,
+                "stat_element": [
+                    "smoke"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "s_c slings mud bombs the dog's way, gaining its attention and leading it away. The rest of the patrol bring the loner to safety, {PRONOUN/n_c:0/subject} {VERB/n_c:0/ask/asks} to stay.",
+                "exp": 10,
+                "stat_element": [
+                    "mud"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "s_c seizes an opportunity to distract the dog by puppeteering cat-shaped shadows for it to chase after instead. The rest of the patrol bring the loner to safety, {PRONOUN/n_c:0/subject} {VERB/n_c:0/ask/asks} to stay.",
+                "exp": 10,
+                "stat_element": [
+                    "shadow"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 3
+            },
+            {
+                "text": "s_c slings sand the dog's way, managing to hit its face. While the dog rushes away whimpering, the patrol catch up with the loner, who asks to stay.",
+                "exp": 10,
+                "stat_element": [
+                    "sand"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 2
+            },
+            {
+                "text": "s_c slings globs of oil the dog's way, soaking its fur with sticky tar. While the dog rushes away in confusion, the patrol catch up with the loner, who asks to stay.",
+                "exp": 10,
+                "stat_element": [
+                    "oil"
+                ],
+                "new_cat": [
+                    [
+                        "loner"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "values": [
+                            "like",
+                            "trust",
+                            "comfort"
+                        ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that saved n_c:0 from a dog."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after being attacked by a dog.",
+                    "death": "m_c died of injuries inflicted by a dog."
+                },
+                "frequency": 3
             }
         ],
         "fail_outcomes": [
@@ -2995,6 +4828,105 @@
                         "meeting",
                         "loner"
                     ]
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "s_c leaps into the fray, letting off sparks that leave the dog yelping and turning tail. The loner doesn't so much as glance back either.",
+                "exp": 0,
+                "stat_element": [
+                    "fire", "blue fire", "lightning", "combustion"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "A splash of water from s_c does little to deter the dog, but it's too preoccupied chasing bubbles to mind the escaping cat. The loner is long gone, though.",
+                "exp": 0,
+                "stat_element": [
+                    "water"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "When s_c shifts the earth underpaw, the dog turns and, head tilting, inspects the moving stones and soil. It digs and searches for supposed burrowing prey while the cats disperse.",
+                "exp": 0,
+                "stat_element": [
+                    "earth"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "s_c balls up leaves and twigs and sends it flying. It draws the dog's attention away long enough for the patrol to catch it off guard and run it off, but the loner is long gone.",
+                "exp": 0,
+                "stat_element": [
+                    "air", "plant"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "s_c gets close enough for smoke to reach the dog, which thinks better of running towards its source. As does the loner.",
+                "exp": 0,
+                "stat_element": [
+                    "smoke"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "s_c slings mud bombs the dog's way, gaining its attention and leading it away. The loner doesn't stop to offer more than a thanks to the patrol before leaving.",
+                "exp": 0,
+                "stat_element": [
+                    "mud"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "s_c seizes an opportunity to distract the dog by puppeteering cat-shaped shadows for it to chase after instead. It draws the dog's attention away long enough for the patrol to catch it off guard and run it off, but the loner is long gone.",
+                "exp": 0,
+                "stat_element": [
+                    "shadow"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 3
+            },
+            {
+                "text": "s_c slings sand the dog's way, but it barely takes any notice. The patrol leaps into action, chasing it off as a team instead, but the loner is long gone by then",
+                "exp": 0,
+                "stat_element": [
+                    "sand"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
+                ],
+                "frequency": 4
+            },
+            {
+                "text": "s_c slings globs of oil the dog's way, soaking its fur with sticky tar. While the dog rushes away in confusion, the loner doesn't seem keen on sticking around near s_c either.",
+                "exp": 0,
+                "stat_element": [
+                    "oil"
+                ],
+                "new_cat": [
+                    [ "meeting", "loner" ]
                 ],
                 "frequency": 3
             }
@@ -3101,17 +5033,8 @@
                 "text": "p_l pads towards the bush to check on the noise when a rabbit bursts out, a loner following it! The loner speaks to p_l about Clan life, and how safe it would be for {PRONOUN/n_c:0/poss} newborn kits. p_l convinces the family to join the Clan.",
                 "exp": 10,
                 "new_cat": [
-                    [
-                        "age:has_kits",
-                        "loner",
-                        "can_birth"
-                    ],
-                    [
-                        "litter",
-                        "parent:0",
-                        "status:newborn",
-                        "backstory:outsider_roots2"
-                    ]
+                    [ "age:has_kits", "loner", "can_birth" ],
+                    [ "litter", "parent:0", "status:newborn", "backstory:outsider_roots2" ]
                 ],
                 "relationships": [
                     {
@@ -3161,6 +5084,147 @@
                 ],
                 "outsider_rep": 1,
                 "frequency": 4
+            },
+            {
+                "text": "s_c carefully burns a few of the leaves, just enough to startle the source of the noise out of hiding. A loner comes scrambling bushy-tailed out the other end with {PRONOUN/n_c:0/poss} kittens. The patrol assures them it's safe before inviting them to join the Clan.",
+                "exp": 10,
+                "stat_element": [ "fire", "blue fire", "magma" ],
+                "stat_skill": [
+                    "CLEVER,1", "STEALTH,1"
+                ],
+                "new_cat": [
+                    [ "age:has_kits", "loner", "can_birth" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:outsider_roots2" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["patrol"],
+                        "values": ["like", "trust"],
+                        "amount": 5,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that invited cat_from and {PRONOUN/cat_from/poss} kits to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c floods the bushes gradually in smoke, until a loner comes scrambling bushy-tailed out the other end with {PRONOUN/n_c:0/poss} kittens. The patrol assures them it's safe before inviting them to join the Clan.",
+                "exp": 10,
+                "stat_element": [ "smoke" ],
+                "stat_skill": [
+                    "CLEVER,1", "STEALTH,1"
+                ],
+                "new_cat": [
+                    [ "age:has_kits", "loner", "can_birth" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:outsider_roots2" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust" ],
+                        "amount": 5,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that invited cat_from and {PRONOUN/cat_from/poss} kits to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c stands back, surrounding the source of the noise in densely weaved branches until a frightened kittypet comes scrambling out of the only exit left with {PRONOUN/n_c:0/poss} kittens. The patrol assures them it's safe before inviting them to join the Clan.",
+                "exp": 10,
+                "stat_element": [ "plant" ],
+                "stat_skill": [
+                    "CLEVER,1", "STEALTH,1"
+                ],
+                "new_cat": [
+                    [ "age:has_kits", "kittypet", "can_birth" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:outsider_roots2" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust" ],
+                        "amount": 5,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that invited cat_from and {PRONOUN/cat_from/poss} kits to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c stands back, manipulating the shadows around the bush into a looming figure. A loner comes scrambling bushy-tailed out the other end with {PRONOUN/n_c:0/poss} kittens. The patrol assures them it's safe before inviting them to join the Clan.",
+                "exp": 10,
+                "stat_element": [ "shadow" ],
+                "new_cat": [
+                    [ "age:has_kits", "kittypet", "can_birth" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:outsider_roots2" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust" ],
+                        "amount": 5,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that invited cat_from and {PRONOUN/cat_from/poss} kits to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c steps forward, shining bright to illuminate whatever might be hiding inside. {PRONOUN/s_c/subject/CAP} {VERB/s_c/find/finds} a loner and {PRONOUN/n_c:0/poss} kittens and introduce {PRONOUN/s_c/self} with an apology before inviting them to join the Clan.",
+                "exp": 10,
+                "stat_element": [ "luminescent" ],
+                "new_cat": [
+                    [ "age:has_kits", "kittypet", "can_birth" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:outsider_roots2" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that invited cat_from and {PRONOUN/cat_from/poss} kits to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c stands back, letting off a harmless bang on the other side of the bush. A loner comes scrambling bushy-tailed out the other end with {PRONOUN/n_c:0/poss} kittens. The patrol assures them it's safe before inviting them to join the Clan.",
+                "exp": 10,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [ "age:has_kits", "kittypet", "can_birth" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:outsider_roots2" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust" ],
+                        "amount": 5,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that invited cat_from and {PRONOUN/cat_from/poss} kits to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 3
             }
         ],
         "fail_outcomes": [
@@ -3225,6 +5289,258 @@
                 "history_text": {
                     "scar": "m_c gained a scar after tussling with a rogue.",
                     "death": "m_c died from injuries sustained in a fight with a rogue."
+                },
+                "outsider_rep": -1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c carefully burns a few of the leaves, just enough to startle the source of the noise out of hiding. A rogue comes scrambling out, hissing and bushy-tailed, scratching up r_c in the process.",
+                "exp": 10,
+                "stat_element": [ "fire", "blue fire", "magma" ],
+                "new_cat": [
+                    [ "rogue", "meeting" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from was driven out of c_n territory by cat_to's patrol after attacking r_c."
+                        }
+                    }
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "claw-wound"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c gained a scar after tussling with a rogue.",
+                    "death": "m_c died from injuries sustained in a fight with a rogue."
+                },
+                "outsider_rep": -1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c floods the bushes gradually in smoke, until a rogue comes scrambling out, hissing and bushy-tailed, scratching up r_c in the process.",
+                "exp": 10,
+                "stat_element": [ "smoke" ],
+                "new_cat": [
+                    [ "rogue", "meeting" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from was driven out of c_n territory by cat_to's patrol after attacking r_c."
+                        }
+                    }
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "claw-wound"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c gained a scar after tussling with a rogue.",
+                    "death": "m_c died from injuries sustained in a fight with a rogue."
+                },
+                "outsider_rep": -1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c stands back, surrounding the source of the noise in densely weaved branches until a kittypet comes scrambling out, hissing and bushy-tailed, scratching up r_c in the process.",
+                "exp": 10,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [ "kittypet", "meeting" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from was driven out of c_n territory by cat_to's patrol after attacking r_c."
+                        }
+                    }
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "claw-wound"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c gained a scar after tussling with a kittypet.",
+                    "death": "m_c died from injuries sustained in a fight with a kittypet."
+                },
+                "outsider_rep": -1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c stands back, manipulating the shadows around the bush into a looming figure. A rogue comes scrambling out, hissing and bushy-tailed, scratching up r_c in the process.",
+                "exp": 10,
+                "stat_element": [ "shadow" ],
+                "new_cat": [
+                    [ "rogue", "meeting" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from was driven out of c_n territory by cat_to's patrol after attacking r_c."
+                        }
+                    }
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "claw-wound"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c gained a scar after tussling with a rogue.",
+                    "death": "m_c died from injuries sustained in a fight with a rogue."
+                },
+                "outsider_rep": -1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c steps forward, shining bright to illuminate whatever might be hiding inside. A rogue comes scrambling out, hissing and bushy-tailed, scratching up r_c in the process.",
+                "exp": 10,
+                "stat_element": [ "luminescent" ],
+                "new_cat": [
+                    [ "rogue", "meeting" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from was driven out of c_n territory by cat_to's patrol after attacking r_c."
+                        }
+                    }
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "claw-wound"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c gained a scar after tussling with a rogue.",
+                    "death": "m_c died from injuries sustained in a fight with a rogue."
+                },
+                "outsider_rep": -1,
+                "frequency": 3
+            },
+            {
+                "text": "s_c stands back, letting off a harmless bang on the other side of the bush. A kittypet comes scrambling out, hissing and bushy-tailed, scratching up r_c in the process.",
+                "exp": 10,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [ "kittypet", "meeting" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [
+                            "like"
+                        ],
+                        "amount": -50,
+                        "log": {
+                            "cats_from": "cat_from was driven out of c_n territory by cat_to's patrol after attacking r_c."
+                        }
+                    }
+                ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "claw-wound"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c gained a scar after tussling with a kittypet.",
+                    "death": "m_c died from injuries sustained in a fight with a kittypet."
                 },
                 "outsider_rep": -1,
                 "frequency": 3
@@ -4133,6 +6449,358 @@
                 ],
                 "outsider_rep": 1,
                 "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} with tiny flames dancing in the air. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "fire", "blue fire" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} with little water bubbles for to chase. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "water" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - lifting {PRONOUN/n_c:1/object} into the air with {PRONOUN/s_c/poss} powers. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "earth", "air" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - with a bit of effort, {PRONOUN/s_c/subject} {VERB/s_c/are/is} able to make snowballs to play with. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "ice" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - sprouting multi-coloured flowers across the grass. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "plant" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - showing off sparks dancing across {PRONOUN/s_c/poss} pelt and playfully shocking the kitten with static. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "lightning" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - using a piece of metal to reflect little sunspots for {PRONOUN/n_c:1/object} to chase. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "metal" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} with a brief mud fight. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "mud" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} with shadow puppets. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "shadow" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} with a sand pile to play around in. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "sand" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - letting {PRONOUN/n_c:1/object} disappear into the mist and try to sneak up on {PRONOUN/s_c/object}. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "mist" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - showing off the rainbow colours {PRONOUN/s_c/poss} oil turns into in the sun. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "oil" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} with crackling little sparks. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "combustion" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - sprouting up variously shaped mushrooms in the grass. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "decay" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - kicking off and staying floating in place above {PRONOUN/n_c:1/poss} head. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "magnetic" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "When a kitten comes rushing towards them, s_c takes the opportunity to entertain {PRONOUN/n_c:1/object} - glowing gently in different colours. Amazed, the kitten declares that {PRONOUN/n_c:1/subject} {VERB/n_c:1/want/wants} to follow them and won't take no for an answer.",
+                "exp": 30,
+                "stat_element": [ "luminescent" ],
+                "new_cat": [
+                    [ "kittypet", "female", "dead", "age:has_kits" ],
+                    [ "litter", "parent:0", "status:kitten", "backstory:abandoned1,abandoned4" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "s_c" ],
+                        "values": [ "like", "trust", "comfort", "respect" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from so much {PRONOUN/cat_from/subject} wanted to join c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
             }
         ],
         "fail_outcomes": [
@@ -4714,10 +7382,9 @@
             {
                 "text": "Oh StarClan, app1 can't live with leaving some poor sad soul alone on the mountainside in the cold! Following the piteous cries, app1 finds a terrified kittypet crouched by a Thunderpath, desperately searching for a monster and the Twolegs that it contains. But it's alright, app1 is here, and c_n will be able to help.",
                 "exp": 20,
+                "stat_element": [ "-fire", "-blue fire", "-magma" ],
                 "new_cat": [
-                    [
-                        "kittypet"
-                    ]
+                    [ "kittypet" ]
                 ],
                 "relationships": [
                     {
@@ -4746,6 +7413,27 @@
                     "scar": "m_c was scarred by frostbite after being abandoned by {PRONOUN/m_c/poss} Twolegs.",
                     "death": "m_c died of frostbite after being abandoned by {PRONOUN/m_c/poss} Twolegs."
                 },
+                "frequency": 4
+            },
+            {
+                "text": "Oh StarClan, app1 can't live with leaving some poor sad soul alone on the mountainside in the cold! Following the piteous cries, app1 finds a terrified kittypet crouched by a Thunderpath, desperately searching for a monster and the Twolegs that it contains. But it's alright, app1 is here to keep {PRONOUN/n_c:0/object} warm, and c_n will be able to help.",
+                "exp": 20,
+                "stat_element": ["fire", "blue fire", "magma"],
+                "new_cat": [
+                    [ "kittypet" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to invited cat_from to c_n when {PRONOUN/cat_from/subject} {VERB/cat_from/were/was} found crying in the mountainside in the cold alone."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
                 "frequency": 4
             },
             {
@@ -4788,6 +7476,7 @@
             {
                 "text": "app1 follows the sad cries to find a kittypet, lost and alone and cold. The apprentice introduces {PRONOUN/app1/self} cheerfully, and the desperate kittypet nearly tumbles {PRONOUN/app1/object} over in {PRONOUN/n_c:0/poss} haste to press {PRONOUN/n_c:0/poss} nose to app1's shoulder, breaking into desperately grateful purrs.",
                 "exp": 20,
+                "stat_element": [ "-fire", "-blue fire", "-magma" ],
                 "stat_trait": [
                     "adventurous",
                     "playful",
@@ -4802,9 +7491,9 @@
                 ],
                 "relationships": [
                     {
-                        "cats_from": ["n_c:0"],
-                        "cats_to": ["patrol"],
-                        "values": ["like", "trust", "comfort"],
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
                         "amount": 10,
                         "log": {
                             "cats_from": "cat_to invited cat_from to c_n when {PRONOUN/cat_from/subject} {VERB/cat_from/were/was} found crying in the mountainside in the cold alone."
@@ -4827,6 +7516,36 @@
                     "scar": "m_c was scarred by frostbite after being abandoned by {PRONOUN/m_c/poss} Twolegs.",
                     "death": "m_c died of frostbite after being abandoned by {PRONOUN/m_c/poss} Twolegs."
                 },
+                "frequency": 4
+            },
+            {
+                "text": "app1 follows the sad cries to find a kittypet, lost and alone and cold. The apprentice introduces {PRONOUN/app1/self} cheerfully, and the desperate kittypet nearly tumbles {PRONOUN/app1/object} over in {PRONOUN/n_c:0/poss} haste to press {PRONOUN/n_c:0/poss} nose to app1's shoulder, breaking into desperately grateful purrs.",
+                "exp": 20,
+                "stat_element": [ "fire", "blue fire", "magma" ],
+                "stat_trait": [
+                    "adventurous",
+                    "playful",
+                    "strange",
+                    "childish",
+                    "shameless"
+                ],
+                "new_cat": [
+                    [
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": ["n_c:0"],
+                        "cats_to": ["patrol"],
+                        "values": ["like", "trust", "comfort"],
+                        "amount": 15,
+                        "log": {
+                            "cats_from": "cat_to invited cat_from to c_n when {PRONOUN/cat_from/subject} {VERB/cat_from/were/was} found crying in the mountainside in the cold alone."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
                 "frequency": 4
             }
         ],
@@ -5002,6 +7721,399 @@
                     "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
                 },
                 "frequency": 4
+            },
+            {
+                "text": "s_c takes the lead as the patrol rushes to the rescue - setting the smooth pelt of the Twoleg's legs alight. It rushes into the water to put it out, leaving the dazed kittens forgotten for the patrol to lead away.",
+                "exp": 10,
+                "stat_element": [ "fire", "blue fire" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [ "kittypet", "can_birth", "age:has_kits" ],
+                    [ "litter", "status:kitten", "backstory:abandoned4", "kittypet", "parent:0" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:1"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 1
+            },
+            {
+                "text": "s_c takes the lead as the patrol rushes to the rescue - setting the smooth pelt of the Twoleg's legs alight. It rushes into the water to put it out, leaving the dazed cat forgotten for the patrol to lead away.",
+                "exp": 10,
+                "stat_element": [ "fire", "blue fire" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [
+                        "status:elder",
+                        "age:senior",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "s_c waits for the Twoleg to drop the bag into the water, forming a wave underneath to carry the cat to the shore where the patrol awaits to help the kittens get free and offer them safety in c_n.",
+                "exp": 10,
+                "stat_element": [ "water" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [ "kittypet", "can_birth", "age:has_kits" ],
+                    [ "litter", "status:kitten", "backstory:abandoned4", "kittypet", "parent:0" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:1"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 1
+            },
+            {
+                "text": "s_c waits for the Twoleg to drop the bag into the water, forming a wave underneath to carry the cat to the shore where the patrol awaits to help the cat get free and offer {PRONOUN/n_c:0/object} safety in c_n.",
+                "exp": 10,
+                "stat_element": [ "water" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [
+                        "status:elder",
+                        "age:senior",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "s_c shifts the ground sharply under the Twoleg's paws, knocking it off balance. The rest of the patrol descend upon it, driving it back from the bag. Once it's gone, they reassure the kittens that they'll be safe with c_n.",
+                "exp": 10,
+                "stat_element": [ "earth", "sand" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [ "kittypet", "can_birth", "age:has_kits" ],
+                    [ "litter", "status:kitten", "backstory:abandoned4", "kittypet", "parent:0" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:1"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 1
+            },
+            {
+                "text": "s_c shifts the ground sharply under the Twoleg's paws, knocking it off balance. The rest of the patrol descend upon it, driving it back from the bag. Once it's gone, they reassure the elder that {PRONOUN/n_c:0/subject}'ll be safe with c_n.",
+                "exp": 10,
+                "stat_element": [ "earth", "sand" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [
+                        "status:elder",
+                        "age:senior",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "s_c sprouts brambles to wrap around one of the Twoleg's legs, distracting it before the rest of the patrol rushes in to rescue the dropped kittens.",
+                "exp": 10,
+                "stat_element": [ "plant" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [ "kittypet", "can_birth", "age:has_kits" ],
+                    [ "litter", "status:kitten", "backstory:abandoned4", "kittypet", "parent:0" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:1"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 1
+            },
+            {
+                "text": "s_c sprouts brambles to wrap around one of the Twoleg's legs, distracting it before the rest of the patrol rushes in to rescue the dropped elderly cat.",
+                "exp": 10,
+                "stat_element": [ "plant" ],
+                "can_have_stat": [ "adult" ],
+                "new_cat": [
+                    [
+                        "status:elder",
+                        "age:senior",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 4
+            },
+            {
+                "text": "s_c sneaks closer, pulling a jingly piece of metal from the Twoleg's pouch from a distance. It's enough to distract it, the Twoleg rushing to grab it while the rest of the patrol lead the dropped kittens away with a promise of safety in c_n.",
+                "exp": 10,
+                "stat_element": [ "metal", "magnetic" ],
+                "new_cat": [
+                    [ "kittypet", "can_birth", "age:has_kits" ],
+                    [ "litter", "status:kitten", "backstory:abandoned4", "kittypet", "parent:0" ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:1" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:1"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 1
+            },
+            {
+                "text": "s_c sneaks closer, pulling a jingly piece of metal from the Twoleg's pouch from a distance. It's enough to distract it, the Twoleg rushing to grab it while the rest of the patrol lead the dropped elder away with a promise of safety in c_n.",
+                "exp": 10,
+                "stat_element": [ "metal", "magnetic" ],
+                "new_cat": [
+                    [
+                        "status:elder",
+                        "age:senior",
+                        "kittypet"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [ "n_c:0" ],
+                        "cats_to": [ "patrol" ],
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to was part of the patrol that rescued cat_from from a cruel Twoleg and brought {PRONOUN/cat_from/object} to c_n."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "injury": [
+                    {
+                        "cats": [
+                            "n_c:0"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury"
+                        ],
+                        "no_results": true
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg attempted to drown {PRONOUN/m_c/object}.",
+                    "death": "m_c died of injuries inflicted by a Twoleg attempting to drown {PRONOUN/m_c/object}."
+                },
+                "frequency": 4
             }
         ],
         "fail_outcomes": [
@@ -5049,6 +8161,48 @@
                     "scar": "m_c was scarred after a Twoleg threw {PRONOUN/m_c/object} to the earth.",
                     "death": "m_c died of injuries inflicted by a Twoleg."
                 },
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c takes the lead as the patrol rushes to the rescue - aiming to set the smooth pelt of the Twoleg's legs alight. {PRONOUN/s_c/subject/CAP} {VERB/s_c/are/is}n't quick enough to avoid the sudden kick and find {PRONOUN/s_c/self} dazed in the water.",
+                "exp": 0,
+                "stat_element": [ "fire", "blue fire" ],
+                "injury": [
+                    {
+                        "cats": [
+                            "r_c"
+                        ],
+                        "injuries": [
+                            "blunt_force_injury", "water in their lungs"
+                        ]
+                    }
+                ],
+                "history_text": {
+                    "scar": "m_c was scarred after a Twoleg kicked {PRONOUN/m_c/object} into the lake.",
+                    "death": "m_c died of injuries inflicted by a Twoleg."
+                },
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c shifts the ground sharply under the Twoleg's paws, but it just barely keeps balance, and tosses the bag into the lake in the process.",
+                "exp": 0,
+                "stat_element": [ "earth", "sand" ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c sprouts brambles to wrap around one of the Twoleg's legs, but it's able to pry itself free.",
+                "exp": 0,
+                "stat_element": [ "plant" ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c sneaks closer, pulling a jingly piece of metal from the Twoleg's pouch from a distance. It notices too fast, using a paw to clutch the object and continue its grizzly work unphased.",
+                "exp": 0,
+                "stat_element": [ "metal", "magnetic" ],
                 "outsider_rep": -1,
                 "frequency": 4
             }
@@ -5395,6 +8549,86 @@
                 ],
                 "outsider_rep": 1,
                 "frequency": 4
+            },
+            {
+                "text": "A loner? Interesting. s_c saunters up to the outsider without hesitation, making a show of {PRONOUN/s_c/poss} powers right off the bat. The loner seems impressed, asking questions and requesting further demonstrations for hours.",
+                "exp": 10,
+                "stat_trait": [
+                    "playful",
+                    "charismatic",
+                    "bold",
+                    "daring",
+                    "confident",
+                    "arrogant",
+                    "competitive",
+                    "flamboyant"
+                ],
+                "stat_element": [ "any" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner",
+                        "age:adolescent"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
+            },
+            {
+                "text": "A kittypet! s_c saunters up to the outsider without hesitations, making a show of {PRONOUN/s_c/poss} powers right off the bat. The kittypet isn't as cowardly as some say, asking questions and requesting further demonstrations for hours.",
+                "exp": 10,
+                "stat_trait": [
+                    "playful",
+                    "charismatic",
+                    "bold",
+                    "daring",
+                    "confident",
+                    "arrogant",
+                    "competitive",
+                    "flamboyant"
+                ],
+                "stat_element": ["any"],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet",
+                        "age:adolescent"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": true,
+                        "values": [ "like", "trust", "comfort" ],
+                        "amount": 10,
+                        "log": {
+                            "cats_from": "cat_to impressed cat_from with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": 1,
+                "frequency": 4
             }
         ],
         "fail_outcomes": [
@@ -5480,6 +8714,66 @@
                     "death": "m_c died from injuries {PRONOUN/p_l/subject} sustained after being attacked by a startled kittypet."
                 },
                 "outsider_rep": 0,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the loner, but {PRONOUN/n_c:0/subject} {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner is sent running with a little use of s_c's powers.",
+                "exp": 0,
+                "stat_element": [ "any" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "loner",
+                        "age:adolescent"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
+            {
+                "text": "s_c hisses at the kittypet, but {PRONOUN/n_c:0/subject} surprisingly {VERB/n_c:0/refuse/refuses} to leave without a fight. s_c has some extra tricks {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner is sent running with a little use of s_c's powers.",
+                "exp": 0,
+                "stat_element": [ "any" ],
+                "new_cat": [
+                    [
+                        "meeting",
+                        "kittypet",
+                        "age:adolescent"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
                 "frequency": 4
             },
             {
@@ -5679,7 +8973,7 @@
                     "death": "m_c died from injuries sustained after foolishly trying to take on a c_n apprentice."
                 },
                 "outsider_rep": -2,
-                "frequency": 2
+                "frequency": 4
             }
         ],
         "antag_fail_outcomes": [
@@ -5862,8 +9156,7 @@
                 "frequency": 2
             }
         ]
-    }
-    ,
+    },
     {
         "patrol_id": "pln_bord_greenleaf_hitherecutie_solo1",
         "biome": [
@@ -6439,6 +9732,37 @@
             }
         ],
         "antag_success_outcomes": [
+            {
+                "text": "s_c demands that the loner leave, and the loner refuses. s_c unsheathes {PRONOUN/s_c/poss} claws and repeats the order. The loner unsheathes {PRONOUN/n_c:0/poss} claws and repeats {PRONOUN/n_c:0/poss} refusal. s_c has some extra suggestions {PRONOUN/n_c:0/subject}'{VERB/n_c:0/re/s} not ready for, though - the loner is sent running with a little use of s_c's powers.",
+                "exp": 0,
+                "art": "gen_battle_warrior_loner",
+                "stat_element": [ "any" ],
+                "new_cat": [
+                    [
+                        "age:adult",
+                        "loner",
+                        "meeting"
+                    ]
+                ],
+                "relationships": [
+                    {
+                        "cats_from": [
+                            "n_c:0"
+                        ],
+                        "cats_to": [
+                            "patrol"
+                        ],
+                        "mutual": false,
+                        "values": [ "like", "comfort" ],
+                        "amount": -20,
+                        "log": {
+                            "cats_from": "cat_to chased cat_from away with {PRONOUN/cat_to/poss} powers."
+                        }
+                    }
+                ],
+                "outsider_rep": -1,
+                "frequency": 4
+            },
             {
                 "text": "Eyeing the piece of stolen fresh-kill hiding behind the grinning loner, p_l thanks {PRONOUN/n_c:0/object} for {PRONOUN/n_c:0/poss} contribution to the fresh-kill pile and escorts {PRONOUN/n_c:0/object} to the border. n_c:0 doesn't think p_l's much fun.",
                 "exp": 15,

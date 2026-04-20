@@ -54,6 +54,32 @@
     "Calico": ["dapple", "patch", "patch"]
   },
 
+  "element_suffixes": {
+    "fire": ["blaze", "blister", "fire", "flame", "flare", "flash", "spark"],
+    "water": ["billow", "bubble", "brook", "creek", "current", "drop", "flood", "lake", "pond", "pool", "puddle", "river", "stream", "splash", "wash", "water", "wave"],
+    "earth": ["earth", "rock", "soil", "stone"],
+    "air": ["breeze", "gale", "gust", "wind"],
+
+    "blue fire": ["blaze", "blister", "fire", "flame", "flare", "flash", "spark", "wisp"],
+    "ice": ["frost", "freeze", "ice", "icicle", "snow", "shiver"],
+    "plant": ["berry", "bloom", "blossom", "bramble", "bud", "bush", "leaf", "petal", "pollen", "sprout", "thorn"],
+    "lightning": ["bolt", "crackle", "flash", "lightning", "shock", "spark", "storm", "thunder"],
+
+    "magma": ["burn", "blister"],
+    "metal": ["glint", "shine"],
+    "smoke": ["billow", "plume", "smog", "smoke"],
+    "mud": ["mud", "puddle"],
+    "shadow": ["murk", "night", "shade", "shadow"],
+    "sand": ["dune", "sand"],
+
+    "mist": ["cloud", "fog", "mist"],
+    "oil": ["slick", "shine", "shimmer"],
+    "combustion": ["boom", "crash", "rumble", "spark"],
+    "decay": ["beetle", "fly", "hive", "rot", "roach", "spore", "swarm"],
+    "magnetic": ["float"],
+    "luminescent": ["beam", "bright", "flash", "flicker", "gleam", "glow", "light", "shine"]
+  },
+
   "normal_prefixes": [
     "Adder", "Alder", "Ant", "Antler", "Aphid", "Apple", "Apricot", "Arch", "Aspen", "Aster", 
     "Badger", "Barley", "Basil", "Bass", "Bay", "Beam", "Bear", "Beaver", "Bee", "Beech", "Beetle", "Berry", "Big", "Billow", "Birch", 

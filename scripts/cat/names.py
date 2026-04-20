@@ -405,6 +405,9 @@ class Name:
                 for i in range(suffix_settings["special"]):
                     options.append(self.mod_suffixes['other']['special'])
 
+                for i in range(suffix_settings["element"]):
+                    options.append(self.mod_suffixes.get('element', {}).get(self.phenotype.element, []))
+
                 appearance = self.mod_suffixes['other']['common']
 
                 if self.phenotype.length == 'longhaired':
@@ -493,11 +496,14 @@ class Name:
             tries += 1
             if tries > 20:
                 break
-            named_after_pelt = not random.getrandbits(2)  # Chance for True is '1/8'.
+            named_after_pelt = not random.getrandbits(3)
+            named_after_element = not random.getrandbits(3) and self.phenotype
             named_after_biome = not random.getrandbits(3)  # 1/8
             # Pelt name only gets used if there's an associated suffix.
             if named_after_pelt and len(pelt) > 0:
                 self.suffix = random.choice(self.names_dict["pelt_suffixes"][random.choice(pelt)])
+            if named_after_element and self.names_dict.get("element_suffixes", {}).get(self.phenotype.element):
+                self.suffix = random.choice(self.names_dict["element_suffixes"][self.phenotype.element])
             elif named_after_biome:
                 if biome in self.names_dict["biome_suffixes"]:
                     self.suffix = random.choice(

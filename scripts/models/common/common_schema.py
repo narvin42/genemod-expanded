@@ -20,6 +20,7 @@ from scripts.models.common.season import Season
 from scripts.models.common.skill import Skill
 from scripts.models.common.status import Status
 from scripts.models.common.trait import Trait
+from scripts.models.common.element import Element
 
 
 class CommonSchema(BaseModel):
@@ -42,3 +43,4 @@ class CommonSchema(BaseModel):
     skill: Skill
     status: Status
     trait: Trait
+    element: Element

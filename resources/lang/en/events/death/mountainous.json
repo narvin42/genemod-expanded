@@ -10,6 +10,7 @@
         "frequency": 1,
         "event_text": "m_c was buried alive when an avalanche hit the camp.",
         "m_c": {
+            "element": ["-earth"],
             "dies": true
         },
         "history": [
@@ -54,6 +55,7 @@
             "status": [
                 "any"
             ],
+            "element": ["-earth"],
             "dies": true
         },
         "history": [
@@ -62,6 +64,70 @@
                     "m_c"
                 ],
                 "death": "m_c was killed by a stalactite."
+            }
+        ]
+    },
+    {
+        "event_id": "gen_death_murder_bury1",
+        "location": [
+            "any"
+        ],
+        "season": [
+            "any"
+        ],
+        "sub_type": [
+            "murder"
+        ],
+        "tags": [ ],
+        "frequency": 2,
+        "event_text": "m_c was buried alive when an avalanche hit the camp.",
+        "m_c": {
+            "status": [
+                "-leader"
+            ],
+            "element": ["-earth"],
+            "dies": true
+        },
+        "r_c": {
+            "age": [
+                "-kitten"
+            ],
+            "element": [
+                "earth"
+            ]
+        },
+        "exclude_involved": [
+            "r_c"
+        ],
+        "history": [
+            {
+                "cats": [
+                    "m_c"
+                ],
+                "death": "m_c was secretly buried by r_c."
+            }
+        ],
+        "future_event": [
+            {
+                "event_type": "misc",
+                "pool": {
+                    "sub_type": [
+                        "murder_reveal"
+                    ]
+                },
+                "moon_delay": [
+                    1,
+                    12
+                ],
+                "involved_cats": {
+                    "m_c": "r_c",
+                    "mur_c": "m_c",
+                    "r_c": {
+                        "age": [
+                            "-kitten"
+                        ]
+                    }
+                }
             }
         ]
     }

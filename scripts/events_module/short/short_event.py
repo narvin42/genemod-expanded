@@ -5,7 +5,7 @@ import i18n
 import re
 
 from scripts.cat import pronouns
-from scripts.cat.cats import Cat, ILLNESSES, INJURIES, PERMANENT
+from scripts.cat.cats import Cat, ILLNESSES, INJURIES, PERMANENT, ELEMENT_BLOCK
 from scripts.cat.enums import CatGroup
 from scripts.cat.pelts import Pelt
 from scripts.cat_relations.relationship import Relationship
@@ -839,14 +839,12 @@ class ShortEvent:
                 # MAIN CAT
                 if abbr == "m_c":
                     if self.give_injury_to_cat(self.main_cat, possible_injuries, potential_scars):
-                        self.handle_injury_history(
-                            self.main_cat, "m_c", injury)
+                        self.handle_injury_history(self.main_cat, "m_c", injury)
 
                 # RANDOM CAT
                 elif abbr == "r_c":
                     if self.give_injury_to_cat(self.random_cat, possible_injuries, potential_scars):
-                        self.handle_injury_history(
-                            self.random_cat, "r_c", injury)
+                        self.handle_injury_history(self.random_cat, "r_c", injury)
 
                 # NEW CATS
                 elif abbr == "n_c":
@@ -870,6 +868,15 @@ class ShortEvent:
                 "WARNING: All possible conditions are already on this cat! (poor kitty)"
             )
             return False
+    
+        if cat.phenotype.element:
+            possible_injuries = list(set(possible_injuries) - set(ELEMENT_BLOCK.get(cat.phenotype.element, [])))
+
+            if not possible_injuries:
+                print(
+                    "WARNING: All possible conditions are already on this cat! (element filter)"
+                )
+                return False
 
         give_injury = choice(possible_injuries)
         # If the cat already has this injury, reroll it to get something new

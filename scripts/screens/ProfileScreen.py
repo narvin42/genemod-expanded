@@ -1358,6 +1358,7 @@ class ProfileScreen(Screens):
             self.info_list += f"Chimera Pseudo-Merle Markings: {self.the_cat.chimerapheno.merlepattern}\n"
 
         self.info_list += f"Body Type Value: {self.the_cat.phenotype.body_value}, Height Value: {self.the_cat.phenotype.height_value}, Growth Pattern: {self.the_cat.phenotype.growth_pattern}\n"
+        self.info_list += f"Element affinities: {self.the_cat.phenotype.elemental_genes["favours"]}\n"
         
         
 

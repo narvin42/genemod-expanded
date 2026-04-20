@@ -36,8 +36,8 @@ def get_data_dir():
     from platformdirs import user_data_dir
 
     if get_version_info().is_dev():
-        return user_data_dir('Genemodex', 'ClanGen')
-    return user_data_dir('Genemodex', 'ClanGen')
+        return user_data_dir('Elemental-Genemod-UD', 'ClanGen')
+    return user_data_dir('Elemental-Genemod-UD_stable', 'ClanGen')
 
 
 def get_log_dir():
