@@ -124,21 +124,76 @@ class Name:
         if self.suffix is None:
             if no_suffixes and not load_existing_name:
                 self.suffix = ""
+                self.specsuffix_hidden = True
             else:
                 self.give_suffix(self.skills, self.personality, biome, honour)
                 if name_fixpref and self.prefix is None:
                     # needed for random dice when we're changing the Prefix
                     name_fixpref = False
-
-        if self.suffix and not load_existing_name:
-            self.check_name(cat, name_fixpref)
-            if get_clan_setting("ancient names") and get_clan_setting("modded names"):
-                self.suffix = " " + self.suffix.title()
-                self.specsuffix_hidden = True
-        elif not load_existing_name and get_clan_setting("no special suffixes") and get_clan_setting("modded names"):
-            self.specsuffix_hidden = True
     
     def load_clan_names(self, clan):
+        if os.path.exists('resources/dicts/names/alt_prefixes.json'):
+            with open('resources/dicts/names/alt_prefixes.json') as read_file:
+                mod_prefixes = ujson.loads(read_file.read())
+        mod_suffixes = None
+        if os.path.exists('resources/dicts/names/alt_suffixes.json'):
+            with open('resources/dicts/names/alt_suffixes.json') as read_file:
+                mod_suffixes = ujson.loads(read_file.read())
+        if os.path.exists('resources/dicts/names/names.json'):
+            with open('resources/dicts/names/names.json') as read_file:
+                names_dict = ujson.loads(read_file.read())
+
+            if os.path.exists(get_save_dir() + "/prefixlist.txt"):
+                with open(
+                    str(get_save_dir() + "/prefixlist.txt"), "r", encoding="utf-8"
+                ) as read_file:
+                    name_list = read_file.read()
+                    if_names = len(name_list)
+                if if_names > 0:
+                    new_names = name_list.split("\n")
+                    for new_name in new_names:
+                        if new_name != "":
+                            if new_name.startswith("-"):
+                                while new_name[1:] in names_dict["normal_prefixes"]:
+                                    names_dict["normal_prefixes"].remove(
+                                        new_name[1:])
+                            else:
+                                names_dict["normal_prefixes"].append(new_name)
+
+            if os.path.exists(get_save_dir() + "/suffixlist.txt"):
+                with open(
+                    str(get_save_dir() + "/suffixlist.txt"), "r", encoding="utf-8"
+                ) as read_file:
+                    name_list = read_file.read()
+                    if_names = len(name_list)
+                if if_names > 0:
+                    new_names = name_list.split("\n")
+                    for new_name in new_names:
+                        if new_name != "":
+                            if new_name.startswith("-"):
+                                while new_name[1:] in names_dict["normal_suffixes"]:
+                                    names_dict["normal_suffixes"].remove(
+                                        new_name[1:])
+                            else:
+                                names_dict["normal_suffixes"].append(new_name)
+
+            if os.path.exists(get_save_dir() + "/specialsuffixes.txt"):
+                with open(
+                    str(get_save_dir() + "/specialsuffixes.txt", "r"), encoding="utf-8"
+                ) as read_file:
+                    name_list = read_file.read()
+                    if_names = len(name_list)
+                if if_names > 0:
+                    new_names = name_list.split("\n")
+                    for new_name in new_names:
+                        if new_name != "":
+                            if new_name.startswith("-"):
+                                del names_dict["special_suffixes"][new_name[1:]]
+                            elif ":" in new_name:
+                                _tmp = new_name.split(":")
+                                names_dict["special_suffixes"][_tmp[0]] = _tmp[1]
+
+
         if not os.path.exists(get_save_dir() + f"/{clan}" + "/names"):
             return
         if os.path.exists(get_save_dir() + f"/{clan}" + "/names" + "/alt_prefixes.json"):
@@ -216,6 +271,13 @@ class Name:
             ):
                 double_animal = False
             i += 1
+
+        if self.suffix:
+            if get_clan_setting("ancient names") and get_clan_setting("modded names"):
+                self.suffix = " " + self.suffix.title()
+                self.specsuffix_hidden = True
+        elif get_clan_setting("no special suffixes") and get_clan_setting("modded names"):
+            self.specsuffix_hidden = True
 
     def __str__(self):
         return self.__repr__()

@@ -752,7 +752,7 @@ def handle_focus():
         - raid other clans
         - hoarding
     Focus which are not able to be handled here:
-        rest and recover - handled in:
+        rest_and_recover - handled in:
             - 'handle_outbreaks'
             - 'condition_events.handle_injuries'
             - 'condition_events.handle_illnesses'
@@ -1128,6 +1128,31 @@ def one_moon_outside_cat(cat, other_clan_cats: list = None):
 
     handle_outside_EX(cat)
 
+    # handling the rank changes for Other Clan cats
+    # this is SUPER rudimentary rn, really just a temp patch to handle our current little edge-cases
+    if cat.status.is_other_clancat:
+        # kitten to apprentice - for now it's going to be limited to warrior apprentices
+        if cat.moons == cat_class.age_moons[CatAge.ADOLESCENT][0]:
+            cat.status._change_rank(CatRank.APPRENTICE)
+            # we aren't going to worry about sourcing a mentor, we're gonna pretend it's "hidden" from the player
+        # apprentice to full
+        if cat.moons >= cat_class.age_moons[CatAge.YOUNG_ADULT][0]:
+            # warrior
+            if cat.status.rank == CatRank.APPRENTICE:
+                cat.status._change_rank(CatRank.WARRIOR)
+            # med cat
+            if cat.status.rank == CatRank.MEDICINE_APPRENTICE:
+                cat.status._change_rank(CatRank.MEDICINE_CAT)
+            # mediator (just in case)
+            if cat.status.rank == CatRank.MEDIATOR_APPRENTICE:
+                cat.status._change_rank(CatRank.MEDIATOR)
+        # cat to elder
+        if cat.moons >= cat_class.age_moons[CatAge.SENIOR][0]:
+            # exclude the roles that don't really retire
+            if cat.status.rank not in (CatRank.LEADER, CatRank.MEDICINE_CAT):
+                cat.status._change_rank(CatRank.ELDER)
+
+    # skill progression needs to be after rank progression
     cat.skills.progress_skill(cat)
     Pregnancy_Events.handle_having_kits(cat, clan=clan)
 
@@ -1408,9 +1433,9 @@ def check_war():
                     victor = clan if not enemy_can_fight else enemy
                 else:
                     threshold = 10
-                    if enemy_clan.temperament == "bloodthirsty":
+                    if enemy_clan.temperament[0] == "bloodthirsty":
                         threshold = 12
-                    if enemy_clan.temperament in ["mellow", "amiable", "gracious"]:
+                    if enemy_clan.temperament[0] in ["mellow", "amiable", "gracious"]:
                         threshold = 7
 
                     threshold -= int(game.clan.war[clan][enemy]["duration"])
@@ -1452,9 +1477,9 @@ def check_war():
                 if active_wars and random.random() > 0.125:
                     continue
                 threshold = 5
-                if enemy_clan.temperament == "bloodthirsty":
+                if enemy_clan.temperament[0] == "bloodthirsty":
                     threshold = 10
-                if enemy_clan.temperament in ["mellow", "amiable", "gracious"]:
+                if enemy_clan.temperament[0] in ["mellow", "amiable", "gracious"]:
                     threshold = 3
 
                 rel_value = game.clan.get_relations(main_clan, enemy_clan)
@@ -2736,8 +2761,8 @@ def handle_outbreaks(cat, clan):
             ):
                 continue
 
-            if get_clan_setting("rest and recover") and clan == game.clan:
-                stopping_chance = constants.CONFIG["focus"]["rest and recover"][
+            if get_clan_setting("rest_and_recover") and clan == game.clan:
+                stopping_chance = constants.CONFIG["focus"]["rest_and_recover"][
                     "outbreak_prevention"
                 ]
                 if not int(random.random() * stopping_chance):

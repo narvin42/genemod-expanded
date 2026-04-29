@@ -278,6 +278,10 @@ def event_for_other_clan(Cat, ranks: list, other_clan) -> bool:
             (parents, orphans) = get_alive_clan_queens(all_clan_cats, clan=other_clan)
             if not len(parents) or (len(parents) < 2 and "mult" in rank):
                 return False
+        if "exiled" in rank:
+            all_clan_cats = [i for i in Cat.all_cats.values() if i.status.is_exiled(other_clan) and i.status.is_outsider and i.status.is_near()]
+            if not len(all_clan_cats) or (len(all_clan_cats) < 2 and "mult" in rank):
+                return False
         else:            
             if "any_app" in rank:
                 final_ranks = ["apprentice", "mediator apprentice", "healer apprentice"]
@@ -291,7 +295,7 @@ def event_for_other_clan(Cat, ranks: list, other_clan) -> bool:
                 final_ranks = ["mediator", "mediator apprentice"]
             oc_cats = find_alive_cats_with_rank(
                 Cat, final_ranks, working=True, clan=other_clan)
-            if not oc_cats or (len(oc_cats) < 2 and "mult" in rank):
+            if not oc_cats or (len(oc_cats) < 3 and "mult" in rank):
                 return False
         
     return True
@@ -484,6 +488,8 @@ def _check_cat_status(cat, statuses: list) -> bool:
     """
     if not statuses or "any" in statuses:
         return True
+
+    statuses = [s.replace("medicine cat", "healer") for s in statuses]
 
     if (cat.status.rank in statuses) or ("lost" in statuses and cat.status.is_lost()):
         return True

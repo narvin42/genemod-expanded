@@ -1288,7 +1288,7 @@
                     "r_c"
                 ],
                 "history_text": {
-                    "death": "m_c was slain by o_c_n warriors"
+                    "death": "m_c was slain by o_c_n warriors."
                 },
                 "relationships": [
                     {
@@ -1385,8 +1385,8 @@
                 ],
                 "other_clan_rep": -8,
                 "new_cat": [
-                    ["age: kitten", "backstory: stolenkit2", "clancat", "exists", "change_clan"],
-                    ["age: kitten", "backstory: stolenkit2", "clancat", "exists", "change_clan"]
+                    ["age: kitten", "backstory: stolenkit0", "clancat", "exists", "change_clan"],
+                    ["age: kitten", "backstory: stolenkit0", "clancat", "exists", "change_clan"]
                 ],
                 "frequency": 3
             },
@@ -1401,8 +1401,8 @@
                 ],
                 "other_clan_rep": -8,
                 "new_cat": [
-                    ["age: kitten", "backstory: stolenkit2", "clancat", "exists", "change_clan"],
-                    ["age: kitten", "backstory: stolenkit2", "clancat", "exists", "change_clan"]
+                    ["age: kitten", "backstory: stolenkit0", "clancat", "exists", "change_clan"],
+                    ["age: kitten", "backstory: stolenkit0", "clancat", "exists", "change_clan"]
                 ],
                 "frequency": 3,
                 "relationships": [

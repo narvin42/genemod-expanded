@@ -53,7 +53,7 @@
     ],
     "sub_type": ["accessory"],
     "frequency": 4,
-    "event_text":  "m_c hunts down one of the first flowers that fortell the arrival of the coming rains, proudly wearing the acc_singular back to camp.",
+    "event_text":  "m_c hunts down one of the first flowers that foretell the arrival of the coming rains, proudly wearing the acc_singular back to camp.",
     "new_accessory": [
       "LAVENDER",
       "JUNIPER",
@@ -588,7 +588,7 @@
     "location": ["desert"],
     "season": ["any"],
     "frequency": 4,
-    "event_text": "m_c spotted a cat silouetted against the setting sun with the light shining partway through their semitransparent fur. Next blink, the figure is gone.",
+    "event_text": "m_c spotted a cat silhouetted against the setting sun with the light shining partway through their semitransparent fur. Next blink, the figure is gone.",
     "m_c": {
       "age": ["any"],
       "status": ["any"],
@@ -1109,7 +1109,7 @@
     "event_id": "dst_misc_any_angrylizard",
     "location": ["desert"],
     "season": ["newleaf", "greenleaf", "leaf-fall"],
-    "weight": 20,
+    "frequency": 4,
     "event_text": "m_c was nipped on the nose when {PRONOUN/m_c/subject} investigated an odd, lizard-shaped lump in the sand.",
     "m_c": {
       "status": ["warrior", "apprentice", "kitten", "elder"]
@@ -1121,7 +1121,7 @@
     "season": ["any"],
     "sub_type": ["war"],
     "tags": ["clan:apprentice"],
-    "weight": 15,
+    "frequency": 3,
     "event_text": "The apprentices of the Clan are taking special training to learn how to blind their enemies with dust from the ground.",
     "m_c": {
       "status": ["apprentice"]
@@ -1131,7 +1131,7 @@
     "event_id": "dst_misc_multiprophecymedcatprophet1",
     "location": ["desert"],
     "season": ["newleaf", "greenleaf"],
-    "weight": 20,
+    "frequency": 4,
     "event_text": "While out gathering valuable herbs, m_c sees a vision of prophecy_list_sight/m_c.",
     "m_c": {
       "status": ["healer", "healer apprentice"],
@@ -1142,7 +1142,7 @@
     "event_id": "dst_misc_multiomenmedcatomen1",
     "location": ["desert"],
     "season": ["newleaf", "greenleaf", "leaf-fall"],
-    "weight": 20,
+    "frequency": 4,
     "event_text": "The things {PRONOUN/m_c/subject} saw in the sand today, omen_list_sight/m_c... {PRONOUN/m_c/subject/CAP} {VERB/m_c/consider/considers} what these omens may entail for c_n.",
     "m_c": {
       "status": ["healer", "healer apprentice"],

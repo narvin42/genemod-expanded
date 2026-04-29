@@ -274,7 +274,7 @@ def create_new_cat_block(
     if not rank and not age and "meeting" not in attribute_list:
         rank = choice([CatRank.WARRIOR, CatRank.WARRIOR,
                       CatRank.WARRIOR, CatRank.APPRENTICE])
-    if rank and not age:
+    if rank and age is None:
         if rank in [
             CatRank.APPRENTICE,
             CatRank.MEDIATOR_APPRENTICE,
@@ -323,7 +323,7 @@ def create_new_cat_block(
         litter = True
         if rank not in (CatRank.KITTEN, CatRank.NEWBORN):
             rank = CatRank.KITTEN
-        if rank == CatRank.NEWBORN:
+        if rank == CatRank.NEWBORN or age == 0:
             age = 0
         else:
             age = randint(
@@ -341,7 +341,7 @@ def create_new_cat_block(
     elif rank == CatRank.MEDICINE_CAT:
         chosen_backstory = choice(["wandering_healer1", "wandering_healer2"])
     else:
-        if cat_social == CatSocial.CLANCAT:
+        if cat_social in (CatSocial.CLANCAT, "former clancat"):
             x = "former_clancat"
         else:
             x = cat_social
@@ -382,7 +382,11 @@ def create_new_cat_block(
             BACKSTORIES["backstory_categories"]["former_clancat_backstories"]
             or (game.clan.clancount == "multiclan" and "clancat" in attribute_list)
         ):
-            cat_social = CatSocial.CLANCAT
+            cat_social = (
+                CatSocial.CLANCAT
+                if cat_social != "former clancat"
+                else "former clancat"
+            )
         elif chosen_backstory in (
             BACKSTORIES["backstory_categories"]["baby_loner_backstories"]
             + BACKSTORIES["backstory_categories"]["loner_backstories"]
