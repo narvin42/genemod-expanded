@@ -96,6 +96,8 @@ class Cat:
     rank_sort_order = [
         CatRank.NEWBORN,
         CatRank.KITTEN,
+        CatRank.QUEEN_APPRENTICE,
+        CatRank.QUEEN,
         CatRank.APPRENTICE,
         CatRank.WARRIOR,
         CatRank.ELDER,
@@ -1343,7 +1345,10 @@ class Cat:
 
             self.history.add_mentor_skill_influence_strings()
             self.history.add_mentor_facet_influence_strings()
-        return
+        
+        if self.status.rank.is_any_apprentice_rank():
+            self.history.add_queen_skill_influence_strings()
+            self.history.add_queen_facet_influence_strings()
 
     def change_name(self, new_prefix=None, new_suffix=None):
         self.name = Name(
@@ -1936,7 +1941,9 @@ class Cat:
         cats_to_choose = [
             iter_cat
             for iter_cat in Cat.all_cats.values()
-            if iter_cat.ID != self.ID and iter_cat.status.group_ID == self.status.group_ID
+            if iter_cat.ID != self.ID and 
+            iter_cat.status.group_ID == self.status.group_ID and 
+            iter_cat.age != CatAge.NEWBORN
         ]
         # if there are no cats to interact, stop
         if not cats_to_choose:

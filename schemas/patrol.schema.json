@@ -114,6 +114,7 @@
       "type": "string"
     },
     "FutureCat": {
+      "additionalProperties": false,
       "properties": {
         "age": {
           "description": "List of ages the cat can be. If they can be anything, use \"any\".",
@@ -275,13 +276,14 @@
       "type": "object"
     },
     "FutureEventPool": {
+      "additionalProperties": false,
       "properties": {
-        "subtype": {
+        "sub_type": {
           "description": "Events to be added to the pool will contain all subtypes specified.",
           "items": {
             "$ref": "#/$defs/EventSubtype"
           },
-          "title": "Subtype",
+          "title": "Sub Type",
           "type": "array"
         },
         "event_id": {
@@ -1398,16 +1400,23 @@
         "-apprentice",
         "mediator apprentice",
         "-mediator apprentice",
+        "queen apprentice",
+        "-queen apprentice",
         "healer apprentice",
         "-healer apprentice",
         "medicine cat apprentice",
         "-medicine cat apprentice",
+        "any_apprentice",
         "warrior",
         "-warrior",
         "mediator",
         "-mediator",
+        "queen",
+        "-queen",
         "healer",
         "-healer",
+        "any_healer",
+        "any_fighter",
         "medicine cat",
         "-medicine cat",
         "deputy",

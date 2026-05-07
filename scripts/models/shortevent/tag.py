@@ -3,7 +3,8 @@ from __future__ import annotations
 from enum import Enum
 from typing import Union, Annotated
 
-from pydantic import RootModel, StringConstraints
+from pydantic import AfterValidator, RootModel, StringConstraints
+from scripts.models.common.rank import validate_clan_rank
 
 
 class TagEnum(Enum):
@@ -24,7 +25,16 @@ class TagEnum(Enum):
     romance = "romance"
     adoption = "adoption"
     tnr = "tnr"
+    not_singleclan = "not_singleclan"
+    not_multiclan = "not_multiclan"
 
 
 class Tag(RootModel):
-    root: Union[TagEnum, Annotated[str, StringConstraints(pattern=r"^clan:(.+)$")]]
+    root: Union[
+        TagEnum,
+        Annotated[
+            str,
+            StringConstraints(pattern=r"^clan:(.+)$"),
+            AfterValidator(validate_clan_rank),
+        ],
+    ]

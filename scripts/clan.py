@@ -1045,7 +1045,8 @@ class Clan:
             # else just start us with an empty herb supply
             else:
                 clan.herb_supply = HerbSupply()
-            clan.herb_supply.required_herb_count = get_living_clan_cat_count(Cat) * 2
+
+            clan.herb_supply.set_required_herb_count(get_living_clan_cat_count(Cat))
         except:
             clan.herb_supply = HerbSupply()
 
@@ -1243,13 +1244,20 @@ class Clan:
     def group_ID_to_clan(self, group_ID):
         return next(filter(lambda c: c.group_ID == group_ID, game.clan.all_other_clans), game.clan)
 
-    def get_relations(self, clan, other_clan):
+    def get_relations(self, clan, other_clan, get_label=False):
         main_enum = clan.group_ID
         other_enum = other_clan.group_ID
 
         if game.clan.relations.get(other_enum, {}).get(main_enum):
             main_enum = other_clan.group_ID
             other_enum = clan.group_ID
+
+        if get_label:
+            if game.clan.relations[main_enum][other_enum] > 17:
+                return "ally"
+            elif 7 <= game.clan.relations[main_enum][other_enum] <= 17:
+                return "neutral"
+            return "hostile"
         
         return game.clan.relations[main_enum][other_enum]
 
@@ -1704,11 +1712,11 @@ def _find_alignment(temper_dict: dict, first_value: int, second_value: int) -> s
     :param second_value: The second value to find the alignment for. This is the chart's "x-value", or when viewing it as a dictionary: its values.
     """
     if 11 <= first_value:
-        temper = list(temper_dict.values())[0]
+        temper = list(temper_dict.values())[2]
     elif 7 <= first_value:
         temper = list(temper_dict.values())[1]
     else:
-        temper = list(temper_dict.values())[2]
+        temper = list(temper_dict.values())[0]
 
     if 11 <= second_value:
         temper = temper[2]
