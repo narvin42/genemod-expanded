@@ -8,6 +8,7 @@ import pygame_gui
 from pygame_gui.core import ObjectID
 
 from scripts.cat.cats import Cat
+from scripts.config import get_config
 from scripts.game_structure import image_cache, constants
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.game_structure import game
@@ -100,7 +101,9 @@ class ClanScreen(Screens):
         self.choose_cat_positions()
 
         self.set_disabled_menu_buttons(["camp_screen"])
-        self.update_heading_text(f"{game.selected_clan.displayname}Clan")
+        self.update_heading_text(
+            "general.clan", text_kwargs={"name": game.selected_clan.displayname}
+        )
         self.show_menu_buttons()
         Screens.menu_buttons["back_to_camp"].hide()
 
@@ -408,11 +411,11 @@ class ClanScreen(Screens):
             # Newborns are not meant to be placed. They are hiding.
             if (
                 Cat.all_cats[x].status.rank == CatRank.NEWBORN
-                or constants.CONFIG["fun"]["all_cats_are_newborn"]
+                or get_config(game.clan, "fun.all_cats_are_newborn")
             ):
                 if (
-                    constants.CONFIG["fun"]["all_cats_are_newborn"]
-                    or constants.CONFIG["fun"]["newborns_can_roam"]
+                    get_config(game.clan, "fun.all_cats_are_newborn")
+                    or get_config(game.clan, "fun.newborns_can_roam")
                 ):
                     # Free them
                     [

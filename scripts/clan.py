@@ -20,12 +20,20 @@ from scripts.cat.names import names
 from scripts.cat.save_load import (
     save_cats,
     get_faded_ids,
-    load_faded_cat_ids,
 )
 from scripts.clan_package.settings import save_clan_settings, load_clan_settings
 from scripts.clan_package.settings.clan_settings import reset_loaded_clan_settings
 from scripts.clan_resources.freshkill import FreshkillPile, Nutrition
 from scripts.clan_resources.herb.herb_supply import HerbSupply
+from scripts.clan_resources.point_of_interest import (
+    load_pois,
+    get_poi_save_dict,
+    generate_and_add_new_poi,
+    PoiType,
+    get_poi_names_set,
+    clear_pois,
+)
+from scripts.config import get_config
 from scripts.events_module.future.future_event import FutureEvent
 from scripts.events_module.generate_events import OngoingEvent
 from scripts.game_structure import constants
@@ -72,6 +80,7 @@ class Clan:
         camp_bg=None,
         symbol=None,
         game_mode="classic",
+        cruel_cards: list[str] = [],
         starting_members=None,
         starting_season="Newleaf",
         relations={CatGroup.PLAYER_CLAN_ID: {}},
@@ -120,6 +129,7 @@ class Clan:
         self.camp_bg = camp_bg
         self.chosen_symbol = symbol
         self.game_mode = game_mode
+        self.cruel_cards: list[str] = cruel_cards
         self.pregnancy_data = {}
         self.inheritance = {}
         self.custom_pronouns = {}
@@ -160,7 +170,7 @@ class Clan:
         modifiers = {"Newleaf": 0, "Greenleaf": 3, "Leaf-fall": 6, "Leaf-bare": 9}
         return (
             self.starting_season
-            if constants.CONFIG["lock_season"]
+            if get_config(game.clan, "lock_season")
             else constants.SEASON_CALENDAR[
                 (self.age + modifiers[self.starting_season]) % 12
             ]
@@ -245,21 +255,10 @@ class Clan:
                 Cat.all_cats[i].example = True
                 self.remove_cat(Cat.all_cats[i].ID)
 
-        allowed_range = constants.CONFIG["clan_creation"]["other_clans_range"]
+        allowed_range = get_config(None, "clan_creation.other_clans_range")
         number_other_clans = randint(allowed_range[0], allowed_range[1])
         for _ in range(number_other_clans):
-            other_clan_names = [str(i.displayname) for i in self.all_other_clans] + [
-                game.clan.displayname
-            ]
-            other_clan_name = choice(
-                names.names_dict["normal_prefixes"] + names.names_dict["clan_prefixes"]
-            )
-            while other_clan_name in other_clan_names:
-                other_clan_name = choice(
-                    names.names_dict["normal_prefixes"]
-                    + names.names_dict["clan_prefixes"]
-                )
-            other_clan = OtherClan(name=other_clan_name, clancount=self.clancount)
+            other_clan = OtherClan(clancount=self.clancount)
             game.clan.relations[CatGroup.PLAYER_CLAN_ID][other_clan.group_ID] = randint(8, 12)
             game.clan.war[CatGroup.PLAYER_CLAN_ID][other_clan.group_ID] = {"at_war": False, "duration": 0}
 
@@ -271,7 +270,7 @@ class Clan:
                     game.clan.relations[clan.group_ID][o_clan.group_ID] = randint(8, 12)
                     game.clan.war[clan.group_ID][o_clan.group_ID] = {"at_war": False, "duration": 0}
 
-        allowed_range = constants.CONFIG["clan_creation"]["starting_outsiders"]
+        allowed_range = get_config(None, "clan_creation.starting_outsiders")
         number_outsiders = randint(allowed_range[0], allowed_range[1])
         for i in range(number_outsiders):
             create_new_cat(
@@ -294,6 +293,14 @@ class Clan:
             the_cat.get_new_thought()
             the_cat.pelt.rebuild_sprite = True 
         save_cats(game.clan.name, Cat, game)
+
+        # remove any already loaded points of interest
+        clear_pois()
+
+        generate_and_add_new_poi(game.clan.biome, PoiType.GATHERING)
+        generate_and_add_new_poi(game.clan.biome, PoiType.MOONPLACE)
+        for i in range(3):
+            generate_and_add_new_poi(game.clan.biome, PoiType.TERRAIN, clan=self.group_ID)
 
         # create leader's ceremony
         if self.leader:
@@ -371,7 +378,6 @@ class Clan:
             self.leader = leader
             Cat.all_cats[leader.ID].rank_change(CatRank.LEADER)
             self.leader_predecessors += 1
-            # self.leader_lives = max(1, choice(constants.CONFIG["clan_creation"]["leader_lives_nr"]))
 
         # todo: this leads nowhere, can it be deleted?
         switch_set_value(Switch.new_leader, None)
@@ -441,6 +447,7 @@ class Clan:
             "camp_bg": self.camp_bg,
             "clan_symbol": self.chosen_symbol,
             "gamemode": self.game_mode,
+            "cruel_cards": self.cruel_cards,
             "used_group_IDs": game.used_group_IDs,
             "last_focus_change": self.last_focus_change,
             "clans_in_focus": self.clans_in_focus,
@@ -497,6 +504,8 @@ class Clan:
 
         clan_data["war"] = self.war
 
+        clan_data["poi"] = get_poi_save_dict()
+
         self.save_herb_supply(game.clan)
         self.save_disaster(game.clan)
         self.save_future_events(game.clan)
@@ -506,9 +515,11 @@ class Clan:
         if game.clan.game_mode in ("expanded", "cruel season"):
             self.save_freshkill_pile(game.clan)
 
-        safe_save(f"{get_save_dir()}/{self.name}clan.json", clan_data)
+        safe_save(f"{get_save_dir()}/{self.name}/clan.json", clan_data)
 
-        if os.path.exists(get_save_dir() + f"/{self.name}clan.txt") & (
+        if os.path.exists(f"{get_save_dir()}/{self.name}clan.json"):
+            os.remove(f"{get_save_dir()}/{self.name}clan.json")
+        elif os.path.exists(get_save_dir() + f"/{self.name}clan.txt") & (
             self.name != "current"
         ):
             os.remove(get_save_dir() + f"/{self.name}clan.txt")
@@ -519,8 +530,11 @@ class Clan:
         """
 
         version_info = None
+        game.reset_used_group_IDs()
         if os.path.exists(
             get_save_dir() + "/" + switch_get_value(Switch.clan_list)[0] + "clan.json"
+        ) or os.path.exists(
+            get_save_dir() + "/" + switch_get_value(Switch.clan_list)[0] + "/clan.json"
         ):
             version_info = self.load_clan_json()
         else:
@@ -569,8 +583,19 @@ class Clan:
         switch_set_value(
             Switch.error_message, "There was an error loading the clan.json"
         )
+        filename = (
+            get_save_dir() + "/" + switch_get_value(Switch.clan_list)[0] + "/clan.json"
+        )
+        if not os.path.exists(filename):
+            # legacy
+            filename = (
+                get_save_dir()
+                + "/"
+                + switch_get_value(Switch.clan_list)[0]
+                + "clan.json"
+            )
         with open(
-            get_save_dir() + "/" + switch_get_value(Switch.clan_list)[0] + "clan.json",
+            filename,
             "r",
             encoding="utf-8",
         ) as read_file:  # pylint: disable=redefined-outer-name
@@ -598,6 +623,8 @@ class Clan:
         else:
             displayname = clan_data["clanname"]
 
+        load_pois(clan_data.get("poi", {"empty": []}))
+
         game.clan = Clan(
             name=clan_data["clanname"],
             displayname=displayname,
@@ -608,6 +635,7 @@ class Clan:
             camp_bg=clan_data["camp_bg"],
             game_mode=clan_data["gamemode"],
             relations=clan_data.get("relations", {CatGroup.PLAYER_CLAN_ID:{}}),
+            cruel_cards=clan_data.get("cruel_cards", []),
             self_run_init_functions=False,
         )
         game.clan.post_initialization_functions()
@@ -770,8 +798,6 @@ class Clan:
                                 other_clan_id = game.clan.all_other_clans[int(other_key[-1])-1].group_ID
                             game.clan.war[clan_id][other_clan_id] = clan_data["war"][key][other_key]
                 
-
-        load_faded_cat_ids(clan_data["clanname"])
 
         game.clan.last_focus_change = clan_data.get("last_focus_change")
         game.clan.clans_in_focus = clan_data.get("clans_in_focus", [])
@@ -1338,9 +1364,16 @@ class OtherClan:
             self.group_ID = game.get_free_group_ID(CatGroup.OTHER_CLAN)
         game.clan.other_clan_IDs.append(self.group_ID)
 
-        clan_names = names.names_dict["normal_prefixes"]
-        clan_names.extend(names.names_dict["clan_prefixes"])
-        self.displayname = name or choice(clan_names)
+        self.displayname = name
+        if not self.displayname:  # find name if clan has no name yet
+            used_names = [str(i.displayname) for i in game.clan.all_other_clans] + [
+                game.clan.displayname
+            ]
+            clan_names = names.names_dict["normal_prefixes"]
+            clan_names.extend(names.names_dict["clan_prefixes"])
+            self.displayname = choice(clan_names)
+            while self.displayname in used_names:  # making sure we don't repeat a name
+                self.displayname = choice(clan_names)
         if biome:
             self.biome = biome
         else:
@@ -1437,6 +1470,9 @@ class OtherClan:
 
         random_rank = [CatRank.WARRIOR, CatRank.WARRIOR, CatRank.ELDER, CatRank.APPRENTICE, CatRank.KITTEN]
         if clancount == "multiclan":
+            for i in range(3):
+                generate_and_add_new_poi(game.clan.biome, PoiType.TERRAIN, clan=self.group_ID)
+
             instructor_rank = choice(
                 (
                     CatRank.APPRENTICE,
@@ -1459,14 +1495,17 @@ class OtherClan:
             self.instructor.dead_for = randint(20, 200)
             self.instructor.status.group_history.insert(0, {"rank": instructor_rank, "group": self.group_ID, "moons_as": self.instructor.moons})
 
-            self.new_leader(create_cat(CatRank.LEADER, biome=self.biome, kittypet=constants.CONFIG["clan_creation"]["use_special_roller"], clan=self.group_ID))
-            self.new_deputy(create_cat(CatRank.DEPUTY, biome=self.biome, kittypet=constants.CONFIG["clan_creation"]["use_special_roller"], clan=self.group_ID))
-            self.new_medicine_cat(create_cat(CatRank.MEDICINE_CAT, biome=self.biome, kittypet=constants.CONFIG["clan_creation"]["use_special_roller"], clan=self.group_ID))
-            for i in range(randint(constants.CONFIG["clan_creation"]["neighbourclan_cats"][0], constants.CONFIG["clan_creation"]["neighbourclan_cats"][1])):
-                create_cat(choice(random_rank), biome=self.biome, kittypet = constants.CONFIG["clan_creation"]["use_special_roller"], clan=self.group_ID)
+            use_special = get_config(None, "clan_creation.use_special_roller")
+            cat_range = get_config(None, "clan_creation.neighbourclan_cats")
+            self.new_leader(create_cat(CatRank.LEADER, biome=self.biome, kittypet=use_special, clan=self.group_ID))
+            self.new_deputy(create_cat(CatRank.DEPUTY, biome=self.biome, kittypet=use_special, clan=self.group_ID))
+            self.new_medicine_cat(create_cat(CatRank.MEDICINE_CAT, biome=self.biome, kittypet=use_special, clan=self.group_ID))
+            for i in range(randint(cat_range[0], cat_range[1])):
+                create_cat(choice(random_rank), biome=self.biome, kittypet = use_special, clan=self.group_ID)
 
     def __repr__(self):
-        return f"{self.displayname}Clan"
+        # has indicators that this is unlocalized, just in case
+        return f"!!{self.displayname}Clan!!"
     
     def get_save_data(self):
         return {
@@ -1497,7 +1536,6 @@ class OtherClan:
             self.leader = leader
             Cat.all_cats[leader.ID].rank_change(CatRank.LEADER)
             self.leader_predecessors += 1
-            # self.leader_lives = max(1, choice(constants.CONFIG["clan_creation"]["leader_lives_nr"]))
         switch_set_value(Switch.new_leader, None)
 
     def new_deputy(self, deputy):

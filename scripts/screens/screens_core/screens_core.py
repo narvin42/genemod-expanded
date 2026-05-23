@@ -9,7 +9,8 @@ import pygame
 import pygame_gui
 
 import scripts.game_structure.screen_settings
-from scripts.game_structure import image_cache, constants
+from scripts.config import get_config
+from scripts.game_structure import image_cache
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.game_structure import game
 from scripts.game_structure.screen_settings import MANAGER
@@ -60,22 +61,20 @@ def rebuild_core(*, should_rebuild_bgs=True):
     rebuild_mute("default")
 
     version_number = pygame_gui.elements.UILabel(
-        ui_scale(pygame.Rect((50, 50), (-1, -1))),
+        ui_scale(pygame.Rect((0, 0), (-1, -1))),
         get_version_info().version_number[0:8],
-        object_id=get_text_box_theme(),
+        object_id="#dev_watermark",
         anchors={"bottom": "bottom", "right": "right"},
     )
     # Adjust position
     version_number.set_relative_position(
-        ui_scale_offset(
-            (
-                800 - version_number.get_relative_rect()[2],
-                700 - version_number.get_relative_rect()[3],
-            )
+        (
+            -version_number.relative_rect[2] - ui_scale_value(10),
+            -version_number.relative_rect[3],
         )
     )
 
-    if get_version_info().is_source_build or get_version_info().is_dev():
+    if get_version_info().is_source_build:
         dev_watermark = pygame_gui.elements.UILabel(
             ui_scale(pygame.Rect((525, 660), (300, 50))),
             "screens.core.dev_watermark",
@@ -262,7 +261,7 @@ def rebuild_top_menu_buttons():
         )
         del heading_rect
     else:
-        clan_list = [c.displayname +"Clan" for c in [game.clan] + game.clan.all_other_clans]
+        clan_list = [i18n.t("general.clan", name=c.displayname) for c in [game.clan] + game.clan.all_other_clans]
         menu_buttons["heading"] = UIDropDown(
             pygame.Rect((0, 25), (220, 35)),
             "",
@@ -509,9 +508,9 @@ def rebuild_bgs():
         del game_box
 
     bg = pygame.Surface(scripts.game_structure.screen_settings.game_screen_size)
-    bg.fill(constants.CONFIG["theme"]["light_mode_background"])
+    bg.fill(get_config(game.clan, "theme.light_mode_background"))
     bg_dark = pygame.Surface(scripts.game_structure.screen_settings.game_screen_size)
-    bg_dark.fill(constants.CONFIG["theme"]["dark_mode_background"])
+    bg_dark.fill(get_config(game.clan, "theme.dark_mode_background"))
 
     default_game_bgs = {
         "light": {"default": bg},
@@ -669,13 +668,11 @@ def process_blur_bg(
     if theme is None:
         theme = "dark" if game_setting_get("dark mode") else "light"
 
-    fade.fill(constants.CONFIG["theme"]["fullscreen_background"][theme]["fade_color"])
-    vignette.set_alpha(
-        constants.CONFIG["theme"]["fullscreen_background"][theme]["vignette_alpha"]
-    )
-    dropshadow.set_alpha(
-        constants.CONFIG["theme"]["fullscreen_background"][theme]["dropshadow_alpha"]
-    )
+    fullscreen_theme_info = get_config(game.clan, "theme.fullscreen_background")
+
+    fade.fill(fullscreen_theme_info[theme]["fade_color"])
+    vignette.set_alpha(fullscreen_theme_info[theme]["vignette_alpha"])
+    dropshadow.set_alpha(fullscreen_theme_info[theme]["dropshadow_alpha"])
 
     if vignette_strength is not None:
         vignette.set_alpha(vignette_strength)

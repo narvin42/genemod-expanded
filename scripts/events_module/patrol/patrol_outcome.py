@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: ascii -*-
+
+from html import escape
 import random
 from os.path import exists as path_exists
 from random import choice, choices
@@ -11,6 +13,7 @@ import pygame
 from scripts.cat.personality import Personality
 from scripts.events_module.future.prep_and_trigger import prep_future_event
 from scripts.clan_package.settings import get_clan_setting
+from scripts.config import get_config
 from scripts.game_structure import constants
 from scripts.game_structure.game.settings import game_setting_get
 
@@ -230,6 +233,11 @@ class PatrolOutcome:
 
         return outcome_list
 
+    @staticmethod
+    def _profile_link(cat: Cat) -> str:
+        """Create a hyperlink to a cat profile from patrol results."""
+        return f'<a href="cat://{cat.ID}"><b>{escape(str(cat.name))}</b></a>'
+
     def execute_outcome(self, patrol: "Patrol") -> Tuple[str, str, list, Optional[str]]:
         """
         Executes the outcome. Returns a tuple with the final outcome text, the results text, and any outcome art
@@ -243,10 +251,10 @@ class PatrolOutcome:
         tnr = False
         tnr2 = False
         if 'tnr' in patrol.patrol_event.tags and get_clan_setting('tnr_mode'):
-            if random.random() < constants.CONFIG['tnr_mode']['Clan_tnr']:
+            if random.random() < get_config(game.clan, "tnr_mode.clan_tnr"):
                 tnr = True
         if 'tnr2' in patrol.patrol_event.tags and get_clan_setting('tnr_mode'):
-            if random.random() < constants.CONFIG['tnr_mode']['Clan_tnr2']:
+            if random.random() < get_config(game.clan, "tnr_mode.clan_tnr2"):
                 tnr = True
                 tnr2 = True
 
@@ -483,8 +491,6 @@ class PatrolOutcome:
             gm_modifier = 1
         elif game.clan.game_mode == "expanded":
             gm_modifier = 3
-        elif game.clan.game_mode == "cruel season":
-            gm_modifier = 6
         else:
             gm_modifier = 1
 
@@ -580,7 +586,7 @@ class PatrolOutcome:
                         )
                     )
             else:
-                catnames.append(str(_cat.name))
+                catnames.append(self._profile_link(_cat))
             # Kill Cat
             self.__handle_death_history(_cat, patrol)
             _cat.die(body)
@@ -625,7 +631,7 @@ class PatrolOutcome:
         return i18n.t(
             "screens.patrol.lost_cats",
             count=len(cats_to_lose),
-            cats=adjust_list_text([str(cat.name) for cat in cats_to_lose]),
+            cats=adjust_list_text([self._profile_link(cat) for cat in cats_to_lose]),
         )
 
     def _handle_condition_and_scars(self, patrol: "Patrol") -> str:
@@ -658,7 +664,6 @@ class PatrolOutcome:
                 lethal = False
 
             # Injury or scar the cats
-            results = []
             for _cat in cats:
                 # give condition
                 if not possible_injuries:
@@ -714,7 +719,9 @@ class PatrolOutcome:
                     for given_condition in given_conditions:
                         self.__handle_condition_history(_cat, given_condition, patrol)
                     combined_conditions = ", ".join(given_conditions)
-                    results.append(f"{_cat.name} got: {combined_conditions}.")
+                    results.append(
+                        f"{self._profile_link(_cat)} got: {combined_conditions}."
+                    )
                 else:
                     # If no results are shown, assume the cat didn't get the patrol history. Default override.
                     self.__handle_condition_history(
@@ -928,11 +935,11 @@ class PatrolOutcome:
                 if "unknown" in attribute_list:
                     continue
                 if cat.dead:
-                    dead.append(str(cat.name))
+                    dead.append(self._profile_link(cat))
                 elif cat.status.group_ID != patrol.clan.group_ID:
-                    outside.append(str(cat.name))
+                    outside.append(self._profile_link(cat))
                 else:
-                    new.append(str(cat.name))
+                    new.append(self._profile_link(cat))
             for type_list, string in [
                 (dead, "screens.patrol.dead_outsider"),
                 (outside, "screens.patrol.met_outsider"),
@@ -1032,7 +1039,9 @@ class PatrolOutcome:
             history_text = (
                 history_text
                 if "o_c_n" not in history_text
-                else history_text.replace("o_c_n", f"{str(patrol.other_clan.displayname)}Clan")
+                else history_text.replace(
+                    "o_c_n", i18n.t("general.clan", name=patrol.other_clan.displayname)
+                )
             )
 
             cat.history.add_scar(history_text)
@@ -1063,7 +1072,7 @@ class PatrolOutcome:
                 final_death_history
                 if "o_c_n" not in final_death_history
                 else final_death_history.replace(
-                    "o_c_n", f"{str(patrol.other_clan.displayname)}Clan"
+                    "o_c_n", i18n.t("general.clan", name=patrol.other_clan.displayname)
                 )
             )
 
@@ -1071,7 +1080,9 @@ class PatrolOutcome:
             history_scar = (
                 history_scar
                 if "o_c_n" not in history_scar
-                else history_scar.replace("o_c_n", f"{str(patrol.other_clan.displayname)}Clan")
+                else history_scar.replace(
+                    "o_c_n", i18n.t("general.clan", name=patrol.other_clan.displayname)
+                )
             )
 
         cat.history.add_possible_history(
@@ -1091,7 +1102,7 @@ class PatrolOutcome:
 
         if final_death_history and isinstance(final_death_history, str):
             final_death_history = final_death_history.replace(
-                "o_c_n", f"{str(patrol.other_clan.displayname)}Clan"
+                "o_c_n", i18n.t("general.clan", name=patrol.other_clan.displayname)
             )
 
         cat.history.add_death(death_text=final_death_history)

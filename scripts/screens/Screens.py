@@ -4,9 +4,11 @@ from typing import Dict, Optional, Union
 import pygame
 import pygame_gui
 import ujson
+import i18n
 
 import scripts.game_structure.screen_settings
 import scripts.screens.screens_core.screens_core
+from scripts.config import get_config
 from scripts.game_structure import constants
 from scripts.cat.enums import CatGroup
 from scripts.game_structure.game.settings import (
@@ -59,7 +61,7 @@ class Screens:
                     b.enable()
             for b in ["screens.core.warriors_den", "screens.core.leader_den"]:
                 Screens.menu_buttons["dens"].child_button_dicts[b].enable()
-            Screens.menu_buttons["heading"].selected_list = [game.clan.displayname + "Clan"]
+            Screens.menu_buttons["heading"].selected_list = [i18n.t("general.clan", name=game.clan.displayname)]
             if hasattr(Screens.menu_buttons["heading"], "child_buttons"):
                 for b in Screens.menu_buttons["heading"].child_buttons:
                     if b.text in Screens.menu_buttons["heading"].selected_list:
@@ -123,11 +125,11 @@ class Screens:
         self.work_done = {}
 
         bg = pygame.Surface(scripts.game_structure.screen_settings.game_screen_size)
-        bg.fill(constants.CONFIG["theme"]["light_mode_background"])
+        bg.fill(get_config(game.clan, "theme.light_mode_background"))
         bg_dark = pygame.Surface(
             scripts.game_structure.screen_settings.game_screen_size
         )
-        bg_dark.fill(constants.CONFIG["theme"]["dark_mode_background"])
+        bg_dark.fill(get_config(game.clan, "theme.dark_mode_background"))
 
         self.game_bgs = {}
         self.fullscreen_bgs = {}
@@ -219,7 +221,9 @@ class Screens:
         Screens.menu_buttons = scripts.screens.screens_core.screens_core.menu_buttons
         Screens.game_frame = scripts.screens.screens_core.screens_core.game_frame
         try:
-            Screens.update_heading_text(game.selected_clan.displayname + "Clan")
+            Screens.update_heading_text(
+                "general.clan", text_kwargs={"name": game.selected_clan.displayname}
+            )
         except AttributeError:
             Screens.update_heading_text("DebugClan")
         if self.active_bg is None or "default" in self.active_bg:
@@ -433,7 +437,7 @@ class Screens:
         # intialise the vignette strength
         vignette = scripts.screens.screens_core.screens_core.vignette
         if vignette_alpha is None:
-            vignette_alpha = constants.CONFIG["theme"]["fullscreen_background"][
+            vignette_alpha = get_config(game.clan, "theme.fullscreen_background")[
                 "dark" if game_setting_get("dark mode") else "light"
             ]["vignette_alpha"]
         if not (0 <= vignette_alpha <= 255):

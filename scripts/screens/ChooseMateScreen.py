@@ -5,6 +5,7 @@ import pygame.transform
 import pygame_gui.elements
 
 from scripts.cat.cats import Cat
+from scripts.cat_relations.inheritance2 import inheritance_db
 from scripts.game_structure import image_cache
 
 from scripts.cat_relations.relationship import (
@@ -48,6 +49,9 @@ class ChooseMateScreen(Screens):
         self.search_genotype = False
         self.search_toggle_checkbox = None
 
+        self.show_all_checkbox = None
+        self.show_all = False
+
         self.toggle_mate = None
         self.page_number = None
 
@@ -90,6 +94,7 @@ class ChooseMateScreen(Screens):
         self.single_only_text = None
         self.have_kits_text = None
         self.with_selected_cat_text = None
+        self.show_all_text = None
 
         self.potential_page_display = None
         self.offspring_page_display = None
@@ -165,6 +170,15 @@ class ChooseMateScreen(Screens):
                     self.search_genotype = True
                 self.search_bar.placeholder_text = "general.genotype_search" if self.search_genotype else "general.name_search"
                 self.search_bar.set_text("")
+                self.update_potential_mates_container()
+
+            elif event.ui_element == self.show_all_checkbox:
+                if "@checked_checkbox" in event.ui_element.get_object_ids():
+                    event.ui_element.change_object_id("@unchecked_checkbox")
+                    self.show_all = False
+                else:
+                    event.ui_element.change_object_id("@checked_checkbox")
+                    self.show_all = True
                 self.update_potential_mates_container()
 
             # Next and last page buttons
@@ -284,6 +298,13 @@ class ChooseMateScreen(Screens):
             manager=MANAGER,
         )
 
+        self.show_all_text = pygame_gui.elements.UITextBox(
+            "screens.choose_mate.show_all",
+            ui_scale(pygame.Rect((225, 630), (120, -1))),
+            object_id=get_text_box_theme("#text_box_26_horizcenter"),
+            manager=MANAGER,
+        )
+
         self.search_toggle_checkbox = UIImageButton(
             ui_scale(pygame.Rect((60, 629), (38, 34))),
             "",
@@ -293,6 +314,16 @@ class ChooseMateScreen(Screens):
             tool_tip_text="screens.list.search_names_tooltip"
             if self.search_genotype
             else "screens.list.search_genotypes_tooltip",
+            starting_height=1,
+            manager=MANAGER,
+        )
+
+        self.show_all_checkbox = UIImageButton(
+            ui_scale(pygame.Rect((220, 629), (38, 34))),
+            "",
+            object_id="@checked_checkbox"
+            if self.show_all
+            else "@unchecked_checkbox",
             starting_height=1,
             manager=MANAGER,
         )
@@ -544,7 +575,7 @@ class ChooseMateScreen(Screens):
             self.the_cat.create_inheritance_new_cat()
         self.all_offspring = [
             Cat.fetch_cat(i)
-            for i in list(self.the_cat.inheritance.kits)
+            for i in inheritance_db.get_children(self.the_cat.ID)
             if isinstance(Cat.fetch_cat(i), Cat)
         ]
         if self.selected_cat and self.kits_selected_pair:
@@ -823,6 +854,8 @@ class ChooseMateScreen(Screens):
         self.have_kits_text = None
         self.with_selected_cat_text.kill()
         self.with_selected_cat_text = None
+        self.show_all_text.kill()
+        self.show_all_text = None
 
         self.the_cat_frame.kill()
         self.the_cat_frame = None
@@ -858,13 +891,15 @@ class ChooseMateScreen(Screens):
         self.search_toggle_checkbox.kill()
         del self.search_toggle_checkbox
         self.previous_search_text = None
+        self.show_all = False
+        self.show_all_checkbox.kill()
+        del self.show_all_checkbox
 
     def update_current_cat_info(self, reset_selected_cat=True):
         """Updates all elements with the current cat, as well as the selected cat.
         Called when the screen switched, and whenever the focused cat is switched"""
         self.the_cat = Cat.all_cats[switch_get_value(Switch.cat)]
-        if not self.the_cat.inheritance:
-            self.the_cat.create_inheritance_new_cat()
+        self.the_cat.create_inheritance_new_cat()
 
         (
             self.next_cat,
@@ -1262,9 +1297,9 @@ class ChooseMateScreen(Screens):
             for i in Cat.all_cats_list
             if not i.faded
             and self.the_cat.is_potential_mate(
-                i, for_love_interest=False, age_restriction=False, ignore_no_mates=True
+                i, for_love_interest=False, age_restriction=False, ignore_no_mates=True, outsider=self.show_all
             )
-            and i.status.group_ID == self.the_cat.status.group_ID
+            and (i.status.group_ID == self.the_cat.status.group_ID or self.show_all)
             and i.ID not in self.the_cat.mate
             and (not self.single_only or not i.mate)
             and (

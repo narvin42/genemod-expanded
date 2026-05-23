@@ -12,11 +12,13 @@ from scripts.events_module.event_filters import (
     event_for_cat,
     event_for_clan_relations,
     event_for_season,
+    event_for_poi,
     cat_for_event,
     get_frequency,
     find_new_frequency,
 )
 from scripts.events_module.relationship.crossclan_event import CrossClanEvent
+from scripts.config import get_config
 from scripts.game_structure import constants, game
 
 loaded_events = {}
@@ -40,7 +42,8 @@ def handle_crossclan_relationships():
         if living:
             viable_cats[c.group_ID] = living
 
-    event_count = min(constants.CONFIG["relationship"]["max_crossclan_interaction"], int(sum([len(c) for c in viable_cats.values()])/len(viable_cats.keys())/2))
+    event_count = min(get_config(game.clan, "relationship.max_crossclan_interaction"), int(
+        sum([len(c) for c in viable_cats.values()])/len(viable_cats.keys())/2))
 
     for i in range(event_count):
         main_cat = choice(viable_cats[choice(list(viable_cats.keys()))])
@@ -199,7 +202,9 @@ def generate_event_objects(is_group, biome, frequency) -> list:
                     event_id=event["event_id"] if "event_id" in event else "",
                     location=event["location"] if "location" in event else ["any"],
                     season=event["season"] if "season" in event else ["any"],
+                    poi=event["poi"] if "poi" in event else {},
                     sub_type=event["sub_type"] if "sub_type" in event else [],
+                    tags=event["tags"] if "tags" in event else [],
                     text=event_text,
                     new_accessory=(
                         event["new_accessory"] if "new_accessory" in event else []
@@ -276,7 +281,7 @@ def filter_events(
             continue
 
         # ensure ID and requirements override
-        if constants.CONFIG["event_generation"]["debug_override_requirements"]:
+        if get_config(game.clan, "event_generation.debug_override_requirements"):
             final_events.append(event)
             continue
 
@@ -284,6 +289,9 @@ def filter_events(
             continue
 
         if not event_for_season(event.season):
+            continue
+
+        if not event_for_poi(event.poi, clan.group_ID):
             continue
 
         # check tags
@@ -349,8 +357,8 @@ def filter_events(
             continue
 
         if (
-            constants.CONFIG["event_generation"]["debug_ensure_event_id"]
-            and constants.CONFIG["event_generation"]["debug_ensure_event_id"]
+            get_config(game.clan, "event_generation.debug_ensure_event_id")
+            and get_config(game.clan, "event_generation.debug_ensure_event_id")
             != chosen_event.event_id
         ):
             final_events.remove(chosen_event)
@@ -359,7 +367,7 @@ def filter_events(
             continue
 
         # if we're overriding requirements, don't bother looking for an appropriate cat
-        # if constants.CONFIG["event_generation"]["debug_override_requirements"]:
+        # if get_config(game.clan, "event_generation.debug_override_requirements"):
         #     chosen_cat = choice(cat_list)
         #     continue
 
@@ -408,9 +416,6 @@ def filter_events(
                 allowable_cats = viable_cats[involved_clans[chosen_event.r_c[i]["clan"]-1]] if chosen_event.r_c[i].get("clan") else viable_cats[involved_clans[-1]]
                 allowable_cats = [c for c in allowable_cats if c not in chosen_cats and c.ID != main_cat.ID]
 
-            if "romance" in chosen_event.sub_type:
-                allowable_cats = [c for c in allowable_cats if c.is_potential_mate(main_cat, for_love_interest=True)]
-            
             for c in chosen_cats + [main_cat]:
                 if c in allowable_cats:
                     allowable_cats.remove(c)
@@ -424,6 +429,7 @@ def filter_events(
                 ).copy(),
                 injuries=r_c_injuries,
                 return_id=False,
+                tags=chosen_event.tags,
             )
 
             if not chosen_cat:

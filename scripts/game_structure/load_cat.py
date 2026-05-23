@@ -11,6 +11,9 @@ import ujson
 
 from scripts.cat.cats import Cat, BACKSTORIES
 from scripts.clan import clan_class
+from scripts.cat.save_load import load_faded_cat_ids
+from scripts.cat_relations.inheritance2 import inheritance_db
+from scripts.cat.save_load import get_faded_ids
 from ..cat.enums import CatGroup, CatRank
 from scripts.cat.pelts import Pelt
 from scripts.cat_relations.inheritance import Inheritance
@@ -22,20 +25,23 @@ from scripts.game_structure.game.switches import (
 from scripts.game_structure.game.settings import game_setting_get
 from ..cat.pronouns import get_new_pronouns
 from scripts.housekeeping.version import SAVE_VERSION_NUMBER
-from scripts.game_structure import constants
+from scripts.config import get_config
 from scripts.game_structure import game
 from ..cat.personality import Personality
 from ..cat.skills import CatSkills
 from ..cat.status import StatusDict
+from ..clan_resources.point_of_interest import (
+    clear_pois,
+    generate_and_add_new_poi,
+    PoiType,
+)
 from ..housekeeping.datadir import get_save_dir
 
 logger = logging.getLogger(__name__)
 
 
 def load_cats():
-    switch_set_value(
-        Switch.error_message, ""
-    )
+    load_faded_cat_ids(switch_get_value(Switch.clan_name))
     try:
         json_load()
     except FileNotFoundError as e:
@@ -146,33 +152,42 @@ def accurate_porting(cat, info):
                 cat.phenotype.white = ["ws", "ws"]
                 cat.phenotype.whitegrade = 3
         
-    if info["eye_colour"] in ["BLUE", "COBALT", "CYAN", "DARKBLUE", "HEATHERBLUE", "PALEBLUE", "SUNLITICE"]:
+    if info["eye_colour"] in ["DUSK"]:
+        pigmentation = "albino"
+        refraction = choice(range(3, 7))
+        cat.phenotype.lefteyetype = f"R{refraction} ; {pigmentation}"
+        cat.phenotype.righteyetype = f"R{refraction} ; {pigmentation}"
+    elif info["eye_colour"] in ["BLUE", "COBALT", "CYAN", "DARKBLUE", "HEATHERBLUE", "PALEBLUE", "SUNLITICE", "SEA", "BLUEBELL"]:
         pigmentation = "blue"
         refraction = choice(range(5, 9))
-        if info["eye_colour"] in ["COBALT", "DARKBLUE", "HEATHERBLUE"]:
+        if info["eye_colour"] in ["COBALT", "DARKBLUE", "HEATHERBLUE", "SEA", "BLUEBELL"]:
             refraction = choice(range(9, 12))
         elif info["eye_colour"] in ["PALEBLUE", "CYAN"]:
             refraction = choice(range(1, 5))
         cat.phenotype.lefteyetype = f"R{refraction} ; {pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; {pigmentation}"
-    elif info["eye_colour"] in ["GOLD", "YELLOW", "PALEYELLOW", "GREENYELLOW"]:
+    elif info["eye_colour"] in ["GOLD", "YELLOW", "PALEYELLOW", "GREENYELLOW", "MUSTARD"]:
         pigmentation = choice(range(1, 6))
         refraction = choice(range(1, 4))
         if info["eye_colour"] == "PALEYELLOW":
             pigmentation = 1
         if info["eye_colour"] == "GREENYELLOW":
             refraction = choice(range(3, 6))
+        if info["eye_colour"] == "MUSTARD":
+            pigmentation = choice(range(4, 7))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour"] in ["AMBER", "COPPER", "BRONZE"]:
+    elif info["eye_colour"] in ["AMBER", "COPPER", "BRONZE", "DAWN", "EARTHY"]:
         pigmentation = choice(range(6, 12))
         refraction = choice(range(1, 4))
         if info["eye_colour"] == "AMBER":
             pigmentation = choice(range(5, 8))
-        if info["eye_colour"] == "COPPER":
+        if info["eye_colour"] in ["COPPER", "EARTHY"]:
             pigmentation = choice(range(7, 10))
         if info["eye_colour"] == "BRONZE":
             pigmentation = choice(range(9, 12))
+        if info["eye_colour"] == "DAWN":
+            pigmentation = choice(range(8, 11))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
     elif info["eye_colour"] in ["EMERALD", "GREEN", "PALEGREEN", "SAGE"]:
@@ -191,39 +206,57 @@ def accurate_porting(cat, info):
         refraction = choice(range(5, 8))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
+    elif info["eye_colour"] in ["AURORA"]:
+        pigmentation = 1
+        refraction = choice(range(11, 13))
+        cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
+        cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
+    elif info["eye_colour"] in ["FOREST"]:
+        pigmentation = 1
+        refraction = choice(range(5, 9))
+        cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
+        cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
 
-    if info["eye_colour2"] in ["BLUE", "COBALT", "CYAN", "DARKBLUE", "HEATHERBLUE", "PALEBLUE", "SUNLITICE"]:
+    if info["eye_colour2"] in ["DUSK"]:
+        pigmentation = "albino"
+        refraction = choice(range(3, 7))
+        cat.phenotype.lefteyetype = f"R{refraction} ; {pigmentation}"
+    elif info["eye_colour2"] in ["BLUE", "COBALT", "CYAN", "DARKBLUE", "HEATHERBLUE", "PALEBLUE", "SUNLITICE", "SEA", "BLUEBELL"]:
         pigmentation = "blue"
         refraction = choice(range(5, 9))
-        if info["eye_colour"] in ["COBALT", "DARKBLUE", "HEATHERBLUE"]:
+        if info["eye_colour2"] in ["COBALT", "DARKBLUE", "HEATHERBLUE", "SEA", "BLUEBELL"]:
             refraction = choice(range(9, 12))
-        elif info["eye_colour"] in ["PALEBLUE", "CYAN"]:
+        elif info["eye_colour2"] in ["PALEBLUE", "CYAN"]:
             refraction = choice(range(1, 5))
         cat.phenotype.lefteyetype = f"R{refraction} ; {pigmentation}"
-    elif info["eye_colour2"] in ["GOLD", "YELLOW", "PALEYELLOW", "GREENYELLOW"]:
+    elif info["eye_colour2"] in ["GOLD", "YELLOW", "PALEYELLOW", "GREENYELLOW", "MUSTARD"]:
         pigmentation = choice(range(1, 6))
         refraction = choice(range(1, 4))
-        if info["eye_colour"] == "PALEYELLOW":
+        if info["eye_colour2"] == "PALEYELLOW":
             pigmentation = 1
-        if info["eye_colour"] == "GREENYELLOW":
+        if info["eye_colour2"] == "GREENYELLOW":
             refraction = choice(range(3, 6))
+        if info["eye_colour2"] == "MUSTARD":
+            pigmentation = choice(range(4, 7))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour2"] in ["AMBER", "COPPER", "BRONZE"]:
+    elif info["eye_colour2"] in ["AMBER", "COPPER", "BRONZE", "DAWN", "EARTHY"]:
         pigmentation = choice(range(6, 12))
         refraction = choice(range(1, 4))
-        if info["eye_colour"] == "AMBER":
+        if info["eye_colour2"] == "AMBER":
             pigmentation = choice(range(5, 8))
-        if info["eye_colour"] == "COPPER":
+        if info["eye_colour2"] in ["COPPER", "EARTHY"]:
             pigmentation = choice(range(7, 10))
-        if info["eye_colour"] == "BRONZE":
+        if info["eye_colour2"] == "BRONZE":
             pigmentation = choice(range(9, 12))
+        if info["eye_colour2"] == "DAWN":
+            pigmentation = choice(range(8, 11))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
     elif info["eye_colour2"] in ["EMERALD", "GREEN", "PALEGREEN", "SAGE"]:
         pigmentation = choice(range(2, 12))
         refraction = choice(range(9, 12))
-        if info["eye_colour"] == "PALEGREEN":
+        if info["eye_colour2"] == "PALEGREEN":
             pigmentation = choice(range(2, 4))
-        elif info["eye_colour"] == "SAGE":
+        elif info["eye_colour2"] == "SAGE":
             pigmentation = choice(range(7, 10))
         else:
             pigmentation = choice(range(3, 7))
@@ -232,7 +265,15 @@ def accurate_porting(cat, info):
         pigmentation = choice(range(5, 8))
         refraction = choice(range(5, 8))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
-    
+    elif info["eye_colour2"] in ["AURORA"]:
+        pigmentation = 1
+        refraction = choice(range(11, 13))
+        cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
+    elif info["eye_colour2"] in ["FOREST"]:
+        pigmentation = 1
+        refraction = choice(range(5, 9))
+        cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
+
     if "SUNLITICE" in [info["eye_colour"], info["eye_colour2"]]:
         if not info["eye_colour2"]:
             cat.phenotype.extraeye = "sectoral3"
@@ -743,7 +784,6 @@ def json_load():
     version_convert(version_info)
 
     # replace cat ids with cat objects and add other needed variables
-    other_clan_cats = [c for c in Cat.all_cats_list if c.status.is_other_clancat]
     for cat in all_cats:
         if cat.status.rank in (CatRank.LEADER, CatRank.DEPUTY, CatRank.MEDICINE_CAT):
             if cat.status.group == CatGroup.STARCLAN:
@@ -775,26 +815,11 @@ def json_load():
             )
             switch_set_value(Switch.traceback, e)
             raise
-
-        cat.inheritance = Inheritance(cat)
-
-        try:
-            # initialization of thoughts
-            cat.get_new_thought(other_clan_cats=other_clan_cats)
-        except Exception as e:
-            logger.exception(
-                f"There was an error when thoughts for cat #{cat} are created."
-            )
-            switch_set_value(
-                Switch.error_message,
-                f"There was an error when thoughts for cat #{cat} are created.",
-            )
-            switch_set_value(Switch.traceback, e)
-            raise
-
-        # Save integrety checks
-        if constants.CONFIG["save_load"]["load_integrity_checks"]:
+        if get_config(None, "save_load.load_integrity_checks"):
             save_check()
+
+    inheritance_db.clear_stored_data()
+    inheritance_db.load_inheritances(Cat, get_faded_ids)
 
 
 def save_check():
@@ -864,11 +889,12 @@ def version_convert(version_info):
                     c.permanent_condition[con].pop("moons_with")
                 c.permanent_condition[con]["moon_start"] = game.clan.age - moons_with
 
+    # freshkill start for older clans
     if version < 3 and game.clan.freshkill_pile:
-        # freshkill start for older clans
         add_prey = game.clan.freshkill_pile.amount_food_needed() * 2
         game.clan.freshkill_pile.add_freshkill(add_prey)
 
+    # death history text revision
     if version < 4:
         for c in Cat.all_cats.values():
             if not c.status.is_leader:
@@ -883,3 +909,14 @@ def version_convert(version_info):
                 # check if a period is present and append one if not
                 if death["text"][-1] != ".":
                     death["text"] += "."
+
+    # generate points of interest
+    if version < 5:
+        # remove any already loaded points of interest
+        clear_pois()
+
+        generate_and_add_new_poi(biome=game.clan.biome, category=PoiType.GATHERING)
+        generate_and_add_new_poi(biome=game.clan.biome, category=PoiType.MOONPLACE)
+
+        for i in range(3):
+            generate_and_add_new_poi(biome=game.clan.biome, category=PoiType.TERRAIN, clan="1")
