@@ -881,7 +881,7 @@ class Pregnancy_Events:
             if pregnant_cat.ID not in involved_cats:
                 involved_cats.append(pregnant_cat.ID)
             involved_cats.append(RandomChoice.ID)
-            if random() < 0.5:
+            if random() < 0.5 or len(other_cat) < 2:
                 event_list.append(choice(events["birth"]["surrogate_birth"]))
             else:
                 SurrogateBirth = True
@@ -1794,10 +1794,13 @@ class Pregnancy_Events:
                 y = randrange(0, 10)
                 if second_kitten.ID == kitten.ID:
                     continue
+                start_value_info = get_config(game.clan, "new_cat.sib_buff.cat1_to_cat2")
                 start_relation = Relationship(kitten, second_kitten, False, True)
-                start_relation.like += 20 + y
-                start_relation.comfort += 10 + y
-                start_relation.trust += 10 + y
+                start_relation.romance += start_value_info["romance"]+ y
+                start_relation.like += start_value_info["like"] + y
+                start_relation.respect += start_value_info["respect"] + y
+                start_relation.comfort += start_value_info["comfort"] + y
+                start_relation.trust += start_value_info["trust"] + y
                 kitten.relationships[second_kitten.ID] = start_relation
 
         # check if the possible adoptive cat is not already in the family tree and
