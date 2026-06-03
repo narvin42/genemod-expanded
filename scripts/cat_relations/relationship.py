@@ -5,7 +5,7 @@ from typing import Optional
 import i18n
 
 from scripts.cat.enums import CatCompatibility
-from scripts.game_structure import constants
+from scripts.config import get_config
 from scripts.cat_relations.interaction import (
     cats_fulfill_single_interaction_constraints,
     rebuild_relationship_dicts,
@@ -65,14 +65,14 @@ class Relationship:
         """
 
         # romance operates on a 0-100 scale, 0 is no romantic interest and 100 is full romantic interest
-        self.romance = romance
+        self._romance = min(max(romance, 0), 100)
 
         # each stat can go from -100 to 100
         # negative numbers are the negative state while positive is the positive state
-        self.like = like
-        self.respect = respect
-        self.trust = trust
-        self.comfort = comfort
+        self._like = min(max(like, -100), 100)
+        self._respect = min(max(respect, -100), 100)
+        self._trust = min(max(trust, -100), 100)
+        self._comfort = min(max(comfort, -100), 100)
 
     def to_dict(self):
         return {
@@ -219,17 +219,17 @@ class Relationship:
         # prepare string for display
         interaction_str = self.adjust_interaction_string(interaction_str)
 
-        effect = ""
+        effect = "relationships.neutral_postscript"
         if positive:
-            effect = i18n.t(f"relationships.positive_postscript_{intensity}")
+            effect = f"relationships.positive_postscript_{intensity}"
         elif not positive:
-            effect = i18n.t(f"relationships.negative_postscript_{intensity}")
+            effect = f"relationships.negative_postscript_{intensity}"
 
-        interaction_str = interaction_str + effect
+        interaction_str = i18n.t(effect, text=interaction_str)
         self.log.append(
-            interaction_str
-            + i18n.t(
+            i18n.t(
                 "relationships.age_postscript",
+                text=interaction_str,
                 name=str(self.cat_from.name),
                 count=self.cat_from.moons,
             )
@@ -273,8 +273,9 @@ class Relationship:
         amount : int
             the amount (negative or positive) for the given parameter
         """
+        relationship_info = get_config(game.clan, "relationship")
         # get the normal amount
-        amount = constants.CONFIG["relationship"]["value_change_amount"][intensity]
+        amount = relationship_info["value_change_amount"][intensity]
         if not is_positive:
             amount = amount * -1
 
@@ -283,10 +284,10 @@ class Relationship:
         if compatibility == CatCompatibility.NEUTRAL:
             amount = amount
         elif compatibility == CatCompatibility.POSITIVE:
-            amount += constants.CONFIG["relationship"]["compatibility_effect"]
+            amount += relationship_info["compatibility_effect"]
         else:
             # negative compatibility
-            amount -= constants.CONFIG["relationship"]["compatibility_effect"]
+            amount -= relationship_info["compatibility_effect"]
         return amount
 
     def interaction_affect_relationships(
@@ -311,7 +312,7 @@ class Relationship:
         # only high intensity gives passive buffs
         if intensity == "high":
             passive_buff = int(
-                amount / constants.CONFIG["relationship"][f"passive_influence_div"]
+                amount / get_config(game.clan, "relationship.passive_influence_div")
             )
             # just adding a teeny bit of variety
             buffs = [passive_buff - 1, passive_buff, passive_buff + 1]
@@ -382,21 +383,23 @@ class Relationship:
 
         """
         # base for non-existing like
-        bool_ballot = [True, True, False]
+        bool_ballot = [True, False]
 
         # take personality in count
         comp = get_personality_compatibility(self.cat_from, self.cat_to)
         if comp == CatCompatibility.POSITIVE:
             bool_ballot.append(True)
+        elif comp == CatCompatibility.NEGATIVE:
+            bool_ballot.append(False)
 
         # further influence the partition based on the relationship
         for value in (self.like, self.respect, self.comfort, self.trust):
-            # each 10th above 0 adds another True
+            # each 20th above 0 adds another True
             if value > 0:
-                bool_ballot += [True] * int(value / 10)
-            # each 10th below 0
+                bool_ballot += [True] * int(value / 20)
+            # each 20th below 0
             else:
-                bool_ballot += [False] * int(abs(value) / 10)
+                bool_ballot += [False] * int(abs(value) / 20)
 
         return choice(bool_ballot)
 
@@ -788,7 +791,7 @@ class Relationship:
         """
         Returns the tier group for the given value.
         """
-        for group, interval in constants.CONFIG["relationship"]["value_intervals"].items():
+        for group, interval in get_config(game.clan, "relationship.value_intervals").items():
             if rel_type <= interval:
                 return group
 
@@ -796,7 +799,7 @@ class Relationship:
 
     @staticmethod
     def _get_neutral_adjusted_value(value: int):
-        value_intervals = constants.CONFIG["relationship"]["value_intervals"]
+        value_intervals = get_config(game.clan, "relationship.value_intervals")
         neutral_start = value_intervals["low_neg"]
         neutral_end = value_intervals["neutral"]
 

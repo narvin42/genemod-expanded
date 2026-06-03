@@ -19,10 +19,11 @@ from scripts.conditions import (
     medicine_cats_can_cover_clan,
     get_amount_cat_for_one_medic,
 )
+from scripts.config import get_config
 from scripts.event_class import Single_Event
 from scripts.events_module.short.scar_events import Scar_Events
 from scripts.events_module.short.short_event_generation import create_short_event
-from scripts.game_structure import constants
+from scripts.config import get_config
 from scripts.game_structure.game.switches import (
     Switch,
     switch_get_value,
@@ -134,7 +135,7 @@ class Condition_Events:
     def handle_nutrient(cat: Cat, nutrition_info: dict) -> None:
         """
         Handles gaining conditions or death for cats with low nutrient.
-        This function should only be called if the game is in 'expanded' or 'cruel season' mode.
+        This function should only be called if the game is in 'expanded' or 'cruel_season' mode.
 
         Starvation and malnutrtion must be handled separately from other illnesses due to their distinct death triggers.
 
@@ -275,22 +276,26 @@ class Condition_Events:
             # ---------------------------------------------------------------------------- #
             #                              make cats sick                                  #
             # ---------------------------------------------------------------------------- #
-            random_number = int(
-                random.random()
-                * game.get_config_value(
-                    clan.group_ID, "condition_related", f"{game.clan.game_mode}_illness_chance"
-                )
+            
+            path = (
+                "condition_related.classic_illness_chance"
+                if game.clan.game_mode == "classic"
+                else "condition_related.illness_chance"
             )
+            random_number = int(random.random() * get_config(game.clan, path))
             modifier = 1
 
             relevant_conditions = []
 
+            path = (
+                "condition_related.classic_perm_condition_modifier"
+                if game.clan.game_mode == "classic"
+                else "condition_related.perm_condition_modifier"
+            )
             season_dict = Condition_Events.SPECIAL_SEASON_LIST[season]
             for key in season_dict:
                 if key in list(cat.permanent_condition.keys()) or key == "fully hairless" and cat.pelt.length == "hairless" and (cat.phenotype.sedesp[0] == "hr" or cat.phenotype.ruhr[1] == "Hrbd" or cat.moons > 11):
-                    modifier = game.get_config_value(
-                        clan.group_ID, "condition_related", f"{game.clan.game_mode}_perm_condition_modifier"
-                    )
+                    modifier = get_config(game.clan, path)
                     relevant_conditions.append(key)
 
             if (
@@ -301,9 +306,7 @@ class Condition_Events:
             ):
                 # CLAN FOCUS!
                 if clan == game.clan and get_clan_setting("rest_and_recover"):
-                    stopping_chance = constants.CONFIG["focus"]["rest_and_recover"][
-                        "illness_prevent"
-                    ]
+                    stopping_chance = get_config(game.clan, "focus.rest_and_recover.illness_prevent")
                     if not int(random.random() * stopping_chance):
                         return triggered
 
@@ -364,8 +367,7 @@ class Condition_Events:
                 chosen_illness = possible_illnesses[int(random.random() * len(possible_illnesses))]
                 random.shuffle(relevant_conditions)
                 if chosen_key in Condition_Events.PERM_CONDITION_RISK_STRINGS and chosen_illness in Condition_Events.PERM_CONDITION_RISK_STRINGS[chosen_key]:
-                    event_string = random.choice(
-                        Condition_Events.PERM_CONDITION_RISK_STRINGS[chosen_key][chosen_illness])
+                    event_string = Condition_Events.get_valid_string_from_list(Condition_Events.PERM_CONDITION_RISK_STRINGS[chosen_key][chosen_illness], cat, clan)
                 if not event_string:
                     print(f"{chosen_illness} not in {chosen_key} risk dict")
                     # try to translate the illness
@@ -389,13 +391,6 @@ class Condition_Events:
                         cat.get_injured(chosen_illness)
                     else:
                         cat.get_ill(chosen_illness)
-
-                    event_string = event_text_adjust(
-                        Cat,
-                        text=event_string,
-                        main_cat=cat,
-                        clan=clan
-                    )
 
         # if an event happened, then add event to cur_event_list and save death if it happened.
         if event_string:
@@ -421,19 +416,30 @@ class Condition_Events:
         Returns: boolean - if an event was triggered
         """
         triggered = False
-        random_number = int(
-            random.random()
-            * game.get_config_value(
-                clan.group_ID, "condition_related", f"{game.clan.game_mode}_injury_chance"
-            )
+
+        modify_for_war = switch_get_value(Switch.war_rel_change_type) != "rel_up" and game.clan.get_wars(clan)
+        path = (
+            "condition_related.classic_injury_chance"
+            if game.clan.game_mode == "classic"
+            else "condition_related.injury_chance"
         )
+
+        injury_chance = get_config(game.clan, path) - (
+            get_config(game.clan, "condition_related.war_injury_modifier")
+            if modify_for_war
+            else 0
+        )
+
+        random_number = int(random.random() * injury_chance)
+
+        random_number = int(random.random() * injury_chance)
 
         if cat.dead:
             triggered = True
             return triggered
 
         if (
-            constants.CONFIG["event_generation"]["debug_type_override"] == "injury"
+            get_config(game.clan, "event_generation.debug_type_override") == "injury"
         ):
             create_short_event(
                 event_type="health",
@@ -481,9 +487,7 @@ class Condition_Events:
             if triggered:
                 # CLAN FOCUS!
                 if get_clan_setting("rest_and_recover") and clan == game.clan:
-                    stopping_chance = constants.CONFIG["focus"]["rest_and_recover"][
-                        "injury_prevent"
-                    ]
+                    stopping_chance = get_config(game.clan, "focus.rest_and_recover.injury_prevent")
                     if not int(random.random() * stopping_chance):
                         return False
 
@@ -579,9 +583,7 @@ class Condition_Events:
                                 possible_conditions.append(x)
                         if len(possible_conditions) > 0 and not int(
                             random.random()
-                            * constants.CONFIG["condition_related"][
-                                "permanent_condition_chance"
-                            ]
+                            * get_config(game.clan, "condition_related.permanent_condition_chance")
                         ):
                             perm_condition = random.choice(possible_conditions)
                         else:

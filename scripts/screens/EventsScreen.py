@@ -9,6 +9,7 @@ from pygame_gui.core import ObjectID
 from scripts.cat.cats import Cat
 from scripts import events
 from scripts.events import Single_Event
+from scripts.config import get_config
 from scripts.game_structure import image_cache, constants
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.game_structure.game.switches import (
@@ -180,24 +181,23 @@ class EventsScreen(Screens):
 
           
         # KEYBIND CONTROLS
-        elif game_setting_get("keybinds"):
-            # ON PRESSING A KEY
-            if event.type == pygame.KEYDOWN:
-                # LEFT ARROW
-                if event.key == pygame.K_LEFT:
-                    self.change_screen(GameScreen.PATROL)
-                # RIGHT ARROW
-                elif event.key == pygame.K_RIGHT:
-                    self.change_screen(GameScreen.CAMP)
-                # DOWN AND UP ARROW
-                elif event.key == pygame.K_DOWN or event.key == pygame.K_UP:
-                    self.handle_tab_select(event.key)
-                # RETURN
-                elif event.key == pygame.K_RETURN:
-                    self.handle_tab_switch(self.selected_display)
-                # SPACE
-                elif event.key == pygame.K_SPACE:
-                    self.save_button.save_game(current_screen=self)
+        # ON PRESSING A KEY
+        if event.type == pygame.KEYDOWN:
+            # LEFT ARROW
+            if event.key == pygame.K_LEFT:
+                self.change_screen(GameScreen.PATROL)
+            # RIGHT ARROW
+            elif event.key == pygame.K_RIGHT:
+                self.change_screen(GameScreen.CAMP)
+            # DOWN AND UP ARROW
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_UP:
+                self.handle_tab_select(event.key)
+            # RETURN
+            elif event.key == pygame.K_RETURN:
+                self.handle_tab_switch(self.selected_display)
+            # SPACE
+            elif event.key == pygame.K_SPACE:
+                self.save_button.save_game(current_screen=self)
 
     def change_clan(self):
         curr_clan = next(filter(lambda c: c.group_ID == self.current_clan, game.clan.all_other_clans), game.clan)
@@ -334,7 +334,7 @@ class EventsScreen(Screens):
             starting_height=1,
             container=self.event_screen_container,
             manager=MANAGER,
-            text_kwargs={"season": i18n.t(game.clan.current_season)},
+            text_kwargs={"season": i18n.t(f"general.{game.clan.current_season.lower()}")},
         )
         self.clan_info["age"] = pygame_gui.elements.UITextBox(
             "screens.events.age",
@@ -385,7 +385,7 @@ class EventsScreen(Screens):
             self.living_groups_container.change_layer(10)
             self.choose_group_buttons[game.clan.group_ID] = UISurfaceImageButton(
                 ui_scale(pygame.Rect((0, 0), (190, 34))),
-                game.clan.displayname + "Clan",
+                i18n.t("general.clan", name=game.clan.displayname),
                 get_button_dict(ButtonStyles.DROPDOWN, (190, 34)),
                 container=self.living_groups_container,
                 object_id=ObjectID(class_id="@buttonstyles_dropdown", object_id=None),
@@ -396,7 +396,7 @@ class EventsScreen(Screens):
             for clan in game.clan.all_other_clans:
                 self.choose_group_buttons[clan.group_ID] = UISurfaceImageButton(
                     ui_scale(pygame.Rect((0, y_pos), (190, 34))),
-                    clan.displayname + "Clan",
+                    i18n.t("general.clan", name=clan.displayname),
                     get_button_dict(ButtonStyles.DROPDOWN, (190, 34)),
                     container=self.living_groups_container,
                     object_id=ObjectID(class_id="@buttonstyles_dropdown", object_id=None),
@@ -469,7 +469,9 @@ class EventsScreen(Screens):
 
         # Draw and disable the correct menu buttons.
         self.set_disabled_menu_buttons(["events"])
-        self.update_heading_text(f"{curr_clan.displayname}Clan")
+        self.update_heading_text(
+            "general.clan", text_kwargs={"name": curr_clan.displayname}
+        )
         self.show_menu_buttons()
 
     def reset_page_buttons(self, is_page_update=False):
@@ -806,7 +808,7 @@ class EventsScreen(Screens):
         # UPDATE CLAN INFO
         self.clan_info["season"].set_text(
             "screens.events.season",
-            text_kwargs={"season": i18n.t(game.clan.current_season)},
+            text_kwargs={"season": i18n.t(f"general.{game.clan.current_season.lower()}")},
         )
         self.clan_info["age"].set_text(
             "screens.events.age", text_kwargs={"count": game.clan.age}
@@ -880,10 +882,8 @@ class EventsScreen(Screens):
         anchor = {"top": "top"}
 
         default_color = pygame.Color(
-            constants.CONFIG["theme"][
-                ("dark" if game_setting_get("dark mode") else "light")
-                + "_mode_background"
-            ]
+            get_config(game.clan, f"theme.{'dark' if game_setting_get('dark mode') else 'light'}_mode_background"
+            )
         )
 
         alternate_color = (

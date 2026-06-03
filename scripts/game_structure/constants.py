@@ -16,7 +16,12 @@ MENU_SCREENS = [
     GameScreen.SETTINGS,
     GameScreen.START,
     GameScreen.SWITCH_CLAN,
-    GameScreen.MAKE_CLAN,
+    GameScreen.MAKE_CLAN_CHOOSE_CLANCOUNT,
+    GameScreen.MAKE_CLAN_CHOOSE_MODE,
+    GameScreen.MAKE_CLAN_CHOOSE_NAME,
+    GameScreen.MAKE_CLAN_CHOOSE_CATS,
+    GameScreen.MAKE_CLAN_CHOOSE_SYMBOL,
+    GameScreen.MAKE_CLAN_CLAN_CREATED,
 ]
 
 EVENTS_PER_PAGE = 10
@@ -156,59 +161,35 @@ SUPPLY_ADJUSTMENTS = [
     "increase_#",
 ]
 
-with open("resources/game_config.toml", "r", encoding="utf-8") as read_file:
-    CONFIG = tomllib.loads(read_file.read())
-    PREY_CONFIG = CONFIG["clan_resources"]["freshkill"]
+CRUEL_CARDS_ALL: dict = {}
+with open(
+    "resources/dicts/cruel_season/behavior_cards.json", "r", encoding="utf-8"
+) as read_file:
+    CRUEL_CARDS_BEHAVIOR: dict = ujson.loads(read_file.read())
+CRUEL_CARDS_ALL.update(CRUEL_CARDS_BEHAVIOR)
 
-def recursive_merge(dict1, dict2):
-    for key, value in dict2.items():
-        if key in dict1 and isinstance(dict1[key], dict) and isinstance(value, dict):
-            # Recursively merge nested dictionaries
-            dict1[key] = recursive_merge(dict1[key], value)
-        else:
-            # Merge non-dictionary values
-            dict1[key] = value
-    return dict1
+with open(
+    "resources/dicts/cruel_season/danger_cards.json", "r", encoding="utf-8"
+) as read_file:
+    CRUEL_CARDS_DANGER: dict = ujson.loads(read_file.read())
+CRUEL_CARDS_ALL.update(CRUEL_CARDS_DANGER)
 
-def other_config_refreshes():
-    global CONFIG
-    from scripts.cat.cats import Cat
-    from scripts.cat.enums import CatAge
-    from scripts.game_structure import game
-    Cat.age_moons = {
-        CatAge.NEWBORN: CONFIG["cat_ages"]["newborn"],
-        CatAge.KITTEN: CONFIG["cat_ages"]["kitten"],
-        CatAge.ADOLESCENT: CONFIG["cat_ages"]["adolescent"],
-        CatAge.YOUNG_ADULT: CONFIG["cat_ages"]["young adult"],
-        CatAge.ADULT: CONFIG["cat_ages"]["adult"],
-        CatAge.SENIOR_ADULT: CONFIG["cat_ages"]["senior adult"],
-        CatAge.SENIOR: CONFIG["cat_ages"]["senior"],
-    }
-    PREY_CONFIG = CONFIG["clan_resources"]["freshkill"]
+with open(
+    "resources/dicts/cruel_season/environment_cards.json", "r", encoding="utf-8"
+) as read_file:
+    CRUEL_CARDS_ENVIRONMENT: dict = ujson.loads(read_file.read())
+CRUEL_CARDS_ALL.update(CRUEL_CARDS_ENVIRONMENT)
 
-def load_clan_config():
-    global CONFIG
-    from scripts.game_structure.game.switches import Switch, switch_get_value
-    reset_config()
-    if switch_get_value(Switch.clan_list) and os.path.exists(
-        get_save_dir() +
-        f"/{switch_get_value(Switch.clan_list)[0]}/game_config.toml"
-    ):
-        with open(
-            get_save_dir()
-            + f"/{switch_get_value(Switch.clan_list)[0]}/game_config.toml",
-            "r",
-            encoding="utf-8",
-        ) as read_file:
-            config_override = tomllib.loads(read_file.read())
-            CONFIG = recursive_merge(CONFIG, config_override)
-            other_config_refreshes()
+with open(
+    "resources/dicts/cruel_season/origin_cards.json", "r", encoding="utf-8"
+) as read_file:
+    CRUEL_CARDS_ORIGIN: dict = ujson.loads(read_file.read())
+CRUEL_CARDS_ALL.update(CRUEL_CARDS_ORIGIN)
 
-def reset_config():
-    global CONFIG
-    with open("resources/game_config.toml", "r", encoding="utf-8") as read_file:
-        CONFIG = tomllib.loads(read_file.read())
-        other_config_refreshes()
+with open(
+    "resources/dicts/cruel_season/card_conflicts.json", "r", encoding="utf-8"
+) as read_file:
+    CRUEL_CARDS_CONFLICTS: dict = ujson.loads(read_file.read())
 
 with open("resources/display_settings.toml", "r", encoding="utf-8") as read_file:
     DISPLAY_SETTINGS = tomllib.loads(read_file.read())

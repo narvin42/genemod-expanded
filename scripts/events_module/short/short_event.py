@@ -1,5 +1,5 @@
 from random import choice, randrange, random, randint, choices, sample
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import i18n
 import re
@@ -32,6 +32,7 @@ from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank
 from scripts.cat.enums import CatAge, CatRank, CatSocial, CatStanding
 from scripts.cat.personality import Personality
 from scripts.cat.skills import SkillPath
+from scripts.config import get_config
 from scripts.game_structure import constants
 
 
@@ -57,6 +58,7 @@ class ShortEvent:
         season: List[str] = None,
         sub_type: List[str] = None,
         tags: List[str] = None,
+        poi: Optional[Dict[str, List]] = None,
         text: str = "",
         new_accessory: List[str] = None,
         m_c=None,
@@ -88,6 +90,7 @@ class ShortEvent:
             )  # this increases the weight inversely to the number of season constraints
         self.sub_type = sub_type if sub_type else []
         self.tags = tags if tags else []
+        self.poi = poi if poi else {}
         self.text = text
         self.text_template = text
         self.new_accessory = new_accessory if new_accessory else []
@@ -194,10 +197,10 @@ class ShortEvent:
             if "changed" not in self.other_clan:
                 self.other_clan["changed"] = 0
             
-            if self.other_clan["changed"] > 0 and constants.CONFIG["event_generation"]["clan_rel_change_multiplier"] < 0:
-                self.weight -= int(self.weight * abs(constants.CONFIG["event_generation"]["clan_rel_change_multiplier"]))
-            if self.other_clan["changed"] < 0 and constants.CONFIG["event_generation"]["clan_rel_change_multiplier"] > 0:
-                self.weight -= int(self.weight * abs(constants.CONFIG["event_generation"]["clan_rel_change_multiplier"]))
+            if self.other_clan["changed"] > 0 and get_config(game.clan, "event_generation.clan_rel_change_multiplier") < 0:
+                self.weight -= int(self.weight * abs(get_config(game.clan, "event_generation.clan_rel_change_multiplier")))
+            if self.other_clan["changed"] < 0 and get_config(game.clan, "event_generation.clan_rel_change_multiplier") > 0:
+                self.weight -= int(self.weight * abs(get_config(game.clan, "event_generation.clan_rel_change_multiplier")))
         self.supplies = supplies if supplies else []
         self.new_gender = new_gender
         self.future_event = future_event if future_event else {}
@@ -235,7 +238,7 @@ class ShortEvent:
         self.dead_cat_objects.clear()
 
         if other_clan:
-            self.other_clan_name = f"{other_clan.displayname}Clan"
+            self.other_clan_name = i18n.t("general.clan", name=other_clan.displayname)
 
         self.all_involved_cat_ids.append(self.main_cat.ID)
 
@@ -656,8 +659,8 @@ class ShortEvent:
         # if there's enough eligible cats, then we KILL
         if alive_count > 15:
             max_deaths = int(alive_count / 2)  # 1/2 of alive cats
-            if max_deaths > 10:  # make this into a constants.CONFIG setting?
-                max_deaths = 10  # we don't want to have massive events with a wall of names to read
+            if max_deaths > get_config(game.clan, "death_related.max_mass_deaths"):
+                max_deaths = get_config(game.clan, "death_related.max_mass_deaths")  # we don't want to have massive events with a wall of names to read
             weights = []
             population = []
             for n in range(2, max_deaths):
@@ -676,7 +679,7 @@ class ShortEvent:
 
             tnr = False
             if 'tnr' in self.tags and get_clan_setting("tnr_mode"):
-                if random() < constants.CONFIG['tnr_mode']['Clan_tnr']:
+                if random() < get_config(game.clan, "tnr_mode.clan_tnr"):
                     tnr = True
                     
             taken_cats = []
@@ -968,6 +971,8 @@ class ShortEvent:
             game.clan.freshkill_pile.remove_freshkill(reduce_amount, take_random=True)
         if increase_amount != 0:
             game.clan.freshkill_pile.add_freshkill(increase_amount)
+
+        game.freshkill_event_list.append(self.text)
 
     def handle_herb_supply(self, block):
         """

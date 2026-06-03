@@ -1,5 +1,5 @@
 from random import choice, randrange, random, randint, choices, sample
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import i18n
 import re
@@ -58,6 +58,8 @@ class CrossClanEvent(ShortEvent):
         location: List[str] = None,
         season: List[str] = None,
         sub_type: List[str] = None,
+        tags: List[str] = None,
+        poi: Optional[Dict[str, List]] = None,
         text: List[str] = [],
         new_accessory: List[str] = None,
         m_c = None,
@@ -76,7 +78,9 @@ class CrossClanEvent(ShortEvent):
             event_id, 
             location, 
             season, 
+            poi=poi,
             sub_type=sub_type,
+            tags=tags,
             text=text, 
             new_accessory=new_accessory, 
             m_c=m_c, 

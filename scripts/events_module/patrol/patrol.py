@@ -16,6 +16,7 @@ from scripts.cat.enums import CatAge, CatRank, CatCompatibility
 from scripts.clan import Clan
 from scripts.clan_package.settings import get_clan_setting
 from scripts.clan_package.get_clan_cats import get_living_clan_cat_count
+from scripts.config import get_config
 from scripts.events_module.event_filters import (
     event_for_tags,
     event_for_other_clan,
@@ -27,9 +28,11 @@ from scripts.events_module.event_filters import (
     event_for_location,
     event_for_season,
     cat_for_event,
+    event_for_poi,
 )
 from scripts.events_module.patrol.patrol_event import PatrolEvent
 from scripts.events_module.patrol.patrol_outcome import PatrolOutcome
+from scripts.config import get_config
 from scripts.game_structure import localization, constants
 from scripts.game_structure.game.settings import game_setting_get
 from scripts.game_structure import game
@@ -106,8 +109,8 @@ class Patrol:
         self.add_patrol_cats(patrol_cats, game.clan)
 
         self.debug_patrol = (
-            constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]
-            if constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]
+            get_config(game.clan, "patrol_generation.debug_ensure_patrol_id")
+            if get_config(game.clan, "patrol_generation.debug_ensure_patrol_id")
             else False
         )
 
@@ -239,7 +242,7 @@ class Patrol:
                     self.patrol_statuses["all apprentices"] = 1
 
             if (
-                cat.status.rank.is_any_adult_warrior_like_rank()
+                cat.status.rank.is_any_adult_patrol_rank()
                 and cat.age != CatAge.ADOLESCENT
             ):
                 if "normal adult" in self.patrol_statuses:
@@ -261,15 +264,15 @@ class Patrol:
         if CatRank.MEDICINE_CAT in self.patrol_status_list:
             index = self.patrol_status_list.index(CatRank.MEDICINE_CAT)
             self.patrol_leader = self.patrol_cats[index]
-        # If there is no healer, but there is a healer apprentice, set them as the patrol leader.
-        # This prevents warrior from being treated as healers in healer patrols.
+            # If there is no medicine cat, but there is a medicine cat apprentice, set them as the patrol leader.
+            # This prevents warrior from being treated as medicine cats in medicine cat patrols.
         elif CatRank.MEDICINE_APPRENTICE in self.patrol_status_list:
             index = self.patrol_status_list.index(CatRank.MEDICINE_APPRENTICE)
             self.patrol_leader = self.patrol_cats[index]
             # then we just make sure that this app will also be app1
             self.patrol_apprentices.remove(self.patrol_leader)
             self.patrol_apprentices = [self.patrol_leader] + self.patrol_apprentices
-        # sets leader as patrol leader
+            # sets leader as patrol leader
         elif CatRank.LEADER in self.patrol_status_list:
             index = self.patrol_status_list.index(CatRank.LEADER)
             self.patrol_leader = self.patrol_cats[index]
@@ -348,9 +351,7 @@ class Patrol:
 
         possible_patrols = []
         # This is for debugging purposes, load-in *ALL* the possible patrols when debug_override_patrol_stat_requirements is true. (May require longer loading time)
-        if constants.CONFIG["patrol_generation"][
-            "debug_override_patrol_stat_requirements"
-        ]:
+        if get_config(game.clan, "patrol_generation.debug_override_patrol_stat_requirements"):
             leaves = ["greenleaf", "leaf-bare", "leaf-fall", "newleaf", "any"]
             for biome in constants.BIOME_TYPES:
                 for leaf in leaves:
@@ -506,9 +507,7 @@ class Patrol:
         )
 
         # This is a debug option, this allows you to remove any constraints of a patrol regarding location, session, biomes, etc.
-        if constants.CONFIG["patrol_generation"][
-            "debug_override_patrol_stat_requirements"
-        ]:
+        if get_config(game.clan, "patrol_generation.debug_override_patrol_stat_requirements"):
             final_patrols = final_romance_patrols = possible_patrols
             # Logging
             print(
@@ -529,7 +528,7 @@ class Patrol:
                         rom = "romance"
                     print(
                         f"debug_ensure_patrol_id: "
-                        f'"{constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]}" '
+                        f'"{get_config(game.clan, "patrol_generation.debug_ensure_patrol_id")}" '
                         f"is a possible {patrol_type} patrol, and was set as the only "
                         f"{patrol_type} {rom} patrol option"
                     )
@@ -537,7 +536,7 @@ class Patrol:
             else:
                 print(
                     f"debug_ensure_patrol_id: "
-                    f'"{constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]}" '
+                    f'"{get_config(game.clan, "patrol_generation.debug_ensure_patrol_id")}" '
                     f"is not found. Check output for reason."
                 )
         return final_patrols, final_romance_patrols
@@ -602,9 +601,7 @@ class Patrol:
             return False
 
         print("attempted romance between:", love1.name, love2.name)
-        chance_of_romance_patrol = constants.CONFIG["patrol_generation"][
-            "chance_of_romance_patrol"
-        ]
+        chance_of_romance_patrol = get_config(game.clan, "patrol_generation.chance_of_romance_patrol")
 
         if (
             get_personality_compatibility(love1, love2) == CatCompatibility.POSITIVE
@@ -624,7 +621,7 @@ class Patrol:
 
         if (
             romantic_event.patrol_id
-            == game.constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]
+            == get_config(game.clan, "patrol_generation.debug_ensure_patrol_id")
         ):
             chance_of_romance_patrol = 1
 
@@ -682,7 +679,7 @@ class Patrol:
                 if (
                     patrol.frequency != chosen_frequency
                     and patrol.patrol_id
-                    != constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]
+                    != get_config(game.clan, "patrol_generation.debug_ensure_patrol_id")
                 ):
                     continue
                 if not self._check_constraints(patrol):
@@ -690,8 +687,7 @@ class Patrol:
 
                 # Don't check for repeat patrols if ensure_patrol_id is being used.
                 if (
-                    constants.CONFIG["patrol_generation"]["debug_ensure_patrol_id"]
-                    == ""
+                    get_config(game.clan, "patrol_generation.debug_ensure_patrol_id") == ""
                     and patrol.patrol_id in self.used_patrols
                 ):
                     continue
@@ -709,7 +705,7 @@ class Patrol:
                         print(f"Issue with status limits: {patrol.patrol_id}")
                         continue
 
-                    if not (num[0] <= self.patrol_statuses.get(sta, -1) <= num[1]):
+                    if not (num[0] <= self.patrol_statuses.get(sta.replace("medicine cat", "healer"), -1) <= num[1]):
                         flag = True
                         break
                 if flag:
@@ -751,6 +747,11 @@ class Patrol:
                         print(
                             "DEBUG: requested patrol does not meet constraints (season)"
                         )
+                    continue
+
+                if not event_for_poi(patrol.poi, self.clan.group_ID):
+                    if self.debug_patrol and self.debug_patrol == patrol.patrol_id:
+                        print("DEBUG: requested patrol does not meet constraints (PoI)")
                     continue
 
                 if "hunting" not in patrol.types and patrol_type == "hunting":
@@ -972,9 +973,13 @@ class Patrol:
 
         patrol_size = len(self.patrol_cats)
         total_exp = sum([x.experience for x in self.patrol_cats])
-        gm_modifier = constants.CONFIG["patrol_generation"][
-            f"{game.clan.game_mode}_difficulty_modifier"
-        ]
+        path = (
+            "patrol_generation.classic_difficulty_modifier"
+            if game.clan.game_mode == "classic"
+            else "patrol_generation.difficulty_modifier"
+        )
+
+        gm_modifier = get_config(game.clan, path)
 
         exp_adustment = (
             (1 + 0.10 * patrol_size) * total_exp / (patrol_size * gm_modifier * 2)
@@ -1010,13 +1015,12 @@ class Patrol:
             if is_exclusionary and not hits:
                 # if they don't have a disallowed skill, we increase the chance
                 success_chance += (
-                    1 * constants.CONFIG["patrol_generation"]["win_stat_cat_modifier"]
+                    1 * get_config(game.clan, "patrol_generation.win_stat_cat_modifier")
                 )
             else:
                 # if they had a required skill, we increase
                 success_chance += (
-                    hits
-                    * constants.CONFIG["patrol_generation"]["win_stat_cat_modifier"]
+                    hits * get_config(game.clan, "patrol_generation.win_stat_cat_modifier")
                 )
 
             # FAIL OUTCOME
@@ -1032,13 +1036,12 @@ class Patrol:
             if is_exclusionary and not hits:
                 # if they don't have a disallowed skill, we decrease chance (fail mod is a negative)
                 success_chance += (
-                    1 * constants.CONFIG["patrol_generation"]["fail_stat_cat_modifier"]
+                    1 * get_config(game.clan, "patrol_generation.fail_stat_cat_modifier")
                 )
             else:
                 # if they had the required skill, we decrease chance (fail mod is a negative)
                 success_chance += (
-                    hits
-                    * constants.CONFIG["patrol_generation"]["fail_stat_cat_modifier"]
+                    hits * get_config(game.clan, "patrol_generation.fail_stat_cat_modifier")
                 )
 
             # SUCCESS OUTCOME
@@ -1055,9 +1058,7 @@ class Patrol:
             if (is_exclusionary and kitty.personality.trait not in trait_to_check) or (
                 kitty.personality.trait in trait_to_check
             ):
-                success_chance += constants.CONFIG["patrol_generation"][
-                    "win_stat_cat_modifier"
-                ]
+                success_chance += get_config(game.clan, "patrol_generation.win_stat_cat_modifier")
 
             # FAIL OUTCOME
             is_exclusionary = any(
@@ -1071,9 +1072,7 @@ class Patrol:
             if (is_exclusionary and kitty.personality.trait not in trait_to_check) or (
                 kitty.personality.trait in trait_to_check
             ):
-                success_chance += constants.CONFIG["patrol_generation"][
-                    "fail_stat_cat_modifier"
-                ]
+                success_chance += get_config(game.clan, "patrol_generation.fail_stat_cat_modifier")
 
             skill_updates += f"{kitty.name} updated chance to {success_chance} | "
 
@@ -1087,11 +1086,9 @@ class Patrol:
 
         # This is a debug option, this will forcefully change the outcome of a patrol
         if isinstance(
-            constants.CONFIG["patrol_generation"]["debug_ensure_patrol_outcome"], bool
+            get_config(game.clan, "patrol_generation.debug_ensure_patrol_outcome"), bool
         ):
-            success = constants.CONFIG["patrol_generation"][
-                "debug_ensure_patrol_outcome"
-            ]
+            success = get_config(game.clan, "patrol_generation.debug_ensure_patrol_outcome")
             # Logging
             print(
                 f"The outcome of {self.patrol_event.patrol_id} was altered to {success}"
@@ -1237,5 +1234,5 @@ class Patrol:
 #                               PATROL CLASS END                               #
 # ---------------------------------------------------------------------------- #
 
-PATROL_WEIGHT_ADAPTION = constants.PREY_CONFIG["patrol_weight_adaption"]
-PATROL_BALANCE = constants.PREY_CONFIG["patrol_balance"]
+PATROL_WEIGHT_ADAPTION = get_config(game.clan, "prey.patrol_weight_adaption")
+PATROL_BALANCE = get_config(game.clan, "prey.patrol_balance")

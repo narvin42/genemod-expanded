@@ -3189,7 +3189,7 @@
         "season": [
             "any"
         ],
-        "frequency": 4,
+        "frequency": 2,
         "event_text": "m_c was injured after a fight with a Clanmate that r_c encouraged.",
         "m_c": {
             "age": [
@@ -3206,6 +3206,7 @@
             ]
         },
         "r_c": {
+            "relationship_status": ["dislikes", "avoids"],
             "age": [
                 "any"
             ],
@@ -3219,7 +3220,6 @@
                 "bloodthirsty",
                 "bold",
                 "cold",
-                "daring",
                 "fierce",
                 "strict",
                 "vengeful"
@@ -5598,12 +5598,13 @@
         "season": [
             "any"
         ],
-        "frequency": 2,
+        "frequency": 1,
         "event_text": "m_c was maimed by r_c for questioning {PRONOUN/r_c/poss} leadership.",
         "m_c": {
             "age": [
                 "-kitten"
             ],
+"relationship_status": ["doubts"],
             "status": [
                 "any"
             ],
@@ -5624,7 +5625,6 @@
                 "bloodthirsty",
                 "bold",
                 "cold",
-                "daring",
                 "fierce",
                 "righteous",
                 "strict",
@@ -5769,9 +5769,10 @@
         "season": [
             "any"
         ],
-        "frequency": 2,
+        "frequency": 1,
         "event_text": "m_c was hurt by r_c for disobeying orders.",
         "m_c": {
+            "relationship_status": ["doubts"],
             "status": [
                 "-kitten",
                 "-leader"
@@ -5858,7 +5859,8 @@
             ],
             "trait": [
                 "-loyal"
-            ]
+            ],
+            "relationship_status": ["doubts"]
         },
         "r_c": {
             "age": [
@@ -5926,9 +5928,10 @@
         "season": [
             "any"
         ],
-        "frequency": 2,
+        "frequency": 1,
         "event_text": "m_c was hurt by r_c to make an example out of {PRONOUN/m_c/object}.",
         "m_c": {
+            "relationship_status": ["doubts"],
             "age": [
                 "any"
             ],
@@ -6137,7 +6140,7 @@
             ],
             "changed": -1,
             "has_rank": [
-                "any_warrior"
+                "warrior"
             ]
         }
     },
@@ -6189,7 +6192,7 @@
             ],
             "changed": -1,
             "has_rank": [
-                "any_warrior"
+                "warrior"
             ]
         }
     },
@@ -8410,8 +8413,8 @@
             [
                 "clancat",
                 "exists",
-                "meeting",
-                "age:young adult"
+                "age:young adult",
+                "meeting"
             ]
         ],
         "injury": [
