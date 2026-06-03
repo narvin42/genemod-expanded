@@ -133,7 +133,7 @@
         "m_c has come to notice a concerning number of bumps on {PRONOUN/m_c/poss} skin while grooming recently."
       ],
     "wobbly": [
-        "m_c fell down again, and r_c is called in to check on {PRONOUN/m_c/poss} health. {PRONOUN/r_c/subject} confirms that m_c has a wobbly gait, but {PRONOUN/m_c/subject} should be able to live a normal life.",
+        "m_c fell down again, and r_c is called in to check on {PRONOUN/m_c/poss} health. {PRONOUN/r_c/subject/CAP} confirms that m_c has a wobbly gait, but {PRONOUN/m_c/subject} should be able to live a normal life.",
         "m_c has a wobbly gait, and {PRONOUN/m_c/subject} {VERB/m_c/seem/seems} to have trouble keeping {PRONOUN/m_c/poss} balance."
     ],
     "flat nose": [
@@ -145,15 +145,15 @@
         "m_c's eyes often seem to center on {PRONOUN/m_c/poss} nose rather than forward."
     ],
     "fragile skin": [
-        "r_c examines m_c's skin, which is thin and easily damaged. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
+        "r_c examines m_c's skin, which is thin and easily damaged. {PRONOUN/r_c/subject/CAP} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
         "m_c's skin is thin and easily damaged."
     ],
     "loose joints": [
-        "r_c examines m_c's joints, which are loose and easily dislocated. {PRONOUN/r_c/subject} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
+        "r_c examines m_c's joints, which are loose and easily dislocated. {PRONOUN/r_c/subject/CAP} explains that m_c will need to be careful throughout {PRONOUN/m_c/poss} life.",
         "m_c's joints are loose and easily dislocated."
     ],
     "sickly": [
-        "r_c examines m_c, who is sick yet again. {PRONOUN/r_c/subject} explains that m_c will need extra care throughout {PRONOUN/m_c/poss} life.",
+        "r_c examines m_c, who is sick yet again. {PRONOUN/r_c/subject/CAP} explains that m_c will need extra care throughout {PRONOUN/m_c/poss} life.",
         "m_c frequently gets sick."
     ],
     "bleeds easily": [

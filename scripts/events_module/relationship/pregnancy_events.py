@@ -589,7 +589,7 @@ class Pregnancy_Events:
 
         # miscarriage function
         if get_clan_setting('miscarriage'):
-            miscarriage_chance = constants.CONFIG['pregnancy']['miscarriage_chances'][cat.age.value]
+            miscarriage_chance = get_config(game.clan, "pregnancy.miscarriage_chances")
         else:
             miscarriage_chance = 0
         miscarriage = False
