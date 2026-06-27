@@ -43,6 +43,19 @@ from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank, get_li
 def cat_is_amab(cat):
     return (('Y' in cat.phenotype.sexgene and cat.phenotype.sex != "molly") or cat.phenotype.sex == "tom")
 
+def no_kits_allowed(cat):
+    kit_blocked_ranks = set()
+    if get_clan_setting("block_litters_by_rank"):
+        for rank in CatRank:
+            rank_str = rank
+            if rank == CatRank.APPRENTICE:
+                rank_str = CatRank.WARRIOR
+            elif "apprentice" in rank:
+                rank_str = rank.replace(" apprentice", "")
+            if get_clan_setting(f"block_litters_{rank_str}"):
+                kit_blocked_ranks.add(rank)
+    return cat.no_kits or cat.status.rank in kit_blocked_ranks
+
 class Pregnancy_Events:
     """All events which are related to pregnancy such as kitting and defining who are the parents."""
 
@@ -81,7 +94,7 @@ class Pregnancy_Events:
             elif len(biggest_family) < len(ancestors) + 1:
                 biggest_family = ancestors
                 biggest_family.append(cat.ID)
-        Pregnancy_Events.biggest_family[clan.displayname] = biggest_family
+        Pregnancy_Events.biggest_family[clan.name] = biggest_family
 
     @staticmethod
     def biggest_family_is_big(clan):
@@ -90,7 +103,7 @@ class Pregnancy_Events:
         living_cats = len(
             [i for i in Cat.all_cats.values() if i.status.group_ID == clan.group_ID]
         )
-        return len(Pregnancy_Events.biggest_family[clan.displayname]) > (living_cats / 10)
+        return len(Pregnancy_Events.biggest_family[clan.name]) > (living_cats / 10)
 
     @staticmethod
     def handle_pregnancy_age(clan):
@@ -104,7 +117,7 @@ class Pregnancy_Events:
         if not clan:
             return
 
-        if not Pregnancy_Events.biggest_family.get(clan.displayname):
+        if not Pregnancy_Events.biggest_family.get(clan.name):
             Pregnancy_Events.set_biggest_family(clan)
 
         # Handles if a cat is already pregnant
@@ -214,7 +227,7 @@ class Pregnancy_Events:
         """Handle if the there is no pregnancy but the pair triggered kits chance."""
         if other_cat:
             for x in other_cat:
-                if not x.status.group.is_any_clan_group() or x.birth_cooldown > 0 or x.no_kits:
+                if not x.status.group.is_any_clan_group() or x.birth_cooldown > 0 or no_kits_allowed(x):
                     other_cat.remove(x)
         
         if other_cat and len(other_cat) < 1:
@@ -294,7 +307,7 @@ class Pregnancy_Events:
         if other_cat:
             other_cat_copy = []
             for x in other_cat:
-                if not (x.dead or x.status.is_lost() or x.status.is_exiled(clan.group_ID) or x.birth_cooldown > 0 or x.no_kits or "sterile" in x.permanent_condition):
+                if not (x.dead or x.status.is_lost() or x.status.is_exiled(clan.group_ID) or x.birth_cooldown > 0 or no_kits_allowed(x) or "sterile" in x.permanent_condition):
                     other_cat_copy.append(x)
             other_cat = other_cat_copy
         
@@ -310,7 +323,7 @@ class Pregnancy_Events:
                     return
         
         # additional save for no kit setting
-        if (cat and cat.no_kits):
+        if (cat and no_kits_allowed(cat)):
             return
 
             
@@ -1036,7 +1049,7 @@ class Pregnancy_Events:
             cat.age in [CatAge.NEWBORN, CatAge.KITTEN, CatAge.ADOLESCENT]
             or cat.moons < 15
         )
-        if not_correct_age or cat.no_kits or cat.dead:
+        if not_correct_age or no_kits_allowed(cat) or cat.dead:
             return False
 
         # check for mate
@@ -1210,12 +1223,12 @@ class Pregnancy_Events:
             chance = get_config(game.clan, "pregnancy.random_affair_chance")
 
         # 'buff' affairs if the current biggest family is big + this cat doesn't belong there
-        if not Pregnancy_Events.biggest_family.get(clan.displayname):
+        if not Pregnancy_Events.biggest_family.get(clan.name):
             Pregnancy_Events.set_biggest_family(clan)
 
         if (
             Pregnancy_Events.biggest_family_is_big(clan)
-            and cat.ID not in Pregnancy_Events.biggest_family[clan.displayname]
+            and cat.ID not in Pregnancy_Events.biggest_family[clan.name]
         ):
             chance = int(chance * 0.8)
 
@@ -2116,6 +2129,17 @@ class Pregnancy_Events:
                 inverse_chance = get_config(game.clan, "pregnancy.primary_chance_mated")
             else:
                 inverse_chance = get_config(game.clan, "pregnancy.modded_primary_chance_mated")
+        
+        is_med = False
+        if first_parent.status.rank in (CatRank.MEDICINE_CAT, CatRank.MEDICINE_APPRENTICE):
+            is_med = True
+        elif second_parent:
+            for p in second_parent:
+                if p != "Surrogate" and p.status.rank in (CatRank.MEDICINE_CAT, CatRank.MEDICINE_APPRENTICE):
+                    is_med = True
+
+        if is_med:
+            inverse_chance += get_config(game.clan, "pregnancy.healer_modifier")
 
         # SETTINGS
         # - decrease inverse chance if only mated pairs can have kits
@@ -2234,7 +2258,7 @@ class Pregnancy_Events:
 
         # 'INBREED' counter
         # - increase inverse chance if one of the current cats belongs in the biggest family
-        if not Pregnancy_Events.biggest_family.get(clan.displayname):  # set the family if not already
+        if not Pregnancy_Events.biggest_family.get(clan.name):  # set the family if not already
             Pregnancy_Events.set_biggest_family(clan)
 
         InBiggest = False
@@ -2242,10 +2266,10 @@ class Pregnancy_Events:
             for x in second_parent:
                 if x == "Surrogate":
                     continue
-                if x.ID in Pregnancy_Events.biggest_family[clan.displayname]:
+                if x.ID in Pregnancy_Events.biggest_family[clan.name]:
                     InBiggest = True
 
-        if first_parent.ID in Pregnancy_Events.biggest_family[clan.displayname] or second_parent and InBiggest:
+        if first_parent.ID in Pregnancy_Events.biggest_family[clan.name] or second_parent and InBiggest:
             inverse_chance = int(inverse_chance * 1.7)
 
         # - decrease inverse chance if the current family is small
