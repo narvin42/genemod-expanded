@@ -410,7 +410,13 @@ class Phenotype(Genotype):
         if(self.munch[0] == 'Mk'):
             self.pawtype = "short legs"
         
-        if(self.poly[0] == 'Pd'):
+        if(self.rh[1] == 'Rh'):
+            if(self.pawtype != ""):
+                self.pawtype += ", "
+            
+            self.pawtype += 'twisted front legs'
+            
+        if(self.poly[0] == 'Pd') or (self.rh[0] == 'Rh'):
             if(self.pawtype != ""):
                 self.pawtype += ", "
             

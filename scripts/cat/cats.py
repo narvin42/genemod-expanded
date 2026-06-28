@@ -750,10 +750,12 @@ class Cat:
         elif self.phenotype.rfca[0] == 'rca':
             self.get_permanent_condition('fragile skin', born_with=True, genetic=True)
         
-        elif self.phenotype.chs[0] == 'ch':
+        if self.phenotype.chs[0] == 'ch':
             self.get_permanent_condition('sickly', born_with=True, genetic=True)
             self.get_permanent_condition('bleeds easily', born_with=True, genetic=True)
-            
+        
+        if self.phenotype.rh[1] == 'Rh':
+            self.get_permanent_condition('twisted legs', born_with=True, genetic=True)
 
         if self.phenotype.pointgene[0] == 'cs' and random() < 0.05:
             self.get_permanent_condition('cross-eyed', born_with=True, genetic=True)

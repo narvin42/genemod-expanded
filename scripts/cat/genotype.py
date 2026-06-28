@@ -83,6 +83,7 @@ class Genotype:
         self.bhd = ['bhd', 'bhd']
         self.rfca = ['Rca', 'Rca']
         self.chs = ['Ch', 'Ch']
+        self.rh = ['rh', 'rh']
 
         self.wideband = ""
         self.wbtype = ""
@@ -229,6 +230,7 @@ class Genotype:
         self.bhd = jsonstring.get("bhd", ['bhd', 'bhd'])
         self.rfca = jsonstring.get("RecFCA", ['Rca', 'Rca'])
         self.chs = jsonstring.get("chs", ['Ch', 'Ch'])
+        self.rh = jsonstring.get("rh", ['rh', 'rh'])
 
         self.wideband = jsonstring["wideband"]
         self.saturation = jsonstring.get("saturation", 3)
@@ -335,6 +337,7 @@ class Genotype:
             "RecFCA" : self.rfca,
             "bhd": self.bhd,
             "chs" : self.chs,
+            "rh" : self.rh,
 
             "wideband" : self.wideband,
             "saturation" : self.saturation,
@@ -481,10 +484,6 @@ class Genotype:
         # DOUBLE EARS
             if self.odds["four_ears"] > 0 and randint(1, self.odds["four_ears"]) == 1:
                 self.fourear[i] = "dup"
-
-        # CHEDIAK-HIGASHI SYNDROME
-            if self.odds["chediak-higashi syndrome"] > 0 and randint(1, self.odds["chediak-higashi syndrome"]) == 1:
-                self.chs[i] = "ch"
 
         if self.odds["breakthrough"] > 0 and randint(1, self.odds["breakthrough"]) == 1:
             self.breakthrough = True
@@ -698,6 +697,10 @@ class Genotype:
         for i in range(2):
             if self.odds["chediak-higashi syndrome"] > 0 and randint(1, self.odds["chediak-higashi syndrome"]) == 1 and not self.ban_genes:
                 self.chs[i] = "ch"
+        
+        for i in range(2):
+            if self.odds["radial hypoplasia"] > 0 and randint(1, self.odds["radial hypoplasia"]) == 1 and not self.ban_genes:
+                self.rh[i] = "Rh"
                 
         self.wideband = ''
         self.rufousing = ''
@@ -921,6 +924,9 @@ class Genotype:
         for i in range(2):
             if self.odds["chediak-higashi syndrome"] > 0 and randint(1, math.ceil(self.odds["chediak-higashi syndrome"]/modifier)) == 1 and not self.ban_genes:
                 self.chs[i] = "ch"
+        for i in range(2):
+            if self.odds["radial hypoplasia"] > 0 and randint(1, math.ceil(self.odds["radial hypoplasia"]/modifier)) == 1 and not self.ban_genes:
+                self.rh[i] = "Rh"
 
         self.wideband = ''
         self.rufousing = ''
@@ -1259,6 +1265,7 @@ class Genotype:
         self.rfca = [choice(par1.rfca), choice(par2.rfca)]
         self.bhd = [choice(par1.bhd), choice(par2.bhd)]
         self.chs = [choice(par1.chs), choice(par2.chs)]
+        self.rh = [choice(par1.rh), choice(par2.rh)]
 
         if random() < 0.25:
             self.saturation = par1.saturation
@@ -1682,7 +1689,7 @@ class Genotype:
                      'wirehair', 'laperm', 'cornish', 'urals', 'tenn', 'fleece', 'ruhr', 'lykoi',
                      'pinkdilute', 'dilutemd', 'karp', 'bleach', 'ghosting', 'satin', 'glitter',
                      'curl', 'fold', "fourear", 'kab', 'toybob', 'jbob', 'kub', 'ring', 'munch', 'poly', 
-                     'rfca', 'dfca', 'bhd', 'chs']:
+                     'rfca', 'dfca', 'bhd', 'chs', 'rh']:
             self[gene].sort()
         for gene in self.april_fools.keys():
             self.april_fools[gene].sort()
@@ -2079,8 +2086,8 @@ class Genotype:
                         self.Body_Genes.append(x)
                 elif x[0] != x[1] or x[0] not in ['cu', 'fd', 'Dup', 'm', 'ab', 'Kab', 'tb', 'Jb', 'kub', 'Rt', 'mk', 'pd', 'NoDBE']:
                     self.Body_Genes.append(x)
-            for x in [self.dfca, self.bhd, self.rfca, self.chs]:
-                if x[0] != x[1] or x[0] not in ['dca', 'bhd', 'Rca', 'Ch']:
+            for x in [self.dfca, self.bhd, self.rfca, self.chs, self.rh]:
+                if x[0] != x[1] or x[0] not in ['dca', 'bhd', 'Rca', 'Ch', 'rh']:
                     self.Genetic_Disorders.append(x)
                     
             for x in self.april_fools.values():
@@ -2090,7 +2097,7 @@ class Genotype:
             self.Fur_Genes = [self.wirehair, self.laperm, self.cornish, self.urals, self.tenn, self.fleece, self.sedesp, self.ruhr, self.ruhrmod, self.lykoi]
             self.Other_Colour = [self.pinkdilute, self.dilutemd, self.ext, self.corin, self.karp, self.bleach, self.ghosting, self.satin, self.glitter]
             self.Body_Genes = [self.curl, self.fold, self.fourear, self.manx, self.kab, self.toybob, self.jbob, self.kub, self.ring, self.munch, self.poly, self.pax3]
-            self.Genetic_Disorders = [self.dfca, self.bhd, self.rfca, self.chs]
+            self.Genetic_Disorders = [self.dfca, self.bhd, self.rfca, self.chs, self.rh]
             april_fools_output = [self.april_fools.values()]
         self.Polygenes = ["Wideband:", self.wideband, self.wbtype, "Rufousing:", self.rufousing, self.ruftype, "Underbelly rufousing:", self.unders_ruf, self.unders_ruftype, "Saturation:", self.saturation, "Bengal:", self.bengal, self.bengtype, "Sokoke:", self.sokoke, self.soktype, "Spotted:", self.spotted, self.spottype, "Ticked:", self.tickgenes, self.ticktype, "White Grade:", self.whitegrade, "Refraction:", self.refraction, "Pigmentation:", self.pigmentation]
 
@@ -2166,16 +2173,17 @@ class Genotype:
     def GeneticDisordermutation(self):
         if self.ban_genes:
             return
-        whichgene = ["dfca", "bhd", "rfca", "chs"]
+        whichgene = ["dfca", "bhd", "rfca", "chs", "rh"]
         which = choice(whichgene)
 
         name_map = {
             "dfca": "dominant cutaneous asthenia",
             "bhd": "burmese head defect",
             "rfca": "recessive cutaneous asthenia",
-            "chs": "chediak-higashi syndrome"
+            "chs": "chediak-higashi syndrome",
+            "rh": "radial hypoplasia"
         }
-        if which in ["dfca", "bhd"]:
+        if which in ["dfca", "bhd", "rh"]:
             if self[which][-1].islower():
                 self[which][-1] = self[which][-1].title()
             else:

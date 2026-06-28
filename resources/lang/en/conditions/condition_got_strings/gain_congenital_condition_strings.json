@@ -175,5 +175,9 @@
     "hare-lipped": [
         "m_c has a lip that resembles a rabbit's, which r_c explains to {PRONOUN/m_c/poss} parents can cause trouble with nursing.",
         "m_c's lip resembles that of a rabbit."
+    ],
+    "twisted legs": [
+        "m_c's legs are twisted, which r_c explains to {PRONOUN/m_c/poss} parents means {PRONOUN/m_c/subject} will never walk normally.",
+        "m_c's legs are twisted."
     ]
 }
