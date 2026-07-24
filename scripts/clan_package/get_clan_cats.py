@@ -1,4 +1,5 @@
-from typing import Union, Type, TYPE_CHECKING, Tuple, List
+from random import choice
+from typing import Union, Type, TYPE_CHECKING, Tuple, List, Optional
 
 if TYPE_CHECKING:
     from scripts.cat.cats import Cat
@@ -202,14 +203,14 @@ def search_cats(search_text, cat_list, search_genotype):
                 "pax3": ["NoDBE", "DBEre", "DBEalt", "DBEcel"],
             }
             polygenes = {
-                "wbsum": ["wideband", "wb"],
-                "rufsum": ["rufousing", "ruf"],
+                "wideband": ["wideband", "wb"],
+                "rufousing": ["rufousing", "ruf"],
                 "unders_rufsum": ["underbelly_rufousing", "underbelly_ruf"],
                 "bengsum": ["bengal", "bm"],
                 "soksum": ["sokoke", "sok"],
                 "spotsum": ["spotted", "spot"],
                 "ticksum": ["ticked_mod", "tickedmod", "tick_md", "tickmd"],
-                "saturation": ["saturation", "sat"],
+                "fur_shade": ["saturation", "sat", "fs", "fur_shade"],
                 "refraction": ["refraction", "ref"],
                 "pigmentation": ["pigmentation", "pig"],
                 "whitegrade": ["whitegrade", "white_grade", "white"]
@@ -295,3 +296,14 @@ def search_cats(search_text, cat_list, search_genotype):
                 if search_text.lower() in str(cat.name).lower()
             ]
     return all_found
+
+def get_random_player_clan_cat(cat, not_allowed: list["Cat"] = None) -> Optional["Cat"]:
+    cat_list = [
+        c
+        for c in cat.all_cats.values()
+        if c.status.get_last_living_group() == cat.status.group_ID and c not in not_allowed
+    ]
+    if not cat_list:
+        return None
+
+    return choice(cat_list)

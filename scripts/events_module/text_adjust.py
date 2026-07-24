@@ -18,6 +18,7 @@ from scripts.cat.sprites.load_sprites import sprites
 from scripts.clan_package.get_clan_cats import find_alive_cats_with_rank
 from scripts.clan_resources.point_of_interest import (
     get_random_poi_by_tag,
+    get_random_poi_by_category,
     get_poi_names_set,
 )
 from scripts.config import get_config
@@ -145,6 +146,9 @@ def poi_repl(inner_details, clan=None):
             if names.intersection(get_poi_names_set(clan))
             else "MISSING_POI"
         )
+    elif inner_details[1].upper() == "CATEGORY":
+        category = inner_details[2].upper()
+        base_string += get_random_poi_by_category(inner_details[2].lower(), clan)
 
     return i18n.t(base_string)
 
@@ -364,9 +368,6 @@ def ongoing_event_text_adjust(Cat, text, clan=None, other_clan_name=None):
     text = text.replace("c_n", clan_name)
 
     text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
-
-    if set(get_config("clan_creation.leader_lives_nr")) != (9):
-        text = text.replace("nine lives", "lives")
 
     return text
 
@@ -596,9 +597,6 @@ def event_text_adjust(
 
     text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
 
-    if list(set(get_config("clan_creation.leader_lives_nr"))) != [9]:
-        text = text.replace("nine lives", "lives")
-
     return text
 
 
@@ -633,7 +631,7 @@ def leader_ceremony_text_adjust(
     leader,
     life_giver=None,
     virtue=None,
-    extra_lives=None,
+    extra_lives: int = None,
 ):
     """
     used to adjust the text for leader ceremonies
@@ -656,13 +654,13 @@ def leader_ceremony_text_adjust(
         text = text.replace("[virtue]", virtue)
 
     if extra_lives:
-        text = text.replace("[life_num]", str(extra_lives))
+        text = text.replace(
+            "[life_num]",
+            i18n.t("general.lives", count=extra_lives),
+        )
 
     clan = leader.status.fetch_clan_object()
     text = text.replace("c_n", leader.status.fetch_clan_object().name)
-
-    if list(set(get_config("clan_creation.leader_lives_nr"))) != [9]:
-        text = text.replace("nine lives", "lives")
 
     return text
 
@@ -767,9 +765,6 @@ def ceremony_text_adjust(
 
     adjust_text = process_text(adjust_text, cat_dict)
 
-    if list(set(get_config("clan_creation.leader_lives_nr"))) != [9]:
-        adjust_text = adjust_text.replace("nine lives", "lives")
-
     return adjust_text, random_living_parent, random_dead_parent
 
 
@@ -848,9 +843,6 @@ def history_text_adjust(text, other_clan_name, clan, other_cat_rc=None):
         text = selective_replace(text, "r_c", str(other_cat_rc.name))
 
     text = text.replace("medicine cat", "healer").replace("medicine den", "healer den")
-
-    if list(set(get_config("clan_creation.leader_lives_nr"))) != [9]:
-        text = text.replace("nine lives", "lives")
     return text
 
 

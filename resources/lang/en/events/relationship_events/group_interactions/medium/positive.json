@@ -207,7 +207,7 @@
             "m_c explains the importance of being honest but tactful to multi_cat.",
             "m_c helps multi_cat work through their challenging emotions.",
             "m_c helps multi_cat cope with something difficult.",
-            "Being young is a challenge, so m_c provides multi_cat a judgment-free space to talk about their feelings.",
+            "Being young is a challenge, so m_c provides multi_cat a judgement-free space to talk about their feelings.",
             "m_c settles a disagreement between multi_cat before it can spark a fight.",
             "multi_cat cannot be consoled until m_c helps them work through their emotions.",
             "When multi_cat come to m_c after a fight, m_c teaches them how to tactfully discuss their feelings.",
@@ -408,7 +408,7 @@
             "m_c understands multi_cat's concern about a decision and explains {PRONOUN/m_c/poss} reasoning behind it.",
             "multi_cat approach m_c about a concern and feel reassured by the end of the discussion.",
             "While m_c doesn't change {PRONOUN/m_c/poss} mind about a decision {PRONOUN/m_c/subject} made, multi_cat appreciate m_c listening to their opinions.",
-            "m_c allows multi_cat to voice their opinions about a decision without judgment.",
+            "m_c allows multi_cat to voice their opinions about a decision without judgement.",
             "m_c doesn't boss multi_cat around with {PRONOUN/m_c/poss} authority during a discussion about Clan policies.",
             "multi_cat feel comfortable talking to m_c about recent events."
         ],
@@ -448,6 +448,49 @@
                 "cats_to": ["m_c"],
                 "mutual": false,
                 "values": ["respect", "trust"],
+                "amount": 10
+            }
+        ]
+    },
+    {
+        "id": "group_multicat_pos_polymatesmid",
+        "strings": [
+            "m_c, multi_cat went out to gather flowers for the nest together.",
+            "m_c, multi_cat found some pretty pebbles for each other.",
+            "m_c took multi_cat to stargaze.",
+            "m_c asked multi_cat out on a date to keep the romance alive.",
+            "m_c complimented multi_cat over and over again until they all couldn't stop purring."
+        ],
+        "involved_cats": {
+            "m_c": {},
+            "multi_cat": {}
+        },
+        "relationship_constraint": [
+            {
+                "cats_from": [
+                    "m_c"
+                ],
+                "cats_to": [
+                    "multi_cat"
+                ],
+                "mutual": true,
+                "constraints": [
+                    "mates"
+                ]
+            }
+        ],
+        "relationship_changes": [
+            {
+                "cats_from": [
+                    "m_c"
+                ],
+                "cats_to": [
+                    "multi_cat"
+                ],
+                "mutual": true,
+                "values": [
+                    "romance"
+                ],
                 "amount": 10
             }
         ]

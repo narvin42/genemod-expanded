@@ -1,5 +1,5 @@
 
-from random import choice, randint, random
+from random import choice, randint, random, choices
 import math
 
 class Breed_generator:
@@ -114,8 +114,8 @@ class Breed_generator:
         else:
             genoclass.ruhrmod = ["hi", "ha"]
 
-        genoclass.wideband = ''
-        genoclass.rufousing = ''
+        genoclass.wideband = 0
+        genoclass.rufousing = 0
         genoclass.spotted = ''
         genoclass.tickgenes = ''
         genoclass.bengal = ''
@@ -123,16 +123,11 @@ class Breed_generator:
         genoclass.unders_ruf = ''
         genoclass.unders_rufsum = 0
         
-        for i in range(0, 8):
-            genoclass.wideband += choice(genoclass.odds["wideband_kittypet"])
-            genoclass.wbsum += int(genoclass.wideband[i])
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11]), choice([12, 13, 14]), choice([15, 16])], weights=genoclass.odds["wideband_kittypet"])[0]
+        genoclass.rufousing = choice(genoclass.odds["rufousing_kittypet"])
 
         for i in range(0, 4):
-            genoclass.rufousing += choice(genoclass.odds["rufousing_kittypet"])
-            genoclass.rufsum += int(genoclass.rufousing[i])
-
-        for i in range(0, 4):
-            genoclass.unders_ruf += choice(genoclass.odds["rufousing"])
+            genoclass.unders_ruf += choice(genoclass.odds["underside_rufousing"])
             genoclass.unders_rufsum += int(genoclass.unders_ruf[i])
 
         for i in range(0, 4):
@@ -231,21 +226,15 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
 
-        genoclass.rufousing = ''
         genoclass.unders_ruf = ''
         genoclass.tickgenes = ''
         genoclass.bengal = ''
         genoclass.sokoke = ''
         
-        while genoclass.wbsum > 11 or genoclass.wbsum < 6:
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
+        genoclass.wideband = randint(4, 11)
+        genoclass.rufousing = 8
 
         for i in range(0, 4):
-            genoclass.rufousing += '2'
             genoclass.unders_ruf += '2'
             genoclass.tickgenes += '2'
 
@@ -433,13 +422,7 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         genoclass.tickgenes = ''
         genoclass.bengal = ''
         genoclass.sokoke = ''
@@ -491,12 +474,7 @@ class Breed_generator:
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         
         if random() < 0.25:
-            while genoclass.wbsum < 14:
-                genoclass.wideband = ""
-                genoclass.wbsum = 0
-                for i in range(0, 8):
-                    genoclass.wideband += choice(genes)
-                    genoclass.wbsum += int(genoclass.wideband[i])
+            genoclass.wideband = randint(15, 16)
         
         genoclass.tickgenes = ''
         genoclass.ticksum = 0
@@ -563,11 +541,7 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         genoclass.spotted = ''
         for i in range(0, 4):
             genoclass.spotted += '2'
@@ -670,23 +644,13 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
 
-        genoclass.rufousing = ''
-        genoclass.rufsum = 0
         genoclass.spotted = ''
         genoclass.spotsum = 0
         genoclass.bengal = ''
         genoclass.bengsum = 0
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
-        for i in range(0, 4):
-            genoclass.rufousing += '2'
-            genoclass.rufsum += int(genoclass.rufousing[i])
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
+        genoclass.rufousing = 8
 
         for i in range(0, 4):
             genoclass.spotted += '2'
@@ -809,13 +773,7 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
 
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         genoclass.bengal = ''
         genoclass.sokoke = ''
         for i in range(0, 4):
@@ -957,13 +915,7 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
 
-        while genoclass.wbsum > 11 or genoclass.wideband == "":  
-            genoclass.wideband = ''
-            genoclass.wbsum = 0    
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         for i in range(0, 4):
             genoclass.bengal += '0'
             genoclass.bengsum += int(genoclass.bengal[i])
@@ -1106,19 +1058,8 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
         
-        while genoclass.wbsum > 11 or genoclass.wbsum < 6:
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
-        while genoclass.rufsum < 3 or genoclass.rufsum > 5:
-            genoclass.rufousing = ""
-            genoclass.rufsum = 0
-            for i in range(0, 4):
-                genoclass.rufousing += choice(genes)
-                genoclass.rufsum += int(genoclass.rufousing[i])
+        genoclass.wideband = choice([4, 5, 6, 7, 8, 9, 10, 11])
+        genoclass.rufousing = randint(3, 5)
 
         for i in range(0, 4):
             genoclass.spotted += '2'
@@ -1345,13 +1286,7 @@ class Breed_generator:
         genoclass.spotted = ''
         genoclass.spotsum = 0
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":  
-            genoclass.wideband = ''
-            genoclass.wbsum = 0    
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         for i in range(0, 4):
             genoclass.spotted += '2'
             genoclass.spotsum += int(genoclass.spotted[i])
@@ -1836,13 +1771,7 @@ class Breed_generator:
         genoclass.spotted = ''
         genoclass.spotsum = 0
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         for i in range(0, 4):
             genoclass.spotted += '2'
             genoclass.spotsum += int(genoclass.spotted[i])
@@ -2005,19 +1934,8 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
         
-        while genoclass.wbsum < 6 or genoclass.wbsum > 9:
-            genoclass.wideband = ''
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
-        while genoclass.rufsum < 3 or genoclass.rufsum > 5:
-            genoclass.rufousing = ''
-            genoclass.rufsum = 0
-            for i in range(0, 4):
-                genoclass.rufousing += choice(genes)
-                genoclass.rufsum += int(genoclass.rufousing[i])
+        genoclass.wideband = randint(4, 7)
+        genoclass.rufousing = randint(3, 5)
 
         for i in range(0, 4):
             genoclass.spotted += '2'
@@ -2118,7 +2036,7 @@ class Breed_generator:
             genoclass.dilute = ["D", "D"]
         else:
             genoclass.dilute = ["d", "d"]
-            genoclass.saturation = randint(0, 2)
+            genoclass.fur_shade = randint(0, 2)
 
         # WHITE
 
@@ -2161,7 +2079,7 @@ class Breed_generator:
             genoclass.sokoke += '0'
 
         genoclass.body_value = randint(genoclass.body_indexes[2]+1, genoclass.body_indexes[4])
-        genoclass.saturation = randint(0, 2)
+        genoclass.fur_shade = randint(0, 2)
         genoclass.breeds["Russian"] = 100
         return genoclass
     
@@ -2230,13 +2148,7 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            genoclass.wideband = ''
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         genoclass.height_value = randint(genoclass.height_indexes[4]+1, genoclass.height_indexes[6])
         
         genoclass.breeds["Siberian"] = 100
@@ -2294,13 +2206,7 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
         
-        while genoclass.wbsum > 11 or genoclass.wbsum < 6:
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         for i in range(0, 4):
             genoclass.tickgenes += '2'
 
@@ -2397,19 +2303,8 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
 
-        while genoclass.wbsum > 11 or genoclass.wbsum < 6:
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
-        while genoclass.rufsum < 3 or genoclass.rufsum > 5:
-            genoclass.rufousing = ""
-            genoclass.rufsum = 0
-            for i in range(0, 4):
-                genoclass.rufousing += choice(genes)
-                genoclass.rufsum += int(genoclass.rufousing[i])
+        genoclass.wideband = choice([4, 5, 6, 7, 8, 9, 10, 11])
+        genoclass.rufousing = randint(3, 5)
 
         for i in range(0, 4):
             genoclass.tickgenes += '0'
@@ -2537,13 +2432,7 @@ class Breed_generator:
 
         genoclass.tickgenes = ''
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":  
-            genoclass.wideband = ''
-            genoclass.wbsum = 0    
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-            
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         genoclass.body_value = randint(genoclass.body_indexes[1]+1, genoclass.body_indexes[4])
         
         genoclass.breeds["Tonkinese"] = 100
@@ -2611,21 +2500,14 @@ class Breed_generator:
 
         genes = ["2", "2", "1", "1", "1", "1", "1", "1", "0", "0"]
 
-        genoclass.rufousing = ''
         genoclass.spotted = ''
         genoclass.tickgenes = ''
         genoclass.bengal = ''
         genoclass.sokoke = ''
-        
-        while genoclass.wbsum > 11 or genoclass.wbsum < 6:
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
 
-        for i in range(0, 4):
-            genoclass.rufousing += '2'
+        genoclass.wideband = choice([4, 5, 6, 7, 8, 9, 10, 11])
+
+        genoclass.rufousing = 8
 
         genesspot = ["1", "1", "1", "1", "1", "0", "0", "0", "0", "0", "0", "0", "0"]
 
@@ -2811,13 +2693,7 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
         
-        while genoclass.wbsum > 11 or genoclass.wideband == "":
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
+        genoclass.wideband = choices([choice([0, 1, 2, 3]), choice([4, 5, 6, 7]), choice([8, 9, 10, 11])], weights=genoclass.odds["wideband_kittypet"][:-2])[0]
         for i in range(0, 4):
             genoclass.spotted += '2'
         
@@ -2934,7 +2810,7 @@ class Breed_generator:
         return genoclass
     
     @staticmethod
-    def Napoleon(genoclass, special):
+    def Minuet(genoclass, special):
 
         genoclass = Breed_generator.AllColours(genoclass, special)
         
@@ -3035,19 +2911,8 @@ class Breed_generator:
         genoclass.bengal = ''
         genoclass.sokoke = ''
         
-        while genoclass.wbsum > 11 or genoclass.wbsum < 6:
-            genoclass.wideband = ""
-            genoclass.wbsum = 0
-            for i in range(0, 8):
-                genoclass.wideband += choice(genes)
-                genoclass.wbsum += int(genoclass.wideband[i])
-
-        while genoclass.rufsum < 3 or genoclass.rufsum > 5:
-            genoclass.rufousing = ""
-            genoclass.rufsum = 0
-            for i in range(0, 4):
-                genoclass.rufousing += choice(genes)
-                genoclass.rufsum += int(genoclass.rufousing[i])
+        genoclass.wideband = choice([4, 5, 6, 7, 8, 9, 10, 11])
+        genoclass.rufousing = randint(3, 5)
 
         for i in range(0, 4):
             genoclass.spotted += '2'
@@ -3105,7 +2970,7 @@ class Breed_checker:
             return False
         if phenotype.eumelanin[0] != "B" and phenotype.silver[0] != "I":
             return False
-        if phenotype.wbsum > 11 or phenotype.soksum > 3:
+        if phenotype.wideband > 11 or phenotype.soksum > 3:
             return False
         return True
     @staticmethod
@@ -3129,7 +2994,7 @@ class Breed_checker:
             return False
         if phenotype.dilute[0] == "d" or phenotype.pointgene[0] != "C" or phenotype.eumelanin[0] != "B" or phenotype.mack[0] == "mc":
             return False
-        if phenotype.wbsum > 11 or phenotype.soksum > 3 or phenotype.spotsum < 6:
+        if phenotype.wideband > 11 or phenotype.soksum > 3 or phenotype.spotsum < 6:
             return False
         return True
 
@@ -3292,7 +3157,7 @@ class Breed_checker:
             return False
         if phenotype.white[0] in ["wg", "wt", "wsal"]:
             return False
-        if phenotype.agouti[0] == "A" and (phenotype.ticked[0] != "ta" or phenotype.mack[0] == "mc" or phenotype.wbsum > 11 or\
+        if phenotype.agouti[0] == "A" and (phenotype.ticked[0] != "ta" or phenotype.mack[0] == "mc" or phenotype.wideband > 11 or\
                                             phenotype.ticksum > 3 or phenotype.bengsum > 3 or phenotype.soksum > 3):
             return False
         if 'o' not in phenotype.sexgene and phenotype.dilute[0] == "d":
@@ -3321,7 +3186,7 @@ class Breed_checker:
         if phenotype.white[0] != "w" or phenotype.pointgene[0] not in ["C", "cb"] or (('cm' in phenotype.pointgene or 'c' in phenotype.pointgene) and phenotype.pointgene[0] != "C"):
             return False
     
-        if phenotype.agouti[0] != "a" and phenotype.wbsum > 11:
+        if phenotype.agouti[0] != "a" and phenotype.wideband > 11:
             return "Burmilla"
         if phenotype.agouti[0] == "a" and phenotype.pointgene[0] == "cb":
             return "European Burmese"
@@ -3467,7 +3332,7 @@ class Breed_checker:
             return False
         if phenotype.dilutemd[0] != "dm" or phenotype.pinkdilute[0] == "dp":
             return False
-        if phenotype.agouti[0] != "A" or (phenotype.wbsum > 11 or phenotype.bengsum > 3 or phenotype.soksum > 3):
+        if phenotype.agouti[0] != "A" or (phenotype.wideband > 11 or phenotype.bengsum > 3 or phenotype.soksum > 3):
             return False
 
         if phenotype.eumelanin[0] != "B" or phenotype.white[0] != 'w':
@@ -3523,7 +3388,7 @@ class Breed_checker:
 
         if phenotype.eumelanin[0] != "B" or 'O' in phenotype.sexgene or phenotype.dilute[0] != 'D' or phenotype.white[0] != 'w':
             return False
-        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] != "C" or phenotype.ticked[0] != "Ta" or phenotype.wbsum > 11:
+        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] != "C" or phenotype.ticked[0] != "Ta" or phenotype.wideband > 11:
             return False
         
         return "Chausie"
@@ -3617,7 +3482,7 @@ class Breed_checker:
         if (('cm' in phenotype.pointgene or 'c' in phenotype.pointgene or 'cb' in phenotype.pointgene) and phenotype.pointgene[0] != "C"):
             return False
 
-        if phenotype.agouti[0] == "A" and (phenotype.bengsum > 3 or phenotype.soksum > 3 or phenotype.wbsum > 11):
+        if phenotype.agouti[0] == "A" and (phenotype.bengsum > 3 or phenotype.soksum > 3 or phenotype.wideband > 11):
             return False
         if phenotype.agouti[0] == "Apb":
             return False
@@ -3764,7 +3629,7 @@ class Breed_checker:
             return False
         if phenotype.dilutemd[0] != "dm" or phenotype.pinkdilute[0] == "dp":
             return False
-        if phenotype.agouti[0] != "A" or (phenotype.wbsum > 11 or phenotype.bengsum > 3 or phenotype.soksum > 3):
+        if phenotype.agouti[0] != "A" or (phenotype.wideband > 11 or phenotype.bengsum > 3 or phenotype.soksum > 3):
             return False
 
         if 'O' in phenotype.sexgene or phenotype.dilute[0] == 'd' or phenotype.white[0] != 'w':
@@ -4213,7 +4078,7 @@ class Breed_checker:
 
         if phenotype.eumelanin[0] != "B" or 'O' in phenotype.sexgene or phenotype.dilute[0] != 'D' or phenotype.white[0] != 'w':
             return False
-        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] != "C" or phenotype.ticked[0] == "Ta" or phenotype.wbsum > 11:
+        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] != "C" or phenotype.ticked[0] == "Ta" or phenotype.wideband > 11:
             return False
         
         if phenotype.mack[0] == "mc" or phenotype.spotsum < 6:
@@ -4372,7 +4237,7 @@ class Breed_checker:
 
         if phenotype.eumelanin[0] != "B" or 'O' in phenotype.sexgene or phenotype.dilute[0] != 'D' or phenotype.white[0] != 'w':
             return False
-        if phenotype.silver[0] == 'I' or phenotype.pointgene != ["cb", "cb"] or phenotype.ticked[0] != "Ta" or phenotype.wbsum > 11:
+        if phenotype.silver[0] == 'I' or phenotype.pointgene != ["cb", "cb"] or phenotype.ticked[0] != "Ta" or phenotype.wideband > 11:
             return False
         
         return "Singapura"
@@ -4419,7 +4284,7 @@ class Breed_checker:
 
         if phenotype.eumelanin[0] != "B" or 'O' in phenotype.sexgene or phenotype.dilute[0] != 'D' or phenotype.white[0] != 'w':
             return False
-        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] not in ["C", "cs"] or phenotype.ticked[0] == "Ta" or phenotype.wbsum > 11:
+        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] not in ["C", "cs"] or phenotype.ticked[0] == "Ta" or phenotype.wideband > 11:
             return False
         if phenotype.soksum < 6 or phenotype.mack[0] != "mc" or phenotype.bengsum > 3:
             return False
@@ -4508,7 +4373,7 @@ class Breed_checker:
         if phenotype.pinkdilute[0] == "dp":
             return False
 
-        if phenotype.agouti[0] == "A" and (phenotype.bengsum > 3 or phenotype.soksum > 3 or phenotype.wbsum > 11):
+        if phenotype.agouti[0] == "A" and (phenotype.bengsum > 3 or phenotype.soksum > 3 or phenotype.wideband > 11):
             return False
         if phenotype.agouti[0] == "Apb":
             return False
@@ -4559,7 +4424,7 @@ class Breed_checker:
 
         if phenotype.eumelanin[0] != "B" or 'O' in phenotype.sexgene or phenotype.dilute[0] != 'D' or phenotype.white[0] != 'w':
             return False
-        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] != "C" or phenotype.ticked[0] == "Ta" or phenotype.wbsum > 11:
+        if phenotype.silver[0] == 'I' or phenotype.pointgene[0] != "C" or phenotype.ticked[0] == "Ta" or phenotype.wideband > 11:
             return False
         if phenotype.bengsum < 6 or phenotype.mack[0] != "Mc" or phenotype.soksum > 3:
             return False
@@ -4636,7 +4501,7 @@ def find_my_breed(phenotype):
         "Gaelic Fold" : phenotype.breeds.get("Munchkin", 0) + phenotype.breeds.get("Persian/Exotic", 0) + phenotype.breeds.get("British", 0), 
         "Kinkalow" : phenotype.breeds.get("American Curl", 0) + phenotype.breeds.get("Munchkin", 0), 
         "Lambkin" : phenotype.breeds.get("Selkirk Rex", 0) + phenotype.breeds.get("Munchkin", 0), 
-        "Napoleon" : phenotype.breeds.get("Munchkin", 0) + phenotype.breeds.get("Persian/Exotic", 0),
+        "Minuet" : phenotype.breeds.get("Munchkin", 0) + phenotype.breeds.get("Persian/Exotic", 0),
         "Peterbald" : phenotype.breeds.get("Oriental/Siamese", 0) + phenotype.breeds.get("Donskoy", 0), 
         "Serengeti" : phenotype.breeds.get("Oriental/Siamese", 0) + phenotype.breeds.get("Bengal", 0), 
         "Skookum" : phenotype.breeds.get("LaPerm", 0) + phenotype.breeds.get("Munchkin", 0)
@@ -4649,7 +4514,7 @@ def find_my_breed(phenotype):
         "Gaelic Fold" : ["Munchkin", "Persian/Exotic", "British"], 
         "Kinkalow" : ["American Curl", "Munchkin"], 
         "Lambkin" : ["Selkirk Rex", "Munchkin"], 
-        "Napoleon" : ["Munchkin", "Persian/Exotic"],
+        "Minuet" : ["Munchkin", "Persian/Exotic"],
         "Peterbald" : ["Oriental/Siamese", "Donskoy"], 
         "Serengeti" : ["Oriental/Siamese", "Bengal"], 
         "Skookum" : ["LaPerm", "Munchkin"]
@@ -4670,7 +4535,7 @@ def find_my_breed(phenotype):
     if not phenotype.breeds.get("Selkirk Rex", False) or not phenotype.breeds.get("Munchkin", False):
         hybrids["Lambkin"] = 0
     if not phenotype.breeds.get("Persian/Exotic", False) or not phenotype.breeds.get("Munchkin", False) or phenotype.breeds.get("British", False):
-        hybrids["Napoleon"] = 0
+        hybrids["Minuet"] = 0
     if not phenotype.breeds.get("Oriental/Siamese", False) or not phenotype.breeds.get("Donskoy", False):
         hybrids["Peterbald"] = 0
     if not phenotype.breeds.get("Oriental/Siamese", False) or not phenotype.breeds.get("Bengal", False):
@@ -4698,8 +4563,8 @@ def find_my_breed(phenotype):
             return "Kinkalow"
         elif breed == "Lambkin" and phenotype.length != "hairless" and phenotype.lykoi[0] == "Ly" and phenotype.sedesp[0] == "Se" and phenotype.breeds.get("Selkirk Rex", 0) and phenotype.breeds.get("Munchkin", 0):
             return "Lambkin"
-        elif breed == "Napoleon" and phenotype.length != "hairless" and phenotype.lykoi[0] == "Ly" and phenotype.breeds.get("Persian/Exotic", 0) and phenotype.breeds.get("Munchkin", 0):
-            return "Napoleon"
+        elif breed == "Minuet" and phenotype.length != "hairless" and phenotype.lykoi[0] == "Ly" and phenotype.breeds.get("Persian/Exotic", 0) and phenotype.breeds.get("Munchkin", 0):
+            return "Minuet"
         elif breed == "Peterbald" and phenotype.breeds.get("Oriental/Siamese", 0) and phenotype.breeds.get("Donskoy", 0):
             return "Peterbald"
         elif breed == "Serengeti" and Breed_checker.Serengeti(phenotype) and phenotype.breeds.get("Oriental/Siamese", 0) and phenotype.breeds.get("Bengal", 0):
@@ -4813,7 +4678,7 @@ breed_functions = {
         "Gaelic Fold" : Breed_generator.Gaelic,
         "Kinkalow" : Breed_generator.Kinkalow,
         "Lambkin" : Breed_generator.Lambkin,
-        "Napoleon" : Breed_generator.Napoleon,
+        "Minuet" : Breed_generator.Minuet,
         "Peterbald" : Breed_generator.Peterbald,
         "Serengeti" : Breed_generator.Serengeti,
         "Skookum" : Breed_generator.Skookum

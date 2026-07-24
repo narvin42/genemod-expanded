@@ -157,8 +157,8 @@ class Namer():
             (phenotype.white[1] in ['ws', 'wt'] and phenotype.whitegrade == 5) or
             (phenotype.tortiepattern == ['revCRYPTIC'] and phenotype.brindledbi) or 
             (phenotype.dilute[0] == 'd' and (phenotype.pinkdilute[0] == 'dp' or phenotype.chs[0] == 'ch') and 
-                (('dove' in phenotype.colour and phenotype.saturation < 2) or 
-                ('platinum' in phenotype.colour and phenotype.saturation < 3) or
+                (('dove' in phenotype.colour and phenotype.fur_shade < 2) or 
+                ('platinum' in phenotype.colour and phenotype.fur_shade < 3) or
                 ('dove' not in phenotype.colour and 'platinum' not in phenotype.colour)))
             ):
             base = 'white'
@@ -202,7 +202,7 @@ class Namer():
             tabby['tortie_red'] = 'mackerel'
         else:
             tabby['tortie_red'] = 'spotted'
-        if base in ['ginger', 'cream'] or (phenotype.agouti[0] != "a") or (phenotype.ext[0] not in ['Eg', 'E']) or ('smoke' in phenotype.silvergold and 14 > phenotype.wbsum > 9):
+        if base in ['ginger', 'cream'] or (phenotype.agouti[0] != "a") or (phenotype.ext[0] not in ['Eg', 'E']) or ('smoke' in phenotype.silvergold and 14 > phenotype.wideband > 9):
             tabby['pattern'] = tabby['tortie_red']
 
             if base not in ['ginger', 'cream'] and ('smoke' in phenotype.silvergold or 'masked' in phenotype.silvergold or phenotype.ext[0] == "Eg" or (('charcoal' in phenotype.tabtype or phenotype.ruftype == 'low') and phenotype.wbtype in ['low', 'medium'])):
@@ -533,7 +533,7 @@ class Namer():
             return self.tabby(params[0], params[1], params[2], params[3])
         
     def chocolate(self, params):
-        if self.phenotype.saturation > 4 and random() < 0.2 and params[0] not in ['black', 'cinnamon']:
+        if self.phenotype.fur_shade > 4 and random() < 0.2 and params[0] not in ['black', 'cinnamon']:
             params[4] = params[4].replace('sepia', 'mink')
             return self.black(params)
 
@@ -597,7 +597,7 @@ class Namer():
         if random() < 0.1:
             self.purple(params)
 
-        if self.phenotype.saturation > 4 and random() < 0.2 and params[0] not in ['blue', 'fawn']:
+        if self.phenotype.fur_shade > 4 and random() < 0.2 and params[0] not in ['blue', 'fawn']:
             params[4] = params[4].replace('sepia', 'mink')
             return self.blue(params)
 
@@ -653,7 +653,7 @@ class Namer():
             return self.tabby(params[0], params[1], params[2], params[3])
         
     def cinnamon(self, params):
-        if self.phenotype.saturation > 4 and random() < 0.2 and params[0] not in ['black', 'chocolate']:
+        if self.phenotype.fur_shade > 4 and random() < 0.2 and params[0] not in ['black', 'chocolate']:
             return self.chocolate(params)
         if random() < 0.1:
             return self.red(params)
@@ -711,7 +711,7 @@ class Namer():
             return self.tabby(params[0], params[1], params[2], params[3])
         
     def fawn(self, params):
-        if self.phenotype.saturation > 4 and random() < 0.2 and params[0] not in ['black', 'chocolate', 'cinnamon', 'blue', 'lilac']:
+        if self.phenotype.fur_shade > 4 and random() < 0.2 and params[0] not in ['black', 'chocolate', 'cinnamon', 'blue', 'lilac']:
             return self.lilac(params)
         if random() < 0.1:
             return self.pink(params)

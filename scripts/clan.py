@@ -10,7 +10,7 @@ TODO: Docs
 
 import os
 import statistics
-from random import choice, randint, random
+from random import choice, randint, random, choices
 
 import i18n
 import ujson
@@ -22,8 +22,12 @@ from scripts.cat.save_load import (
     save_cats,
     get_faded_ids,
 )
+from scripts.clan_package.clan_names import get_possible_clan_names
 from scripts.clan_package.settings import save_clan_settings, load_clan_settings
-from scripts.clan_package.settings.clan_settings import reset_loaded_clan_settings
+from scripts.clan_package.settings.clan_settings import (
+    reset_loaded_clan_settings,
+    set_clan_setting,
+)
 from scripts.clan_resources.freshkill import FreshkillPile, Nutrition
 from scripts.clan_resources.herb.herb_supply import HerbSupply
 from scripts.clan_resources.point_of_interest import (
@@ -63,7 +67,6 @@ class Clan:
 
     """
 
-    leader_lives = 0
     clan_cats = []
 
     age = 0
@@ -82,7 +85,7 @@ class Clan:
         camp_bg=None,
         symbol=None,
         game_mode="classic",
-        cruel_cards: list[str] = [],
+        cruel_cards: list[str] = None,
         starting_members=None,
         starting_season="Newleaf",
         relations={CatGroup.PLAYER_CLAN_ID: {}},
@@ -104,8 +107,11 @@ class Clan:
         self.name = display_name if display_name else save_id
         self.clancount = clan_count_mode
 
+        # needs to happen immediately so that any config retrievals will be accurate
+        self.cruel_cards: list[str] = cruel_cards if cruel_cards else []
+
         self.leader = leader
-        self.leader_lives = 9
+        self._leader_lives = 9
         self.leader_predecessors = 0
         self.deputy = deputy
         self.deputy_predecessors = 0
@@ -126,7 +132,6 @@ class Clan:
         self.camp_bg = camp_bg
         self.chosen_symbol = symbol
         self.game_mode = game_mode
-        self.cruel_cards: list[str] = cruel_cards
         self.pregnancy_data = {}
         self.inheritance = {}
         self.custom_pronouns = {}
@@ -138,7 +143,11 @@ class Clan:
         # Reputation is for loners/kittypets/outsiders in general that wish to join the clan.
         # it's a range from 1-100, with 30-70 being neutral, 71-100 being "welcoming",
         # and 1-29 being "hostile". if you're hostile to outsiders, they will VERY RARELY show up.
-        self._reputation = 80
+        self._reputation = get_config(
+            "outsiders.starting_reputation",
+            creating_clan=True,
+            card_list_override=self.cruel_cards,
+        )
         self.relations = relations if relations.get(self.group_ID) else {CatGroup.PLAYER_CLAN_ID: {}}
 
         self.all_other_clans: list[OtherClan] = []
@@ -164,12 +173,17 @@ class Clan:
 
     @property
     def current_season(self):
-        modifiers = {"Newleaf": 0, "Greenleaf": 3, "Leaf-fall": 6, "Leaf-bare": 9}
+        season_length = get_config("seasons.length")
+        calendar = get_config("seasons.calendar")
+        modifiers = {
+            season: i * season_length
+            for i, season in enumerate(calendar)
+        }
         return (
             self.starting_season
-            if get_config("lock_season")
+            if get_config("seasons.lock_season")
             else constants.SEASON_CALENDAR[
-                (self.age + modifiers[self.starting_season]) % 12
+                (self.age + modifiers[self.starting_season]) % (season_length * len(calendar))
             ]
         )
 
@@ -180,6 +194,14 @@ class Clan:
     @name.setter
     def name(self, value):
         self.prefix = value
+
+    @property
+    def leader_lives(self):
+        return min(self._leader_lives, get_config("death_related.max_leader_lives"))
+
+    @leader_lives.setter
+    def leader_lives(self, value):
+        self._leader_lives = min(value, get_config("death_related.max_leader_lives"))
 
     # The clan couldn't save itself in time due to issues arising, for example, from this function: "if deputy is not
     # None: self.deputy.status_change('deputy') -> game.clan.remove_med_cat(self)"
@@ -264,7 +286,10 @@ class Clan:
         number_other_clans = randint(allowed_range[0], allowed_range[1])
         for _ in range(number_other_clans):
             other_clan = OtherClan(clancount=self.clancount)
-            game.clan.relations[CatGroup.PLAYER_CLAN_ID][other_clan.group_ID] = randint(8, 12)
+            game.clan.relations[CatGroup.PLAYER_CLAN_ID][other_clan.group_ID] = randint(
+                get_config("clan_creation.starting_clan_relation")[0],
+                get_config("clan_creation.starting_clan_relation")[1],
+            )
             game.clan.war[CatGroup.PLAYER_CLAN_ID][other_clan.group_ID] = {"at_war": False, "duration": 0}
 
         if self.clancount == "multiclan":
@@ -272,7 +297,10 @@ class Clan:
                 game.clan.war[clan.group_ID] = {}
                 game.clan.relations[clan.group_ID] = {}
                 for o_clan in game.clan.all_other_clans[i+1:]:
-                    game.clan.relations[clan.group_ID][o_clan.group_ID] = randint(8, 12)
+                    game.clan.relations[clan.group_ID][o_clan.group_ID] = randint(
+                        get_config("clan_creation.starting_clan_relation")[0],
+                        get_config("clan_creation.starting_clan_relation")[1],
+                    )
                     game.clan.war[clan.group_ID][o_clan.group_ID] = {"at_war": False, "duration": 0}
 
         allowed_range = get_config("clan_creation.starting_outsiders")
@@ -306,7 +334,7 @@ class Clan:
         for i in range(3):
             generate_and_add_new_poi(game.clan.biome, PoiType.TERRAIN, clan=self.group_ID)
 
-        # create leader's ceremony
+        # create leader's ceremony and give lives
         if self.leader:
             self.leader.generate_lead_ceremony()
         if self.clancount == "multiclan":
@@ -329,6 +357,40 @@ class Clan:
             self.game_mode = "classic"
 
         rebuild_top_menu_buttons()
+        # makes sure all the settings are at their starting positions
+        self._adjust_settings()
+
+    @staticmethod
+    def _adjust_settings():
+        """
+        Make sure settings are at their starting positions as dictated in the game_config
+        """
+        # deputy
+        if get_config("settings.force_enable.deputy"):
+            set_clan_setting("deputy", True)
+            save_clan_settings()
+
+        # modded_kits
+        if get_config("settings.force_disable.modded_kits"):
+            set_clan_setting("modded_kits", False)
+            save_clan_settings()
+
+        # feeding order
+        starting_order = get_config("prey.feeding.starting_order")
+        for setting in [
+            "low_rank",
+            "high_rank",
+            "youngest_first",
+            "oldest_first",
+            "hungriest_first",
+            "experience_first",
+        ]:
+            set_clan_setting(setting, True if starting_order == setting else False)
+
+        # feeding priority
+        starting_priority = get_config("prey.feeding.starting_priority")
+        for setting in ["hunter_first", "sick_injured_first"]:
+            set_clan_setting(setting, True if starting_priority == setting else False)
 
     def add_cat(self, cat):  # cat is a 'Cat' object
         """Adds cat into the list of clan cats"""
@@ -378,13 +440,11 @@ class Clan:
         """
 
         if leader:
-            leader.generate_lead_ceremony()
+            leader.history.add_lead_ceremony()
             self.leader = leader
-            Cat.all_cats[leader.ID].rank_change(CatRank.LEADER)
+            if leader.status.rank != CatRank.LEADER:
+                Cat.all_cats[leader.ID].rank_change(CatRank.LEADER)
             self.leader_predecessors += 1
-
-        # todo: this leads nowhere, can it be deleted?
-        switch_set_value(Switch.new_leader, None)
 
     def new_deputy(self, deputy):
         """
@@ -649,18 +709,21 @@ class Clan:
             camp_bg=clan_data["camp_bg"],
             game_mode=clan_data["gamemode"],
             relations=clan_data.get("relations", {CatGroup.PLAYER_CLAN_ID:{}}),
-            cruel_cards=clan_data.get("cruel_cards", []),
+            cruel_cards=[
+                c
+                for c in clan_data.get("cruel_cards", [])
+                if c in constants.CRUEL_CARDS_ALL
+            ],
             self_run_init_functions=False,
         )
         game.clan.post_initialization_functions()
-        names.load_clan_names(save_id)
 
         if clan_data.get("used_group_IDs"):
             game.used_group_IDs = clan_data["used_group_IDs"]
             for ID in game.used_group_IDs:
                 game.used_group_IDs[ID] = CatGroup(game.used_group_IDs[ID])
 
-        game.clan.reputation = max(0, min(100, int(clan_data["reputation"])))
+        game.clan.reputation = clan_data["reputation"]
 
         game.clan.clancount = clan_data.get("clancount_mode", "singleclan")
         game.clan.age = clan_data["clanage"]
@@ -768,7 +831,10 @@ class Clan:
                             if rel := clan_data["relations"].get("other_clan" + (str(i+1)), {}).get("other_clan" + (str(j+1))):
                                 game.clan.relations[clan.group_ID][o_clan.group_ID] = rel
                                 continue
-                        game.clan.relations[clan.group_ID][o_clan.group_ID] = randint(8, 12)
+                        game.clan.relations[clan.group_ID][o_clan.group_ID] = randint(
+                            get_config("clan_creation.starting_clan_relation")[0],
+                            get_config("clan_creation.starting_clan_relation")[1],
+                        )
 
         for cat in clan_data["clan_cats"].split(","):
             if cat in Cat.all_cats:
@@ -1181,11 +1247,8 @@ class Clan:
 
     @reputation.setter
     def reputation(self, a: int):
-        self._reputation = int(a)
-        if self._reputation > 100:
-            self._reputation = 100
-        elif self._reputation < 0:
-            self._reputation = 0
+        rep = min(int(a), get_config("outsiders.max_reputation"))
+        self._reputation = max(rep, get_config("outsiders.min_reputation"))
 
     @property
     def temperament(self) -> tuple[str, str]:
@@ -1293,11 +1356,11 @@ class Clan:
             other_enum = clan.group_ID
 
         if get_label:
-            if game.clan.relations[main_enum][other_enum] > 17:
+            if game.clan.relations[main_enum][other_enum] > get_config("reputation.other_clans.neutral"):
                 return "ally"
-            elif 7 <= game.clan.relations[main_enum][other_enum] <= 17:
-                return "neutral"
-            return "hostile"
+            elif game.clan.relations[main_enum][other_enum] <= get_config("reputation.other_clans.hostile"):
+                return "hostile"
+            return "neutral"
         
         return game.clan.relations[main_enum][other_enum]
 
@@ -1311,7 +1374,7 @@ class Clan:
 
         value = value or game.clan.relations[main_enum][other_enum]
         
-        game.clan.relations[main_enum][other_enum] = int(value + offset)
+        game.clan.relations[main_enum][other_enum] = max(0, min(int(value + offset), get_config("reputation.other_clans.relation_cap")))
 
     def get_wars(self, clan):
         enemies = []
@@ -1383,9 +1446,8 @@ class OtherClan:
             used_names = [str(i.name) for i in game.clan.all_other_clans] + [
                 game.clan.name
             ]
-            clan_names = names.names_dict["normal_prefixes"]
-            clan_names.extend(names.names_dict["clan_prefixes"])
-            self.name = choice(clan_names)
+            clan_names = get_possible_clan_names()
+            self.name = choice(clan_names)  # name property will set self.prefix
             while self.name in used_names:  # making sure we don't repeat a name
                 self.name = choice(clan_names)
         if biome:
@@ -1424,7 +1486,6 @@ class OtherClan:
                 choice([x for x in self.first_temper_list if x not in used_tempers]),
                 choice([x for x in self.second_temper_list if x not in used_tempers]),
             )
-        # self.relations = relations or randint(8, 12)
         if reputation is None:
             if self.temperament[0] in ["gracious", "amiable"]:
                 self.reputation = choice([randint(71, 100), randint(71, 100), randint(71, 100), randint(50, 70)])
@@ -1482,7 +1543,7 @@ class OtherClan:
 
         game.clan.all_other_clans.append(self)
 
-        random_rank = get_config("clan_creation.random_ranks")
+        rank_weights = get_config("clan_creation.rank_weights")
         if clancount == "multiclan":
             for i in range(3):
                 generate_and_add_new_poi(game.clan.biome, PoiType.TERRAIN, clan=self.group_ID)
@@ -1515,14 +1576,14 @@ class OtherClan:
             self.new_deputy(create_cat(CatRank.DEPUTY, biome=self.biome, kittypet=use_special, clan=self.group_ID))
             self.new_medicine_cat(create_cat(CatRank.MEDICINE_CAT, biome=self.biome, kittypet=use_special, clan=self.group_ID))
             for i in range(randint(cat_range[0], cat_range[1])):
-                create_cat(choice(random_rank), biome=self.biome, kittypet = use_special, clan=self.group_ID)
+                create_cat(choices(list(rank_weights.keys()), list(rank_weights.values()))[0], biome=self.biome, kittypet = use_special, clan=self.group_ID)
     @property
     def name(self):
         return i18n.t("general.clan", name=self.prefix)
 
     @name.setter
     def name(self, value):
-        self.prefix = value.replace("Clan", "")
+        self.prefix = value
 
     def __repr__(self):
         # has indicators that this is unlocalized, just in case
@@ -1555,9 +1616,9 @@ class OtherClan:
         if leader:
             leader.history.add_lead_ceremony()
             self.leader = leader
-            Cat.all_cats[leader.ID].rank_change(CatRank.LEADER)
+            if leader.status.rank != CatRank.LEADER:
+                Cat.all_cats[leader.ID].rank_change(CatRank.LEADER)
             self.leader_predecessors += 1
-        switch_set_value(Switch.new_leader, None)
 
     def new_deputy(self, deputy):
         """
@@ -1678,7 +1739,7 @@ class Afterlife:
     @stability.setter
     def stability(self, value):
         raise Exception(
-            "ERROR: Afterlife aggresstabilitysion cannot be set manually as it is meant to be calculated from the currently dead cats."
+            "ERROR: Afterlife stability cannot be set manually as it is meant to be calculated from the currently dead cats."
         )
 
     @property

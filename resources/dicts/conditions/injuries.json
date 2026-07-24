@@ -1488,8 +1488,7 @@
         "also_got": [
         ],
         "cause_permanent": [
-            "paralyzed",
-            "bad back"
+            "paralyzed", "bad back"
         ],
         "herbs": {
             "1": [
@@ -1675,7 +1674,9 @@
             "juniper"
         ],
             "2": [],
-            "3": []
+            "3": [
+            "honey"
+            ]
         }
     },
     

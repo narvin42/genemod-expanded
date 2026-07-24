@@ -32,6 +32,7 @@ from scripts.events_module.text_adjust import event_text_adjust, adjust_list_tex
 from scripts.events_module.consequences import (
     create_new_cat,
     change_relationship_values,
+    check_stolen_vitality,
 )
 from scripts.events_module.event_filters import (
     get_highest_romantic_relation,
@@ -971,6 +972,8 @@ class Pregnancy_Events:
                 clan.leader_lives -= 1
                 cat.die()
                 death_event = i18n.t("conditions.pregnancy.leader_kitting_death")
+                if extra_result := check_stolen_vitality(cat, 1):
+                    death_event += " " + extra_result
             else:
                 cat.die()
                 death_event = i18n.t(
@@ -1312,7 +1315,7 @@ class Pregnancy_Events:
                         possible = False
                         break
                     if x := couple.relationships.get(cand.ID):
-                        if (x.romance + x.like + x.respect + x.trust + x.comfort) < 5:
+                        if (x.romance + x.like + x.respect + x.trust + x.comfort) < 15:
                             possible = False
                             break
                 if possible:
@@ -1411,7 +1414,7 @@ class Pregnancy_Events:
                                                 outside=True,
                                                 is_parent=True)
             outside_parent[0].get_new_thought(CatThought.OUTSIDE_DAM if background_category == "2" else CatThought.OUTSIDE_SIRE, other_cat=cat)
-            if random() < 0.2:
+            if random() < get_config("mates.crossclan_litter_mates_chance") and get_config("mates.allow_mating"):
                 outside_parent[0].set_mate(cat)
                 cat.set_mate(outside_parent[0])
         else:
@@ -1448,7 +1451,7 @@ class Pregnancy_Events:
                                                         is_parent=True)[0]
                     outside_parent.get_new_thought(CatThought.OUTSIDE_DAM if background_category == "2" else CatThought.OUTSIDE_SIRE, other_cat=cat)
                     outside_parent.birth_cooldown = get_config("pregnancy.birth_cooldown")
-                    if random() < 0.1:
+                    if random() < get_config("mates.outsider_litter_mates_chance") and get_config("mates.allow_mating"):
                         outside_parent.set_mate(cat)
                         cat.set_mate(outside_parent)
 
@@ -1762,7 +1765,7 @@ class Pregnancy_Events:
                     if the_cat.ID in kit.get_parents():
                         parent_to_kit = get_config("new_cat.parent_buff.parent_to_kit")
                         y = randrange(0, 15)
-                        start_relation = Relationship(the_cat, kit, False, True)
+                        start_relation = Relationship(the_cat, kit, True)
                         start_relation.like = parent_to_kit[RelType.LIKE] + y
                         start_relation.comfort = parent_to_kit[RelType.COMFORT] + y
                         start_relation.respect = parent_to_kit[RelType.RESPECT] + y
@@ -1771,7 +1774,7 @@ class Pregnancy_Events:
 
                         kit_to_parent = get_config("new_cat.parent_buff.kit_to_parent")
                         y = randrange(0, 15)
-                        start_relation = Relationship(kit, the_cat, False, True)
+                        start_relation = Relationship(kit, the_cat, True)
                         start_relation.like += kit_to_parent[RelType.LIKE] + y
                         start_relation.comfort = kit_to_parent[RelType.COMFORT] + y
                         start_relation.respect = kit_to_parent[RelType.RESPECT] + y
@@ -1805,7 +1808,7 @@ class Pregnancy_Events:
                 if second_kitten.ID == kitten.ID:
                     continue
                 start_value_info = get_config("new_cat.sib_buff.cat1_to_cat2")
-                start_relation = Relationship(kitten, second_kitten, False, True)
+                start_relation = Relationship(kitten, second_kitten, True)
                 start_relation.romance += start_value_info["romance"]
                 start_relation.like += start_value_info["like"] + y
                 start_relation.respect += start_value_info["respect"] + y

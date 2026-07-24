@@ -370,7 +370,7 @@ def one_moon():
 
     # Promote leader and deputy, if needed.
     for clan in [game.clan] + game.clan.all_other_clans:
-        check_and_promote_leader(clan)
+        check_leader(clan)
         check_and_promote_deputy(clan)
         if not clancount:
             break
@@ -854,7 +854,7 @@ def handle_focus():
         if get_clan_setting("sabotage_other_clans"):
             amount = amount * -1
         for name in game.clan.clans_in_focus:
-            clan = [clan for clan in game.clan.all_other_clans if clan.prefix == name][0]
+            clan = [clan for clan in game.clan.all_other_clans if clan.name == name or clan.prefix == name][0]
             change_clan_relations(game.clan, clan, amount)
         focus_text = None
 
@@ -932,7 +932,7 @@ def handle_focus():
         # if it is raiding, lower the relation to other clans
         if get_clan_setting("raid_other_clans"):
             for name in game.clan.clans_in_focus:
-                clan = [clan for clan in game.clan.all_other_clans if clan.prefix == name][0]
+                clan = [clan for clan in game.clan.all_other_clans if clan.name == name][0]
                 amount = -info_dict["relation"]
                 change_clan_relations(game.clan, clan, amount)
 
@@ -1386,7 +1386,6 @@ def one_moon_cat(cat, clan):
 
     # relationships have to be handled separately, because of the ceremony name change
     if cat.status.group.is_any_clan_group():
-        cat.relationship_interaction()
         Relation_Events.handle_relationships(cat)
 
     # now we make sure ill and injured cats don't get interactions they shouldn't
@@ -1575,11 +1574,11 @@ def check_war():
             event = random.choice(war_events)
             if not victor or victor == clan:
                 event = ongoing_event_text_adjust(
-                    Cat, event, other_clan_name=i18n.t("general.clan", name=enemy_clan.prefix), clan=main_clan
+                    Cat, event, other_clan_name=enemy_clan.name, clan=main_clan
                 )
             else:
                 event = ongoing_event_text_adjust(
-                    Cat, event, other_clan_name=i18n.t("general.clan", name=main_clan.prefix), clan=enemy_clan
+                    Cat, event, other_clan_name=main_clan.name, clan=enemy_clan
                 )
             game.cur_events_list.append(Single_Event(event, "other_clans", clan=clan))
             if game.clan.clancount == "multiclan":
@@ -1590,262 +1589,215 @@ def perform_ceremonies(cat, clan):
     ceremonies
     """    
     global ceremony_accessory
-    # TODO: hardcoded events, not good, consider how to convert to ShortEvent
-    #  we *do* have a ceremony dict and format, not sure why it isn't being used here
+
+    # Protection check, to ensure "None" cats won't cause a crash.
+    if not cat or cat.dead:
+        return
+
+    if cat.status.rank == CatRank.DEPUTY and clan.deputy is None:
+        clan.deputy = cat
+    if cat.status.rank == CatRank.MEDICINE_CAT and clan.medicine_cat is None:
+        clan.medicine_cat = cat
+
     # PROMOTE DEPUTY TO LEADER, IF NEEDED -----------------------
-    if clan.leader:
-        leader_dead = clan.leader.dead
-        leader_outside = clan.leader.status.group_ID != clan.group_ID
-    else:
-        leader_dead = True
-        # If leader is None, treat them as dead (since they are dead - and faded away.)
-        leader_outside = True
 
     # If a Clan deputy exists, and the leader is dead,
     #  outside, or doesn't exist, make the deputy leader.
-    if clan.deputy:
-        if (
-            clan.deputy is not None
-            and not clan.deputy.dead
-            and not clan.deputy.status.group_ID != clan.group_ID
-            and (leader_dead or leader_outside)
-        ):
-            old_name = clan.deputy.name
-            clan.new_leader(clan.deputy)
-            cat = clan.leader
-            text = ""
-            if cat.personality.trait == "bloodthirsty":
-                text = i18n.t(
-                    "hardcoded.ceremony_leader_bloodthirsty",
-                    oldname=old_name,
-                    newname=cat.name,
-                )
-            else:
-                c = random.randint(1, 3)
-                text = i18n.t(
-                    f"hardcoded.ceremony_leader_{c}",
-                    oldname=old_name,
-                    newname=cat.name,
-                )
-
-            # game.ceremony_events_list.append(text)
-            text += " " + i18n.t("hardcoded.ceremony_closer")
-
-            text = event_text_adjust(Cat, text, main_cat=cat, clan=clan)
-
-            game.cur_events_list.append(
-                Single_Event(text, "ceremony", cat.ID, clan=clan.group_ID)
-            )
-            ceremony_accessory = True
-            gain_accessories(cat, clan)
-            clan.deputy = None
+    if cat == clan.deputy:
+        # leader gone, time to promote
+        if not clan.leader or clan.leader.status.group_ID != clan.group_ID:
+            if clan.deputy.status.group_ID == clan.group_ID:
+                ceremony(cat, CatRank.LEADER)
+                clan.deputy = None
 
     # OTHER CEREMONIES ---------------------------------------
 
-    # Protection check, to ensure "None" cats won't cause a crash.
-    if cat:
-        cat_dead = cat.dead
-    else:
-        cat_dead = True
-
-    if not cat_dead:
-        if cat.status.rank == CatRank.DEPUTY and clan.deputy is None:
-            clan.deputy = cat
-        if (
-            cat.status.rank == CatRank.MEDICINE_CAT
-            and clan.medicine_cat is None
-        ):
-            clan.medicine_cat = cat
-
-        special_can_retire = False
-        role_info = get_config("roles")
-        retirement_info = get_config("retirement")
-        if cat.status.rank == CatRank.LEADER:
-            special_can_retire = get_clan_setting("leader_retirement") and random.random() < (1/retirement_info["max_leader_retire_chance"])
-        if cat.status.rank == CatRank.MEDICINE_CAT:
-            special_can_retire = get_clan_setting("healer_retirement") and medicine_cats_can_cover_clan(
-                Cat.all_cats.values(), get_amount_cat_for_one_medic(), clan=clan.group_ID, exclude=cat
-            ) and random.random() < (1/retirement_info["max_healer_retire_chance"])
-        if cat.status.rank == CatRank.MEDIATOR:
-            special_can_retire = get_clan_setting("mediator_retirement") and random.random() < (1/retirement_info["max_mediator_retire_chance"])
-        if cat.status.rank == CatRank.QUEEN:
-            special_can_retire = random.random() < (1/retirement_info["max_queen_retire_chance"])
+    special_can_retire = False
+    role_info = get_config("roles")
+    retirement_info = get_config("retirement")
+    if cat.status.rank == CatRank.LEADER:
+        special_can_retire = get_clan_setting("leader_retirement") and random.random() < (1/retirement_info["max_leader_retire_chance"])
+    if cat.status.rank == CatRank.MEDICINE_CAT:
+        special_can_retire = get_clan_setting("healer_retirement") and medicine_cats_can_cover_clan(
+            Cat.all_cats.values(), get_amount_cat_for_one_medic(), clan=clan.group_ID, exclude=cat
+        ) and random.random() < (1/retirement_info["max_healer_retire_chance"])
+    if cat.status.rank == CatRank.MEDIATOR:
+        special_can_retire = get_clan_setting("mediator_retirement") and random.random() < (1/retirement_info["max_mediator_retire_chance"])
+    if cat.status.rank == CatRank.QUEEN:
+        special_can_retire = random.random() < (1/retirement_info["max_queen_retire_chance"])
         
         # retiring to elder den
-        if (
-            not cat.no_retire
-            and (cat.status.rank in (CatRank.WARRIOR, CatRank.DEPUTY) or cat.status.rank in (CatRank.MEDICINE_CAT, CatRank.MEDIATOR, CatRank.LEADER, CatRank.QUEEN) and special_can_retire)
-            and len(cat.apprentice) < 1
-            and cat.moons >= retirement_info["min_retirement_age"]
+    if (
+        not cat.no_retire
+        and (cat.status.rank in (CatRank.WARRIOR, CatRank.DEPUTY) or cat.status.rank in (CatRank.MEDICINE_CAT, CatRank.MEDIATOR, CatRank.LEADER, CatRank.QUEEN) and special_can_retire)
+        and len(cat.apprentice) < 1
+        and cat.moons >= retirement_info["min_retirement_age"]
+    ):
+        # There is some variation in the age.
+        if cat.moons > retirement_info["min_retirement_age"]+25 or not int(
+            random.random() * (-0.7 * (cat.moons-retirement_info["min_retirement_age"]+115) + 100)
         ):
-            # There is some variation in the age.
-            if cat.moons > retirement_info["min_retirement_age"]+25 or not int(
-                random.random() * (-0.7 * (cat.moons-retirement_info["min_retirement_age"]+115) + 100)
-            ):
-                if cat.status.rank == CatRank.DEPUTY:
-                    clan.deputy = None
-                if cat.status.rank == CatRank.LEADER:
-                    clan.leader = None
-                if cat.status.rank == CatRank.MEDICINE_CAT:
-                    clan.remove_med_cat(cat)
-                ceremony(cat, CatRank.ELDER)
+            if cat.status.rank == CatRank.DEPUTY:
+                clan.deputy = None
+            if cat.status.rank == CatRank.LEADER:
+                clan.leader = None
+            if cat.status.rank == CatRank.MEDICINE_CAT:
+                clan.remove_med_cat(cat)
+            ceremony(cat, CatRank.ELDER)
 
-        # apprentice a kitten to either med or warrior
-        if cat.moons == cat_class.age_moons[CatAge.ADOLESCENT][0]:
-            if cat.status.rank == CatRank.KITTEN:
-                if _is_suitable_medcat_app(cat, clan):
-                    ceremony(cat, CatRank.MEDICINE_APPRENTICE)
-                    ceremony_accessory = True
-                    gain_accessories(cat, clan)
-                else:
-                    # Chance for mediator apprentice
-                    mediator_list = list(
-                        filter(
-                            lambda x: x.status.rank == CatRank.MEDIATOR
-                            and x.status.group_ID == clan.group_ID,
-                            Cat.all_cats_list,
-                        )
-                    )
-
-                    # This checks if at least one mediator already has an apprentice.
-                    has_mediator_apprentice = False
-                    for c in mediator_list:
-                        if c.apprentice:
-                            has_mediator_apprentice = True
-                            break
-
-                    chance = role_info["mediator_app_chance"]
-                    if cat.personality.trait in [
-                        "charismatic",
-                        "loving",
-                        "responsible",
-                        "wise",
-                        "thoughtful",
-                    ]:
-                        chance = int(chance / 1.5)
-                    if cat.skills.primary.path == SkillPath.MEDIATOR or cat.skills.secondary and cat.skills.secondary.path == SkillPath.MEDIATOR:
-                        chance = int(chance / 2)
-                    if cat.is_disabled():
-                        chance = int(chance / 2)
-
-                    if chance == 0:
-                        chance = 1
-
-                    # Chance for queen apprentice
-                    queen_list = list(
-                        filter(
-                            lambda x: x.status.rank == CatRank.QUEEN
-                            and x.status.group_ID == clan.group_ID,
-                            Cat.all_cats_list,
-                        )
-                    )
-
-                    # This checks if at least one mediator already has an apprentice.
-                    has_queen_apprentice = False
-                    for c in queen_list:
-                        if c.apprentice:
-                            has_queen_apprentice = True
-                            break
-
-                    q_chance = role_info["queen_app_chance"]
-                    if cat.personality.trait in [
-                        "childish",
-                        "playful",
-                        "compassionate",
-                        "thoughtful",
-                        "calm",
-                        "responsible",
-                    ]:
-                        q_chance = int(chance / 1.5)
-                    if cat.skills.primary.path == SkillPath.KIT or cat.skills.secondary and cat.skills.secondary.path == SkillPath.KIT:
-                        q_chance = int(chance / 2)
-                    if cat.is_disabled():
-                        q_chance = int(chance / 2)
-
-                    if q_chance == 0:
-                        q_chance = 1
-
-                    # Only become a mediator if there is already one in the clan.
-                    if (
-                        mediator_list
-                        and not has_mediator_apprentice
-                        and not int(random.random() * chance)
-                    ):
-                        ceremony(cat, CatRank.MEDIATOR_APPRENTICE)
-                        ceremony_accessory = True
-                        gain_accessories(cat, clan)
-                    elif (
-                        not mediator_list
-                        and not int(random.random() * chance * 3)
-                    ):
-                        ceremony(cat, CatRank.MEDIATOR_APPRENTICE)
-                        ceremony_accessory = True
-                        gain_accessories(cat, clan)
-                    elif (
-                        queen_list
-                        and not has_queen_apprentice
-                        and not int(random.random() * q_chance)
-                    ):
-                        ceremony(cat, CatRank.QUEEN_APPRENTICE)
-                        ceremony_accessory = True
-                        gain_accessories(cat, clan)
-                    elif (
-                        not queen_list
-                        and not int(random.random() * q_chance * 3)
-                    ):
-                        ceremony(cat, CatRank.QUEEN_APPRENTICE)
-                        ceremony_accessory = True
-                        gain_accessories(cat, clan)
-                    else:
-                        ceremony(cat, CatRank.APPRENTICE)
-                        ceremony_accessory = True
-                        gain_accessories(cat, clan)
-
-        # graduate
-        if cat.status.rank.is_any_apprentice_rank():
-            if get_clan_setting("12_moon_graduation"):
-                _ready = cat.moons >= 12
+    # apprentice a kitten to either med or warrior
+    if cat.moons == cat_class.age_moons[CatAge.ADOLESCENT][0]:
+        if cat.status.rank == CatRank.KITTEN:
+            if _is_suitable_medcat_app(cat, clan):
+                ceremony(cat, CatRank.MEDICINE_APPRENTICE)
+                ceremony_accessory = True
+                gain_accessories(cat, clan)
             else:
-                graduation_info = get_config("graduation")
-                _ready = (
-                    cat.experience_level not in ["untrained", "trainee"]
-                    and cat.moons
-                    >= graduation_info["min_graduating_age"]
-                ) or cat.moons >= graduation_info["max_apprentice_age"][cat.status.rank]
+                # Chance for mediator apprentice
+                mediator_list = list(
+                    filter(
+                        lambda x: x.status.rank == CatRank.MEDIATOR
+                        and x.status.group_ID == clan.group_ID,
+                        Cat.all_cats_list,
+                    )
+                )
 
-            if _ready:
-                if get_clan_setting("12_moon_graduation"):
-                    preparedness = "prepared"
+                # This checks if at least one mediator already has an apprentice.
+                has_mediator_apprentice = False
+                for c in mediator_list:
+                    if c.apprentice:
+                        has_mediator_apprentice = True
+                        break
+
+                chance = role_info["mediator_app_chance"]
+                if cat.personality.trait in [
+                    "charismatic",
+                    "loving",
+                    "responsible",
+                    "wise",
+                    "thoughtful",
+                ]:
+                    chance = int(chance / 1.5)
+                if cat.skills.primary.path == SkillPath.MEDIATOR or cat.skills.secondary and cat.skills.secondary.path == SkillPath.MEDIATOR:
+                    chance = int(chance / 2)
+                if cat.is_disabled():
+                    chance = int(chance / 2)
+
+                if chance == 0:
+                    chance = 1
+
+                # Chance for queen apprentice
+                queen_list = list(
+                    filter(
+                        lambda x: x.status.rank == CatRank.QUEEN
+                        and x.status.group_ID == clan.group_ID,
+                        Cat.all_cats_list,
+                    )
+                )
+
+                # This checks if at least one mediator already has an apprentice.
+                has_queen_apprentice = False
+                for c in queen_list:
+                    if c.apprentice:
+                        has_queen_apprentice = True
+                        break
+
+                q_chance = role_info["queen_app_chance"]
+                if cat.personality.trait in [
+                    "childish",
+                    "playful",
+                    "compassionate",
+                    "thoughtful",
+                    "calm",
+                    "responsible",
+                ]:
+                    q_chance = int(chance / 1.5)
+                if cat.skills.primary.path == SkillPath.KIT or cat.skills.secondary and cat.skills.secondary.path == SkillPath.KIT:
+                    q_chance = int(chance / 2)
+                if cat.is_disabled():
+                    q_chance = int(chance / 2)
+
+                if q_chance == 0:
+                    q_chance = 1
+
+                # Only become a mediator if there is already one in the clan.
+                if (
+                    mediator_list
+                    and not has_mediator_apprentice
+                    and not int(random.random() * chance)
+                ):
+                    ceremony(cat, CatRank.MEDIATOR_APPRENTICE)
+                    ceremony_accessory = True
+                    gain_accessories(cat, clan)
+                elif (
+                    not mediator_list
+                    and not int(random.random() * chance * 3)
+                ):
+                    ceremony(cat, CatRank.MEDIATOR_APPRENTICE)
+                    ceremony_accessory = True
+                    gain_accessories(cat, clan)
+                elif (
+                    queen_list
+                    and not has_queen_apprentice
+                    and not int(random.random() * q_chance)
+                ):
+                    ceremony(cat, CatRank.QUEEN_APPRENTICE)
+                    ceremony_accessory = True
+                    gain_accessories(cat, clan)
+                elif (
+                    not queen_list
+                    and not int(random.random() * q_chance * 3)
+                ):
+                    ceremony(cat, CatRank.QUEEN_APPRENTICE)
+                    ceremony_accessory = True
+                    gain_accessories(cat, clan)
                 else:
-                    if (
-                        cat.moons == graduation_info["min_graduating_age"]
-                    ):
-                        preparedness = "early"
-                    elif cat.experience_level in ["untrained", "trainee"]:
-                        preparedness = "unprepared"
-                    else:
-                        preparedness = "prepared"
-
-                if cat.status.rank == CatRank.APPRENTICE:
-                    ceremony(cat, CatRank.WARRIOR, preparedness)
+                    ceremony(cat, CatRank.APPRENTICE)
                     ceremony_accessory = True
                     gain_accessories(cat, clan)
 
-                # promote to med cat
-                elif cat.status.rank == CatRank.MEDICINE_APPRENTICE:
-                    ceremony(cat, CatRank.MEDICINE_CAT, preparedness)
-                    ceremony_accessory = True
-                    gain_accessories(cat, clan)
+    # graduate
+    if cat.status.rank.is_any_apprentice_rank():
+        if get_clan_setting("12_moon_graduation"):
+            _ready = cat.moons >= 12
+        else:
+            graduation_info = get_config("graduation")
+            _ready = (
+                cat.experience_level not in ["untrained", "learning"]
+                and cat.moons >= graduation_info["min_graduating_age"]
+            ) or cat.moons >= graduation_info["max_apprentice_age"][cat.status.rank]
 
-                elif cat.status.rank == CatRank.MEDIATOR_APPRENTICE:
-                    ceremony(cat, CatRank.MEDIATOR, preparedness)
-                    ceremony_accessory = True
-                    gain_accessories(cat, clan)
+        if _ready:
+            if get_clan_setting("12_moon_graduation"):
+                preparedness = "prepared"
+            else:
+                if cat.moons == graduation_info["min_graduating_age"]:
+                    preparedness = "early"
+                elif cat.experience_level in ["untrained", "learning"]:
+                    preparedness = "unprepared"
+                else:
+                    preparedness = "prepared"
 
-                elif cat.status.rank == CatRank.QUEEN_APPRENTICE:
-                    ceremony(cat, CatRank.QUEEN, preparedness)
-                    ceremony_accessory = True
-                    gain_accessories(cat, clan)
+            if cat.status.rank == CatRank.APPRENTICE:
+                ceremony(cat, CatRank.WARRIOR, preparedness)
+                ceremony_accessory = True
+                gain_accessories(cat, clan)
+
+            # promote to med cat
+            elif cat.status.rank == CatRank.MEDICINE_APPRENTICE:
+                ceremony(cat, CatRank.MEDICINE_CAT, preparedness)
+                ceremony_accessory = True
+                gain_accessories(cat, clan)
+
+            elif cat.status.rank == CatRank.MEDIATOR_APPRENTICE:
+                ceremony(cat, CatRank.MEDIATOR, preparedness)
+                ceremony_accessory = True
+                gain_accessories(cat, clan)
+
+            elif cat.status.rank == CatRank.QUEEN_APPRENTICE:
+                ceremony(cat, CatRank.QUEEN, preparedness)
+                ceremony_accessory = True
+                gain_accessories(cat, clan)
 
 def _is_suitable_medcat_app(cat, clan) -> bool:
     """
@@ -2326,6 +2278,9 @@ def ceremony(cat, promoted_to, preparedness="prepared"):
     )
     # game.ceremony_events_list.append(f'{cat.name}{ceremony_text}')
 
+    if promoted_to == CatRank.LEADER:
+        clan.new_leader(cat)
+
 def gain_accessories(cat, clan):
     """
     accessories
@@ -2410,7 +2365,7 @@ def handle_outside_EX(cat):
         if cat.age == CatAge.KITTEN:
             return
 
-        exp_info = get_config("outside_ex")
+        exp_info = get_config("outsiders.outside_ex")
 
         if cat.age == CatAge.ADOLESCENT:
             ran = exp_info["base_adolescent_timeskip_ex"]
@@ -2444,7 +2399,7 @@ def handle_timeskip_EX(cat):
         if cat.not_working() and int(random.random() * 3):
             return
 
-        if cat.experience > cat.experience_levels_range["trainee"][1]:
+        if cat.experience > cat.experience_levels_range["learning"][1]:
             return
     
         exp_info = get_config("clancat_ex")
@@ -2698,10 +2653,7 @@ def handle_murder(cat, clan):
     targets = []
 
     # if this cat is unstable and aggressive, we lower the random murder chance
-    random_murder_chance = int(get_config("death_related.base_random_murder_chance"))
-    # random_murder_chance -= 0.5 * (
-    #     (cat.personality.aggression) + (16 - cat.personality.stability)
-    # )
+    random_murder_chance = int(get_config("death_related.murder.base_random_murder_chance"))
 
     # Check to see if random murder is triggered.
     # If so, we allow targets to be anyone they have even the smallest amount of negativity for
@@ -2714,6 +2666,14 @@ def handle_murder(cat, clan):
         ]
         if not targets:
             return
+
+        if (
+            get_config("death_related.murder.deputy_prefer_leader")
+            and cat.status.rank == CatRank.DEPUTY
+        ):
+            possible_targets = [c for c in targets if c.status.is_leader and c.status.group_ID == cat.status.group_ID]
+            if possible_targets:
+                targets = possible_targets
 
         chosen_cat = random.choice(targets)
 
@@ -2758,13 +2718,22 @@ def handle_murder(cat, clan):
 
     # if we have some, then we need to decide if this cat will kill
     if targets:
+        # chosen target is the cat with the worst relationship (or leader, if a config is set as such)
+        if (
+            get_config("death_related.murder.deputy_prefer_leader")
+            and cat.status.rank == CatRank.DEPUTY
+        ):
+            possible_targets = [c for c in targets if c.cat_to.status.is_leader and c.cat_to.status.group_ID == cat.status.group_ID]
+            if possible_targets:
+                targets = possible_targets
+
         chosen_target = random.choice(targets)
         chosen_cat = Cat.fetch_cat(chosen_target.cat_to)
 
-        kill_chance = get_config("death_related.base_murder_kill_chance")
+        kill_chance = get_config("death_related.murder.base_murder_kill_chance")
 
         if chosen_cat.status.group_ID != cat.status.group_ID:
-            kill_chance = get_config("death_related.base_crossclan_murder_kill_chance")
+            kill_chance = get_config("death_related.murder.base_crossclan_murder_kill_chance")
 
         extreme_neg = len(
             [l for l in chosen_target.get_reltype_tiers() if l.is_extreme_neg]
@@ -2789,12 +2758,15 @@ def handle_murder(cat, clan):
 
         # little easter egg just for fun
         if cat.personality.trait in ("ambitious", "arrogant", "rebellious") and (
-            Cat.fetch_cat(chosen_target.cat_to).status.is_leader
-            or Cat.fetch_cat(chosen_target.cat_to).status.rank == CatRank.DEPUTY
+            chosen_cat.status.is_leader
+            or chosen_cat.status.rank == CatRank.DEPUTY
         ):
             kill_chance -= 10
             if cat.status.rank == CatRank.DEPUTY:
                 kill_chance -= 15
+
+        if cat.status.rank == CatRank.DEPUTY and chosen_cat.status.is_leader:
+            kill_chance -= get_config("death_related.murder.deputy_murder_modifier")
 
         kill_chance -= cat.personality.aggression
         kill_chance -= 16 - cat.personality.stability
@@ -2838,10 +2810,10 @@ def handle_illnesses_or_illness_deaths(cat, clan):
     #                           decide if cat dies                                 #
     # ---------------------------------------------------------------------------- #
     # if triggered_death is True then the cat will die
-    triggered_death = False
-    triggered_death = Condition_Events.handle_illnesses(
-        cat, game.clan.current_season, clan=clan
-    )
+    triggered_death = Condition_Events.handle_illnesses(cat, game.clan.current_season, clan=clan)
+    if not triggered_death:
+        handle_outbreaks(cat, clan)
+
     return triggered_death
 
 def handle_outbreaks(cat, clan):
@@ -2861,7 +2833,7 @@ def handle_outbreaks(cat, clan):
     already_sick_count = len(already_sick)
 
     # round up the living kitties
-    alive_cats = list(
+    healthy_cats = list(
         filter(
             lambda kitty: (
                 kitty.status.group_ID == clan.group_ID and not kitty.is_ill()
@@ -2869,10 +2841,12 @@ def handle_outbreaks(cat, clan):
             Cat.all_cats.values(),
         )
     )
-    alive_count = len(alive_cats)
+    healthy_count = len(healthy_cats)
 
     # if large amount of the population is already sick, stop spreading
-    if already_sick_count >= alive_count * 0.25:
+    if already_sick_count >= healthy_count * get_config(
+        "condition_related.illness_percentage_max"
+    ):
         return
 
     meds = find_alive_cats_with_rank(
@@ -2888,11 +2862,12 @@ def handle_outbreaks(cat, clan):
         if cat.illnesses[illness]["infectiousness"] == 0:
             continue
         chance = cat.illnesses[illness]["infectiousness"]
-        chance += len(meds) * 7
+        chance += len(meds) * get_config("condition_related.med_infection_reduction")
         if not int(random.random() * chance):  # 1/chance to infect
             # fleas are the only condition allowed to spread outside of cold seasons
             if (
-                game.clan.current_season not in ["Leaf-bare", "Leaf-fall"]
+                game.clan.current_season
+                not in get_config("condition_related.illness_outbreak_season")
                 and illness != "fleas"
             ):
                 continue
@@ -2904,22 +2879,23 @@ def handle_outbreaks(cat, clan):
 
             if illness == "kittencough":
                 # adjust alive cats list to only include kittens
-                alive_cats = list(
+                healthy_cats = list(
                     filter(
                         lambda kitty: (
                             kitty.status.rank.is_baby()
                             and kitty.status.group_ID == clan.group_ID
+                            and not kitty.is_ill()
                         ),
                         Cat.all_cats.values(),
                     )
                 )
-                alive_count = len(alive_cats)
+                healthy_count = len(healthy_cats)
 
-            max_infected = int(alive_count / 2)  # 1/2 of alive cats
+            max_infected = int(healthy_count / 2)  # 1/2 of alive cats
             # If there are less than two cat to infect,
             # you are allowed to infect all the cats
             if max_infected < 2:
-                max_infected = alive_count
+                max_infected = healthy_count
             # If, event with all the cats, there is less
             # than two cats to infect, cancel outbreak.
             if max_infected < 2:
@@ -2937,7 +2913,7 @@ def handle_outbreaks(cat, clan):
 
             infected_names = []
             involved_cats = []
-            infected_cats = random.sample(alive_cats, infected_count)
+            infected_cats = random.sample(healthy_cats, infected_count)
             for sick_meowmeow in infected_cats:
                 infected_names.append(str(sick_meowmeow.name))
                 involved_cats.append(sick_meowmeow.ID)
@@ -2997,37 +2973,25 @@ def coming_out(cat, clan):
 
     return
 
-def check_and_promote_leader(clan):
-    """Checks if a new leader need to be promoted, and promotes them, if needed."""
+
+def check_leader(clan):
+    """Checks if leader is missing."""
     # check for leader
     if clan.leader:
-        leader_invalid = clan.leader.status.group_ID == clan.group_ID
+        leader_invalid = clan.leader.status.group_ID != clan.group_ID
     else:
         leader_invalid = True
 
     if leader_invalid:
-        perform_ceremonies(
-            None, clan
-        )  # This is where the deputy will be make leader
-
-        if clan.leader:
-            leader_dead = clan.leader.dead
-            leader_outside = clan.leader.status.group_ID != clan.group_ID
-        else:
-            leader_dead = True
-            leader_outside = True
-
-        if leader_dead or leader_outside:
-            string = i18n.t("defaults.warn_no_leader")
-            game.cur_events_list.insert(
-                0,
-                Single_Event(
-                    event_text_adjust(
-                        Cat, string, clan=clan
-                    ),
-                    clan=clan.group_ID
+        game.cur_events_list.insert(
+            0,
+            Single_Event(
+                event_text_adjust(
+                    Cat, i18n.t("defaults.warn_no_leader"), clan=clan
                 ),
-            )
+                clan=clan.group_ID
+            ),
+        )
 
 def rel_deputy_filter(cat_list, leader):
     has_rel = []

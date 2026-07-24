@@ -34,7 +34,10 @@ class ChooseClancountScreen(MakeClanScreenBase):
         # Reset variables
         reset_loaded_clan_settings()
         reset_config()
-        switch_set_value(Switch.possible_cats, create_example_cats())
+        switch_set_value(Switch.possible_cats, create_example_cats(
+            majority_rank=self.get_config_during_creation("clan_creation.majority_rank"),
+            rank_weights=self.get_config_during_creation("clan_creation.rank_weights"),
+        ))
 
         super().screen_switches()
         self.elements["previous_step"].disable()
@@ -102,7 +105,6 @@ class ChooseClancountScreen(MakeClanScreenBase):
                 self.clan_count_mode = 'multiclan'
                 self.refresh_text_and_buttons()
 
-            # Logic for when to quick-start clan
             elif event.ui_element == self.elements["next_step"]:
                 self.clan_info.clan_count_mode = self.clan_count_mode
                 self.change_screen(GameScreen.MAKE_CLAN_CHOOSE_MODE)
