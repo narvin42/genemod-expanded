@@ -1057,7 +1057,7 @@ class Phenotype(Genotype):
             else:
                 colour = "ivory"
                 if rufousing != "silver":
-                    rufousing = f"_{genes.rufousing-6}
+                    rufousing = f"_{genes.rufousing-6}"
     
         if (genes.ext[0] == "ec" and genes.agouti[0] == "a" and 'o' in genes.sexgene):
             unders_opacity = 0
