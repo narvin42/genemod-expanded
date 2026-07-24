@@ -1249,10 +1249,7 @@ class Genotype:
         self.chs = [choice(par1.chs), choice(par2.chs)]
         self.rh = [choice(par1.rh), choice(par2.rh)]
 
-        if random() < 0.25:
-            self.fur_shade = par1.fur_shade
-        elif random() < 0.25:
-            self.fur_shade = par2.fur_shade
+        self.fur_shade = self.kit_gradient_traits(par1.fur_shade, par2.fur_shade, 7, True)
 
         self.wideband = self.kit_gradient_traits(par1.wideband, par2.wideband, 17)
         self.rufousing = self.kit_gradient_traits(par1.rufousing, par2.rufousing, 9)

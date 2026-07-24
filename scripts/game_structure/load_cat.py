@@ -190,30 +190,34 @@ def accurate_porting(cat, info):
             pigmentation = choice(range(8, 11))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour"] in ["EMERALD", "GREEN", "PALEGREEN", "SAGE"]:
-        pigmentation = choice(range(2, 12))
+    elif info["eye_colour"] in ["EMERALD", "GREEN", "PALEGREEN", "SAGE", "OLIVE", "FERN", "MOSSY", "LEAF"]:
+        pigmentation = choice(range(3, 7))
         refraction = choice(range(9, 12))
         if info["eye_colour"] == "PALEGREEN":
             pigmentation = choice(range(2, 4))
-        elif info["eye_colour"] == "SAGE":
+        elif info["eye_colour"] in ["SAGE", "FERN"]:
             pigmentation = choice(range(7, 10))
-        else:
-            pigmentation = choice(range(3, 7))
+        elif info["eye_colour"] in ["OLIVE", "MOSSY"]:
+            pigmentation = choice(range(9, 11))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour"] in ["HAZEL"]:
+    elif info["eye_colour"] in ["HAZEL", "GRASSYGREEN", "CATTAIL", "CACTUS"]:
         pigmentation = choice(range(5, 8))
         refraction = choice(range(5, 8))
+        if info["eye_colour"] == "CATTAIL":
+            pigmentation = choice(range(10, 12))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour"] in ["AURORA"]:
-        pigmentation = 1
-        refraction = choice(range(11, 12))
+    elif info["eye_colour"] in ["AURORA", "AQUAMARINE"]:
+        pigmentation = choice(range(1, 3))
+        refraction = choice(range(10, 12))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour"] in ["FOREST"]:
+    elif info["eye_colour"] in ["FOREST", "LICHEN"]:
         pigmentation = 1
         refraction = choice(range(5, 9))
+        if info["eye_colour"] == "LICHEN":
+            pigmentation = choice(range(1, 4))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
         cat.phenotype.righteyetype = f"R{refraction} ; P{pigmentation}"
 
@@ -251,27 +255,31 @@ def accurate_porting(cat, info):
         if info["eye_colour2"] == "DAWN":
             pigmentation = choice(range(8, 11))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour2"] in ["EMERALD", "GREEN", "PALEGREEN", "SAGE"]:
-        pigmentation = choice(range(2, 12))
+    elif info["eye_colour"] in ["EMERALD", "GREEN", "PALEGREEN", "SAGE", "OLIVE", "FERN", "MOSSY", "LEAF"]:
+        pigmentation = choice(range(3, 7))
         refraction = choice(range(9, 12))
-        if info["eye_colour2"] == "PALEGREEN":
+        if info["eye_colour"] == "PALEGREEN":
             pigmentation = choice(range(2, 4))
-        elif info["eye_colour2"] == "SAGE":
+        elif info["eye_colour"] in ["SAGE", "FERN"]:
             pigmentation = choice(range(7, 10))
-        else:
-            pigmentation = choice(range(3, 7))
+        elif info["eye_colour"] in ["OLIVE", "MOSSY"]:
+            pigmentation = choice(range(9, 11))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour2"] in ["HAZEL"]:
+    elif info["eye_colour"] in ["HAZEL", "GRASSYGREEN", "CATTAIL", "CACTUS"]:
         pigmentation = choice(range(5, 8))
         refraction = choice(range(5, 8))
+        if info["eye_colour"] == "CATTAIL":
+            pigmentation = choice(range(10, 12))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour2"] in ["AURORA"]:
-        pigmentation = 1
-        refraction = choice(range(11, 12))
+    elif info["eye_colour"] in ["AURORA", "AQUAMARINE"]:
+        pigmentation = choice(range(1, 3))
+        refraction = choice(range(10, 12))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
-    elif info["eye_colour2"] in ["FOREST"]:
+    elif info["eye_colour"] in ["FOREST", "LICHEN"]:
         pigmentation = 1
         refraction = choice(range(5, 9))
+        if info["eye_colour"] == "LICHEN":
+            pigmentation = choice(range(1, 4))
         cat.phenotype.lefteyetype = f"R{refraction} ; P{pigmentation}"
 
     if "SUNLITICE" in [info["eye_colour"], info["eye_colour2"]]:
@@ -319,10 +327,14 @@ def accurate_porting(cat, info):
     elif (main_colour["pattern"] in ["single", "singlecolour", "twocolour", "smoke"] and main_colour["colour"] not in tabby_bases) or (main_colour["colour"] == "GHOST"):
         cat.phenotype.agouti = ["a", "a"]
 
-    if main_colour["pattern"] in ["ticked", "agouti", "singlestripe"] or (not cat.chimerapheno and patch_colour["pattern"] in ["ticked", "agouti", "singlestripe"]):
+    if main_colour["pattern"] in ["ticked", "agouti", "singlestripe", "freckled"] or (not cat.chimerapheno and patch_colour["pattern"] in ["ticked", "agouti", "singlestripe", "freckled"]):
         cat.phenotype.ticked[0] = "Ta"
         if main_colour["pattern"] != "ticked" or (not cat.chimerapheno and patch_colour["pattern"] != "ticked"):
             cat.phenotype.tickgenes = "2222"
+        if main_colour["pattern"] == "freckled" or (not cat.chimerapheno and patch_colour["pattern"] == "freckled"):
+            cat.phenotype.ticked = ["Ta", "ta"]
+            cat.phenotype.breakthrough = True
+            cat.phenotype.mack[0] = "Mc"
     elif main_colour["pattern"] in ["classic", "sokoke", "marbled"] or (not cat.chimerapheno and patch_colour["pattern"] in ["classic", "sokoke", "marbled"]):
         cat.phenotype.ticked = ["ta", "ta"]
         cat.phenotype.mack = ["mc", "mc"]
@@ -332,8 +344,8 @@ def accurate_porting(cat, info):
         cat.phenotype.ticked = ["ta", "ta"]
         cat.phenotype.mack[0] = "Mc"
         cat.phenotype.spotted = "0000"
-        if main_colour["pattern"] in ["speckled", "rosette", "bengal"] or (not cat.chimerapheno and patch_colour["pattern"] in ["speckled", "rosette", "bengal"]):
-            cat.phenotype.spotted = "2222"
+    if main_colour["pattern"] in ["speckled", "rosette", "bengal", "freckled"] or (not cat.chimerapheno and patch_colour["pattern"] in ["speckled", "rosette", "bengal", "freckled"]):
+        cat.phenotype.spotted = "2222"
     if (main_colour["pattern"] in ["single", "singlecolour", "twocolour", "smoke"] and main_colour["colour"] in tabby_bases):
         cat.phenotype.ticked[0] = "Ta"
     
@@ -344,10 +356,14 @@ def accurate_porting(cat, info):
             if patch_colour["pattern"] != "rosette":
                 cat.chimerapheno.agouti = ["Apb", "a"]
 
-        if patch_colour["pattern"] in ["ticked", "agouti", "singlestripe"]:
+        if patch_colour["pattern"] in ["ticked", "agouti", "singlestripe", "freckled"]:
             cat.chimerapheno.ticked[0] = "Ta"
             if patch_colour["pattern"] != "ticked":
                 cat.chimerapheno.tickgenes = "2222"
+            if patch_colour["pattern"] == "freckled":
+                cat.chimerapheno.ticked = ["Ta", "ta"]
+                cat.chimerapheno.breakthrough = True
+                cat.chimerapheno.mack[0] = "Mc"
         elif patch_colour["pattern"] in ["classic", "sokoke", "marbled"]:
             cat.chimerapheno.ticked = ["ta", "ta"]
             cat.chimerapheno.mack = ["mc", "mc"]
@@ -357,12 +373,12 @@ def accurate_porting(cat, info):
             cat.chimerapheno.ticked = ["ta", "ta"]
             cat.chimerapheno.mack[0] = "Mc"
             cat.chimerapheno.spotted = "0000"
-            if patch_colour["pattern"] in ["speckled", "rosette", "bengal"]:
-                cat.chimerapheno.spotted = "2222"
         elif (patch_colour["pattern"] in ["single", "singlecolour", "twocolour", "smoke"] and patch_colour["colour"] not in tabby_bases) or (patch_colour["colour"] == "GHOST"):
             cat.chimerapheno.agouti = ["a", "a"]
         elif (patch_colour["pattern"] in ["single", "singlecolour", "twocolour", "smoke"] and patch_colour["colour"] in tabby_bases):
             cat.chimerapheno.ticked[0] = "Ta"
+        if patch_colour["pattern"] in ["speckled", "rosette", "bengal", "freckled"]:
+            cat.chimerapheno.spotted = "2222"
     
     if not patch_colour["pattern"] and main_colour["pattern"] in ["singlecolour", "twocolour"] and main_colour["colour"] == "WHITE":
         cat.phenotype.white[0] = "W"

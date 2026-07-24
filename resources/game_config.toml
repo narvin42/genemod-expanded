@@ -608,6 +608,14 @@ dev_tools = false
   lineart_color_sc = [47, 51, 64]
   lineart_color_df = [30, 8, 11]
 
+[thought_generation]
+  # the ID of the thoughts to ensure
+  debug_ensure_thought_id = ""
+  # if you want to ensure a specific string from the thought's options, include its index here.
+  # by default the first string will be used (index 0)
+  debug_ensure_thought_index = 0
+
+
 [patrol_generation]
   # modifies success rate based on game mode. higher = more difficult.
   difficulty_modifier = 2.5
@@ -699,6 +707,19 @@ dev_tools = false
     "3" = 0.1
     "4" = 0.05
     "5" = 0.05
+
+  # directly added to base death chance, depending on the adult size of the cat, starting at adolescence
+  [death_related.size_modifiers]
+    "teacup" = 0
+    "tiny" = 0
+    "small" = 0
+    "below average" = 0
+    "average" = 0
+    "above average" = 0
+    "large" = 0
+    "massive" = 0
+    "giant" = 0
+    "goliath" = 0
 
   [death_related.murder]
     # base 1/2^(chance) a completely random murder occurs
@@ -1160,6 +1181,9 @@ dev_tools = false
     # herb bonus applied when cats should gather a boosted number of herbs
     general_amount_bonus = 2
 
+    # the amount of herbs a single cat can carry in a patrol - CLEVER quantity mod will apply
+    general_patrol_quantity_per_cat = 6
+
     # adjust weights for finding [1 herb type, 2 herb types, 3 herb types] for each season
     [clan_resources.herbs.forest]
       newleaf = [2, 3, 2]
@@ -1351,6 +1375,7 @@ dev_tools = false
   # force a game setting to be true, stopping players from changing it
   [settings.force_enable]
     "deputy" = false
+    "modded_kits" = false
 
   [settings.force_disable]
     "modded_kits" = false

@@ -1608,7 +1608,9 @@ def perform_ceremonies(cat, clan):
         if not clan.leader or clan.leader.status.group_ID != clan.group_ID:
             if clan.deputy.status.group_ID == clan.group_ID:
                 ceremony(cat, CatRank.LEADER)
+                cat.generate_lead_ceremony()
                 clan.deputy = None
+                clan.leader = cat
 
     # OTHER CEREMONIES ---------------------------------------
 
@@ -1916,7 +1918,6 @@ def _is_suitable_medcat_app(cat, clan) -> bool:
         "fierce",
         "rebellious",
         "troublesome",
-        "sneaky",
         "vengeful",
     ]:
         chance = chance * 2
@@ -2631,6 +2632,8 @@ def handle_injuries_or_general_death(cat, clan):
     death_chance = get_config(path) - (
         get_config("death_related.war_death_modifier") if use_war_modifier else 0
     )
+    if not cat.age.is_baby():
+        death_chance += get_config("death_related.size_modifiers")[cat.phenotype.height_label]
     if not int(random.random() * death_chance) and not cat.not_working():  # 1/400
         create_short_event(
             event_type="birth_death",
