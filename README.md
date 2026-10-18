@@ -26,6 +26,7 @@ Expanded disabilites creator: narvin, delgado-master.tumblr.com
 
 ## Downloads
 Note: These are developer builds and are not guaranteed to work!
+Note: there is currently a major bug I cannot fix right now, and I need to rebuild the mod anyway.
 - [Nightly Link](https://nightly.link/narvin42/genemod-expanded/workflows/build/expanded-disabilities-diseases)
 
 ## Running from source
