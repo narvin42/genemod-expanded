@@ -121,7 +121,7 @@ def generate_sprite(
             phenotype[phenotype.somatic["gene"]][0] = phenotype.somatic["allele"]
             phenotype.GeneSort()
             if phenotype.somatic["gene"] == 'sexgene' and len(phenotype.sexgene) > 1:
-                phenotype.sexgene[1] = 'Y'
+                phenotype.fsexgene[1] = 'Y'
             phenotype.PhenotypeOutput(phenotype.white_pattern)
 
         stripecolourdict = {
@@ -1308,51 +1308,30 @@ def generate_sprite(
             if(int(cat_sprite) % 4 != 3 and int(cat_sprite) > 3):
                 lefteye = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                 righteye = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                leftmicro = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
-                rightmicro = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
                 special = pygame.Surface((sprites.size, sprites.size), pygame.HWSURFACE | pygame.SRCALPHA)
 
                 lefteye.blit(sprites.sprites['left' + cat_sprite], (0, 0))
                 righteye.blit(sprites.sprites['right' + cat_sprite], (0, 0))
-                leftmicro.blit(sprites.sprites['microleft' + cat_sprite], (0, 0))
-                rightmicro.blit(sprites.sprites['microright' + cat_sprite], (0, 0))
 
                 lefteye.blit(construct_eye_colour(phenotype.lefteyetype), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                 righteye.blit(construct_eye_colour(phenotype.righteyetype), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-                leftmicro.blit(construct_eye_colour(phenotype.lefteyetype), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-                rightmicro.blit(construct_eye_colour(phenotype.righteyetype), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
-                if phenotype.lefteyesize == 'normal':
+                if phenotype.lefteyesize != 'no':
                     gensprite.blit(lefteye, (0, 0))
-                elif phenotype.lefteyesize == 'micro':
-                    gensprite.blit(leftmicro, (0, 0))
-                if phenotype.righteyesize == 'normal':
+                if phenotype.righteyesize != 'no':
                     gensprite.blit(righteye, (0, 0))
-                elif phenotype.righteyesize == 'micro':
-                    gensprite.blit(rightmicro, (0, 0))
 
                 if sprite_age == 1:
                     lefteye.blit(sprites.sprites['left' + cat_sprite], (0, 0))
                     righteye.blit(sprites.sprites['right' + cat_sprite], (0, 0))
-                    leftmicro.blit(sprites.sprites['microleft' + cat_sprite], (0, 0))
-                    rightmicro.blit(sprites.sprites['microright' + cat_sprite], (0, 0))
                     lefteye.blit(construct_eye_colour(phenotype.lefteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     righteye.blit(construct_eye_colour(phenotype.righteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-                    leftmicro.blit(construct_eye_colour(phenotype.lefteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-                    rightmicro.blit(construct_eye_colour(phenotype.righteyetype.split(' ; ')[0] + ' ; blue'), (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
                     lefteye.set_alpha(200)
                     righteye.set_alpha(200)
-                    leftmicro.set_alpha(200)
-                    rightmicro.set_alpha(200)
-                    if phenotype.lefteyesize == 'normal':
+                    if phenotype.lefteyesize != 'no':
                         gensprite.blit(lefteye, (0, 0))
-                    elif phenotype.lefteyesize == 'micro':
-                        gensprite.blit(leftmicro, (0, 0))
-                    if phenotype.righteyesize == 'normal':
+                    if phenotype.righteyesize != 'no':
                         gensprite.blit(righteye, (0, 0))
-                    elif phenotype.righteyesize == 'micro':
-                        gensprite.blit(rightmicro, (0, 0))
-
 
                 if(phenotype.extraeye):
                     special.blit(sprites.sprites[phenotype.extraeye + cat_sprite], (0, 0))
